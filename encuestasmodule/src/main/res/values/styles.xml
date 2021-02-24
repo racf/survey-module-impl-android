@@ -1,0 +1,326 @@
+<resources>
+
+    <!-- Base application theme. -->
+    <style name="AppTheme" parent="Theme.AppCompat.Light.NoActionBar">
+        <!-- Customize your theme here. -->
+        <item name="colorPrimary">@color/colorPrimary</item>
+        <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
+        <item name="colorAccent">@color/colorAccent</item>
+    </style>
+
+    <style name="SplashScreen" parent="Theme.AppCompat.Light.NoActionBar">
+        <item name="android:windowBackground">@drawable/splash</item>
+    </style>
+
+    <style name="ScrollView">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">wrap_content</item>
+    </style>
+    <style name="ScrollView.Vertical">
+        <item name="android:orientation">vertical</item>
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">wrap_content</item>
+    </style>
+    <style name="ScrollView.Vertical.Full">
+        <item name="android:layout_height">match_parent</item>
+    </style>
+    <style name="ScrollView.Vertical.Wrap">
+        <item name="android:layout_height">wrap_content</item>
+    </style>
+
+    <style name="LinearLayout">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">wrap_content</item>
+    </style>
+    <style name="LinearLayout.Vertical">
+        <item name="android:orientation">vertical</item>
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">wrap_content</item>
+    </style>
+    <style name="LinearLayout.Vertical.Full">
+        <item name="android:layout_height">match_parent</item>
+    </style>
+    <style name="LinearLayout.Vertical.Wrap">
+        <item name="android:layout_height">wrap_content</item>
+    </style>
+    <style name="LinearLayout.Horizontal">
+        <item name="android:orientation">horizontal</item>
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">wrap_content</item>
+    </style>
+    <style name="LinearLayout.Horizontal.Full">
+        <item name="android:layout_height">match_parent</item>
+    </style>
+    <style name="LinearLayout.Horizontal.Wrap">
+        <item name="android:layout_height">wrap_content</item>
+    </style>
+
+    <style name="TextView" parent="@android:style/Widget.TextView">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:paddingTop">16dp</item>
+        <item name="android:paddingBottom">16dp</item>
+        <item name="android:paddingLeft">16dp</item>
+        <item name="android:paddingRight">16dp</item>
+    </style>
+    <style name="TextView.Loading">
+        <item name="android:textSize">15sp</item>
+        <item name="android:textStyle">italic</item>
+        <item name="android:gravity">center</item>
+        <item name="android:visibility">gone</item>
+        <item name="android:paddingTop">5dp</item>
+        <item name="android:paddingBottom">3dp</item>
+        <item name="android:textColor">@color/gray_dark</item>
+        <item name="android:background">@android:color/transparent</item>
+    </style>
+    <style name="TextView.Label">
+        <item name="android:textSize">18sp</item>
+        <item name="android:textStyle">bold</item>
+        <item name="android:paddingTop">16dp</item>
+        <item name="android:paddingBottom">2dp</item>
+    </style>
+    <style name="TextView.Value">
+        <item name="android:textSize">18sp</item>
+        <item name="android:paddingTop">2dp</item>
+        <item name="android:paddingBottom">16dp</item>
+    </style>
+    <style name="TextView.Title">
+        <item name="android:textSize">18sp</item>
+        <item name="android:paddingBottom">16dp</item>
+        <item name="android:textColor">@color/black_dark</item>
+    </style>
+    <style name="TextView.SubTitle">
+        <item name="android:textSize">15sp</item>
+        <item name="android:paddingTop">0dp</item>
+    </style>
+    <style name="TextView.SubTitle.Truncate">
+        <item name="android:ellipsize">end</item>
+        <item name="android:singleLine">true</item>
+    </style>
+    <style name="TextView.Title.Center">
+        <item name="android:gravity">center</item>
+    </style>
+    <style name="TextView.Description">
+        <item name="android:textSize">16sp</item>
+        <item name="android:textStyle">normal</item>
+        <item name="android:lineSpacingMultiplier">1.2</item>
+        <item name="android:textColor">@color/gray_light</item>
+    </style>
+    <style name="TextView.Description.Truncate">
+        <item name="android:ellipsize">end</item>
+        <item name="android:singleLine">true</item>
+    </style>
+    <style name="TextView.Description.Center">
+        <item name="android:gravity">center</item>
+        <item name="android:paddingTop">8dp</item>
+        <item name="android:paddingBottom">8dp</item>
+    </style>
+    <style name="TextView.Links">
+        <item name="android:textSize">17sp</item>
+        <item name="android:linksClickable">true</item>
+        <item name="android:autoLink">web|email</item>
+        <item name="android:paddingTop">8dp</item>
+        <item name="android:paddingBottom">8dp</item>
+    </style>
+    <style name="TextView.Links.Center">
+        <item name="android:gravity">center</item>
+    </style>
+    <style name="TextView.Info">
+        <item name="android:textSize">17sp</item>
+        <item name="android:textStyle">italic</item>
+    </style>
+    <style name="TextView.Empty">
+        <item name="android:visibility">gone</item>
+        <item name="android:textSize">18sp</item>
+        <item name="android:textStyle">italic</item>
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">match_parent</item>
+        <item name="android:gravity">center_vertical|center_horizontal</item>
+    </style>
+    <style name="TextView.Error">
+        <item name="android:textSize">18sp</item>
+        <item name="android:textStyle">italic</item>
+        <item name="android:textColor">@color/red_dark</item>
+        <item name="android:visibility">gone</item>
+    </style>
+    <style name="TextView.Required">
+        <item name="android:layout_height">match_parent</item>
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:textSize">16sp</item>
+        <item name="android:textStyle">italic</item>
+        <item name="android:textColor">@color/red_dark</item>
+        <item name="android:visibility">gone</item>
+        <item name="android:paddingStart">0dp</item>
+        <item name="android:paddingLeft">0dp</item>
+        <item name="android:gravity">center_vertical</item>
+    </style>
+    <style name="TextView.Prefix">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:textSize">17sp</item>
+        <item name="android:textStyle">bold</item>
+        <item name="android:paddingLeft">16dp</item>
+        <item name="android:paddingTop">16dp</item>
+        <item name="android:paddingBottom">16dp</item>
+        <item name="android:paddingRight">0dp</item>
+        <item name="android:layout_weight">0</item>
+        <item name="android:layout_marginTop">16dp</item>
+    </style>
+    <style name="TextView.Suffix">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:textSize">17sp</item>
+        <item name="android:textStyle">bold</item>
+        <item name="android:paddingLeft">0dp</item>
+        <item name="android:paddingTop">16dp</item>
+        <item name="android:paddingBottom">16dp</item>
+        <item name="android:paddingRight">16dp</item>
+        <item name="android:layout_weight">0</item>
+        <item name="android:layout_marginTop">16dp</item>
+    </style>
+
+    <style name="EditText" parent="@android:style/Widget.EditText">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:textSize">18sp</item>
+        <item name="android:inputType">text</item>
+        <item name="android:layout_marginTop">16dp</item>
+        <item name="android:layout_marginLeft">16dp</item>
+        <item name="android:layout_marginRight">16dp</item>
+        <item name="android:layout_marginBottom">16dp</item>
+        <item name="android:paddingTop">16dp</item>
+        <item name="android:paddingBottom">16dp</item>
+        <item name="android:paddingLeft">16dp</item>
+        <item name="android:paddingRight">16dp</item>
+    </style>
+    <style name="EditText.Label">
+        <item name="android:layout_width">wrap_content</item>
+    </style>
+    <style name="EditText.NoSuggestions">
+        <item name="android:inputType">textFilter|textNoSuggestions</item>
+    </style>
+    <style name="EditText.Number">
+        <item name="android:inputType">number</item>
+    </style>
+    <style name="EditText.Number.Wrap">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_weight">1</item>
+    </style>
+    <style name="EditText.Decimal">
+        <item name="android:inputType">numberDecimal</item>
+    </style>
+    <style name="EditText.Decimal.Wrap">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_weight">1</item>
+    </style>
+    <style name="EditText.Phone">
+        <item name="android:inputType">phone</item>
+    </style>
+    <style name="EditText.Multiline">
+        <item name="android:inputType">textMultiLine|textCapSentences</item>
+        <item name="android:minLines">3</item>
+    </style>
+    <style name="EditText.URL">
+        <item name="android:inputType">textUri</item>
+    </style>
+    <style name="EditText.Password">
+        <item name="android:inputType">textPassword</item>
+    </style>
+    <style name="EditText.Email">
+        <item name="android:inputType">textEmailAddress</item>
+    </style>
+    <style name="EditText.Name">
+        <item name="android:inputType">textPersonName|textCapWords</item>
+    </style>
+    <style name="EditText.Search">
+        <item name="android:inputType">text</item>
+        <item name="android:maxLines">1</item>
+    </style>
+    <style name="EditText.CapWords">
+        <item name="android:inputType">textCapWords</item>
+    </style>
+    <style name="EditText.CapCharacters">
+        <item name="android:inputType">textCapCharacters</item>
+    </style>
+    <style name="EditText.CapSentences">
+        <item name="android:inputType">textCapSentences</item>
+    </style>
+    <style name="EditText.PostalAddress">
+        <item name="android:inputType">textPostalAddress</item>
+    </style>
+    <style name="EditText.ReadOnly">
+        <item name="android:inputType">none</item>
+    </style>
+    <style name="RadioGroup">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:paddingTop">16dp</item>
+        <item name="android:paddingBottom">16dp</item>
+        <item name="android:paddingLeft">16dp</item>
+        <item name="android:paddingRight">16dp</item>
+    </style>
+    <style name="RadioGroup.Vertical">
+        <item name="android:orientation">vertical</item>
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">wrap_content</item>
+    </style>
+    <style name="RadioGroup.Vertical.Full">
+        <item name="android:layout_height">match_parent</item>
+    </style>
+    <style name="RadioGroup.Vertical.Wrap">
+        <item name="android:layout_height">wrap_content</item>
+    </style>
+    <style name="RadioGroup.Horizontal">
+        <item name="android:orientation">horizontal</item>
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">wrap_content</item>
+    </style>
+    <style name="RadioGroup.Horizontal.Full">
+        <item name="android:layout_height">match_parent</item>
+    </style>
+    <style name="RadioGroup.Horizontal.Wrap">
+        <item name="android:layout_height">wrap_content</item>
+    </style>
+
+    <style name="RadioButton">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:textColor">@color/gray_dark</item>
+        <item name="android:textSize">17sp</item>
+    </style>
+    <style name="RadioButton.Full">
+        <item name="android:layout_width">match_parent</item>
+    </style>
+    <style name="RadioButton.Fill">
+        <item name="android:layout_weight">1</item>
+    </style>
+
+    <style name="CheckBox" parent="@android:style/Widget.CompoundButton.CheckBox">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:textColor">@color/gray_dark</item>
+        <item name="android:textSize">17sp</item>
+    </style>
+    <style name="CheckBox.Full">
+        <item name="android:layout_width">match_parent</item>
+    </style>
+    <style name="CheckBox.Fill">
+        <item name="android:layout_weight">1</item>
+    </style>
+
+    <!-- Spinner -->
+    <style name="Spinner" parent="@android:style/Widget.Spinner">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_marginTop">16dp</item>
+        <item name="android:layout_marginLeft">16dp</item>
+        <item name="android:layout_marginRight">16dp</item>
+        <item name="android:layout_marginBottom">16dp</item>
+        <item name="android:paddingTop">16dp</item>
+        <item name="android:paddingBottom">16dp</item>
+        <item name="android:paddingLeft">16dp</item>
+        <item name="android:paddingRight">16dp</item>
+    </style>
+    <style name="Spinner.TextView" parent="@android:style/Widget.TextView.SpinnerItem">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">wrap_content</item>
+    </style>
+</resources>

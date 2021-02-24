@@ -1,0 +1,3 @@
+include ':encuestasmodule'
+include ':app'
+rootProject.name = "survey-module-impl-android"

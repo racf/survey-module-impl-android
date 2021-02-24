@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.core.widget.NestedScrollView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    style="@style/ScrollView.Vertical"
+    android:id="@+id/scroll_view"
+    tools:context=".fragment.SelectFragment">
+    <androidx.cardview.widget.CardView
+        xmlns:card_view="http://schemas.android.com/apk/res-auto"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="@dimen/marginBody"
+        android:clickable="true"
+        android:focusable="true"
+        android:foreground="?android:attr/selectableItemBackground"
+        card_view:cardBackgroundColor="@color/white_light"
+        card_view:cardCornerRadius="@dimen/padding">
+        <LinearLayout
+            style="@style/LinearLayout.Vertical.Full"
+            tools:context=".fragment.SelectFragment">
+            <include layout="@layout/fragment_widget"/>
+            <LinearLayout
+                style="@style/ScrollView.Vertical.Full">
+                <RadioGroup
+                    android:id="@+id/radio_group"
+                    style="@style/RadioGroup.Vertical.Wrap"/>
+
+            </LinearLayout>
+        </LinearLayout>
+
+    </androidx.cardview.widget.CardView>
+
+</androidx.core.widget.NestedScrollView>

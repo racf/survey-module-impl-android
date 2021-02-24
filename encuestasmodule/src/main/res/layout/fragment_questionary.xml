@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.core.widget.NestedScrollView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    style="@style/ScrollView.Vertical">
+    <LinearLayout
+        style="@style/LinearLayout.Vertical">
+        <!-- <include android:layout_height="wrap_content" android:layout_width="match_parent"
+            layout="@layout/fragment_widget"/> -->
+        <TextView
+            android:id="@+id/tvCuestionarioTitulo"
+            android:layout_width="match_parent"
+            android:gravity="center_horizontal"
+            android:layout_margin="@dimen/marginBody"
+            android:textColor="@color/gobierno_rojo"
+            android:textStyle="bold"
+            android:textSize="20dp"
+            android:layout_height="wrap_content"/>
+
+        <LinearLayout
+            android:id="@+id/fieldset"
+            style="@style/LinearLayout.Vertical"/>
+    </LinearLayout>
+</androidx.core.widget.NestedScrollView>

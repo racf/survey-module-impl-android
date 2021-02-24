@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context=".view.QuestionaryActivity">
+    <LinearLayout
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:padding="@dimen/paddingSmall"
+        android:weightSum="12"
+        android:layout_height="wrap_content">
+        <Button
+            android:layout_height="wrap_content"
+            android:layout_width="0dp"
+            android:layout_weight="4"
+            android:text="Atras"
+            android:id="@+id/btnPrev"
+            android:textColor="@color/white_light"
+            android:layout_gravity="left|start"
+            android:onClick="prevQuestionary"
+            android:background="@color/gobierno_verde"/>
+        <TextView
+            android:id="@+id/tvLabelPage"
+            android:layout_gravity="center_horizontal|center_vertical"
+            android:layout_width="0dp"
+            android:layout_weight="4"
+            android:layout_height="wrap_content" />
+        <Button
+            android:id="@+id/btnNext"
+            android:text="Siguiente"
+            android:layout_gravity="right|end"
+            android:layout_width="0dp"
+            android:layout_weight="4"
+            android:layout_height="wrap_content"
+            android:textColor="@color/white_light"
+            android:background="@color/gobierno_verde"
+            android:onClick="nextQuestionary"/>
+
+    </LinearLayout>
+
+    <View android:layout_width="match_parent"
+        android:layout_height="2dp"
+        android:background="#808080"/>
+
+    <com.cysout.sousystems.surveymodule.viewpager.NoSwipeViewPager
+        android:id="@+id/nsvpQuestionary"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"/>
+</LinearLayout>
