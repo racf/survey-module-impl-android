@@ -1,5 +1,8 @@
 package com.cysout.sousystems.surveymodule.utils;
-
+/**
+ *Developed by cysout.com and sousystems.com.mx
+ *Contact info@cysout.com or contacto@sousystems.com.mx
+**/
 public class CustomConstants {
 
     public static  final boolean TRUE = true;
@@ -43,7 +46,7 @@ public class CustomConstants {
 
     // Database
     public static final String DATABASE_NAME = "encuesta";
-    public static final int DATABASE_VERSION = 3;
+    public static final int DATABASE_VERSION = 4;
 
     // Estados
     public static Integer ENCUESTA_TERMINADA = 1;

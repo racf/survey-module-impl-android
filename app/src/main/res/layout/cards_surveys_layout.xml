@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.cardview.widget.CardView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:foreground="?android:attr/selectableItemBackground"
+    app:cardBackgroundColor="#FFFFFF"
+    app:cardCornerRadius="@dimen/padding"
+    android:layout_marginBottom="@dimen/marginBody"
+    android:layout_marginStart="@dimen/marginBody"
+    android:layout_marginLeft="@dimen/marginBody"
+    android:layout_marginRight="@dimen/marginBody"
+    android:layout_marginTop="@dimen/margin_padding_4"
+    android:layout_marginEnd="@dimen/marginBody">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:padding="@dimen/margin_padding_16"
+        >
+
+        <TextView
+            android:id="@+id/tvCardSurveyTitle"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:textStyle="bold"
+            android:textSize="16sp"
+            android:layout_marginStart="@dimen/margin_padding_8"
+            android:layout_marginLeft="@dimen/margin_padding_8"
+            android:layout_marginEnd="@dimen/margin_padding_8"
+            android:layout_marginRight="@dimen/margin_padding_16"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/tvCardSurveySubTitle"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:textStyle="bold"
+            android:textSize="14sp"
+            android:layout_marginStart="@dimen/margin_padding_8"
+            android:layout_marginEnd="@dimen/margin_padding_8"
+            android:layout_marginTop="@dimen/margin_padding_8"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/tvCardSurveyTitle" />
+
+        <Button
+            android:id="@+id/btnStartSurvey"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:text="@string/start_survey"
+            android:layout_marginStart="@dimen/margin_padding_8"
+            android:layout_marginEnd="@dimen/margin_padding_8"
+            android:layout_marginTop="@dimen/margin_padding_8"
+            android:layout_marginBottom="@dimen/margin_padding_2"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/tvCardSurveySubTitle" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</androidx.cardview.widget.CardView>

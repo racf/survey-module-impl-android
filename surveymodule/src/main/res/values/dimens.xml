@@ -5,4 +5,12 @@
     <dimen name="paddingSmall">6dp</dimen>
     <dimen name="padding">12dp</dimen>
     <dimen name="paddingLarge">18dp</dimen>
+    <dimen name="margin_padding_0">0dp</dimen>
+    <dimen name="margin_padding_16">16dp</dimen>
+    <dimen name="margin_padding_18">18dp</dimen>
+    <dimen name="margin_padding_12">12dp</dimen>
+    <dimen name="margin_padding_8">8dp</dimen>
+    <dimen name="margin_padding_6">6dp</dimen>
+    <dimen name="margin_padding_4">4dp</dimen>
+    <dimen name="margin_padding_2">2dp</dimen>
 </resources>

@@ -27,6 +27,7 @@ public class Encuesta implements Serializable {
     private Integer etapa;
     private Long catEncuestaTipoId;
     private Boolean visible;
+    private Long versionCode;
     private String json;
     private String fechaCreacion;
     private String fechaModificacion;
@@ -39,6 +40,14 @@ public class Encuesta implements Serializable {
 
     public void setVisible(Boolean visible) {
         this.visible = visible;
+    }
+
+    public Long getVersionCode() {
+        return versionCode;
+    }
+
+    public void setVersionCode(Long versionCode) {
+        this.versionCode = versionCode;
     }
 
     public Long getEncuestaId() {
@@ -136,7 +145,8 @@ public class Encuesta implements Serializable {
                 ", etapa=" + etapa +
                 ", catEncuestaTipoId=" + catEncuestaTipoId +
                 ", visible=" + visible +
-                ", json='" + json + '\'' +
+                ", versionCode=" + versionCode +
+//                ", json='" + json + '\'' +
                 ", fechaCreacion='" + fechaCreacion + '\'' +
                 ", fechaModificacion='" + fechaModificacion + '\'' +
                 '}';
