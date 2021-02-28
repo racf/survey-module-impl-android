@@ -6,13 +6,12 @@ import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import android.app.Activity;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 
 import com.cysout.sousystems.survey.impl.adapter.SurveyAdapter;
-import com.cysout.sousystems.surveymodule.entity.Encuesta;
+import com.cysout.sousystems.surveymodule.entity.Survey;
 import com.cysout.sousystems.surveymodule.service.SurveyService;
 import com.cysout.sousystems.surveymodule.service.impl.SurveyServiceImpl;
 import com.cysout.sousystems.surveymodule.utils.CustomConstants;
@@ -45,18 +44,21 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void actionRecyclerView(){
-        surveyService.loadAllSurveys().observe(this, new Observer<List<Encuesta>>() {
+        surveyService.loadAllSurveys().observe(this, new Observer<List<Survey>>() {
             @Override
-            public void onChanged(List<Encuesta> encuestas) {
-                adapter = new SurveyAdapter(encuestas, R.layout.cards_surveys_layout, new SurveyAdapter.CustomHolder.OnItemClickListener() {
+            public void onChanged(List<Survey> surveys) {
+                for(Survey survey1 : surveys){
+                    Log.i(CustomConstants.TAG_LOG, "ENCUESTA A MOSTRAR "+survey1.toString());
+                }
+                adapter = new SurveyAdapter(surveys, R.layout.cards_surveys_layout, new SurveyAdapter.CustomHolder.OnItemClickListener() {
                     @Override
-                    public void onItemClick(Encuesta encuesta, int position) {
+                    public void onItemClick(Survey survey, int position) {
 
                     }
 
                     @Override
-                    public void btnOnClick(View v, Encuesta encuesta, int position) {
-                        Utils.startNewSurvey(getApplicationContext(), encuesta);
+                    public void btnOnClick(View v, Survey survey, int position) {
+                        Utils.startNewSurvey(getApplicationContext(), survey);
                         //Utils.startNewSurvey(getApplicationContext(), activity, encuesta);
                     }
                 });
@@ -70,8 +72,8 @@ public class MainActivity extends AppCompatActivity {
         surveyService.saveSurveys(surveys);
        // Log.i(CustomConstants.TAG_LOG, "Ejecuto --- "+surveyService.saveSurveys(surveys));
         Executors.newSingleThreadExecutor().execute(() -> {
-            for (Encuesta encuesta : surveyService.loadAllSurveysSync()) {
-                Log.i(CustomConstants.TAG_LOG, "DATA Front: " + encuesta.toString());
+            for (Survey survey : surveyService.loadAllSurveysSync()) {
+                Log.i(CustomConstants.TAG_LOG, "DATA Front: " + survey.toString());
             }
         });
     }

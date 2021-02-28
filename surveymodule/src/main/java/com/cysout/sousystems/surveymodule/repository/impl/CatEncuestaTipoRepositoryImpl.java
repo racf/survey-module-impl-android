@@ -9,7 +9,6 @@ import java.util.List;
 import com.cysout.sousystems.surveymodule.config.AppDatabase;
 import com.cysout.sousystems.surveymodule.dao.CatEncuestaTipoDao;
 import com.cysout.sousystems.surveymodule.entity.CatEncuestaTipo;
-import com.cysout.sousystems.surveymodule.entity.TestModel;
 import com.cysout.sousystems.surveymodule.repository.CatEncuestaTipoRepository;
 
 public class CatEncuestaTipoRepositoryImpl implements CatEncuestaTipoRepository {
@@ -65,8 +64,4 @@ public class CatEncuestaTipoRepositoryImpl implements CatEncuestaTipoRepository 
         return this.catEncuestaTipoDao.loadAllSync();
     }
 
-    @Override
-    public List<TestModel> tipoEncuestas() {
-        return this.catEncuestaTipoDao.tipoEncuestas();
-    }
 }

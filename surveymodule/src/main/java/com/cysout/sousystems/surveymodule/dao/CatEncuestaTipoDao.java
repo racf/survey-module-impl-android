@@ -11,7 +11,6 @@ import androidx.room.Update;
 import java.util.List;
 
 import com.cysout.sousystems.surveymodule.entity.CatEncuestaTipo;
-import com.cysout.sousystems.surveymodule.entity.TestModel;
 
 @Dao
 public interface CatEncuestaTipoDao {
@@ -30,8 +29,4 @@ public interface CatEncuestaTipoDao {
 
     @Query("SELECT * FROM catEncuestaTipo")
     List<CatEncuestaTipo> loadAllSync();
-
-    @Transaction
-    @Query("SELECT * FROM catEncuestaTipo")
-    List<TestModel> tipoEncuestas();
 }

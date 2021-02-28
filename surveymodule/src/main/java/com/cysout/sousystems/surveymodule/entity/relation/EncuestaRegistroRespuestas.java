@@ -6,30 +6,33 @@ import androidx.room.Relation;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
+import com.cysout.sousystems.surveymodule.entity.SurveyAnswer;
+import com.cysout.sousystems.surveymodule.entity.SurveyRecord;
 
-import com.cysout.sousystems.surveymodule.entity.EncuestaRegistro;
-import com.cysout.sousystems.surveymodule.entity.EncuestaRespuesta;
-
+/**
+ *Developed by cysout.com and sousystems.com.mx
+ *Contact info@cysout.com or contacto@sousystems.com.mx
+**/
 public class EncuestaRegistroRespuestas implements Serializable {
     @Embedded
-    private EncuestaRegistro encuestaRegistro;
+    private SurveyRecord encuestaRegistro;
 
-    @Relation(parentColumn = "encuestaRegistroId", entityColumn = "encuestaRegistroId", entity = EncuestaRespuesta.class)
-    private List<EncuestaRespuesta> encuestaRespuestas = new ArrayList<>();
+    @Relation(parentColumn = "surveyRecordId", entityColumn = "surveyRecordId", entity = SurveyAnswer.class)
+    private List<SurveyAnswer> surveyAnswers = new ArrayList<>();
 
-    public EncuestaRegistro getEncuestaRegistro() {
+    public SurveyRecord getEncuestaRegistro() {
         return encuestaRegistro;
     }
 
-    public void setEncuestaRegistro(EncuestaRegistro encuestaRegistro) {
+    public void setEncuestaRegistro(SurveyRecord encuestaRegistro) {
         this.encuestaRegistro = encuestaRegistro;
     }
 
-    public List<EncuestaRespuesta> getEncuestaRespuestas() {
-        return encuestaRespuestas;
+    public List<SurveyAnswer> getSurveyAnswers() {
+        return surveyAnswers;
     }
 
-    public void setEncuestaRespuestas(List<EncuestaRespuesta> encuestaRespuestas) {
-        this.encuestaRespuestas = encuestaRespuestas;
+    public void setSurveyAnswers(List<SurveyAnswer> surveyAnswers) {
+        this.surveyAnswers = surveyAnswers;
     }
 }

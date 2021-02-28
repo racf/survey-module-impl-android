@@ -12,6 +12,10 @@ import com.cysout.sousystems.surveymodule.utils.CustomConstants;
 import com.cysout.sousystems.surveymodule.utils.Validation;
 import com.cysout.sousystems.surveymodule.validation.text.TextFormState;
 
+/**
+ *Developed by cysout.com and sousystems.com.mx
+ *Contact info@cysout.com or contacto@sousystems.com.mx
+**/
 public class TextController extends AndroidViewModel {
     private MutableLiveData<TextFormState> textFormState = new MutableLiveData<>();
     public TextController(@NonNull Application application) {

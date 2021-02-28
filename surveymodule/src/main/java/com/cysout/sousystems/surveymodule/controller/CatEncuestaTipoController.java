@@ -9,7 +9,6 @@ import androidx.lifecycle.LiveData;
 import java.util.List;
 
 import com.cysout.sousystems.surveymodule.entity.CatEncuestaTipo;
-import com.cysout.sousystems.surveymodule.entity.TestModel;
 import com.cysout.sousystems.surveymodule.repository.CatEncuestaTipoRepository;
 import com.cysout.sousystems.surveymodule.repository.impl.CatEncuestaTipoRepositoryImpl;
 
@@ -34,8 +33,5 @@ public class CatEncuestaTipoController extends AndroidViewModel {
 
     public List<CatEncuestaTipo> findAllList(){
         return this.catEncuestaTipoRepository.findAllList();
-    }
-    public List<TestModel> tipoEncuestas() {
-        return this.catEncuestaTipoRepository.tipoEncuestas();
     }
 }

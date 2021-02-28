@@ -21,6 +21,8 @@ import android.widget.RadioGroup;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.cysout.sousystems.surveymodule.entity.Survey;
+import com.cysout.sousystems.surveymodule.entity.SurveyRecord;
 import com.google.gson.Gson;
 
 import java.util.ArrayList;
@@ -32,8 +34,6 @@ import com.cysout.sousystems.surveymodule.R;
 import com.cysout.sousystems.surveymodule.controller.RespuestaMostrarCuestionariosController;
 import com.cysout.sousystems.surveymodule.dto.ResponseMessageDto;
 import com.cysout.sousystems.surveymodule.entity.Cuestionario;
-import com.cysout.sousystems.surveymodule.entity.Encuesta;
-import com.cysout.sousystems.surveymodule.entity.EncuestaRegistro;
 import com.cysout.sousystems.surveymodule.entity.Pregunta;
 import com.cysout.sousystems.surveymodule.entity.Respuesta;
 import com.cysout.sousystems.surveymodule.entity.RespuestaMostrarCuestionarios;
@@ -53,11 +53,16 @@ import com.cysout.sousystems.surveymodule.utils.Validation;
 import com.cysout.sousystems.surveymodule.viewpager.NoSwipeViewPager;
 import com.cysout.sousystems.surveymodule.viewpager.QuestionaryViewPagerAdapter;
 
+/**
+ *Developed by cysout.com and sousystems.com.mx
+ *Contact info@cysout.com or contacto@sousystems.com.mx
+**/
 public class QuestionaryActivity extends AppCompatActivity{
     private NoSwipeViewPager questionaryViewPager;
     private QuestionaryViewPagerAdapter mPagerAdapter;
-    public static Button btnPrev, btnNext;
-    private Encuesta encuesta;
+    public static Button btnPrev;
+    public static Button btnNext;
+    private Survey survey;
     private final List<QuestionaryFragment> cuestionarios = new ArrayList<>();
 
     private List<RespuestaMostrarCuestionarios> listMostrarCuestionarios;
@@ -81,13 +86,13 @@ public class QuestionaryActivity extends AppCompatActivity{
         startObj();
         //Obtenemos el parametro del Intent
         Intent intent = getIntent();
-        Encuesta encuestaParameter = (Encuesta) intent.getSerializableExtra(CustomConstants.SURVEY_KEY);
-        EncuestaRegistro encuestaRegistro = (EncuestaRegistro) intent.getSerializableExtra(CustomConstants.REGISTRATION_SURVEY_KEY);
-        if ( encuestaParameter != null && encuestaRegistro != null ){ //Para una encuesta con información que se ha iniciado
+        Survey surveyParameter = (Survey) intent.getSerializableExtra(CustomConstants.SURVEY_KEY);
+        SurveyRecord encuestaRegistro = (SurveyRecord) intent.getSerializableExtra(CustomConstants.REGISTRATION_SURVEY_KEY);
+        if ( surveyParameter != null && encuestaRegistro != null ){ //Para una encuesta con información que se ha iniciado
             //Guardamos el ID auto-increment de EncuestaRegistro, es util para encuestas que se han quedado sin concluir
-            Utils.saveOnPreferenceLong(getApplicationContext(), CustomConstants.PREFERENCE_NAME_CUESTIONARIO, CustomConstants.CUESTIONARIO_REGISTRO_ID, encuestaRegistro.getEncuestaRegistroId());
+            Utils.saveOnPreferenceLong(getApplicationContext(), CustomConstants.PREFERENCE_NAME_CUESTIONARIO, CustomConstants.CUESTIONARIO_REGISTRO_ID, encuestaRegistro.getSurveyRecordId());
             Log.i(CustomConstants.TAG_LOG, "ENCUESTA PENDIENTE");
-        }else if ( encuestaParameter != null ){ //Es para una encuesta nueva
+        }else if ( surveyParameter != null ){ //Es para una encuesta nueva
             Utils.deleteSinglePreference(getApplicationContext(), CustomConstants.PREFERENCE_NAME_CUESTIONARIO, CustomConstants.CUESTIONARIO_REGISTRO_ID);
             Log.i(CustomConstants.TAG_LOG, "ENCUESTA NUEVA");
         } else {
@@ -97,7 +102,7 @@ public class QuestionaryActivity extends AppCompatActivity{
         }
 
         //String jsonEncuesta = Utils.jsonStringFinal();
-        startAdapter(encuestaParameter);
+        startAdapter(surveyParameter);
 
         respuestaMostrarCuestionariosController.loadAll().observe(this, new Observer<List<RespuestaMostrarCuestionarios>>() {
             @Override
@@ -151,9 +156,9 @@ public class QuestionaryActivity extends AppCompatActivity{
         Log.i(CustomConstants.TAG_LOG, "testMethods");
         surveyService.saveSurveys(Utils.jsonArrayTest());
         //Todas las encuesta registradas
-        for (Encuesta encuesta : surveyService.loadAllSurveysSync()){
-            encuesta.setJson("");
-            Log.i(CustomConstants.TAG_LOG, "DATA: "+Utils.convertirObjToJson(encuesta));
+        for (Survey survey : surveyService.loadAllSurveysSync()){
+            survey.setJson("");
+            Log.i(CustomConstants.TAG_LOG, "DATA: "+Utils.convertirObjToJson(survey));
         }
 
         for( SurveyRecords surveyRecordCompleted : surveyService.loadSurveyCompletedSync() ) {
@@ -166,7 +171,7 @@ public class QuestionaryActivity extends AppCompatActivity{
             Log.i(CustomConstants.TAG_LOG, "DATA-surveyRecordPending : "+Utils.convertirObjToJson(surveyRecordPending));
         }
     }
-    private void startAdapter(Encuesta survey){
+    private void startAdapter(Survey survey){
         Executors.newSingleThreadExecutor().execute(() -> {
             //testMethods();
             /*//Guardamos Encuesta
@@ -177,10 +182,10 @@ public class QuestionaryActivity extends AppCompatActivity{
             //Modificar lógica para obtener la encuesta desde el paraetro del intent
             //Encuesta encuestaReturn = surveyService.loadSurveyByIdSync(2L);
             //encuesta = new Gson().fromJson(jsonEncuesta, Encuesta.class);
-            encuesta = new Gson().fromJson(survey.getJson(), Encuesta.class);
-            Log.i(CustomConstants.TAG_LOG, "PARAMETER SURVEY: "+encuesta.toString());
-            for (Cuestionario cuestionario: encuesta.getCuestionarios()) {
-                cuestionarios.add(new QuestionaryFragment(encuesta, cuestionario));
+            this.survey = new Gson().fromJson(survey.getJson(), Survey.class);
+            Log.i(CustomConstants.TAG_LOG, "PARAMETER SURVEY: "+ this.survey.toString());
+            for (Cuestionario cuestionario: this.survey.getCuestionarios()) {
+                cuestionarios.add(new QuestionaryFragment(this.survey, cuestionario));
             }
             mPagerAdapter = new QuestionaryViewPagerAdapter(getSupportFragmentManager(), FragmentPagerAdapter.BEHAVIOR_RESUME_ONLY_CURRENT_FRAGMENT, cuestionarios);
             questionaryViewPager.setAdapter(mPagerAdapter);
@@ -375,19 +380,19 @@ public class QuestionaryActivity extends AppCompatActivity{
                                         questionaryViewPager.setCurrentItem(next, CustomConstants.TRUE);
                                     } else {
                                         Log.i(CustomConstants.TAG_LOG, "ENTRO 5: ");
-                                        retornarRespuestasEncuesta();
+                                        surveyResponse();
                                         /*Intent returnIntent = new Intent();
                                         setResult(Activity.RESULT_OK, returnIntent);
                                         finish();*/
                                     }
                                 } else {
                                     Log.i(CustomConstants.TAG_LOG, "ENTRO 6: ");
-                                    retornarRespuestasEncuesta();
+                                    surveyResponse();
                                 }
                             }else {
                                 if (next > mPagerAdapter.getCount()) {
                                     Log.i(CustomConstants.TAG_LOG, "ENTRO 7: ");
-                                    retornarRespuestasEncuesta();
+                                    surveyResponse();
                                 } else {
                                     Log.i(CustomConstants.TAG_LOG, "ENTRO 8: ");
                                     questionaryViewPager.setCurrentItem(next, true);
@@ -397,7 +402,7 @@ public class QuestionaryActivity extends AppCompatActivity{
                             Log.i(CustomConstants.TAG_LOG, "ENTRO 9: ");
                             if (next == mPagerAdapter.getCount()) {
                                 Log.i(CustomConstants.TAG_LOG, "ENTRO 10: ");
-                                retornarRespuestasEncuesta();
+                                surveyResponse();
                             }
                         }
                     } else {
@@ -413,7 +418,7 @@ public class QuestionaryActivity extends AppCompatActivity{
 
         view.startAnimation(animation);
     }
-    private void retornarRespuestasEncuesta(){
+    private void surveyResponse(){
         Executors.newSingleThreadExecutor().execute(() -> {
             Long encuestaRegistroId = Utils.findPreferenceLong(getApplicationContext(), CustomConstants.PREFERENCE_NAME_CUESTIONARIO, CustomConstants.CUESTIONARIO_REGISTRO_ID);
             EncuestaRegistroRespuestas encuestaRegistroRespuestas = encuestaService.encuentaFinaliza(encuestaRegistroId, CustomConstants.TERMINADA, Utils.dateTime());

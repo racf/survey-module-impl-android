@@ -15,7 +15,10 @@ import java.util.List;
 
 import com.cysout.sousystems.surveymodule.R;
 import com.cysout.sousystems.surveymodule.entity.Respuesta;
-
+/**
+ *Developed by cysout.com and sousystems.com.mx
+ *Contact info@cysout.com or contacto@sousystems.com.mx
+**/
 public class SpinnerAdapter extends ArrayAdapter<String> {
     private final LayoutInflater mInflater;
     private final Context mContext;

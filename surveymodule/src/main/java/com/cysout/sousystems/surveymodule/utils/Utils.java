@@ -5,6 +5,9 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 
+import com.cysout.sousystems.surveymodule.entity.Survey;
+import com.cysout.sousystems.surveymodule.entity.SurveyAnswer;
+import com.cysout.sousystems.surveymodule.entity.SurveyRecord;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 
@@ -22,14 +25,11 @@ import com.cysout.sousystems.surveymodule.R;
 import com.cysout.sousystems.surveymodule.entity.CatEncuestaEstatus;
 import com.cysout.sousystems.surveymodule.entity.CatEncuestaTipo;
 import com.cysout.sousystems.surveymodule.entity.Cuestionario;
-import com.cysout.sousystems.surveymodule.entity.Encuesta;
-import com.cysout.sousystems.surveymodule.entity.EncuestaRegistro;
-import com.cysout.sousystems.surveymodule.entity.EncuestaRespuesta;
 import com.cysout.sousystems.surveymodule.entity.MostrarSiSelecciona;
 import com.cysout.sousystems.surveymodule.entity.Pregunta;
 import com.cysout.sousystems.surveymodule.entity.Respuesta;
-import com.cysout.sousystems.surveymodule.entity.relation.SurveyRecords;
 import com.cysout.sousystems.surveymodule.view.QuestionaryActivity;
+
 /**
  *Developed by cysout.com and sousystems.com.mx
  *Contact info@cysout.com or contacto@sousystems.com.mx
@@ -286,10 +286,10 @@ public class Utils {
         return cat;
     }
 
-    public static ArrayList<Encuesta> convertJsonToObjectSurveys(String surveys){
+    public static ArrayList<Survey> convertJsonToObjectSurveys(String surveys){
         Gson gson = new Gson();
-        Type listType = new TypeToken<ArrayList<Encuesta>>(){}.getType();
-        ArrayList<Encuesta> array = gson.fromJson(surveys, listType);
+        Type listType = new TypeToken<ArrayList<Survey>>(){}.getType();
+        ArrayList<Survey> array = gson.fromJson(surveys, listType);
         //EncuestaDto[] array = gson.fromJson(encuestas, EncuestaDto[].class);
         return array;
     }
@@ -305,7 +305,681 @@ public class Utils {
         //String json = "[{\"encuestaId\":2,\"titulo\":\"AUTODIAGNÓSTICO COVID-19\",\"etapa\":2,\"descripcion\":\"Información para guiar a personas con sospecha de haber contraido COVID-19\",\"catEncuestaTipoId\":1,\"visible\":true,\"cuestionarios\":[{\"cuestionarioId\":10,\"nombre\":\"sospechaCasos\",\"orden\":1,\"preguntas\":[{\"descripcion\":\"Escribe su nombre completo\",\"nombre\":\"nombre\",\"orden\":1,\"preguntaId\":1,\"requerido\":true,\"tipo\":\"text\",\"tipoInput\":\"textPersonName\",\"titulo\":\"Nombre de la persona\",\"validaciones\":[],\"visible\":true},{\"descripcion\":\"Escribe sus dos apellidos separados por espacios\",\"nombre\":\"apellidos\",\"orden\":2,\"preguntaId\":2,\"requerido\":true,\"tipo\":\"text\",\"tipoInput\":\"textPersonName\",\"titulo\":\"Apellidos\",\"validaciones\":[],\"visible\":true},{\"descripcion\":\"\",\"nombre\":\"sospecha\",\"orden\":3,\"preguntaId\":3,\"requerido\":true,\"respuestas\":[{\"finalizarSiSelecciona\":false,\"mostrarSiSelecciona\":{\"cuestionarios\":[],\"preguntas\":[{\"cuestionarioId\":10,\"preguntaId\":4},{\"cuestionarioId\":10,\"preguntaId\":5},{\"cuestionarioId\":10,\"preguntaId\":30},{\"cuestionarioId\":10,\"preguntaId\":31},{\"cuestionarioId\":10,\"preguntaId\":32}],\"respuestas\":[]},\"ocultarSiSelecciona\":{},\"respuestaId\":1,\"texto\":\"SI\",\"visible\":true},{\"finalizarSiSelecciona\":true,\"mostrarSiSelecciona\":{},\"ocultarSiSelecciona\":{},\"respuestaId\":2,\"texto\":\"NO\",\"visible\":true}],\"tipo\":\"radiogroup\",\"titulo\":\"¿Sospechas que tienes coronavirus o alguien cercano a ti puede tenerlo?\",\"visible\":true},{\"descripcion\":\"\",\"nombre\":\"presentaSintomas\",\"orden\":4,\"preguntaId\":4,\"requerido\":true,\"respuestas\":[{\"finalizarSiSelecciona\":false,\"mostrarSiSelecciona\":{},\"ocultarSiSelecciona\":{},\"respuestaId\":3,\"texto\":\"SI\",\"visible\":true},{\"finalizarSiSelecciona\":false,\"mostrarSiSelecciona\":{},\"ocultarSiSelecciona\":{},\"respuestaId\":4,\"texto\":\"NO\",\"visible\":true}],\"tipo\":\"radiogroup\",\"titulo\":\"¿Esta persona tiene algún síntoma como: tos, dolor de garganta, dolor de cabeza y/o fiebre igual o mayor a 38°C?\",\"visible\":false},{\"descripcion\":\"Muestra checkBox y RadioButton - Opoción SI\",\"nombre\":\"presentaSintomasSaltaCuestionario\",\"orden\":5,\"preguntaId\":5,\"requerido\":true,\"respuestas\":[{\"finalizarSiSelecciona\":false,\"mostrarSiSelecciona\":{\"cuestionarios\":[],\"preguntas\":[],\"respuestas\":[{\"cuestionarioId\":10,\"preguntaId\":31,\"respuestaId\":31},{\"cuestionarioId\":10,\"preguntaId\":32,\"respuestaId\":35}]},\"ocultarSiSelecciona\":{},\"respuestaId\":5,\"texto\":\"SI\",\"visible\":true},{\"finalizarSiSelecciona\":false,\"mostrarSiSelecciona\":{},\"ocultarSiSelecciona\":{},\"respuestaId\":6,\"texto\":\"NO\",\"visible\":true}],\"tipo\":\"radiogroup\",\"titulo\":\"¿Pregunta que activa respuestas? Opción SI\",\"visible\":false},{\"descripcion\":\"Prueba tipo text\",\"nombre\":\"tipoText\",\"orden\":6,\"preguntaId\":30,\"requerido\":true,\"tipo\":\"text\",\"tipoInput\":\"textPersonName\",\"titulo\":\"Prueba tipo text\",\"validaciones\":[],\"visible\":false},{\"preguntaId\":31,\"orden\":7,\"tipo\":\"checkbox\",\"nombre\":\"checkTest\",\"titulo\":\"¿Prueba tipo check?\",\"descripcion\":\"\",\"requerido\":true,\"visible\":false,\"respuestas\":[{\"respuestaId\":30,\"texto\":\"1\",\"mostrarSiSelecciona\":{},\"ocultarSiSelecciona\":{},\"finalizarSiSelecciona\":false,\"visible\":true},{\"respuestaId\":31,\"texto\":\"2\",\"mostrarSiSelecciona\":{},\"ocultarSiSelecciona\":{},\"finalizarSiSelecciona\":false,\"visible\":false},{\"respuestaId\":32,\"texto\":\"3\",\"mostrarSiSelecciona\":{},\"ocultarSiSelecciona\":{},\"finalizarSiSelecciona\":false,\"visible\":true}]},{\"descripcion\":\"\",\"nombre\":\"testRadiogroup\",\"orden\":8,\"preguntaId\":32,\"requerido\":true,\"respuestas\":[{\"finalizarSiSelecciona\":false,\"mostrarSiSelecciona\":{\"cuestionarios\":[{\"cuestionarioId\":11}],\"preguntas\":[],\"respuestas\":[]},\"ocultarSiSelecciona\":{},\"respuestaId\":33,\"texto\":\"SI\",\"visible\":true},{\"finalizarSiSelecciona\":true,\"mostrarSiSelecciona\":{},\"ocultarSiSelecciona\":{},\"respuestaId\":34,\"texto\":\"NO\",\"visible\":true},{\"finalizarSiSelecciona\":true,\"mostrarSiSelecciona\":{},\"ocultarSiSelecciona\":{},\"respuestaId\":35,\"texto\":\"OTRO\",\"visible\":false}],\"tipo\":\"radiogroup\",\"titulo\":\"¿SALTA AL SIGUIENTE CUESTIONARIO - OPCIÓN SI?\",\"visible\":false}],\"titulo\":\"Sospecha de casos\",\"visible\":true},{\"cuestionarioId\":11,\"titulo\":\"Diagnostico\",\"nombre\":\"cuestionarioDiagnostico\",\"orden\":2,\"visible\":false,\"preguntas\":[{\"descripcion\":\"Escribe su edad\",\"nombre\":\"edad\",\"orden\":1,\"preguntaId\":6,\"requerido\":true,\"tipo\":\"text\",\"tipoInput\":\"number\",\"titulo\":\"Edad en años\",\"validaciones\":[\"verifyEdad\"],\"visible\":true},{\"descripcion\":\"\",\"nombre\":\"sexo\",\"orden\":2,\"preguntaId\":7,\"requerido\":true,\"respuestas\":[{\"finalizarSiSelecciona\":false,\"mostrarSiSelecciona\":{},\"ocultarSiSelecciona\":{},\"respuestaId\":10,\"texto\":\"Masculino\",\"visible\":true},{\"finalizarSiSelecciona\":false,\"mostrarSiSelecciona\":{},\"ocultarSiSelecciona\":{},\"respuestaId\":11,\"texto\":\"Femenino\",\"visible\":true}],\"tipo\":\"select\",\"titulo\":\"Género\",\"visible\":true},{\"descripcion\":\"Su número de teléfono tiene que tener 10 dígitos\",\"nombre\":\"telefono\",\"orden\":3,\"preguntaId\":8,\"requerido\":true,\"tipo\":\"text\",\"tipoInput\":\"phone\",\"titulo\":\"Teléfono\",\"validaciones\":[\"verifyTelefono\",\"verifyLadaMorelos\"],\"visible\":true},{\"descripcion\":\"Descripción pregunta municipio\",\"nombre\":\"municipio\",\"orden\":4,\"preguntaId\":9,\"requerido\":true,\"tipo\":\"text\",\"tipoInput\":\"text\",\"titulo\":\"Municipio/Alcaldía\",\"validaciones\":[],\"visible\":true},{\"descripcion\":\"\",\"titulo\":\"¿Pertenece a alguno(s) de los siguientes grupos?\",\"tipo\":\"checkbox\",\"nombre\":\"grupos\",\"orden\":5,\"preguntaId\":10,\"requerido\":true,\"visible\":true,\"respuestas\":[{\"finalizarSiSelecciona\":false,\"mostrarSiSelecciona\":{\"cuestionarios\":[],\"preguntas\":[{\"cuestionarioId\":11,\"preguntaId\":11}],\"respuestas\":[]},\"ocultarSiSelecciona\":{},\"respuestaId\":12,\"texto\":\"Embarazo\",\"visible\":true},{\"finalizarSiSelecciona\":false,\"mostrarSiSelecciona\":{},\"ocultarSiSelecciona\":{},\"respuestaId\":13,\"texto\":\"Diabetes\",\"visible\":true},{\"finalizarSiSelecciona\":false,\"mostrarSiSelecciona\":{},\"ocultarSiSelecciona\":{},\"respuestaId\":14,\"texto\":\"Hipertensión\",\"visible\":true},{\"respuestaId\":15,\"texto\":\"Obesidad\",\"mostrarSiSelecciona\":{},\"ocultarSiSelecciona\":{},\"finalizarSiSelecciona\":false,\"visible\":true},{\"respuestaId\":16,\"texto\":\"Padece una enfermedad o toma algún medicamento que baje sus defensas\",\"mostrarSiSelecciona\":{},\"ocultarSiSelecciona\":{},\"finalizarSiSelecciona\":false,\"visible\":true}]},{\"preguntaId\":11,\"orden\":6,\"tipo\":\"radiogroup\",\"nombre\":\"mesesEmbarazos\",\"titulo\":\"¿Cuantos meses de embarazo tiene?\",\"descripcion\":\"\",\"requerido\":true,\"visible\":false,\"respuestas\":[{\"respuestaId\":17,\"texto\":\"Un mes\",\"mostrarSiSelecciona\":{},\"ocultarSiSelecciona\":{},\"finalizarSiSelecciona\":false,\"visible\":true},{\"respuestaId\":18,\"texto\":\"Dos a tres meses\",\"mostrarSiSelecciona\":{},\"ocultarSiSelecciona\":{},\"finalizarSiSelecciona\":false,\"visible\":true},{\"respuestaId\":19,\"texto\":\"Cuatro a seis meses\",\"mostrarSiSelecciona\":{},\"ocultarSiSelecciona\":{},\"finalizarSiSelecciona\":false,\"visible\":true},{\"respuestaId\":20,\"texto\":\"Siete a nueve meses\",\"mostrarSiSelecciona\":{},\"ocultarSiSelecciona\":{},\"finalizarSiSelecciona\":false,\"visible\":true}]}]},{\"cuestionarioId\":12,\"nombre\":\"datosFinales\",\"orden\":3,\"titulo\":\"Cuestionario final\",\"visible\":true,\"preguntas\":[{\"descripcion\":\"Alguna opinión\",\"nombre\":\"opinion\",\"orden\":1,\"preguntaId\":40,\"requerido\":false,\"tipo\":\"text\",\"tipoInput\":\"textPersonName\",\"titulo\":\"Opinión\",\"validaciones\":[],\"visible\":true}]}]},{\"encuestaId\":3,\"titulo\":\"INFLUENZA\",\"etapa\":1,\"descripcion\":\"Autodiagnóstico influenza\",\"catEncuestaTipoId\":2,\"visible\":true,\"cuestionarios\":[{\"cuestionarioId\":20,\"orden\":1,\"titulo\":\"Datos personales\",\"nombre\":\"datosPersonales\",\"visible\":true,\"preguntas\":[{\"preguntaId\":21,\"orden\":1,\"nombre\":\"nombre\",\"tipo\":\"text\",\"tipoInput\":\"textPersonName\",\"titulo\":\"Nombre de la persona\",\"descripcion\":\"Escribe su nombre\",\"requerido\":true,\"visible\":true,\"validaciones\":[]},{\"preguntaId\":22,\"orden\":2,\"nombre\":\"primerApellido\",\"tipo\":\"text\",\"tipoInput\":\"textPersonName\",\"titulo\":\"Primer Apellido\",\"descripcion\":\"Escribe su apellido paterno\",\"requerido\":true,\"visible\":true,\"validaciones\":[]},{\"preguntaId\":23,\"orden\":3,\"nombre\":\"segundoApellido\",\"tipo\":\"text\",\"tipoInput\":\"textPersonName\",\"titulo\":\"Segundo Apellido\",\"descripcion\":\"Escribe su apellido materno\",\"requerido\":true,\"visible\":true,\"validaciones\":[]},{\"preguntaId\":24,\"orden\":4,\"tipo\":\"radiogroup\",\"nombre\":\"sexo\",\"titulo\":\"Género\",\"descripcion\":\"Género de la persona\",\"requerido\":true,\"visible\":true,\"respuestas\":[{\"respuestaId\":30,\"texto\":\"Masculino\",\"mostrarSiSelecciona\":{},\"ocultarSiSelecciona\":{},\"visible\":true,\"finalizarSiSelecciona\":false},{\"respuestaId\":31,\"texto\":\"Femenino\",\"mostrarSiSelecciona\":{},\"ocultarSiSelecciona\":{},\"visible\":true,\"finalizarSiSelecciona\":false}]},{\"preguntaId\":25,\"orden\":5,\"nombre\":\"curp\",\"tipo\":\"text\",\"tipoInput\":\"textPersonName\",\"titulo\":\"Curp\",\"descripcion\":\"La CURP consta de 18 caracteres\",\"requerido\":true,\"visible\":true,\"validaciones\":[]},{\"preguntaId\":26,\"orden\":6,\"tipo\":\"radiogroup\",\"nombre\":\"edadMayor\",\"titulo\":\"¿Usted cuenta con más de 18 años?\",\"descripcion\":\"\",\"requerido\":true,\"visible\":true,\"respuestas\":[{\"respuestaId\":32,\"texto\":\"SI\",\"mostrarSiSelecciona\":{\"cuestionarios\":[{\"cuestionarioId\":21}],\"preguntas\":[{\"cuestionarioId\":20,\"preguntaId\":27}],\"respuestas\":[]},\"ocultarSiSelecciona\":{},\"visible\":true,\"finalizarSiSelecciona\":false},{\"respuestaId\":33,\"texto\":\"NO\",\"mostrarSiSelecciona\":{},\"ocultarSiSelecciona\":{},\"visible\":true,\"finalizarSiSelecciona\":true}]},{\"preguntaId\":27,\"orden\":7,\"nombre\":\"ine\",\"tipo\":\"text\",\"tipoInput\":\"textPersonName\",\"titulo\":\"INE\",\"descripcion\":\"Escribe su clave electoral\",\"requerido\":true,\"visible\":false,\"validaciones\":[]}]},{\"cuestionarioId\":21,\"orden\":2,\"titulo\":\"Datos de diagnóstico\",\"nombre\":\"cuestionarioDiagnostico\",\"visible\":false,\"preguntas\":[{\"preguntaId\":30,\"orden\":1,\"tipo\":\"radiogroup\",\"nombre\":\"sospecha\",\"titulo\":\"¿Sospechas que tienes influenza o alguien cercano a ti puede tenerlo?\",\"descripcion\":\"\",\"requerido\":true,\"visible\":true,\"respuestas\":[{\"respuestaId\":40,\"texto\":\"SI\",\"mostrarSiSelecciona\":{\"cuestionarios\":[],\"preguntas\":[{\"cuestionarioId\":21,\"preguntaId\":31}],\"respuestas\":[]},\"ocultarSiSelecciona\":{},\"visible\":true,\"finalizarSiSelecciona\":false},{\"respuestaId\":41,\"mostrarSiSelecciona\":{},\"ocultarSiSelecciona\":{},\"visible\":true,\"finalizarSiSelecciona\":true}]},{\"preguntaId\":31,\"orden\":2,\"tipo\":\"radiogroup\",\"nombre\":\"diaSintomas\",\"titulo\":\"¿Cuantos días tienes de síntomas?\",\"descripcion\":\"\",\"requerido\":true,\"visible\":false,\"respuestas\":[{\"respuestaId\":42,\"texto\":\"Un día\",\"mostrarSiSelecciona\":{},\"ocultarSiSelecciona\":{},\"visible\":false,\"finalizarSiSelecciona\":false},{\"respuestaId\":43,\"texto\":\"Dos a tres días\",\"mostrarSiSelecciona\":{},\"ocultarSiSelecciona\":{},\"visible\":false,\"finalizarSiSelecciona\":false},{\"respuestaId\":44,\"texto\":\"Cuatro a seis días\",\"mostrarSiSelecciona\":{},\"ocultarSiSelecciona\":{},\"visible\":false,\"finalizarSiSelecciona\":false},{\"respuestaId\":45,\"texto\":\"Siete  o mas días\",\"mostrarSiSelecciona\":{},\"ocultarSiSelecciona\":{},\"visible\":false,\"finalizarSiSelecciona\":false}]}]}]}]";
         //String json = "[{\"encuestaId\":2,\"titulo\":\"AUTODIAGNÓSTICO COVID-19\",\"etapa\":2,\"descripcion\":\"Información para guiar a personas con sospecha de haber contraido COVID-19\",\"catEncuestaTipoId\":1,\"visible\":true,\"cuestionarios\":[{\"cuestionarioId\":10,\"nombre\":\"sospechaCasos\",\"orden\":1,\"preguntas\":[{\"descripcion\":\"Escribe su nombre completo\",\"nombre\":\"nombre\",\"orden\":1,\"preguntaId\":1,\"requerido\":true,\"tipo\":\"text\",\"tipoInput\":\"textPersonName\",\"titulo\":\"Nombre de la persona\",\"validaciones\":[],\"visible\":true},{\"descripcion\":\"Escribe sus dos apellidos separados por espacios\",\"nombre\":\"apellidos\",\"orden\":2,\"preguntaId\":2,\"requerido\":true,\"tipo\":\"text\",\"tipoInput\":\"textPersonName\",\"titulo\":\"Apellidos\",\"validaciones\":[],\"visible\":true},{\"descripcion\":\"\",\"nombre\":\"sospecha\",\"orden\":3,\"preguntaId\":3,\"requerido\":true,\"respuestas\":[{\"finalizarSiSelecciona\":false,\"mostrarSiSelecciona\":{\"cuestionarios\":[],\"preguntas\":[{\"cuestionarioId\":10,\"preguntaId\":4},{\"cuestionarioId\":10,\"preguntaId\":5},{\"cuestionarioId\":10,\"preguntaId\":30},{\"cuestionarioId\":10,\"preguntaId\":31},{\"cuestionarioId\":10,\"preguntaId\":32}],\"respuestas\":[]},\"ocultarSiSelecciona\":{},\"respuestaId\":1,\"texto\":\"SI\",\"visible\":true},{\"finalizarSiSelecciona\":true,\"mostrarSiSelecciona\":{},\"ocultarSiSelecciona\":{},\"respuestaId\":2,\"texto\":\"NO\",\"visible\":true}],\"tipo\":\"radiogroup\",\"titulo\":\"¿Sospechas que tienes coronavirus o alguien cercano a ti puede tenerlo?\",\"visible\":true},{\"descripcion\":\"\",\"nombre\":\"presentaSintomas\",\"orden\":4,\"preguntaId\":4,\"requerido\":true,\"respuestas\":[{\"finalizarSiSelecciona\":false,\"mostrarSiSelecciona\":{},\"ocultarSiSelecciona\":{},\"respuestaId\":3,\"texto\":\"SI\",\"visible\":true},{\"finalizarSiSelecciona\":false,\"mostrarSiSelecciona\":{},\"ocultarSiSelecciona\":{},\"respuestaId\":4,\"texto\":\"NO\",\"visible\":true}],\"tipo\":\"radiogroup\",\"titulo\":\"¿Esta persona tiene algún síntoma como: tos, dolor de garganta, dolor de cabeza y/o fiebre igual o mayor a 38°C?\",\"visible\":false},{\"descripcion\":\"Muestra checkBox y RadioButton - Opoción SI\",\"nombre\":\"presentaSintomasSaltaCuestionario\",\"orden\":5,\"preguntaId\":5,\"requerido\":true,\"respuestas\":[{\"finalizarSiSelecciona\":false,\"mostrarSiSelecciona\":{\"cuestionarios\":[],\"preguntas\":[],\"respuestas\":[{\"cuestionarioId\":10,\"preguntaId\":31,\"respuestaId\":31},{\"cuestionarioId\":10,\"preguntaId\":32,\"respuestaId\":35}]},\"ocultarSiSelecciona\":{},\"respuestaId\":5,\"texto\":\"SI\",\"visible\":true},{\"finalizarSiSelecciona\":false,\"mostrarSiSelecciona\":{},\"ocultarSiSelecciona\":{},\"respuestaId\":6,\"texto\":\"NO\",\"visible\":true}],\"tipo\":\"radiogroup\",\"titulo\":\"¿Pregunta que activa respuestas? Opción SI\",\"visible\":false},{\"descripcion\":\"Prueba tipo text\",\"nombre\":\"tipoText\",\"orden\":6,\"preguntaId\":30,\"requerido\":true,\"tipo\":\"text\",\"tipoInput\":\"textPersonName\",\"titulo\":\"Prueba tipo text\",\"validaciones\":[],\"visible\":false},{\"preguntaId\":31,\"orden\":7,\"tipo\":\"checkbox\",\"nombre\":\"checkTest\",\"titulo\":\"¿Prueba tipo check?\",\"descripcion\":\"\",\"requerido\":true,\"visible\":false,\"respuestas\":[{\"respuestaId\":30,\"texto\":\"1\",\"mostrarSiSelecciona\":{},\"ocultarSiSelecciona\":{},\"finalizarSiSelecciona\":false,\"visible\":true},{\"respuestaId\":31,\"texto\":\"2\",\"mostrarSiSelecciona\":{},\"ocultarSiSelecciona\":{},\"finalizarSiSelecciona\":false,\"visible\":false},{\"respuestaId\":32,\"texto\":\"3\",\"mostrarSiSelecciona\":{},\"ocultarSiSelecciona\":{},\"finalizarSiSelecciona\":false,\"visible\":true}]},{\"descripcion\":\"\",\"nombre\":\"testRadiogroup\",\"orden\":8,\"preguntaId\":32,\"requerido\":true,\"respuestas\":[{\"finalizarSiSelecciona\":false,\"mostrarSiSelecciona\":{\"cuestionarios\":[{\"cuestionarioId\":11}],\"preguntas\":[],\"respuestas\":[]},\"ocultarSiSelecciona\":{},\"respuestaId\":33,\"texto\":\"SI\",\"visible\":true},{\"finalizarSiSelecciona\":true,\"mostrarSiSelecciona\":{},\"ocultarSiSelecciona\":{},\"respuestaId\":34,\"texto\":\"NO\",\"visible\":true},{\"finalizarSiSelecciona\":true,\"mostrarSiSelecciona\":{},\"ocultarSiSelecciona\":{},\"respuestaId\":35,\"texto\":\"OTRO\",\"visible\":false}],\"tipo\":\"radiogroup\",\"titulo\":\"¿SALTA AL SIGUIENTE CUESTIONARIO - OPCIÓN SI?\",\"visible\":false}],\"titulo\":\"Sospecha de casos\",\"visible\":true},{\"cuestionarioId\":11,\"titulo\":\"Diagnostico\",\"nombre\":\"cuestionarioDiagnostico\",\"orden\":2,\"visible\":false,\"preguntas\":[{\"descripcion\":\"Escribe su edad\",\"nombre\":\"edad\",\"orden\":1,\"preguntaId\":6,\"requerido\":true,\"tipo\":\"text\",\"tipoInput\":\"number\",\"titulo\":\"Edad en años\",\"validaciones\":[\"verifyEdad\"],\"visible\":true},{\"descripcion\":\"\",\"nombre\":\"sexo\",\"orden\":2,\"preguntaId\":7,\"requerido\":true,\"respuestas\":[{\"finalizarSiSelecciona\":false,\"mostrarSiSelecciona\":{},\"ocultarSiSelecciona\":{},\"respuestaId\":10,\"texto\":\"Masculino\",\"visible\":true},{\"finalizarSiSelecciona\":false,\"mostrarSiSelecciona\":{},\"ocultarSiSelecciona\":{},\"respuestaId\":11,\"texto\":\"Femenino\",\"visible\":true}],\"tipo\":\"select\",\"titulo\":\"Género\",\"visible\":true},{\"descripcion\":\"Su número de teléfono tiene que tener 10 dígitos\",\"nombre\":\"telefono\",\"orden\":3,\"preguntaId\":8,\"requerido\":true,\"tipo\":\"text\",\"tipoInput\":\"phone\",\"titulo\":\"Teléfono\",\"validaciones\":[\"verifyTelefono\",\"verifyLadaMorelos\"],\"visible\":true},{\"descripcion\":\"Descripción pregunta municipio\",\"nombre\":\"municipio\",\"orden\":4,\"preguntaId\":9,\"requerido\":true,\"tipo\":\"text\",\"tipoInput\":\"text\",\"titulo\":\"Municipio/Alcaldía\",\"validaciones\":[],\"visible\":true},{\"descripcion\":\"\",\"titulo\":\"¿Pertenece a alguno(s) de los siguientes grupos?\",\"tipo\":\"checkbox\",\"nombre\":\"grupos\",\"orden\":5,\"preguntaId\":10,\"requerido\":true,\"visible\":true,\"respuestas\":[{\"finalizarSiSelecciona\":false,\"mostrarSiSelecciona\":{\"cuestionarios\":[],\"preguntas\":[{\"cuestionarioId\":11,\"preguntaId\":11}],\"respuestas\":[]},\"ocultarSiSelecciona\":{},\"respuestaId\":12,\"texto\":\"Embarazo\",\"visible\":true},{\"finalizarSiSelecciona\":false,\"mostrarSiSelecciona\":{},\"ocultarSiSelecciona\":{},\"respuestaId\":13,\"texto\":\"Diabetes\",\"visible\":true},{\"finalizarSiSelecciona\":false,\"mostrarSiSelecciona\":{},\"ocultarSiSelecciona\":{},\"respuestaId\":14,\"texto\":\"Hipertensión\",\"visible\":true},{\"respuestaId\":15,\"texto\":\"Obesidad\",\"mostrarSiSelecciona\":{},\"ocultarSiSelecciona\":{},\"finalizarSiSelecciona\":false,\"visible\":true},{\"respuestaId\":16,\"texto\":\"Padece una enfermedad o toma algún medicamento que baje sus defensas\",\"mostrarSiSelecciona\":{},\"ocultarSiSelecciona\":{},\"finalizarSiSelecciona\":false,\"visible\":true}]},{\"preguntaId\":11,\"orden\":6,\"tipo\":\"radiogroup\",\"nombre\":\"mesesEmbarazos\",\"titulo\":\"¿Cuantos meses de embarazo tiene?\",\"descripcion\":\"\",\"requerido\":true,\"visible\":false,\"respuestas\":[{\"respuestaId\":17,\"texto\":\"Un mes\",\"mostrarSiSelecciona\":{},\"ocultarSiSelecciona\":{},\"finalizarSiSelecciona\":false,\"visible\":true},{\"respuestaId\":18,\"texto\":\"Dos a tres meses\",\"mostrarSiSelecciona\":{},\"ocultarSiSelecciona\":{},\"finalizarSiSelecciona\":false,\"visible\":true},{\"respuestaId\":19,\"texto\":\"Cuatro a seis meses\",\"mostrarSiSelecciona\":{},\"ocultarSiSelecciona\":{},\"finalizarSiSelecciona\":false,\"visible\":true},{\"respuestaId\":20,\"texto\":\"Siete a nueve meses\",\"mostrarSiSelecciona\":{},\"ocultarSiSelecciona\":{},\"finalizarSiSelecciona\":false,\"visible\":true}]}]},{\"cuestionarioId\":12,\"nombre\":\"datosFinales\",\"orden\":3,\"titulo\":\"Cuestionario final\",\"visible\":true,\"preguntas\":[{\"descripcion\":\"Alguna opinión\",\"nombre\":\"opinion\",\"orden\":1,\"preguntaId\":40,\"requerido\":false,\"tipo\":\"text\",\"tipoInput\":\"textPersonName\",\"titulo\":\"Opinión\",\"validaciones\":[],\"visible\":true}]}]},{\"encuestaId\":3,\"titulo\":\"INFLUENZA\",\"etapa\":1,\"descripcion\":\"Autodiagnóstico influenza\",\"catEncuestaTipoId\":2,\"visible\":true,\"cuestionarios\":[{\"cuestionarioId\":20,\"orden\":1,\"titulo\":\"Datos personales\",\"nombre\":\"datosPersonales\",\"visible\":true,\"preguntas\":[{\"preguntaId\":21,\"orden\":1,\"nombre\":\"nombre\",\"tipo\":\"text\",\"tipoInput\":\"textPersonName\",\"titulo\":\"Nombre de la persona\",\"descripcion\":\"Escribe su nombre\",\"requerido\":true,\"visible\":true,\"validaciones\":[]},{\"preguntaId\":22,\"orden\":2,\"nombre\":\"primerApellido\",\"tipo\":\"text\",\"tipoInput\":\"textPersonName\",\"titulo\":\"Primer Apellido\",\"descripcion\":\"Escribe su apellido paterno\",\"requerido\":true,\"visible\":true,\"validaciones\":[]},{\"preguntaId\":23,\"orden\":3,\"nombre\":\"segundoApellido\",\"tipo\":\"text\",\"tipoInput\":\"textPersonName\",\"titulo\":\"Segundo Apellido\",\"descripcion\":\"Escribe su apellido materno\",\"requerido\":true,\"visible\":true,\"validaciones\":[]},{\"preguntaId\":24,\"orden\":4,\"tipo\":\"radiogroup\",\"nombre\":\"sexo\",\"titulo\":\"Género\",\"descripcion\":\"Género de la persona\",\"requerido\":true,\"visible\":true,\"respuestas\":[{\"respuestaId\":30,\"texto\":\"Masculino\",\"mostrarSiSelecciona\":{},\"ocultarSiSelecciona\":{},\"visible\":true,\"finalizarSiSelecciona\":false},{\"respuestaId\":31,\"texto\":\"Femenino\",\"mostrarSiSelecciona\":{},\"ocultarSiSelecciona\":{},\"visible\":true,\"finalizarSiSelecciona\":false}]},{\"preguntaId\":25,\"orden\":5,\"nombre\":\"curp\",\"tipo\":\"text\",\"tipoInput\":\"textPersonName\",\"titulo\":\"Curp\",\"descripcion\":\"La CURP consta de 18 caracteres\",\"requerido\":true,\"visible\":true,\"validaciones\":[]},{\"preguntaId\":26,\"orden\":6,\"tipo\":\"radiogroup\",\"nombre\":\"edadMayor\",\"titulo\":\"¿Usted cuenta con más de 18 años?\",\"descripcion\":\"\",\"requerido\":true,\"visible\":true,\"respuestas\":[{\"respuestaId\":32,\"texto\":\"SI\",\"mostrarSiSelecciona\":{\"cuestionarios\":[{\"cuestionarioId\":21}],\"preguntas\":[{\"cuestionarioId\":20,\"preguntaId\":27}],\"respuestas\":[]},\"ocultarSiSelecciona\":{},\"visible\":true,\"finalizarSiSelecciona\":false},{\"respuestaId\":33,\"texto\":\"NO\",\"mostrarSiSelecciona\":{},\"ocultarSiSelecciona\":{},\"visible\":true,\"finalizarSiSelecciona\":true}]},{\"preguntaId\":27,\"orden\":7,\"nombre\":\"ine\",\"tipo\":\"text\",\"tipoInput\":\"textPersonName\",\"titulo\":\"INE\",\"descripcion\":\"Escribe su clave electoral\",\"requerido\":true,\"visible\":false,\"validaciones\":[]}]},{\"cuestionarioId\":21,\"orden\":2,\"titulo\":\"Datos de diagnóstico\",\"nombre\":\"cuestionarioDiagnostico\",\"visible\":false,\"preguntas\":[{\"preguntaId\":30,\"orden\":1,\"tipo\":\"radiogroup\",\"nombre\":\"sospecha\",\"titulo\":\"¿Sospechas que tienes influenza o alguien cercano a ti puede tenerlo?\",\"descripcion\":\"\",\"requerido\":true,\"visible\":true,\"respuestas\":[{\"respuestaId\":40,\"texto\":\"SI\",\"mostrarSiSelecciona\":{\"cuestionarios\":[],\"preguntas\":[{\"cuestionarioId\":21,\"preguntaId\":31}],\"respuestas\":[]},\"ocultarSiSelecciona\":{},\"visible\":true,\"finalizarSiSelecciona\":false},{\"respuestaId\":41,\"texto\":\"NO\",\"mostrarSiSelecciona\":{},\"ocultarSiSelecciona\":{},\"visible\":true,\"finalizarSiSelecciona\":true}]},{\"preguntaId\":31,\"orden\":2,\"tipo\":\"radiogroup\",\"nombre\":\"diaSintomas\",\"titulo\":\"¿Cuantos días tienes de síntomas?\",\"descripcion\":\"\",\"requerido\":true,\"visible\":false,\"respuestas\":[{\"respuestaId\":42,\"texto\":\"Un día\",\"mostrarSiSelecciona\":{},\"ocultarSiSelecciona\":{},\"visible\":true,\"finalizarSiSelecciona\":false},{\"respuestaId\":43,\"texto\":\"Dos a tres días\",\"mostrarSiSelecciona\":{},\"ocultarSiSelecciona\":{},\"visible\":true,\"finalizarSiSelecciona\":false},{\"respuestaId\":44,\"texto\":\"Cuatro a seis días\",\"mostrarSiSelecciona\":{},\"ocultarSiSelecciona\":{},\"visible\":true,\"finalizarSiSelecciona\":false},{\"respuestaId\":45,\"texto\":\"Siete  o mas días\",\"mostrarSiSelecciona\":{},\"ocultarSiSelecciona\":{},\"visible\":true,\"finalizarSiSelecciona\":false}]}]}]}]";
         //Agrego la pregunta componente Select v0.0.1
-        String json = "[{\"encuestaId\":2,\"versionCode\":2,\"titulo\":\"AUTODIAGNÓSTICO COVID-19\",\"etapa\":2,\"descripcion\":\"Información para guiar a personas con sospecha de haber contraido COVID-19\",\"catEncuestaTipoId\":1,\"visible\":true,\"cuestionarios\":[{\"cuestionarioId\":10,\"nombre\":\"sospechaCasos\",\"orden\":1,\"preguntas\":[{\"descripcion\":\"Escribe su nombre completo\",\"nombre\":\"nombre\",\"orden\":1,\"preguntaId\":1,\"requerido\":true,\"tipo\":\"text\",\"tipoInput\":\"textPersonName\",\"titulo\":\"Nombre de la persona\",\"validaciones\":[],\"visible\":true},{\"descripcion\":\"Escribe sus dos apellidos separados por espacios\",\"nombre\":\"apellidos\",\"orden\":2,\"preguntaId\":2,\"requerido\":true,\"tipo\":\"text\",\"tipoInput\":\"textPersonName\",\"titulo\":\"Apellidos\",\"validaciones\":[],\"visible\":true},{\"descripcion\":\"\",\"nombre\":\"sospecha\",\"orden\":3,\"preguntaId\":3,\"requerido\":true,\"respuestas\":[{\"finalizarSiSelecciona\":false,\"mostrarSiSelecciona\":{\"cuestionarios\":[],\"preguntas\":[{\"cuestionarioId\":10,\"preguntaId\":4},{\"cuestionarioId\":10,\"preguntaId\":5},{\"cuestionarioId\":10,\"preguntaId\":30},{\"cuestionarioId\":10,\"preguntaId\":31},{\"cuestionarioId\":10,\"preguntaId\":32}],\"respuestas\":[]},\"ocultarSiSelecciona\":{},\"respuestaId\":1,\"texto\":\"SI\",\"visible\":true},{\"finalizarSiSelecciona\":true,\"mostrarSiSelecciona\":{},\"ocultarSiSelecciona\":{},\"respuestaId\":2,\"texto\":\"NO\",\"visible\":true}],\"tipo\":\"radiogroup\",\"titulo\":\"¿Sospechas que tienes coronavirus o alguien cercano a ti puede tenerlo?\",\"visible\":true},{\"descripcion\":\"\",\"nombre\":\"presentaSintomas\",\"orden\":4,\"preguntaId\":4,\"requerido\":true,\"respuestas\":[{\"finalizarSiSelecciona\":false,\"mostrarSiSelecciona\":{},\"ocultarSiSelecciona\":{},\"respuestaId\":3,\"texto\":\"SI\",\"visible\":true},{\"finalizarSiSelecciona\":false,\"mostrarSiSelecciona\":{},\"ocultarSiSelecciona\":{},\"respuestaId\":4,\"texto\":\"NO\",\"visible\":true}],\"tipo\":\"radiogroup\",\"titulo\":\"¿Esta persona tiene algún síntoma como: tos, dolor de garganta, dolor de cabeza y/o fiebre igual o mayor a 38°C?\",\"visible\":false},{\"descripcion\":\"Muestra checkBox y RadioButton - Opoción SI\",\"nombre\":\"presentaSintomasSaltaCuestionario\",\"orden\":5,\"preguntaId\":5,\"requerido\":true,\"respuestas\":[{\"finalizarSiSelecciona\":false,\"mostrarSiSelecciona\":{\"cuestionarios\":[],\"preguntas\":[],\"respuestas\":[{\"cuestionarioId\":10,\"preguntaId\":31,\"respuestaId\":31},{\"cuestionarioId\":10,\"preguntaId\":32,\"respuestaId\":35}]},\"ocultarSiSelecciona\":{},\"respuestaId\":5,\"texto\":\"SI\",\"visible\":true},{\"finalizarSiSelecciona\":false,\"mostrarSiSelecciona\":{},\"ocultarSiSelecciona\":{},\"respuestaId\":6,\"texto\":\"NO\",\"visible\":true}],\"tipo\":\"radiogroup\",\"titulo\":\"¿Pregunta que activa respuestas? Opción SI\",\"visible\":false},{\"descripcion\":\"Prueba tipo text\",\"nombre\":\"tipoText\",\"orden\":6,\"preguntaId\":30,\"requerido\":true,\"tipo\":\"text\",\"tipoInput\":\"textPersonName\",\"titulo\":\"Prueba tipo text\",\"validaciones\":[],\"visible\":false},{\"preguntaId\":31,\"orden\":7,\"tipo\":\"checkbox\",\"nombre\":\"checkTest\",\"titulo\":\"¿Prueba tipo check?\",\"descripcion\":\"\",\"requerido\":true,\"visible\":false,\"respuestas\":[{\"respuestaId\":30,\"texto\":\"1\",\"mostrarSiSelecciona\":{},\"ocultarSiSelecciona\":{},\"finalizarSiSelecciona\":false,\"visible\":true},{\"respuestaId\":31,\"texto\":\"2\",\"mostrarSiSelecciona\":{},\"ocultarSiSelecciona\":{},\"finalizarSiSelecciona\":false,\"visible\":false},{\"respuestaId\":32,\"texto\":\"3\",\"mostrarSiSelecciona\":{},\"ocultarSiSelecciona\":{},\"finalizarSiSelecciona\":false,\"visible\":true}]},{\"descripcion\":\"\",\"nombre\":\"testRadiogroup\",\"orden\":8,\"preguntaId\":32,\"requerido\":true,\"respuestas\":[{\"finalizarSiSelecciona\":false,\"mostrarSiSelecciona\":{\"cuestionarios\":[{\"cuestionarioId\":11}],\"preguntas\":[],\"respuestas\":[]},\"ocultarSiSelecciona\":{},\"respuestaId\":33,\"texto\":\"SI\",\"visible\":true},{\"finalizarSiSelecciona\":true,\"mostrarSiSelecciona\":{},\"ocultarSiSelecciona\":{},\"respuestaId\":34,\"texto\":\"NO\",\"visible\":true},{\"finalizarSiSelecciona\":true,\"mostrarSiSelecciona\":{},\"ocultarSiSelecciona\":{},\"respuestaId\":35,\"texto\":\"OTRO\",\"visible\":false}],\"tipo\":\"radiogroup\",\"titulo\":\"¿SALTA AL SIGUIENTE CUESTIONARIO - OPCIÓN SI?\",\"visible\":false}],\"titulo\":\"Sospecha de casos\",\"visible\":true},{\"cuestionarioId\":11,\"titulo\":\"Diagnostico\",\"nombre\":\"cuestionarioDiagnostico\",\"orden\":2,\"visible\":false,\"preguntas\":[{\"descripcion\":\"Escribe su edad\",\"nombre\":\"edad\",\"orden\":1,\"preguntaId\":6,\"requerido\":true,\"tipo\":\"text\",\"tipoInput\":\"number\",\"titulo\":\"Edad en años\",\"validaciones\":[\"verifyEdad\"],\"visible\":true},{\"descripcion\":\"\",\"nombre\":\"sexo\",\"orden\":2,\"preguntaId\":7,\"requerido\":true,\"respuestas\":[{\"finalizarSiSelecciona\":false,\"mostrarSiSelecciona\":{},\"ocultarSiSelecciona\":{},\"respuestaId\":10,\"texto\":\"Masculino\",\"visible\":true},{\"finalizarSiSelecciona\":false,\"mostrarSiSelecciona\":{},\"ocultarSiSelecciona\":{},\"respuestaId\":11,\"texto\":\"Femenino\",\"visible\":true}],\"tipo\":\"radiogroup\",\"titulo\":\"Género\",\"visible\":true},{\"descripcion\":\"Su número de teléfono tiene que tener 10 dígitos\",\"nombre\":\"telefono\",\"orden\":3,\"preguntaId\":8,\"requerido\":true,\"tipo\":\"text\",\"tipoInput\":\"phone\",\"titulo\":\"Teléfono\",\"validaciones\":[\"verifyTelefono\",\"verifyLadaMorelos\"],\"visible\":true},{\"descripcion\":\"Descripción pregunta municipio\",\"nombre\":\"municipio\",\"orden\":4,\"preguntaId\":9,\"requerido\":true,\"tipo\":\"text\",\"tipoInput\":\"text\",\"titulo\":\"Municipio/Alcaldía\",\"validaciones\":[],\"visible\":true},{\"descripcion\":\"\",\"titulo\":\"¿Pertenece a alguno(s) de los siguientes grupos?\",\"tipo\":\"checkbox\",\"nombre\":\"grupos\",\"orden\":5,\"preguntaId\":10,\"requerido\":true,\"visible\":true,\"respuestas\":[{\"finalizarSiSelecciona\":false,\"mostrarSiSelecciona\":{\"cuestionarios\":[],\"preguntas\":[{\"cuestionarioId\":11,\"preguntaId\":11}],\"respuestas\":[]},\"ocultarSiSelecciona\":{},\"respuestaId\":12,\"texto\":\"Embarazo\",\"visible\":true},{\"finalizarSiSelecciona\":false,\"mostrarSiSelecciona\":{},\"ocultarSiSelecciona\":{},\"respuestaId\":13,\"texto\":\"Diabetes\",\"visible\":true},{\"finalizarSiSelecciona\":false,\"mostrarSiSelecciona\":{},\"ocultarSiSelecciona\":{},\"respuestaId\":14,\"texto\":\"Hipertensión\",\"visible\":true},{\"respuestaId\":15,\"texto\":\"Obesidad\",\"mostrarSiSelecciona\":{},\"ocultarSiSelecciona\":{},\"finalizarSiSelecciona\":false,\"visible\":true},{\"respuestaId\":16,\"texto\":\"Padece una enfermedad o toma algún medicamento que baje sus defensas\",\"mostrarSiSelecciona\":{},\"ocultarSiSelecciona\":{},\"finalizarSiSelecciona\":false,\"visible\":true}]},{\"preguntaId\":11,\"orden\":6,\"tipo\":\"radiogroup\",\"nombre\":\"mesesEmbarazos\",\"titulo\":\"¿Cuantos meses de embarazo tiene?\",\"descripcion\":\"\",\"requerido\":true,\"visible\":false,\"respuestas\":[{\"respuestaId\":17,\"texto\":\"Un mes\",\"mostrarSiSelecciona\":{},\"ocultarSiSelecciona\":{},\"finalizarSiSelecciona\":false,\"visible\":true},{\"respuestaId\":18,\"texto\":\"Dos a tres meses\",\"mostrarSiSelecciona\":{},\"ocultarSiSelecciona\":{},\"finalizarSiSelecciona\":false,\"visible\":true},{\"respuestaId\":19,\"texto\":\"Cuatro a seis meses\",\"mostrarSiSelecciona\":{},\"ocultarSiSelecciona\":{},\"finalizarSiSelecciona\":false,\"visible\":true},{\"respuestaId\":20,\"texto\":\"Siete a nueve meses\",\"mostrarSiSelecciona\":{},\"ocultarSiSelecciona\":{},\"finalizarSiSelecciona\":false,\"visible\":true}]}]},{\"cuestionarioId\":12,\"nombre\":\"datosFinales\",\"orden\":3,\"titulo\":\"Cuestionario final\",\"visible\":true,\"preguntas\":[{\"descripcion\":\"Alguna opinión\",\"nombre\":\"opinion\",\"orden\":1,\"preguntaId\":40,\"requerido\":false,\"tipo\":\"text\",\"tipoInput\":\"textPersonName\",\"titulo\":\"Opinión\",\"validaciones\":[],\"visible\":true}]}]},{\"encuestaId\":3,\"versionCode\":1,\"titulo\":\"INFLUENZA\",\"etapa\":1,\"descripcion\":\"Autodiagnóstico influenza\",\"catEncuestaTipoId\":2,\"visible\":true,\"cuestionarios\":[{\"cuestionarioId\":20,\"orden\":1,\"titulo\":\"Datos personales\",\"nombre\":\"datosPersonales\",\"visible\":true,\"preguntas\":[{\"preguntaId\":21,\"orden\":1,\"nombre\":\"nombre\",\"tipo\":\"text\",\"tipoInput\":\"textPersonName\",\"titulo\":\"Nombre de la persona\",\"descripcion\":\"Escribe su nombre\",\"requerido\":true,\"visible\":true,\"validaciones\":[]},{\"preguntaId\":22,\"orden\":2,\"nombre\":\"primerApellido\",\"tipo\":\"text\",\"tipoInput\":\"textPersonName\",\"titulo\":\"Primer Apellido\",\"descripcion\":\"Escribe su apellido paterno\",\"requerido\":true,\"visible\":true,\"validaciones\":[]},{\"preguntaId\":23,\"orden\":3,\"nombre\":\"segundoApellido\",\"tipo\":\"text\",\"tipoInput\":\"textPersonName\",\"titulo\":\"Segundo Apellido\",\"descripcion\":\"Escribe su apellido materno\",\"requerido\":true,\"visible\":true,\"validaciones\":[]},{\"preguntaId\":24,\"orden\":4,\"tipo\":\"select\",\"tipoInput\":\"selectServer\",\"nombre\":\"sexo\",\"titulo\":\"Género\",\"descripcion\":\"Género de la persona\",\"requerido\":true,\"visible\":true,\"respuestas\":[{\"respuestaId\":30,\"texto\":\"Masculino\",\"mostrarSiSelecciona\":{},\"ocultarSiSelecciona\":{},\"visible\":true,\"finalizarSiSelecciona\":false},{\"respuestaId\":31,\"texto\":\"Femenino\",\"mostrarSiSelecciona\":{},\"ocultarSiSelecciona\":{},\"visible\":true,\"finalizarSiSelecciona\":false}]},{\"preguntaId\":25,\"orden\":5,\"nombre\":\"curp\",\"tipo\":\"text\",\"tipoInput\":\"textPersonName\",\"titulo\":\"Curp\",\"descripcion\":\"La CURP consta de 18 caracteres\",\"requerido\":true,\"visible\":true,\"validaciones\":[]},{\"preguntaId\":26,\"orden\":6,\"tipo\":\"radiogroup\",\"nombre\":\"edadMayor\",\"titulo\":\"¿Usted cuenta con más de 18 años?\",\"descripcion\":\"\",\"requerido\":true,\"visible\":true,\"respuestas\":[{\"respuestaId\":32,\"texto\":\"SI\",\"mostrarSiSelecciona\":{\"cuestionarios\":[{\"cuestionarioId\":21}],\"preguntas\":[{\"cuestionarioId\":20,\"preguntaId\":27}],\"respuestas\":[]},\"ocultarSiSelecciona\":{},\"visible\":true,\"finalizarSiSelecciona\":false},{\"respuestaId\":33,\"texto\":\"NO\",\"mostrarSiSelecciona\":{},\"ocultarSiSelecciona\":{},\"visible\":true,\"finalizarSiSelecciona\":true}]},{\"preguntaId\":27,\"orden\":7,\"nombre\":\"ine\",\"tipo\":\"text\",\"tipoInput\":\"textPersonName\",\"titulo\":\"INE\",\"descripcion\":\"Escribe su clave electoral\",\"requerido\":true,\"visible\":false,\"validaciones\":[]}]},{\"cuestionarioId\":21,\"orden\":2,\"titulo\":\"Datos de diagnóstico\",\"nombre\":\"cuestionarioDiagnostico\",\"visible\":false,\"preguntas\":[{\"preguntaId\":30,\"orden\":1,\"tipo\":\"radiogroup\",\"nombre\":\"sospecha\",\"titulo\":\"¿Sospechas que tienes influenza o alguien cercano a ti puede tenerlo?\",\"descripcion\":\"\",\"requerido\":true,\"visible\":true,\"respuestas\":[{\"respuestaId\":40,\"texto\":\"SI\",\"mostrarSiSelecciona\":{\"cuestionarios\":[],\"preguntas\":[{\"cuestionarioId\":21,\"preguntaId\":31}],\"respuestas\":[]},\"ocultarSiSelecciona\":{},\"visible\":true,\"finalizarSiSelecciona\":false},{\"respuestaId\":41,\"texto\":\"NO\",\"mostrarSiSelecciona\":{},\"ocultarSiSelecciona\":{},\"visible\":true,\"finalizarSiSelecciona\":true}]},{\"preguntaId\":31,\"orden\":2,\"tipo\":\"radiogroup\",\"nombre\":\"diaSintomas\",\"titulo\":\"¿Cuantos días tienes de síntomas?\",\"descripcion\":\"\",\"requerido\":true,\"visible\":false,\"respuestas\":[{\"respuestaId\":42,\"texto\":\"Un día\",\"mostrarSiSelecciona\":{},\"ocultarSiSelecciona\":{},\"visible\":true,\"finalizarSiSelecciona\":false},{\"respuestaId\":43,\"texto\":\"Dos a tres días\",\"mostrarSiSelecciona\":{},\"ocultarSiSelecciona\":{},\"visible\":true,\"finalizarSiSelecciona\":false},{\"respuestaId\":44,\"texto\":\"Cuatro a seis días\",\"mostrarSiSelecciona\":{},\"ocultarSiSelecciona\":{},\"visible\":true,\"finalizarSiSelecciona\":false},{\"respuestaId\":45,\"texto\":\"Siete  o mas días\",\"mostrarSiSelecciona\":{},\"ocultarSiSelecciona\":{},\"visible\":true,\"finalizarSiSelecciona\":false}]}]}]}]";
+        //String json = "[{\"encuestaId\":2,\"versionCode\":2,\"titulo\":\"AUTODIAGNÓSTICO COVID-19\",\"etapa\":2,\"descripcion\":\"Información para guiar a personas con sospecha de haber contraido COVID-19\",\"catEncuestaTipoId\":1,\"visible\":true,\"cuestionarios\":[{\"cuestionarioId\":10,\"nombre\":\"sospechaCasos\",\"orden\":1,\"preguntas\":[{\"descripcion\":\"Escribe su nombre completo\",\"nombre\":\"nombre\",\"orden\":1,\"preguntaId\":1,\"requerido\":true,\"tipo\":\"text\",\"tipoInput\":\"textPersonName\",\"titulo\":\"Nombre de la persona\",\"validaciones\":[],\"visible\":true},{\"descripcion\":\"Escribe sus dos apellidos separados por espacios\",\"nombre\":\"apellidos\",\"orden\":2,\"preguntaId\":2,\"requerido\":true,\"tipo\":\"text\",\"tipoInput\":\"textPersonName\",\"titulo\":\"Apellidos\",\"validaciones\":[],\"visible\":true},{\"descripcion\":\"\",\"nombre\":\"sospecha\",\"orden\":3,\"preguntaId\":3,\"requerido\":true,\"respuestas\":[{\"finalizarSiSelecciona\":false,\"mostrarSiSelecciona\":{\"cuestionarios\":[],\"preguntas\":[{\"cuestionarioId\":10,\"preguntaId\":4},{\"cuestionarioId\":10,\"preguntaId\":5},{\"cuestionarioId\":10,\"preguntaId\":30},{\"cuestionarioId\":10,\"preguntaId\":31},{\"cuestionarioId\":10,\"preguntaId\":32}],\"respuestas\":[]},\"ocultarSiSelecciona\":{},\"respuestaId\":1,\"texto\":\"SI\",\"visible\":true},{\"finalizarSiSelecciona\":true,\"mostrarSiSelecciona\":{},\"ocultarSiSelecciona\":{},\"respuestaId\":2,\"texto\":\"NO\",\"visible\":true}],\"tipo\":\"radiogroup\",\"titulo\":\"¿Sospechas que tienes coronavirus o alguien cercano a ti puede tenerlo?\",\"visible\":true},{\"descripcion\":\"\",\"nombre\":\"presentaSintomas\",\"orden\":4,\"preguntaId\":4,\"requerido\":true,\"respuestas\":[{\"finalizarSiSelecciona\":false,\"mostrarSiSelecciona\":{},\"ocultarSiSelecciona\":{},\"respuestaId\":3,\"texto\":\"SI\",\"visible\":true},{\"finalizarSiSelecciona\":false,\"mostrarSiSelecciona\":{},\"ocultarSiSelecciona\":{},\"respuestaId\":4,\"texto\":\"NO\",\"visible\":true}],\"tipo\":\"radiogroup\",\"titulo\":\"¿Esta persona tiene algún síntoma como: tos, dolor de garganta, dolor de cabeza y/o fiebre igual o mayor a 38°C?\",\"visible\":false},{\"descripcion\":\"Muestra checkBox y RadioButton - Opoción SI\",\"nombre\":\"presentaSintomasSaltaCuestionario\",\"orden\":5,\"preguntaId\":5,\"requerido\":true,\"respuestas\":[{\"finalizarSiSelecciona\":false,\"mostrarSiSelecciona\":{\"cuestionarios\":[],\"preguntas\":[],\"respuestas\":[{\"cuestionarioId\":10,\"preguntaId\":31,\"respuestaId\":31},{\"cuestionarioId\":10,\"preguntaId\":32,\"respuestaId\":35}]},\"ocultarSiSelecciona\":{},\"respuestaId\":5,\"texto\":\"SI\",\"visible\":true},{\"finalizarSiSelecciona\":false,\"mostrarSiSelecciona\":{},\"ocultarSiSelecciona\":{},\"respuestaId\":6,\"texto\":\"NO\",\"visible\":true}],\"tipo\":\"radiogroup\",\"titulo\":\"¿Pregunta que activa respuestas? Opción SI\",\"visible\":false},{\"descripcion\":\"Prueba tipo text\",\"nombre\":\"tipoText\",\"orden\":6,\"preguntaId\":30,\"requerido\":true,\"tipo\":\"text\",\"tipoInput\":\"textPersonName\",\"titulo\":\"Prueba tipo text\",\"validaciones\":[],\"visible\":false},{\"preguntaId\":31,\"orden\":7,\"tipo\":\"checkbox\",\"nombre\":\"checkTest\",\"titulo\":\"¿Prueba tipo check?\",\"descripcion\":\"\",\"requerido\":true,\"visible\":false,\"respuestas\":[{\"respuestaId\":30,\"texto\":\"1\",\"mostrarSiSelecciona\":{},\"ocultarSiSelecciona\":{},\"finalizarSiSelecciona\":false,\"visible\":true},{\"respuestaId\":31,\"texto\":\"2\",\"mostrarSiSelecciona\":{},\"ocultarSiSelecciona\":{},\"finalizarSiSelecciona\":false,\"visible\":false},{\"respuestaId\":32,\"texto\":\"3\",\"mostrarSiSelecciona\":{},\"ocultarSiSelecciona\":{},\"finalizarSiSelecciona\":false,\"visible\":true}]},{\"descripcion\":\"\",\"nombre\":\"testRadiogroup\",\"orden\":8,\"preguntaId\":32,\"requerido\":true,\"respuestas\":[{\"finalizarSiSelecciona\":false,\"mostrarSiSelecciona\":{\"cuestionarios\":[{\"cuestionarioId\":11}],\"preguntas\":[],\"respuestas\":[]},\"ocultarSiSelecciona\":{},\"respuestaId\":33,\"texto\":\"SI\",\"visible\":true},{\"finalizarSiSelecciona\":true,\"mostrarSiSelecciona\":{},\"ocultarSiSelecciona\":{},\"respuestaId\":34,\"texto\":\"NO\",\"visible\":true},{\"finalizarSiSelecciona\":true,\"mostrarSiSelecciona\":{},\"ocultarSiSelecciona\":{},\"respuestaId\":35,\"texto\":\"OTRO\",\"visible\":false}],\"tipo\":\"radiogroup\",\"titulo\":\"¿SALTA AL SIGUIENTE CUESTIONARIO - OPCIÓN SI?\",\"visible\":false}],\"titulo\":\"Sospecha de casos\",\"visible\":true},{\"cuestionarioId\":11,\"titulo\":\"Diagnostico\",\"nombre\":\"cuestionarioDiagnostico\",\"orden\":2,\"visible\":false,\"preguntas\":[{\"descripcion\":\"Escribe su edad\",\"nombre\":\"edad\",\"orden\":1,\"preguntaId\":6,\"requerido\":true,\"tipo\":\"text\",\"tipoInput\":\"number\",\"titulo\":\"Edad en años\",\"validaciones\":[\"verifyEdad\"],\"visible\":true},{\"descripcion\":\"\",\"nombre\":\"sexo\",\"orden\":2,\"preguntaId\":7,\"requerido\":true,\"respuestas\":[{\"finalizarSiSelecciona\":false,\"mostrarSiSelecciona\":{},\"ocultarSiSelecciona\":{},\"respuestaId\":10,\"texto\":\"Masculino\",\"visible\":true},{\"finalizarSiSelecciona\":false,\"mostrarSiSelecciona\":{},\"ocultarSiSelecciona\":{},\"respuestaId\":11,\"texto\":\"Femenino\",\"visible\":true}],\"tipo\":\"radiogroup\",\"titulo\":\"Género\",\"visible\":true},{\"descripcion\":\"Su número de teléfono tiene que tener 10 dígitos\",\"nombre\":\"telefono\",\"orden\":3,\"preguntaId\":8,\"requerido\":true,\"tipo\":\"text\",\"tipoInput\":\"phone\",\"titulo\":\"Teléfono\",\"validaciones\":[\"verifyTelefono\",\"verifyLadaMorelos\"],\"visible\":true},{\"descripcion\":\"Descripción pregunta municipio\",\"nombre\":\"municipio\",\"orden\":4,\"preguntaId\":9,\"requerido\":true,\"tipo\":\"text\",\"tipoInput\":\"text\",\"titulo\":\"Municipio/Alcaldía\",\"validaciones\":[],\"visible\":true},{\"descripcion\":\"\",\"titulo\":\"¿Pertenece a alguno(s) de los siguientes grupos?\",\"tipo\":\"checkbox\",\"nombre\":\"grupos\",\"orden\":5,\"preguntaId\":10,\"requerido\":true,\"visible\":true,\"respuestas\":[{\"finalizarSiSelecciona\":false,\"mostrarSiSelecciona\":{\"cuestionarios\":[],\"preguntas\":[{\"cuestionarioId\":11,\"preguntaId\":11}],\"respuestas\":[]},\"ocultarSiSelecciona\":{},\"respuestaId\":12,\"texto\":\"Embarazo\",\"visible\":true},{\"finalizarSiSelecciona\":false,\"mostrarSiSelecciona\":{},\"ocultarSiSelecciona\":{},\"respuestaId\":13,\"texto\":\"Diabetes\",\"visible\":true},{\"finalizarSiSelecciona\":false,\"mostrarSiSelecciona\":{},\"ocultarSiSelecciona\":{},\"respuestaId\":14,\"texto\":\"Hipertensión\",\"visible\":true},{\"respuestaId\":15,\"texto\":\"Obesidad\",\"mostrarSiSelecciona\":{},\"ocultarSiSelecciona\":{},\"finalizarSiSelecciona\":false,\"visible\":true},{\"respuestaId\":16,\"texto\":\"Padece una enfermedad o toma algún medicamento que baje sus defensas\",\"mostrarSiSelecciona\":{},\"ocultarSiSelecciona\":{},\"finalizarSiSelecciona\":false,\"visible\":true}]},{\"preguntaId\":11,\"orden\":6,\"tipo\":\"radiogroup\",\"nombre\":\"mesesEmbarazos\",\"titulo\":\"¿Cuantos meses de embarazo tiene?\",\"descripcion\":\"\",\"requerido\":true,\"visible\":false,\"respuestas\":[{\"respuestaId\":17,\"texto\":\"Un mes\",\"mostrarSiSelecciona\":{},\"ocultarSiSelecciona\":{},\"finalizarSiSelecciona\":false,\"visible\":true},{\"respuestaId\":18,\"texto\":\"Dos a tres meses\",\"mostrarSiSelecciona\":{},\"ocultarSiSelecciona\":{},\"finalizarSiSelecciona\":false,\"visible\":true},{\"respuestaId\":19,\"texto\":\"Cuatro a seis meses\",\"mostrarSiSelecciona\":{},\"ocultarSiSelecciona\":{},\"finalizarSiSelecciona\":false,\"visible\":true},{\"respuestaId\":20,\"texto\":\"Siete a nueve meses\",\"mostrarSiSelecciona\":{},\"ocultarSiSelecciona\":{},\"finalizarSiSelecciona\":false,\"visible\":true}]}]},{\"cuestionarioId\":12,\"nombre\":\"datosFinales\",\"orden\":3,\"titulo\":\"Cuestionario final\",\"visible\":true,\"preguntas\":[{\"descripcion\":\"Alguna opinión\",\"nombre\":\"opinion\",\"orden\":1,\"preguntaId\":40,\"requerido\":false,\"tipo\":\"text\",\"tipoInput\":\"textPersonName\",\"titulo\":\"Opinión\",\"validaciones\":[],\"visible\":true}]}]},{\"encuestaId\":3,\"versionCode\":1,\"titulo\":\"INFLUENZA\",\"etapa\":1,\"descripcion\":\"Autodiagnóstico influenza\",\"catEncuestaTipoId\":2,\"visible\":true,\"cuestionarios\":[{\"cuestionarioId\":20,\"orden\":1,\"titulo\":\"Datos personales\",\"nombre\":\"datosPersonales\",\"visible\":true,\"preguntas\":[{\"preguntaId\":21,\"orden\":1,\"nombre\":\"nombre\",\"tipo\":\"text\",\"tipoInput\":\"textPersonName\",\"titulo\":\"Nombre de la persona\",\"descripcion\":\"Escribe su nombre\",\"requerido\":true,\"visible\":true,\"validaciones\":[]},{\"preguntaId\":22,\"orden\":2,\"nombre\":\"primerApellido\",\"tipo\":\"text\",\"tipoInput\":\"textPersonName\",\"titulo\":\"Primer Apellido\",\"descripcion\":\"Escribe su apellido paterno\",\"requerido\":true,\"visible\":true,\"validaciones\":[]},{\"preguntaId\":23,\"orden\":3,\"nombre\":\"segundoApellido\",\"tipo\":\"text\",\"tipoInput\":\"textPersonName\",\"titulo\":\"Segundo Apellido\",\"descripcion\":\"Escribe su apellido materno\",\"requerido\":true,\"visible\":true,\"validaciones\":[]},{\"preguntaId\":24,\"orden\":4,\"tipo\":\"select\",\"tipoInput\":\"selectServer\",\"nombre\":\"sexo\",\"titulo\":\"Género\",\"descripcion\":\"Género de la persona\",\"requerido\":true,\"visible\":true,\"respuestas\":[{\"respuestaId\":30,\"texto\":\"Masculino\",\"mostrarSiSelecciona\":{},\"ocultarSiSelecciona\":{},\"visible\":true,\"finalizarSiSelecciona\":false},{\"respuestaId\":31,\"texto\":\"Femenino\",\"mostrarSiSelecciona\":{},\"ocultarSiSelecciona\":{},\"visible\":true,\"finalizarSiSelecciona\":false}]},{\"preguntaId\":25,\"orden\":5,\"nombre\":\"curp\",\"tipo\":\"text\",\"tipoInput\":\"textPersonName\",\"titulo\":\"Curp\",\"descripcion\":\"La CURP consta de 18 caracteres\",\"requerido\":true,\"visible\":true,\"validaciones\":[]},{\"preguntaId\":26,\"orden\":6,\"tipo\":\"radiogroup\",\"nombre\":\"edadMayor\",\"titulo\":\"¿Usted cuenta con más de 18 años?\",\"descripcion\":\"\",\"requerido\":true,\"visible\":true,\"respuestas\":[{\"respuestaId\":32,\"texto\":\"SI\",\"mostrarSiSelecciona\":{\"cuestionarios\":[{\"cuestionarioId\":21}],\"preguntas\":[{\"cuestionarioId\":20,\"preguntaId\":27}],\"respuestas\":[]},\"ocultarSiSelecciona\":{},\"visible\":true,\"finalizarSiSelecciona\":false},{\"respuestaId\":33,\"texto\":\"NO\",\"mostrarSiSelecciona\":{},\"ocultarSiSelecciona\":{},\"visible\":true,\"finalizarSiSelecciona\":true}]},{\"preguntaId\":27,\"orden\":7,\"nombre\":\"ine\",\"tipo\":\"text\",\"tipoInput\":\"textPersonName\",\"titulo\":\"INE\",\"descripcion\":\"Escribe su clave electoral\",\"requerido\":true,\"visible\":false,\"validaciones\":[]}]},{\"cuestionarioId\":21,\"orden\":2,\"titulo\":\"Datos de diagnóstico\",\"nombre\":\"cuestionarioDiagnostico\",\"visible\":false,\"preguntas\":[{\"preguntaId\":30,\"orden\":1,\"tipo\":\"radiogroup\",\"nombre\":\"sospecha\",\"titulo\":\"¿Sospechas que tienes influenza o alguien cercano a ti puede tenerlo?\",\"descripcion\":\"\",\"requerido\":true,\"visible\":true,\"respuestas\":[{\"respuestaId\":40,\"texto\":\"SI\",\"mostrarSiSelecciona\":{\"cuestionarios\":[],\"preguntas\":[{\"cuestionarioId\":21,\"preguntaId\":31}],\"respuestas\":[]},\"ocultarSiSelecciona\":{},\"visible\":true,\"finalizarSiSelecciona\":false},{\"respuestaId\":41,\"texto\":\"NO\",\"mostrarSiSelecciona\":{},\"ocultarSiSelecciona\":{},\"visible\":true,\"finalizarSiSelecciona\":true}]},{\"preguntaId\":31,\"orden\":2,\"tipo\":\"radiogroup\",\"nombre\":\"diaSintomas\",\"titulo\":\"¿Cuantos días tienes de síntomas?\",\"descripcion\":\"\",\"requerido\":true,\"visible\":false,\"respuestas\":[{\"respuestaId\":42,\"texto\":\"Un día\",\"mostrarSiSelecciona\":{},\"ocultarSiSelecciona\":{},\"visible\":true,\"finalizarSiSelecciona\":false},{\"respuestaId\":43,\"texto\":\"Dos a tres días\",\"mostrarSiSelecciona\":{},\"ocultarSiSelecciona\":{},\"visible\":true,\"finalizarSiSelecciona\":false},{\"respuestaId\":44,\"texto\":\"Cuatro a seis días\",\"mostrarSiSelecciona\":{},\"ocultarSiSelecciona\":{},\"visible\":true,\"finalizarSiSelecciona\":false},{\"respuestaId\":45,\"texto\":\"Siete  o mas días\",\"mostrarSiSelecciona\":{},\"ocultarSiSelecciona\":{},\"visible\":true,\"finalizarSiSelecciona\":false}]}]}]}]";
+        //json en ingles
+        String json = "[{\n" +
+                "        \"surveyId\": 2,\n" +
+                "        \"title\": \"AUTODIAGNÓSTICO COVID-19\",\n" +
+                "        \"phase\": 2,\n" +
+                "        \"description\": \"Información para guiar a personas con sospecha de haber contraido COVID-19\",\n" +
+                "        \"surveyType\": 1,\n" +
+                "        \"visible\": true,\n" +
+                "        \"versionCode\": 1,\n" +
+                "        \"questionnaires\": [{\n" +
+                "                \"questionaryId\": 10,\n" +
+                "                \"name\": \"sospechaCasos\",\n" +
+                "                \"order\": 1,\n" +
+                "                \"questions\": [{\n" +
+                "                        \"description\": \"Escribe su nombre completo\",\n" +
+                "                        \"name\": \"name\",\n" +
+                "                        \"order\": 1,\n" +
+                "                        \"questionId\": 1,\n" +
+                "                        \"required\": true,\n" +
+                "                        \"type\": \"text\",\n" +
+                "                        \"typeInput\": \"textPersonName\",\n" +
+                "                        \"title\": \"name de la persona\",\n" +
+                "                        \"validations\": [],\n" +
+                "                        \"visible\": true\n" +
+                "                    },\n" +
+                "                    {\n" +
+                "                        \"description\": \"Escribe sus dos apellidos separados por espacios\",\n" +
+                "                        \"name\": \"apellidos\",\n" +
+                "                        \"order\": 2,\n" +
+                "                        \"questionId\": 2,\n" +
+                "                        \"required\": true,\n" +
+                "                        \"type\": \"text\",\n" +
+                "                        \"typeInput\": \"textPersonName\",\n" +
+                "                        \"title\": \"Apellidos\",\n" +
+                "                        \"validations\": [],\n" +
+                "                        \"visible\": true\n" +
+                "                    },\n" +
+                "                    {\n" +
+                "                        \"description\": \"\",\n" +
+                "                        \"name\": \"sospecha\",\n" +
+                "                        \"order\": 3,\n" +
+                "                        \"questionId\": 3,\n" +
+                "                        \"required\": true,\n" +
+                "                        \"answers\": [{\n" +
+                "                                \"finishSelect\": false,\n" +
+                "                                \"showSelect\": {\n" +
+                "                                    \"questionnaires\": [],\n" +
+                "                                    \"questions\": [{\n" +
+                "                                            \"questionaryId\": 10,\n" +
+                "                                            \"questionId\": 4\n" +
+                "                                        },\n" +
+                "                                        {\n" +
+                "                                            \"questionaryId\": 10,\n" +
+                "                                            \"questionId\": 5\n" +
+                "                                        },\n" +
+                "                                        {\n" +
+                "                                            \"questionaryId\": 10,\n" +
+                "                                            \"questionId\": 30\n" +
+                "                                        },\n" +
+                "                                        {\n" +
+                "                                            \"questionaryId\": 10,\n" +
+                "                                            \"questionId\": 31\n" +
+                "                                        },\n" +
+                "                                        {\n" +
+                "                                            \"questionaryId\": 10,\n" +
+                "                                            \"questionId\": 32\n" +
+                "                                        }\n" +
+                "                                    ],\n" +
+                "                                    \"answers\": []\n" +
+                "                                },\n" +
+                "                                \"hideSelect\": {},\n" +
+                "                                \"answerId\": 1,\n" +
+                "                                \"text\": \"SI\",\n" +
+                "                                \"visible\": true\n" +
+                "                            },\n" +
+                "                            {\n" +
+                "                                \"finishSelect\": true,\n" +
+                "                                \"showSelect\": {},\n" +
+                "                                \"hideSelect\": {},\n" +
+                "                                \"answerId\": 2,\n" +
+                "                                \"text\": \"NO\",\n" +
+                "                                \"visible\": true\n" +
+                "                            }\n" +
+                "                        ],\n" +
+                "                        \"type\": \"radiogroup\",\n" +
+                "                        \"title\": \"¿Sospechas que tienes coronavirus o alguien cercano a ti puede tenerlo?\",\n" +
+                "                        \"visible\": true\n" +
+                "                    },\n" +
+                "                    {\n" +
+                "                        \"description\": \"\",\n" +
+                "                        \"name\": \"presentaSintomas\",\n" +
+                "                        \"order\": 4,\n" +
+                "                        \"questionId\": 4,\n" +
+                "                        \"required\": true,\n" +
+                "                        \"answers\": [{\n" +
+                "                                \"finishSelect\": false,\n" +
+                "                                \"showSelect\": {},\n" +
+                "                                \"hideSelect\": {},\n" +
+                "                                \"answerId\": 3,\n" +
+                "                                \"text\": \"SI\",\n" +
+                "                                \"visible\": true\n" +
+                "                            },\n" +
+                "                            {\n" +
+                "                                \"finishSelect\": false,\n" +
+                "                                \"showSelect\": {},\n" +
+                "                                \"hideSelect\": {},\n" +
+                "                                \"answerId\": 4,\n" +
+                "                                \"text\": \"NO\",\n" +
+                "                                \"visible\": true\n" +
+                "                            }\n" +
+                "                        ],\n" +
+                "                        \"type\": \"radiogroup\",\n" +
+                "                        \"title\": \"¿Esta persona tiene algún síntoma como: tos, dolor de garganta, dolor de cabeza y/o fiebre igual o mayor a 38°C?\",\n" +
+                "                        \"visible\": false\n" +
+                "                    },\n" +
+                "                    {\n" +
+                "                        \"description\": \"Muestra checkBox y RadioButton - Opoción SI\",\n" +
+                "                        \"name\": \"presentaSintomasSaltaquestionary\",\n" +
+                "                        \"order\": 5,\n" +
+                "                        \"questionId\": 5,\n" +
+                "                        \"required\": true,\n" +
+                "                        \"answers\": [{\n" +
+                "                                \"finishSelect\": false,\n" +
+                "                                \"showSelect\": {\n" +
+                "                                    \"questionnaires\": [],\n" +
+                "                                    \"questions\": [],\n" +
+                "                                    \"answers\": [{\n" +
+                "                                            \"questionaryId\": 10,\n" +
+                "                                            \"questionId\": 31,\n" +
+                "                                            \"answerId\": 31\n" +
+                "                                        },\n" +
+                "                                        {\n" +
+                "                                            \"questionaryId\": 10,\n" +
+                "                                            \"questionId\": 32,\n" +
+                "                                            \"answerId\": 35\n" +
+                "                                        }\n" +
+                "                                    ]\n" +
+                "                                },\n" +
+                "                                \"hideSelect\": {},\n" +
+                "                                \"answerId\": 5,\n" +
+                "                                \"text\": \"SI\",\n" +
+                "                                \"visible\": true\n" +
+                "                            },\n" +
+                "                            {\n" +
+                "                                \"finishSelect\": false,\n" +
+                "                                \"showSelect\": {},\n" +
+                "                                \"hideSelect\": {},\n" +
+                "                                \"answerId\": 6,\n" +
+                "                                \"text\": \"NO\",\n" +
+                "                                \"visible\": true\n" +
+                "                            }\n" +
+                "                        ],\n" +
+                "                        \"type\": \"radiogroup\",\n" +
+                "                        \"title\": \"¿Pregunta que activa answers? Opción SI\",\n" +
+                "                        \"visible\": false\n" +
+                "                    },\n" +
+                "                    {\n" +
+                "                        \"description\": \"Prueba type text\",\n" +
+                "                        \"name\": \"typeText\",\n" +
+                "                        \"order\": 6,\n" +
+                "                        \"questionId\": 30,\n" +
+                "                        \"required\": true,\n" +
+                "                        \"type\": \"text\",\n" +
+                "                        \"typeInput\": \"textPersonName\",\n" +
+                "                        \"title\": \"Prueba type text\",\n" +
+                "                        \"validations\": [],\n" +
+                "                        \"visible\": false\n" +
+                "                    },\n" +
+                "                    {\n" +
+                "                        \"questionId\": 31,\n" +
+                "                        \"order\": 7,\n" +
+                "                        \"type\": \"checkbox\",\n" +
+                "                        \"name\": \"checkTest\",\n" +
+                "                        \"title\": \"¿Prueba type check?\",\n" +
+                "                        \"description\": \"\",\n" +
+                "                        \"required\": true,\n" +
+                "                        \"visible\": false,\n" +
+                "                        \"answers\": [{\n" +
+                "                                \"answerId\": 30,\n" +
+                "                                \"text\": \"1\",\n" +
+                "                                \"showSelect\": {},\n" +
+                "                                \"hideSelect\": {},\n" +
+                "                                \"finishSelect\": false,\n" +
+                "                                \"visible\": true\n" +
+                "                            },\n" +
+                "                            {\n" +
+                "                                \"answerId\": 31,\n" +
+                "                                \"text\": \"2\",\n" +
+                "                                \"showSelect\": {},\n" +
+                "                                \"hideSelect\": {},\n" +
+                "                                \"finishSelect\": false,\n" +
+                "                                \"visible\": false\n" +
+                "                            },\n" +
+                "                            {\n" +
+                "                                \"answerId\": 32,\n" +
+                "                                \"text\": \"3\",\n" +
+                "                                \"showSelect\": {},\n" +
+                "                                \"hideSelect\": {},\n" +
+                "                                \"finishSelect\": false,\n" +
+                "                                \"visible\": true\n" +
+                "                            }\n" +
+                "                        ]\n" +
+                "                    },\n" +
+                "                    {\n" +
+                "                        \"description\": \"\",\n" +
+                "                        \"name\": \"testRadiogroup\",\n" +
+                "                        \"order\": 8,\n" +
+                "                        \"questionId\": 32,\n" +
+                "                        \"required\": true,\n" +
+                "                        \"answers\": [{\n" +
+                "                                \"finishSelect\": false,\n" +
+                "                                \"showSelect\": {\n" +
+                "                                    \"questionnaires\": [{\n" +
+                "                                        \"questionaryId\": 11\n" +
+                "                                    }],\n" +
+                "                                    \"questions\": [],\n" +
+                "                                    \"answers\": []\n" +
+                "                                },\n" +
+                "                                \"hideSelect\": {},\n" +
+                "                                \"answerId\": 33,\n" +
+                "                                \"text\": \"SI\",\n" +
+                "                                \"visible\": true\n" +
+                "                            },\n" +
+                "                            {\n" +
+                "                                \"finishSelect\": true,\n" +
+                "                                \"showSelect\": {},\n" +
+                "                                \"hideSelect\": {},\n" +
+                "                                \"answerId\": 34,\n" +
+                "                                \"text\": \"NO\",\n" +
+                "                                \"visible\": true\n" +
+                "                            },\n" +
+                "                            {\n" +
+                "                                \"finishSelect\": true,\n" +
+                "                                \"showSelect\": {},\n" +
+                "                                \"hideSelect\": {},\n" +
+                "                                \"answerId\": 35,\n" +
+                "                                \"text\": \"OTRO\",\n" +
+                "                                \"visible\": false\n" +
+                "                            }\n" +
+                "                        ],\n" +
+                "                        \"type\": \"radiogroup\",\n" +
+                "                        \"title\": \"¿SALTA AL SIGUIENTE questionary - OPCIÓN SI?\",\n" +
+                "                        \"visible\": false\n" +
+                "                    }\n" +
+                "                ],\n" +
+                "                \"title\": \"Sospecha de casos\",\n" +
+                "                \"visible\": true\n" +
+                "            },\n" +
+                "            {\n" +
+                "                \"questionaryId\": 11,\n" +
+                "                \"title\": \"Diagnostico\",\n" +
+                "                \"name\": \"questionaryDiagnostico\",\n" +
+                "                \"order\": 2,\n" +
+                "                \"visible\": false,\n" +
+                "                \"questions\": [{\n" +
+                "                        \"description\": \"Escribe su edad\",\n" +
+                "                        \"name\": \"edad\",\n" +
+                "                        \"order\": 1,\n" +
+                "                        \"questionId\": 6,\n" +
+                "                        \"required\": true,\n" +
+                "                        \"type\": \"text\",\n" +
+                "                        \"typeInput\": \"number\",\n" +
+                "                        \"title\": \"Edad en años\",\n" +
+                "                        \"validations\": [\n" +
+                "                            \"verifyEdad\"\n" +
+                "                        ],\n" +
+                "                        \"visible\": true\n" +
+                "                    },\n" +
+                "                    {\n" +
+                "                        \"description\": \"\",\n" +
+                "                        \"name\": \"sexo\",\n" +
+                "                        \"order\": 2,\n" +
+                "                        \"questionId\": 7,\n" +
+                "                        \"required\": true,\n" +
+                "                        \"answers\": [{\n" +
+                "                                \"finishSelect\": false,\n" +
+                "                                \"showSelect\": {},\n" +
+                "                                \"hideSelect\": {},\n" +
+                "                                \"answerId\": 10,\n" +
+                "                                \"text\": \"Masculino\",\n" +
+                "                                \"visible\": true\n" +
+                "                            },\n" +
+                "                            {\n" +
+                "                                \"finishSelect\": false,\n" +
+                "                                \"showSelect\": {},\n" +
+                "                                \"hideSelect\": {},\n" +
+                "                                \"answerId\": 11,\n" +
+                "                                \"text\": \"Femenino\",\n" +
+                "                                \"visible\": true\n" +
+                "                            }\n" +
+                "                        ],\n" +
+                "                        \"type\": \"radiogroup\",\n" +
+                "                        \"title\": \"Género\",\n" +
+                "                        \"visible\": true\n" +
+                "                    },\n" +
+                "                    {\n" +
+                "                        \"description\": \"Su número de teléfono tiene que tener 10 dígitos\",\n" +
+                "                        \"name\": \"telefono\",\n" +
+                "                        \"order\": 3,\n" +
+                "                        \"questionId\": 8,\n" +
+                "                        \"required\": true,\n" +
+                "                        \"type\": \"text\",\n" +
+                "                        \"typeInput\": \"phone\",\n" +
+                "                        \"title\": \"Teléfono\",\n" +
+                "                        \"validations\": [\n" +
+                "                            \"verifyTelefono\",\n" +
+                "                            \"verifyLadaMorelos\"\n" +
+                "                        ],\n" +
+                "                        \"visible\": true\n" +
+                "                    },\n" +
+                "                    {\n" +
+                "                        \"description\": \"Descripción pregunta municipio\",\n" +
+                "                        \"name\": \"municipio\",\n" +
+                "                        \"order\": 4,\n" +
+                "                        \"questionId\": 9,\n" +
+                "                        \"required\": true,\n" +
+                "                        \"type\": \"text\",\n" +
+                "                        \"typeInput\": \"text\",\n" +
+                "                        \"title\": \"Municipio/Alcaldía\",\n" +
+                "                        \"validations\": [],\n" +
+                "                        \"visible\": true\n" +
+                "                    },\n" +
+                "                    {\n" +
+                "                        \"description\": \"\",\n" +
+                "                        \"title\": \"¿Pertenece a alguno(s) de los siguientes grupos?\",\n" +
+                "                        \"type\": \"checkbox\",\n" +
+                "                        \"name\": \"grupos\",\n" +
+                "                        \"order\": 5,\n" +
+                "                        \"questionId\": 10,\n" +
+                "                        \"required\": true,\n" +
+                "                        \"visible\": true,\n" +
+                "                        \"answers\": [{\n" +
+                "                                \"finishSelect\": false,\n" +
+                "                                \"showSelect\": {\n" +
+                "                                    \"questionnaires\": [],\n" +
+                "                                    \"questions\": [{\n" +
+                "                                        \"questionaryId\": 11,\n" +
+                "                                        \"questionId\": 11\n" +
+                "                                    }],\n" +
+                "                                    \"answers\": []\n" +
+                "                                },\n" +
+                "                                \"hideSelect\": {},\n" +
+                "                                \"answerId\": 12,\n" +
+                "                                \"text\": \"Embarazo\",\n" +
+                "                                \"visible\": true\n" +
+                "                            },\n" +
+                "                            {\n" +
+                "                                \"finishSelect\": false,\n" +
+                "                                \"showSelect\": {},\n" +
+                "                                \"hideSelect\": {},\n" +
+                "                                \"answerId\": 13,\n" +
+                "                                \"text\": \"Diabetes\",\n" +
+                "                                \"visible\": true\n" +
+                "                            },\n" +
+                "                            {\n" +
+                "                                \"finishSelect\": false,\n" +
+                "                                \"showSelect\": {},\n" +
+                "                                \"hideSelect\": {},\n" +
+                "                                \"answerId\": 14,\n" +
+                "                                \"text\": \"Hipertensión\",\n" +
+                "                                \"visible\": true\n" +
+                "                            },\n" +
+                "                            {\n" +
+                "                                \"answerId\": 15,\n" +
+                "                                \"text\": \"Obesidad\",\n" +
+                "                                \"showSelect\": {},\n" +
+                "                                \"hideSelect\": {},\n" +
+                "                                \"finishSelect\": false,\n" +
+                "                                \"visible\": true\n" +
+                "                            },\n" +
+                "                            {\n" +
+                "                                \"answerId\": 16,\n" +
+                "                                \"text\": \"Padece una enfermedad o toma algún medicamento que baje sus defensas\",\n" +
+                "                                \"showSelect\": {},\n" +
+                "                                \"hideSelect\": {},\n" +
+                "                                \"finishSelect\": false,\n" +
+                "                                \"visible\": true\n" +
+                "                            }\n" +
+                "                        ]\n" +
+                "                    },\n" +
+                "                    {\n" +
+                "                        \"questionId\": 11,\n" +
+                "                        \"order\": 6,\n" +
+                "                        \"type\": \"radiogroup\",\n" +
+                "                        \"name\": \"mesesEmbarazos\",\n" +
+                "                        \"title\": \"¿Cuantos meses de embarazo tiene?\",\n" +
+                "                        \"description\": \"\",\n" +
+                "                        \"required\": true,\n" +
+                "                        \"visible\": false,\n" +
+                "                        \"answers\": [{\n" +
+                "                                \"answerId\": 17,\n" +
+                "                                \"text\": \"Un mes\",\n" +
+                "                                \"showSelect\": {},\n" +
+                "                                \"hideSelect\": {},\n" +
+                "                                \"finishSelect\": false,\n" +
+                "                                \"visible\": true\n" +
+                "                            },\n" +
+                "                            {\n" +
+                "                                \"answerId\": 18,\n" +
+                "                                \"text\": \"Dos a tres meses\",\n" +
+                "                                \"showSelect\": {},\n" +
+                "                                \"hideSelect\": {},\n" +
+                "                                \"finishSelect\": false,\n" +
+                "                                \"visible\": true\n" +
+                "                            },\n" +
+                "                            {\n" +
+                "                                \"answerId\": 19,\n" +
+                "                                \"text\": \"Cuatro a seis meses\",\n" +
+                "                                \"showSelect\": {},\n" +
+                "                                \"hideSelect\": {},\n" +
+                "                                \"finishSelect\": false,\n" +
+                "                                \"visible\": true\n" +
+                "                            },\n" +
+                "                            {\n" +
+                "                                \"answerId\": 20,\n" +
+                "                                \"text\": \"Siete a nueve meses\",\n" +
+                "                                \"showSelect\": {},\n" +
+                "                                \"hideSelect\": {},\n" +
+                "                                \"finishSelect\": false,\n" +
+                "                                \"visible\": true\n" +
+                "                            }\n" +
+                "                        ]\n" +
+                "                    }\n" +
+                "                ]\n" +
+                "            },\n" +
+                "            {\n" +
+                "                \"questionaryId\": 12,\n" +
+                "                \"name\": \"datosFinales\",\n" +
+                "                \"order\": 3,\n" +
+                "                \"title\": \"questionary final\",\n" +
+                "                \"visible\": true,\n" +
+                "                \"questions\": [{\n" +
+                "                    \"description\": \"Alguna opinión\",\n" +
+                "                    \"name\": \"opinion\",\n" +
+                "                    \"order\": 1,\n" +
+                "                    \"questionId\": 40,\n" +
+                "                    \"required\": false,\n" +
+                "                    \"type\": \"text\",\n" +
+                "                    \"typeInput\": \"textPersonName\",\n" +
+                "                    \"title\": \"Opinión\",\n" +
+                "                    \"validations\": [],\n" +
+                "                    \"visible\": true\n" +
+                "                }]\n" +
+                "            }\n" +
+                "        ]\n" +
+                "    },\n" +
+                "    {\n" +
+                "        \"surveyId\": 3,\n" +
+                "        \"title\": \"INFLUENZA\",\n" +
+                "        \"phase\": 1,\n" +
+                "        \"description\": \"Autodiagnóstico influenza\",\n" +
+                "        \"surveyType\": 2,\n" +
+                "        \"visible\": true,\n" +
+                "        \"versionCode\": 2,\n" +
+                "        \"questionnaires\": [{\n" +
+                "                \"questionaryId\": 20,\n" +
+                "                \"order\": 1,\n" +
+                "                \"title\": \"Datos personales\",\n" +
+                "                \"name\": \"datosPersonales\",\n" +
+                "                \"visible\": true,\n" +
+                "                \"questions\": [{\n" +
+                "                        \"questionId\": 21,\n" +
+                "                        \"order\": 1,\n" +
+                "                        \"name\": \"name\",\n" +
+                "                        \"type\": \"text\",\n" +
+                "                        \"typeInput\": \"textPersonName\",\n" +
+                "                        \"title\": \"name de la persona\",\n" +
+                "                        \"description\": \"Escribe su name\",\n" +
+                "                        \"required\": true,\n" +
+                "                        \"visible\": true,\n" +
+                "                        \"validations\": []\n" +
+                "                    },\n" +
+                "                    {\n" +
+                "                        \"questionId\": 22,\n" +
+                "                        \"order\": 2,\n" +
+                "                        \"name\": \"primerApellido\",\n" +
+                "                        \"type\": \"text\",\n" +
+                "                        \"typeInput\": \"textPersonName\",\n" +
+                "                        \"title\": \"Primer Apellido\",\n" +
+                "                        \"description\": \"Escribe su apellido paterno\",\n" +
+                "                        \"required\": true,\n" +
+                "                        \"visible\": true,\n" +
+                "                        \"validations\": []\n" +
+                "                    },\n" +
+                "                    {\n" +
+                "                        \"questionId\": 23,\n" +
+                "                        \"order\": 3,\n" +
+                "                        \"name\": \"segundoApellido\",\n" +
+                "                        \"type\": \"text\",\n" +
+                "                        \"typeInput\": \"textPersonName\",\n" +
+                "                        \"title\": \"Segundo Apellido\",\n" +
+                "                        \"description\": \"Escribe su apellido materno\",\n" +
+                "                        \"required\": true,\n" +
+                "                        \"visible\": true,\n" +
+                "                        \"validations\": []\n" +
+                "                    },\n" +
+                "                    {\n" +
+                "                        \"questionId\": 24,\n" +
+                "                        \"order\": 4,\n" +
+                "                        \"type\": \"select\",\n" +
+                "                        \"typeInput\": \"selectServer\",\n" +
+                "                        \"name\": \"sexo\",\n" +
+                "                        \"title\": \"Género\",\n" +
+                "                        \"description\": \"Género de la persona\",\n" +
+                "                        \"required\": true,\n" +
+                "                        \"visible\": true,\n" +
+                "                        \"answers\": [{\n" +
+                "                                \"answerId\": 30,\n" +
+                "                                \"text\": \"Masculino\",\n" +
+                "                                \"showSelect\": {},\n" +
+                "                                \"hideSelect\": {},\n" +
+                "                                \"visible\": true,\n" +
+                "                                \"finishSelect\": false\n" +
+                "                            },\n" +
+                "                            {\n" +
+                "                                \"answerId\": 31,\n" +
+                "                                \"text\": \"Femenino\",\n" +
+                "                                \"showSelect\": {},\n" +
+                "                                \"hideSelect\": {},\n" +
+                "                                \"visible\": true,\n" +
+                "                                \"finishSelect\": false\n" +
+                "                            }\n" +
+                "                        ]\n" +
+                "                    },\n" +
+                "                    {\n" +
+                "                        \"questionId\": 25,\n" +
+                "                        \"order\": 5,\n" +
+                "                        \"name\": \"curp\",\n" +
+                "                        \"type\": \"text\",\n" +
+                "                        \"typeInput\": \"textPersonName\",\n" +
+                "                        \"title\": \"Curp\",\n" +
+                "                        \"description\": \"La CURP consta de 18 caracteres\",\n" +
+                "                        \"required\": true,\n" +
+                "                        \"visible\": true,\n" +
+                "                        \"validations\": []\n" +
+                "                    },\n" +
+                "                    {\n" +
+                "                        \"questionId\": 26,\n" +
+                "                        \"order\": 6,\n" +
+                "                        \"type\": \"radiogroup\",\n" +
+                "                        \"name\": \"edadMayor\",\n" +
+                "                        \"title\": \"¿Usted cuenta con más de 18 años?\",\n" +
+                "                        \"description\": \"\",\n" +
+                "                        \"required\": true,\n" +
+                "                        \"visible\": true,\n" +
+                "                        \"answers\": [{\n" +
+                "                                \"answerId\": 32,\n" +
+                "                                \"text\": \"SI\",\n" +
+                "                                \"showSelect\": {\n" +
+                "                                    \"questionnaires\": [{\n" +
+                "                                        \"questionaryId\": 21\n" +
+                "                                    }],\n" +
+                "                                    \"questions\": [{\n" +
+                "                                        \"questionaryId\": 20,\n" +
+                "                                        \"questionId\": 27\n" +
+                "                                    }],\n" +
+                "                                    \"answers\": []\n" +
+                "                                },\n" +
+                "                                \"hideSelect\": {},\n" +
+                "                                \"visible\": true,\n" +
+                "                                \"finishSelect\": false\n" +
+                "                            },\n" +
+                "                            {\n" +
+                "                                \"answerId\": 33,\n" +
+                "                                \"text\": \"NO\",\n" +
+                "                                \"showSelect\": {},\n" +
+                "                                \"hideSelect\": {},\n" +
+                "                                \"visible\": true,\n" +
+                "                                \"finishSelect\": true\n" +
+                "                            }\n" +
+                "                        ]\n" +
+                "                    },\n" +
+                "                    {\n" +
+                "                        \"questionId\": 27,\n" +
+                "                        \"order\": 7,\n" +
+                "                        \"name\": \"ine\",\n" +
+                "                        \"type\": \"text\",\n" +
+                "                        \"typeInput\": \"textPersonName\",\n" +
+                "                        \"title\": \"INE\",\n" +
+                "                        \"description\": \"Escribe su clave electoral\",\n" +
+                "                        \"required\": true,\n" +
+                "                        \"visible\": false,\n" +
+                "                        \"validations\": []\n" +
+                "                    }\n" +
+                "                ]\n" +
+                "            },\n" +
+                "            {\n" +
+                "                \"questionaryId\": 21,\n" +
+                "                \"order\": 2,\n" +
+                "                \"title\": \"Datos de diagnóstico\",\n" +
+                "                \"name\": \"questionaryDiagnostico\",\n" +
+                "                \"visible\": false,\n" +
+                "                \"questions\": [{\n" +
+                "                        \"questionId\": 30,\n" +
+                "                        \"order\": 1,\n" +
+                "                        \"type\": \"radiogroup\",\n" +
+                "                        \"name\": \"sospecha\",\n" +
+                "                        \"title\": \"¿Sospechas que tienes influenza o alguien cercano a ti puede tenerlo?\",\n" +
+                "                        \"description\": \"\",\n" +
+                "                        \"required\": true,\n" +
+                "                        \"visible\": true,\n" +
+                "                        \"answers\": [{\n" +
+                "                                \"answerId\": 40,\n" +
+                "                                \"text\": \"SI\",\n" +
+                "                                \"showSelect\": {\n" +
+                "                                    \"questionnaires\": [],\n" +
+                "                                    \"questions\": [{\n" +
+                "                                        \"questionaryId\": 21,\n" +
+                "                                        \"questionId\": 31\n" +
+                "                                    }],\n" +
+                "                                    \"answers\": []\n" +
+                "                                },\n" +
+                "                                \"hideSelect\": {},\n" +
+                "                                \"visible\": true,\n" +
+                "                                \"finishSelect\": false\n" +
+                "                            },\n" +
+                "                            {\n" +
+                "                                \"answerId\": 41,\n" +
+                "                                \"text\": \"NO\",\n" +
+                "                                \"showSelect\": {},\n" +
+                "                                \"hideSelect\": {},\n" +
+                "                                \"visible\": true,\n" +
+                "                                \"finishSelect\": true\n" +
+                "                            }\n" +
+                "                        ]\n" +
+                "                    },\n" +
+                "                    {\n" +
+                "                        \"questionId\": 31,\n" +
+                "                        \"order\": 2,\n" +
+                "                        \"type\": \"radiogroup\",\n" +
+                "                        \"name\": \"diaSintomas\",\n" +
+                "                        \"title\": \"¿Cuantos días tienes de síntomas?\",\n" +
+                "                        \"description\": \"\",\n" +
+                "                        \"required\": true,\n" +
+                "                        \"visible\": false,\n" +
+                "                        \"answers\": [{\n" +
+                "                                \"answerId\": 42,\n" +
+                "                                \"text\": \"Un día\",\n" +
+                "                                \"showSelect\": {},\n" +
+                "                                \"hideSelect\": {},\n" +
+                "                                \"visible\": true,\n" +
+                "                                \"finishSelect\": false\n" +
+                "                            },\n" +
+                "                            {\n" +
+                "                                \"answerId\": 43,\n" +
+                "                                \"text\": \"Dos a tres días\",\n" +
+                "                                \"showSelect\": {},\n" +
+                "                                \"hideSelect\": {},\n" +
+                "                                \"visible\": true,\n" +
+                "                                \"finishSelect\": false\n" +
+                "                            },\n" +
+                "                            {\n" +
+                "                                \"answerId\": 44,\n" +
+                "                                \"text\": \"Cuatro a seis días\",\n" +
+                "                                \"showSelect\": {},\n" +
+                "                                \"hideSelect\": {},\n" +
+                "                                \"visible\": true,\n" +
+                "                                \"finishSelect\": false\n" +
+                "                            },\n" +
+                "                            {\n" +
+                "                                \"answerId\": 45,\n" +
+                "                                \"text\": \"Siete  o mas días\",\n" +
+                "                                \"showSelect\": {},\n" +
+                "                                \"hideSelect\": {},\n" +
+                "                                \"visible\": true,\n" +
+                "                                \"finishSelect\": false\n" +
+                "                            }\n" +
+                "                        ]\n" +
+                "                    }\n" +
+                "                ]\n" +
+                "            }\n" +
+                "        ]\n" +
+                "    }\n" +
+                "]";
         return json;
     }
 
@@ -330,33 +1004,33 @@ public class Utils {
         String date = simpleDateFormat.format(new Date());
         return date;
     }
-    private Encuesta getEncuesta(Long id, String titulo, String descripcion,Integer etapa, Long catEncuestaTipoId, String json){
-        Encuesta encuesta = new Encuesta();
-        encuesta.setEncuestaId(id);
-        encuesta.setTitulo(titulo);
-        encuesta.setDescripcion(descripcion);
-        encuesta.setEtapa(etapa);
-        encuesta.setCatEncuestaTipoId(catEncuestaTipoId);
+    private Survey getEncuesta(Long id, String titulo, String descripcion, Integer etapa, Long catEncuestaTipoId, String json){
+        Survey survey = new Survey();
+        survey.setSurveyId(id);
+        survey.setTitle(titulo);
+        survey.setDescription(descripcion);
+        survey.setPhase(etapa);
+        survey.setSurveyType(catEncuestaTipoId);
         // encuesta.setJson(json);
-        return encuesta;
+        return survey;
     }
-    public static EncuestaRegistro getEncuestaRegistro(Encuesta encuesta, Integer catEncuestaEstatusId, String fechaInicial, String fechaFinal){
-        EncuestaRegistro encuestaRegistro = new EncuestaRegistro();
-        encuestaRegistro.setEncuestaId(encuesta.getEncuestaId());
-        encuestaRegistro.setCatEncuestaEstatusId(catEncuestaEstatusId);
-        encuestaRegistro.setFechaInicial(fechaInicial);
-        encuestaRegistro.setFechaFinal(fechaFinal);
-        return encuestaRegistro;
+    public static SurveyRecord getEncuestaRegistro(Survey survey, Integer catEncuestaEstatusId, String fechaInicial, String fechaFinal){
+        SurveyRecord surveyRecord = new SurveyRecord();
+        surveyRecord.setSurveyId(survey.getSurveyId());
+        surveyRecord.setSurveyStatus(catEncuestaEstatusId);
+        surveyRecord.setStartDate(fechaInicial);
+        surveyRecord.setEndDate(fechaFinal);
+        return surveyRecord;
     }
-    public static EncuestaRespuesta getEncuestaRespuesta(Cuestionario cuestionario,
-                                                         Pregunta pregunta, String respuesta, Long encuestaRegistroId){
-        EncuestaRespuesta encuestaRespuesta = new EncuestaRespuesta();
-        encuestaRespuesta.setEncuestaRegistroId(encuestaRegistroId);
-        encuestaRespuesta.setCuestionarioId(cuestionario.getCuestionarioId());
-        encuestaRespuesta.setPreguntaId(pregunta.getPreguntaId());
-        encuestaRespuesta.setTipo(pregunta.getTipo());
-        encuestaRespuesta.setRespuesta(respuesta);
-        return encuestaRespuesta;
+    public static SurveyAnswer getEncuestaRespuesta(Cuestionario cuestionario,
+                                                    Pregunta pregunta, String respuesta, Long encuestaRegistroId){
+        SurveyAnswer surveyAnswer = new SurveyAnswer();
+        surveyAnswer.setSurveyRecordId(encuestaRegistroId);
+        surveyAnswer.setCuestionarioId(cuestionario.getCuestionarioId());
+        surveyAnswer.setPreguntaId(pregunta.getPreguntaId());
+        surveyAnswer.setTipo(pregunta.getTipo());
+        surveyAnswer.setRespuesta(respuesta);
+        return surveyAnswer;
     }
 
     public static MostrarSiSelecciona infoMostrarSiSelecciona(Respuesta respuesta){
@@ -382,20 +1056,20 @@ public class Utils {
         return obj == null || obj.toString().trim().isEmpty();
     }
 
-    public static void startNewSurveyFragment(Context context, Activity activity, Encuesta survey){
+    public static void startNewSurveyFragment(Context context, Activity activity, Survey survey){
         Intent intent = new Intent(context, QuestionaryActivity.class);
         intent.putExtra(CustomConstants.SURVEY_KEY, survey);
         activity.startActivityForResult(intent, CustomConstants.QUESTIONNAIRES_REQUEST);
     }
 
-    public static void startNewSurvey(Context context, Encuesta survey){
+    public static void startNewSurvey(Context context, Survey survey){
         Intent intent = new Intent(context, QuestionaryActivity.class);
         intent.putExtra(CustomConstants.SURVEY_KEY, survey);
         intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
         context.startActivity(intent);
     }
 
-    public static void startOldSurvey(Context context, Activity activity, Encuesta survey, EncuestaRegistro registrationSurvey){
+    /*public static void startOldSurvey(Context context, Activity activity, Survey survey, EncuestaRegistro registrationSurvey){
         Intent intent = new Intent(context, QuestionaryActivity.class);
         intent.putExtra(CustomConstants.SURVEY_KEY, survey);
         intent.putExtra(CustomConstants.REGISTRATION_SURVEY_KEY, registrationSurvey);
@@ -403,13 +1077,13 @@ public class Utils {
     }
 
     public static void startOldSurvey(Context context, Activity activity, SurveyRecords surveyRecords){
-        Encuesta survey = surveyRecords.getSurvey();
+        Survey survey = surveyRecords.getSurvey();
         EncuestaRegistro registrationSurvey = surveyRecords.getRecord();
         Intent intent = new Intent(context, QuestionaryActivity.class);
         intent.putExtra(CustomConstants.SURVEY_KEY, survey);
         intent.putExtra(CustomConstants.REGISTRATION_SURVEY_KEY, registrationSurvey);
         activity.startActivityForResult(intent, CustomConstants.QUESTIONNAIRES_REQUEST);
-    }
+    }*/
 
     public static Respuesta getRespuestaSpinnerDefault(Context mContext){
         Respuesta respuesta = new Respuesta();

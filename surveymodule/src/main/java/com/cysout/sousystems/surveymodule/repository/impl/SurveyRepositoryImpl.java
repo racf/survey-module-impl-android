@@ -7,23 +7,23 @@ import androidx.lifecycle.LiveData;
 import java.util.List;
 
 import com.cysout.sousystems.surveymodule.config.AppDatabase;
-import com.cysout.sousystems.surveymodule.dao.EncuestaDao;
-import com.cysout.sousystems.surveymodule.entity.Encuesta;
+import com.cysout.sousystems.surveymodule.dao.SurveyDao;
+import com.cysout.sousystems.surveymodule.entity.Survey;
 import com.cysout.sousystems.surveymodule.entity.relation.EncuestaCuestionarios;
 import com.cysout.sousystems.surveymodule.entity.relation.SurveyRecords;
-import com.cysout.sousystems.surveymodule.repository.EncuestaRepository;
+import com.cysout.sousystems.surveymodule.repository.SurveyRepository;
 
-public class EncuestaRepositoryImpl implements EncuestaRepository {
-    private EncuestaDao encuestaDao;
+public class SurveyRepositoryImpl implements SurveyRepository {
+    private SurveyDao surveyDao;
 
-    public EncuestaRepositoryImpl(Application application) {
+    public SurveyRepositoryImpl(Application application) {
         AppDatabase db = AppDatabase.getDataBase(application);
-        this.encuestaDao = db.encuestaDao();
+        this.surveyDao = db.surveyDao();
     }
 
     @Override
-    public Long insert(Encuesta encuesta) {
-        return this.encuestaDao.insert(encuesta);
+    public Long insert(Survey survey) {
+        return this.surveyDao.insert(survey);
         /*final Long[] ids = {null};
         AppDatabase.databaseWriteExecutor.execute(() -> {
             ids[0] = encuestaDao.insert(encuesta);
@@ -32,22 +32,22 @@ public class EncuestaRepositoryImpl implements EncuestaRepository {
     }
 
     @Override
-    public Long[] insertList(List<Encuesta> list) {
+    public Long[] insertList(List<Survey> list) {
         /*final Long[][] ids = {{null}};
         AppDatabase.databaseWriteExecutor.execute(() -> {
             ids[0] = encuestaDao.insertList(list);
         });
         return ids[0];*/
-        return this.encuestaDao.insertList(list);
+        return this.surveyDao.insertList(list);
     }
 
     @Override
-    public void update(Encuesta encuesta) {
-        this.encuestaDao.update(encuesta);
+    public void update(Survey survey) {
+        this.surveyDao.update(survey);
     }
 
     @Override
-    public void delete(Encuesta encuesta) {
+    public void delete(Survey survey) {
 
     }
 
@@ -57,78 +57,78 @@ public class EncuestaRepositoryImpl implements EncuestaRepository {
     }
 
     @Override
-    public LiveData<Encuesta> loadEncuestaById(Long encuestaId) {
-        return this.encuestaDao.loadEncuestaById(encuestaId);
+    public LiveData<Survey> loadEncuestaById(Long encuestaId) {
+        return this.surveyDao.loadEncuestaById(encuestaId);
     }
 
     @Override
-    public Encuesta loadEncuestaByIdSync(Long encuestaId) {
-        return this.encuestaDao.loadEncuestaByIdSync(encuestaId);
+    public Survey loadEncuestaByIdSync(Long encuestaId) {
+        return this.surveyDao.loadEncuestaByIdSync(encuestaId);
     }
 
 
     @Override
-    public List<Encuesta> findEncuestasById(Long encuestaId) {
-        return this.encuestaDao.loadByEncuestaIdSync(encuestaId);
+    public List<Survey> findEncuestasById(Long encuestaId) {
+        return this.surveyDao.loadByEncuestaIdSync(encuestaId);
     }
 
     @Override
-    public LiveData<List<Encuesta>> loadAll() {
-        return this.encuestaDao.loadAll();
+    public LiveData<List<Survey>> loadAll() {
+        return this.surveyDao.loadAll();
     }
 
     @Override
-    public List<Encuesta> loadAllSync() {
-        return this.encuestaDao.loadAllSync();
+    public List<Survey> loadAllSync() {
+        return this.surveyDao.loadAllSync();
     }
 
     @Override
     public List<EncuestaCuestionarios> loadEncuestaCuestionarios() {
-        return this.encuestaDao.loadCuestionariosSync();
+        return this.surveyDao.loadCuestionariosSync();
     }
 
     @Override
     public EncuestaCuestionarios loadCuestionarioRespuestasSync() {
-        return this.encuestaDao.loadCuestionarioRespuestasSync();
+        return this.surveyDao.loadCuestionarioRespuestasSync();
     }
 
     @Override
     public LiveData<List<SurveyRecords>> loadAllSurveyRecords() {
-        return this.encuestaDao.loadAllSurveyRecords();
+        return this.surveyDao.loadAllSurveyRecords();
     }
 
     @Override
     public List<SurveyRecords> loadAllSurveyRecordsSync() {
-        return this.encuestaDao.loadAllSurveyRecordsSync();
+        return this.surveyDao.loadAllSurveyRecordsSync();
     }
 
     @Override
     public LiveData<List<SurveyRecords>> loadSurveyCompleted() {
-        return this.encuestaDao.loadSurveyCompleted();
+        return this.surveyDao.loadSurveyCompleted();
     }
 
     @Override
     public List<SurveyRecords> loadSurveyCompletedSync() {
-        return this.encuestaDao.loadSurveyCompletedSync();
+        return this.surveyDao.loadSurveyCompletedSync();
     }
 
     @Override
     public LiveData<List<SurveyRecords>> loadSurveyPending() {
-        return this.encuestaDao.loadSurveyPending();
+        return this.surveyDao.loadSurveyPending();
     }
 
     @Override
     public List<SurveyRecords> loadSurveyPendingSync() {
-        return this.encuestaDao.loadSurveyPendingSync();
+        return this.surveyDao.loadSurveyPendingSync();
     }
 
     @Override
     public LiveData<List<SurveyRecords>> loadSurveySent() {
-        return this.encuestaDao.loadSurveySent();
+        return this.surveyDao.loadSurveySent();
     }
 
     @Override
     public List<SurveyRecords> loadSurveySentSync() {
-        return this.encuestaDao.loadSurveySentSync();
+        return this.surveyDao.loadSurveySentSync();
     }
 }

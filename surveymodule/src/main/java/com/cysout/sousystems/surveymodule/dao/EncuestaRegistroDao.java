@@ -9,7 +9,7 @@ import androidx.room.Transaction;
 import androidx.room.Update;
 
 import java.util.List;
-import com.cysout.sousystems.surveymodule.entity.EncuestaRegistro;
+import com.cysout.sousystems.surveymodule.entity.SurveyRecord;
 import com.cysout.sousystems.surveymodule.entity.relation.EncuestaRegistroRespuestas;
 
 
@@ -17,69 +17,69 @@ import com.cysout.sousystems.surveymodule.entity.relation.EncuestaRegistroRespue
 public interface EncuestaRegistroDao {
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    Long insert(EncuestaRegistro item);
+    Long insert(SurveyRecord item);
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    Long[] insertList(List<EncuestaRegistro> list);
+    Long[] insertList(List<SurveyRecord> list);
 
     @Update
-    void update(EncuestaRegistro item);
+    void update(SurveyRecord item);
 
-    @Query("DELETE FROM encuestaRegistro")
+    @Query("DELETE FROM surveyRecord")
     void deleteAll();
 
-    @Query("SELECT * FROM encuestaRegistro")
-    LiveData<List<EncuestaRegistro>> loadAll();
+    @Query("SELECT * FROM surveyRecord")
+    LiveData<List<SurveyRecord>> loadAll();
 
-    @Query("SELECT * FROM encuestaRegistro")
-    List<EncuestaRegistro> loadAllSync();
+    @Query("SELECT * FROM surveyRecord")
+    List<SurveyRecord> loadAllSync();
 
-    @Query("SELECT * FROM encuestaRegistro WHERE encuestaIdFK=:encuestaId")
-    LiveData<List<EncuestaRegistro>> loadByEncuestaId(Long encuestaId);
+    @Query("SELECT * FROM surveyRecord WHERE surveyIdFK=:encuestaId")
+    LiveData<List<SurveyRecord>> loadByEncuestaId(Long encuestaId);
 
-    @Query("SELECT * FROM encuestaRegistro WHERE encuestaIdFK=:encuestaId LIMIT 1")
-    List<EncuestaRegistro> loadByEncuestaIdSync(Long encuestaId);
+    @Query("SELECT * FROM surveyRecord WHERE surveyIdFK=:encuestaId LIMIT 1")
+    List<SurveyRecord> loadByEncuestaIdSync(Long encuestaId);
 
-    @Query("SELECT * FROM encuestaRegistro WHERE encuestaIdFK=:encuestaId")
-    EncuestaRegistro encuestaRegistro(Long encuestaId);
+    @Query("SELECT * FROM surveyRecord WHERE surveyIdFK=:encuestaId")
+    SurveyRecord encuestaRegistro(Long encuestaId);
 
-    @Query("SELECT * FROM encuestaRegistro WHERE encuestaIdFK=:encuestaId AND catEncuestaEstatusId=:catEncuestaEstatusId LIMIT 1")
-    EncuestaRegistro encuestaRegistroByEncuestaIdAndCatEncuestaEstatusId(Long encuestaId, Integer catEncuestaEstatusId);
+    @Query("SELECT * FROM surveyRecord WHERE surveyIdFK=:encuestaId AND surveyStatus=:catEncuestaEstatusId LIMIT 1")
+    SurveyRecord encuestaRegistroByEncuestaIdAndCatEncuestaEstatusId(Long encuestaId, Integer catEncuestaEstatusId);
 
-    @Query("SELECT * FROM encuestaRegistro WHERE encuestaIdFK=:encuestaId AND catEncuestaEstatusId=:catEncuestaEstatusId")
-    LiveData<List<EncuestaRegistro>> loadByEncuestaIdAndCatEncuestaEstatusId(Long encuestaId, Integer catEncuestaEstatusId);
+    @Query("SELECT * FROM surveyRecord WHERE surveyIdFK=:encuestaId AND surveyStatus=:catEncuestaEstatusId")
+    LiveData<List<SurveyRecord>> loadByEncuestaIdAndCatEncuestaEstatusId(Long encuestaId, Integer catEncuestaEstatusId);
 
-    @Query("SELECT * FROM encuestaRegistro WHERE encuestaIdFK=:encuestaId AND catEncuestaEstatusId=:catEncuestaEstatusId")
-    List<EncuestaRegistro> loadByEncuestaIdAndCatEncuestaEstatusIdSync(Long encuestaId, Integer catEncuestaEstatusId);
+    @Query("SELECT * FROM surveyRecord WHERE surveyIdFK=:encuestaId AND surveyStatus=:catEncuestaEstatusId")
+    List<SurveyRecord> loadByEncuestaIdAndCatEncuestaEstatusIdSync(Long encuestaId, Integer catEncuestaEstatusId);
 
-    @Query("UPDATE encuestaRegistro SET catEncuestaEstatusId =:catEncuestaEstatusId WHERE encuestaRegistroId=:encuestaRegistroId")
-    void updateEncuestaRegistroByEnctRegtroId(Integer catEncuestaEstatusId, Long encuestaRegistroId);
+    @Query("UPDATE surveyRecord SET surveyStatus =:catEncuestaEstatusId WHERE surveyRecordId=:surveyRecordId")
+    void updateEncuestaRegistroByEnctRegtroId(Integer catEncuestaEstatusId, Long surveyRecordId);
 
-    @Query("UPDATE encuestaRegistro SET catEncuestaEstatusId =:catEncuestaEstatusId, fechaFinal=:fechaFinal WHERE encuestaRegistroId=:encuestaRegistroId")
-    void updateEncuestaRegistroByEnctRegtroId(Integer catEncuestaEstatusId, String fechaFinal, Long encuestaRegistroId);
-
-    @Transaction
-    @Query("SELECT * FROM encuestaRegistro WHERE encuestaRegistroId=:encuestaRegistroId")
-    LiveData<EncuestaRegistroRespuestas> loadRegistroRespByEnctRegtroId(Long encuestaRegistroId);
+    @Query("UPDATE surveyRecord SET surveyStatus =:catEncuestaEstatusId, endDate=:fechaFinal WHERE surveyRecordId=:surveyRecordId")
+    void updateEncuestaRegistroByEnctRegtroId(Integer catEncuestaEstatusId, String fechaFinal, Long surveyRecordId);
 
     @Transaction
-    @Query("SELECT * FROM encuestaRegistro WHERE encuestaRegistroId=:encuestaRegistroId")
-    EncuestaRegistroRespuestas loadRegistroRespByEnctRegtroIdSync(Long encuestaRegistroId);
+    @Query("SELECT * FROM surveyRecord WHERE surveyRecordId=:surveyRecordId")
+    LiveData<EncuestaRegistroRespuestas> loadRegistroRespByEnctRegtroId(Long surveyRecordId);
 
     @Transaction
-    @Query("SELECT * FROM encuestaRegistro WHERE encuestaRegistroId=:encuestaRegistroId")
-    LiveData<List<EncuestaRegistroRespuestas>> loadRegistrosRespByEnctRegtroId(Long encuestaRegistroId);
+    @Query("SELECT * FROM surveyRecord WHERE surveyRecordId=:surveyRecordId")
+    EncuestaRegistroRespuestas loadRegistroRespByEnctRegtroIdSync(Long surveyRecordId);
 
     @Transaction
-    @Query("SELECT * FROM encuestaRegistro WHERE encuestaRegistroId=:encuestaRegistroId")
-    List<EncuestaRegistroRespuestas> loadRegistrosRespByEnctRegtroIdSync(Long encuestaRegistroId);
+    @Query("SELECT * FROM surveyRecord WHERE surveyRecordId=:surveyRecordId")
+    LiveData<List<EncuestaRegistroRespuestas>> loadRegistrosRespByEnctRegtroId(Long surveyRecordId);
 
     @Transaction
-    @Query("SELECT * FROM encuestaRegistro WHERE catEncuestaEstatusId=:catEncuestaEstatusId")
+    @Query("SELECT * FROM surveyRecord WHERE surveyRecordId=:surveyRecordId")
+    List<EncuestaRegistroRespuestas> loadRegistrosRespByEnctRegtroIdSync(Long surveyRecordId);
+
+    @Transaction
+    @Query("SELECT * FROM surveyRecord WHERE surveyStatus=:catEncuestaEstatusId")
     LiveData<List<EncuestaRegistroRespuestas>> loadRegistrosRespuestasByEstatus(Integer catEncuestaEstatusId);
 
     @Transaction
-    @Query("SELECT * FROM encuestaRegistro WHERE catEncuestaEstatusId=:catEncuestaEstatusId")
+    @Query("SELECT * FROM surveyRecord WHERE surveyStatus=:catEncuestaEstatusId")
     List<EncuestaRegistroRespuestas> loadRegistrosRespuestasByEstatusSync(Integer catEncuestaEstatusId);
 
 }

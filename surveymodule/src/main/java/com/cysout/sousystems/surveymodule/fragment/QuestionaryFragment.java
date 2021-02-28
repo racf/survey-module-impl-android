@@ -21,16 +21,20 @@ import java.util.concurrent.Executors;
 
 import com.cysout.sousystems.surveymodule.R;
 import com.cysout.sousystems.surveymodule.entity.Cuestionario;
-import com.cysout.sousystems.surveymodule.entity.Encuesta;
+import com.cysout.sousystems.surveymodule.entity.Survey;
 import com.cysout.sousystems.surveymodule.entity.Pregunta;
 import com.cysout.sousystems.surveymodule.service.EncuestaService;
 import com.cysout.sousystems.surveymodule.service.impl.EncuestaServiceImpl;
 import com.cysout.sousystems.surveymodule.utils.CustomConstants;
 import com.cysout.sousystems.surveymodule.utils.Utils;
 
+/**
+ *Developed by cysout.com and sousystems.com.mx
+ *Contact info@cysout.com or contacto@sousystems.com.mx
+**/
 public class QuestionaryFragment extends Fragment implements WidgetFragment.FragmentCallback {
     private Cuestionario cuestionario;
-    private Encuesta encuesta;
+    private Survey survey;
     private TextView tvQuestionaryTitle;
     private Map<WidgetFragment, Pregunta> preguntas = new HashMap<WidgetFragment, Pregunta>();
     private LinearLayout fieldset;
@@ -39,8 +43,8 @@ public class QuestionaryFragment extends Fragment implements WidgetFragment.Frag
     private static final int NUMBER_OF_THREADS = 10;
     public static final ExecutorService executorService = Executors.newFixedThreadPool(NUMBER_OF_THREADS);
     private String fechaInicial = "";
-    public QuestionaryFragment(Encuesta encuesta, Cuestionario cuestionario) {
-        this.encuesta = encuesta;
+    public QuestionaryFragment(Survey survey, Cuestionario cuestionario) {
+        this.survey = survey;
         this.cuestionario = cuestionario;
         this.fechaInicial = Utils.dateTime();
     }
@@ -75,7 +79,7 @@ public class QuestionaryFragment extends Fragment implements WidgetFragment.Frag
             Long encuestaRegistroId = Utils.findPreferenceLong(getContext(), CustomConstants.PREFERENCE_NAME_CUESTIONARIO, CustomConstants.CUESTIONARIO_REGISTRO_ID);
             //Si es la primera vez que se guarda una encuesta_registro, en caso contrario obtiene el identificador que se ha generado anteriormente
             if( encuestaRegistroId == 0L){
-                encuestaRegistroId = encuestaService.encuestaRegistro(encuesta, CustomConstants.ENCUESTA_EN_PROCESO, this.fechaInicial, this.fechaInicial);
+                encuestaRegistroId = encuestaService.encuestaRegistro(survey, CustomConstants.ENCUESTA_EN_PROCESO, this.fechaInicial, this.fechaInicial);
                     Log.d(CustomConstants.TAG_LOG, "PRIMERA VEZ PARA GUARDAR " + encuestaRegistroId + " --- "+ this.fechaInicial);
                     //Guardamos el ID auto-increment de la encuesta que se esta encuestaRegistroId
                     Utils.saveOnPreferenceLong(getContext(), CustomConstants.PREFERENCE_NAME_CUESTIONARIO, CustomConstants.CUESTIONARIO_REGISTRO_ID, encuestaRegistroId);
@@ -84,7 +88,7 @@ public class QuestionaryFragment extends Fragment implements WidgetFragment.Frag
                 WidgetFragment widgetFragment = entry.getKey();
                 Pregunta pregunta = entry.getValue();
                 Log.d(CustomConstants.TAG_LOG, "id: "+ pregunta.getPreguntaId() + " titulo: " + pregunta.getTitulo());
-                widgetFragment.save(encuesta, cuestionario, pregunta, encuestaRegistroId);
+                widgetFragment.save(survey, cuestionario, pregunta, encuestaRegistroId);
             }
         });
     }

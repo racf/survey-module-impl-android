@@ -10,7 +10,7 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.cysout.sousystems.survey.impl.R;
-import com.cysout.sousystems.surveymodule.entity.Encuesta;
+import com.cysout.sousystems.surveymodule.entity.Survey;
 
 import java.util.List;
 
@@ -20,10 +20,10 @@ import java.util.List;
 **/
 public class SurveyAdapter extends RecyclerView.Adapter<SurveyAdapter.CustomHolder>{
     private int layout;
-    private List<Encuesta> list;
+    private List<Survey> list;
     private CustomHolder.OnItemClickListener itemClickListener;
 
-    public SurveyAdapter (List<Encuesta> list, int layout, CustomHolder.OnItemClickListener listener){
+    public SurveyAdapter (List<Survey> list, int layout, CustomHolder.OnItemClickListener listener){
         this.list = list;
         this.layout = layout;
         this.itemClickListener = listener;
@@ -58,20 +58,20 @@ public class SurveyAdapter extends RecyclerView.Adapter<SurveyAdapter.CustomHold
             this.tvCardSurveySubTitle = itemView.findViewById(R.id.tvCardSurveySubTitle);
             this.btnStartSurvey = itemView.findViewById(R.id.btnStartSurvey);
         }
-        public void bind(final Encuesta encuesta, final CustomHolder.OnItemClickListener listener){
-            tvCardSurveyTitle.setText(encuesta.getTitulo());
-            String description = encuesta.getDescripcion() == null ? "" : encuesta.getDescripcion();
+        public void bind(final Survey survey, final CustomHolder.OnItemClickListener listener){
+            tvCardSurveyTitle.setText(survey.getTitle());
+            String description = survey.getDescription() == null ? "" : survey.getDescription();
             tvCardSurveySubTitle.setText(description);
             btnStartSurvey.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    listener.btnOnClick(v, encuesta, getAdapterPosition());
+                    listener.btnOnClick(v, survey, getAdapterPosition());
                 }
             });
         }
         public interface OnItemClickListener{
-            void onItemClick(Encuesta encuesta, int position);
-            void btnOnClick(View v, Encuesta encuesta, int position);
+            void onItemClick(Survey survey, int position);
+            void btnOnClick(View v, Survey survey, int position);
         }
 
     }

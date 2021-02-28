@@ -26,7 +26,7 @@ import java.util.concurrent.Executors;
 import com.cysout.sousystems.surveymodule.R;
 import com.cysout.sousystems.surveymodule.controller.RespuestaMostrarCuestionariosController;
 import com.cysout.sousystems.surveymodule.entity.Cuestionario;
-import com.cysout.sousystems.surveymodule.entity.Encuesta;
+import com.cysout.sousystems.surveymodule.entity.Survey;
 import com.cysout.sousystems.surveymodule.entity.MostrarCuestionarios;
 import com.cysout.sousystems.surveymodule.entity.MostrarPreguntas;
 import com.cysout.sousystems.surveymodule.entity.MostrarRespuestas;
@@ -39,6 +39,10 @@ import com.cysout.sousystems.surveymodule.service.impl.EncuestaServiceImpl;
 import com.cysout.sousystems.surveymodule.utils.CustomConstants;
 import com.cysout.sousystems.surveymodule.utils.Utils;
 
+/**
+ *Developed by cysout.com and sousystems.com.mx
+ *Contact info@cysout.com or contacto@sousystems.com.mx
+**/
 public abstract class WidgetFragment extends Fragment {
     private static final Map<String, Class<? extends WidgetFragment>> widgets = new HashMap<>();
 
@@ -116,7 +120,7 @@ public abstract class WidgetFragment extends Fragment {
 
     public abstract boolean load(Cuestionario cuestionario, Pregunta pregunta);
 
-    public abstract boolean save(Encuesta encuesta, Cuestionario cuestionario, Pregunta pregunta, Long encuestaRegistroId);
+    public abstract boolean save(Survey survey, Cuestionario cuestionario, Pregunta pregunta, Long encuestaRegistroId);
 
     protected void showSurvey(Cuestionario cuestionario, Pregunta pregunta, Respuesta respuesta, MostrarSiSelecciona mostrarSiSelecciona) {
         Executors.newSingleThreadExecutor().execute(() -> {
@@ -352,26 +356,6 @@ public abstract class WidgetFragment extends Fragment {
         checkBox.setTag(tag);
         return checkBox;
     }
-    /*public static Class<? extends WidgetFragment> classForType(Context context, String type) {
-        if (widgets.size() == 0) {
-            try {
-                for (Class<? extends WidgetFragment> widgetClass : ca.dalezak.androidbase.utils.Runtime.getClasses(context, WidgetFragment.class))  {
-                    Annotation annotation = widgetClass.getAnnotation(Type.class);
-                    if (annotation instanceof Type) {
-                        String widgetType = ((Type)annotation).value().toLowerCase();
-                        widgets.put(widgetType, widgetClass);
-                    }
-                }
-            }
-            catch (PackageManager.NameNotFoundException e) {
-                Log.w(WidgetFragment.class, "NameNotFoundException", e);
-            }
-            catch (IOException e) {
-                Log.w(WidgetFragment.class, "IOException", e);
-            }
-        }
-        return widgets.get(type);
-    }*/
 
     public interface FragmentCallback {
         void onFragmentResume(WidgetFragment widgetFragment);

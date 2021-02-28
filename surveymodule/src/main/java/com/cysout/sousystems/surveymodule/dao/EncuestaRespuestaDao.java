@@ -9,64 +9,64 @@ import androidx.room.Update;
 
 import java.util.List;
 
-import com.cysout.sousystems.surveymodule.entity.EncuestaRespuesta;
+import com.cysout.sousystems.surveymodule.entity.SurveyAnswer;
 
 @Dao
 public interface EncuestaRespuestaDao {
     @Insert()
-    Long insert(EncuestaRespuesta item);
+    Long insert(SurveyAnswer item);
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    Long[] insertList(List<EncuestaRespuesta> list);
+    Long[] insertList(List<SurveyAnswer> list);
 
     @Update
-    void update(EncuestaRespuesta item);
+    void update(SurveyAnswer item);
 
-    @Query("DELETE FROM encuestaRespuesta")
+    @Query("DELETE FROM surveyAnswer")
     void deleteAll();
 
-    @Query("SELECT * FROM encuestaRespuesta")
-    LiveData<List<EncuestaRespuesta>> loadAll();
+    @Query("SELECT * FROM surveyAnswer")
+    LiveData<List<SurveyAnswer>> loadAll();
 
-    @Query("SELECT * FROM encuestaRespuesta")
-    List<EncuestaRespuesta> loadAllSync();
+    @Query("SELECT * FROM surveyAnswer")
+    List<SurveyAnswer> loadAllSync();
 
-    @Query("SELECT * FROM encuestaRespuesta WHERE encuestaRegistroId =:encuestaRegistroId AND preguntaId=:preguntaId LIMIT 1")
-    LiveData<EncuestaRespuesta> encuestaRespuestaByRegistroIdAndPregId(Long encuestaRegistroId, Long preguntaId);
+    @Query("SELECT * FROM surveyAnswer WHERE surveyRecordId =:surveyRecordId AND preguntaId=:preguntaId LIMIT 1")
+    LiveData<SurveyAnswer> surveyAnswerByRegistroIdAndPregId(Long surveyRecordId, Long preguntaId);
 
-    @Query("SELECT * FROM encuestaRespuesta WHERE encuestaRegistroId =:encuestaRegistroId AND preguntaId=:preguntaId LIMIT 1")
-    EncuestaRespuesta encuestaRespuestaByRegistroIdAndPregIdSync(Long encuestaRegistroId, Long preguntaId);
+    @Query("SELECT * FROM surveyAnswer WHERE surveyRecordId =:surveyRecordId AND preguntaId=:preguntaId LIMIT 1")
+    SurveyAnswer surveyAnswerByRegistroIdAndPregIdSync(Long surveyRecordId, Long preguntaId);
 
-    @Query("SELECT * FROM encuestaRespuesta WHERE encuestaRegistroId =:encuestaRegistroId AND preguntaId=:preguntaId AND respuesta=:respuestaId LIMIT 1")
-    LiveData<EncuestaRespuesta> encuestaRespuestaByRegtroIdAndPregIdAndRespId(Long encuestaRegistroId, Long preguntaId, String respuestaId);
+    @Query("SELECT * FROM surveyAnswer WHERE surveyRecordId =:surveyRecordId AND preguntaId=:preguntaId AND respuesta=:respuestaId LIMIT 1")
+    LiveData<SurveyAnswer> surveyAnswerByRegtroIdAndPregIdAndRespId(Long surveyRecordId, Long preguntaId, String respuestaId);
 
-    @Query("SELECT * FROM encuestaRespuesta WHERE encuestaRegistroId =:encuestaRegistroId AND preguntaId=:preguntaId AND respuesta=:respuestaId LIMIT 1")
-    EncuestaRespuesta encuestaRespuestaByRegtroIdAndPregIdAndRespIdSync(Long encuestaRegistroId, Long preguntaId, String respuestaId);
+    @Query("SELECT * FROM surveyAnswer WHERE surveyRecordId =:surveyRecordId AND preguntaId=:preguntaId AND respuesta=:respuestaId LIMIT 1")
+    SurveyAnswer surveyAnswerByRegtroIdAndPregIdAndRespIdSync(Long surveyRecordId, Long preguntaId, String respuestaId);
 
-    @Query("SELECT * FROM encuestaRespuesta WHERE encuestaRegistroId =:encuestaRegistroId")
-    List<EncuestaRespuesta> loadByEncuestaRegistroIdSync(Long encuestaRegistroId);
+    @Query("SELECT * FROM surveyAnswer WHERE surveyRecordId =:surveyRecordId")
+    List<SurveyAnswer> loadBysurveyRecordIdSync(Long surveyRecordId);
 
-    @Query("SELECT * FROM encuestaRespuesta WHERE encuestaRegistroId =:encuestaRegistroId")
-    LiveData<List<EncuestaRespuesta>> loadByEncuestaRegistroId(Long encuestaRegistroId);
+    @Query("SELECT * FROM surveyAnswer WHERE surveyRecordId =:surveyRecordId")
+    LiveData<List<SurveyAnswer>> loadBysurveyRecordId(Long surveyRecordId);
 
-    @Query("SELECT * FROM encuestaRespuesta WHERE cuestionarioId=:cuestionarioId")
-    LiveData<List<EncuestaRespuesta>> loadByCuestionarioId(Long cuestionarioId);
+    @Query("SELECT * FROM surveyAnswer WHERE cuestionarioId=:cuestionarioId")
+    LiveData<List<SurveyAnswer>> loadByCuestionarioId(Long cuestionarioId);
 
-    @Query("SELECT * FROM encuestaRespuesta WHERE cuestionarioId=:cuestionarioId")
-    List<EncuestaRespuesta> loadByCuestionarioIdSync(Long cuestionarioId);
+    @Query("SELECT * FROM surveyAnswer WHERE cuestionarioId=:cuestionarioId")
+    List<SurveyAnswer> loadByCuestionarioIdSync(Long cuestionarioId);
 
-    @Query("SELECT * FROM encuestaRespuesta WHERE encuestaRegistroId =:encuestaRegistroId AND cuestionarioId=:cuestionarioId LIMIT 1")
-    LiveData<EncuestaRespuesta> encuestaRespuestaByRegistroIdAndCuestId(Long encuestaRegistroId, Long cuestionarioId);
+    @Query("SELECT * FROM surveyAnswer WHERE surveyRecordId =:surveyRecordId AND cuestionarioId=:cuestionarioId LIMIT 1")
+    LiveData<SurveyAnswer> surveyAnswerByRegistroIdAndCuestId(Long surveyRecordId, Long cuestionarioId);
 
-    @Query("SELECT * FROM encuestaRespuesta WHERE encuestaRegistroId =:encuestaRegistroId AND cuestionarioId=:cuestionarioId LIMIT 1")
-    EncuestaRespuesta encuestaRespuestaByRegistroIdAndCuestIdSync(Long encuestaRegistroId, Long cuestionarioId);
+    @Query("SELECT * FROM surveyAnswer WHERE surveyRecordId =:surveyRecordId AND cuestionarioId=:cuestionarioId LIMIT 1")
+    SurveyAnswer surveyAnswerByRegistroIdAndCuestIdSync(Long surveyRecordId, Long cuestionarioId);
 
-    @Query("DELETE FROM encuestaRespuesta WHERE encuestaRegistroId=:encuestaRegistroId AND cuestionarioId=:cuestionarioId")
-    void deleteByEnctRegtIdAndCuestId(Long encuestaRegistroId, Long cuestionarioId);
+    @Query("DELETE FROM surveyAnswer WHERE surveyRecordId=:surveyRecordId AND cuestionarioId=:cuestionarioId")
+    void deleteByEnctRegtIdAndCuestId(Long surveyRecordId, Long cuestionarioId);
 
-    @Query("DELETE FROM encuestaRespuesta WHERE encuestaRegistroId=:encuestaRegistroId AND preguntaId=:preguntaId")
-    void deleteByEnctRegtIdAndPreguntaId(Long encuestaRegistroId, Long preguntaId);
+    @Query("DELETE FROM surveyAnswer WHERE surveyRecordId=:surveyRecordId AND preguntaId=:preguntaId")
+    void deleteByEnctRegtIdAndPreguntaId(Long surveyRecordId, Long preguntaId);
 
-    @Query("DELETE FROM encuestaRespuesta WHERE encuestaRegistroId=:encuestaRegistroId AND preguntaId=:preguntaId AND respuesta=:respuesta")
-    void deleteByEnctRegtIdAndPregtIdAndResp(Long encuestaRegistroId, Long preguntaId, String respuesta);
+    @Query("DELETE FROM surveyAnswer WHERE surveyRecordId=:surveyRecordId AND preguntaId=:preguntaId AND respuesta=:respuesta")
+    void deleteByEnctRegtIdAndPregtIdAndResp(Long surveyRecordId, Long preguntaId, String respuesta);
 }

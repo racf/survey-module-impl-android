@@ -8,10 +8,14 @@ import java.util.List;
 
 import com.cysout.sousystems.surveymodule.config.AppDatabase;
 import com.cysout.sousystems.surveymodule.dao.EncuestaRegistroDao;
-import com.cysout.sousystems.surveymodule.entity.EncuestaRegistro;
+import com.cysout.sousystems.surveymodule.entity.SurveyRecord;
 import com.cysout.sousystems.surveymodule.entity.relation.EncuestaRegistroRespuestas;
 import com.cysout.sousystems.surveymodule.repository.EncuestaRegistroRepository;
 
+/**
+ *Developed by cysout.com and sousystems.com.mx
+ *Contact info@cysout.com or contacto@sousystems.com.mx
+**/
 public class EncuestaRegistroRepositoryImpl implements EncuestaRegistroRepository {
     private EncuestaRegistroDao encuestaRegistroDao;
 
@@ -21,17 +25,17 @@ public class EncuestaRegistroRepositoryImpl implements EncuestaRegistroRepositor
     }
 
     @Override
-    public Long insert(EncuestaRegistro encuestaRegistro) {
+    public Long insert(SurveyRecord encuestaRegistro) {
         return this.encuestaRegistroDao.insert(encuestaRegistro);
     }
 
     @Override
-    public Long[] insertList(List<EncuestaRegistro> list) {
+    public Long[] insertList(List<SurveyRecord> list) {
         return this.encuestaRegistroDao.insertList(list);
     }
 
     @Override
-    public void update(EncuestaRegistro encuestaRegistro) {
+    public void update(SurveyRecord encuestaRegistro) {
         this.encuestaRegistroDao.update(encuestaRegistro);
     }
 
@@ -41,42 +45,42 @@ public class EncuestaRegistroRepositoryImpl implements EncuestaRegistroRepositor
     }
 
     @Override
-    public LiveData<List<EncuestaRegistro>> loadAll() {
+    public LiveData<List<SurveyRecord>> loadAll() {
         return this.encuestaRegistroDao.loadAll();
     }
 
     @Override
-    public List<EncuestaRegistro> loadAllSync() {
+    public List<SurveyRecord> loadAllSync() {
         return this.encuestaRegistroDao.loadAllSync();
     }
 
     @Override
-    public LiveData<List<EncuestaRegistro>> loadByEncuestaId(Long encuestaId) {
+    public LiveData<List<SurveyRecord>> loadByEncuestaId(Long encuestaId) {
         return this.encuestaRegistroDao.loadByEncuestaId(encuestaId);
     }
 
     @Override
-    public List<EncuestaRegistro> loadByEncuestaIdSync(Long encuestaId) {
+    public List<SurveyRecord> loadByEncuestaIdSync(Long encuestaId) {
         return this.encuestaRegistroDao.loadByEncuestaIdSync(encuestaId);
     }
 
     @Override
-    public EncuestaRegistro encuestaRegistro(Long encuestaId) {
+    public SurveyRecord encuestaRegistro(Long encuestaId) {
         return this.encuestaRegistroDao.encuestaRegistro(encuestaId);
     }
 
     @Override
-    public EncuestaRegistro encuestaRegistroByEncuestaIdAndCatEncuestaEstatusId(Long encuestaId, Integer catEncuestaEstatusId) {
+    public SurveyRecord encuestaRegistroByEncuestaIdAndCatEncuestaEstatusId(Long encuestaId, Integer catEncuestaEstatusId) {
         return this.encuestaRegistroDao.encuestaRegistroByEncuestaIdAndCatEncuestaEstatusId(encuestaId, catEncuestaEstatusId);
     }
 
     @Override
-    public LiveData<List<EncuestaRegistro>> loadByEncuestaIdAndCatEncuestaEstatusId(Long encuestaId, Integer catEncuestaEstatusId) {
+    public LiveData<List<SurveyRecord>> loadByEncuestaIdAndCatEncuestaEstatusId(Long encuestaId, Integer catEncuestaEstatusId) {
         return this.encuestaRegistroDao.loadByEncuestaIdAndCatEncuestaEstatusId(encuestaId, catEncuestaEstatusId);
     }
 
     @Override
-    public List<EncuestaRegistro> loadByEncuestaIdAndCatEncuestaEstatusIdSync(Long encuestaId, Integer catEncuestaEstatusId) {
+    public List<SurveyRecord> loadByEncuestaIdAndCatEncuestaEstatusIdSync(Long encuestaId, Integer catEncuestaEstatusId) {
         return this.encuestaRegistroDao.loadByEncuestaIdAndCatEncuestaEstatusIdSync(encuestaId, catEncuestaEstatusId);
     }
 

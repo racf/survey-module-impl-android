@@ -8,32 +8,32 @@ import androidx.room.PrimaryKey;
 
 import java.io.Serializable;
 
-@Entity(tableName = "encuestaRespuesta",
+@Entity(tableName = "surveyAnswer",
         foreignKeys = {
-            @ForeignKey(entity = EncuestaRegistro.class,
-                    parentColumns = "encuestaRegistroId",
-                    childColumns = "encuestaRegistroId")
+            @ForeignKey(entity = SurveyRecord.class,
+                    parentColumns = "surveyRecordId",
+                    childColumns = "surveyRecordId")
         },
         indices = {
-            @Index(value = {"encuestaRegistroId"})
+            @Index(value = {"surveyRecordId"})
     })
-public class EncuestaRespuesta implements Serializable {
+public class SurveyAnswer implements Serializable {
     @PrimaryKey(autoGenerate = true)
     private Long encuestaRespuestaId;
-    private Long encuestaRegistroId;
+    private Long surveyRecordId;
     private Long cuestionarioId;
     private Long preguntaId;
     private String tipo;
     private String respuesta;
 
-    public EncuestaRespuesta() {
+    public SurveyAnswer() {
 
     }
 
     @Ignore
-    public EncuestaRespuesta(Long encuestaRespuestaId, Long encuestaRegistroId, Long cuestionarioId, Long preguntaId, String tipo, String respuesta) {
+    public SurveyAnswer(Long encuestaRespuestaId, Long surveyRecordId, Long cuestionarioId, Long preguntaId, String tipo, String respuesta) {
         this.encuestaRespuestaId = encuestaRespuestaId;
-        this.encuestaRegistroId = encuestaRegistroId;
+        this.surveyRecordId = surveyRecordId;
         this.cuestionarioId = cuestionarioId;
         this.preguntaId = preguntaId;
         this.tipo = tipo;
@@ -48,12 +48,12 @@ public class EncuestaRespuesta implements Serializable {
         this.encuestaRespuestaId = encuestaRespuestaId;
     }
 
-    public Long getEncuestaRegistroId() {
-        return encuestaRegistroId;
+    public Long getSurveyRecordId() {
+        return surveyRecordId;
     }
 
-    public void setEncuestaRegistroId(Long encuestaRegistroId) {
-        this.encuestaRegistroId = encuestaRegistroId;
+    public void setSurveyRecordId(Long surveyRecordId) {
+        this.surveyRecordId = surveyRecordId;
     }
 
     public Long getCuestionarioId() {
@@ -92,7 +92,7 @@ public class EncuestaRespuesta implements Serializable {
     public String toString() {
         return "EncuestaRespuesta{" +
                 "encuestaRespuestaId=" + encuestaRespuestaId +
-                ", encuestaRegistroId=" + encuestaRegistroId +
+                ", surveyRecordId=" + surveyRecordId +
                 ", cuestionarioId=" + cuestionarioId +
                 ", preguntaId=" + preguntaId +
                 ", tipo='" + tipo + '\'' +

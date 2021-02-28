@@ -12,13 +12,13 @@ import java.util.List;
 
 @Entity(tableName = "cuestionario",
         foreignKeys = {
-            @ForeignKey(entity = Encuesta.class,
-                    parentColumns = "encuestaId",
-                    childColumns = "encuestaId",
+            @ForeignKey(entity = Survey.class,
+                    parentColumns = "surveyId",
+                    childColumns = "surveyId",
                     onDelete = ForeignKey.CASCADE)
         },
         indices = {
-            @Index(value = {"encuestaId"})
+            @Index(value = {"surveyId"})
         })
 public class Cuestionario implements Serializable {
     @PrimaryKey
@@ -27,7 +27,7 @@ public class Cuestionario implements Serializable {
     private String titulo;
     private String nombre;
     private Boolean visible;
-    private Long encuestaId;
+    private Long surveyId;
     @Ignore
     private List<Pregunta> preguntas = new ArrayList<>();
 
@@ -71,12 +71,12 @@ public class Cuestionario implements Serializable {
         this.visible = visible;
     }
 
-    public Long getEncuestaId() {
-        return encuestaId;
+    public Long getSurveyId() {
+        return surveyId;
     }
 
-    public void setEncuestaId(Long encuestaId) {
-        this.encuestaId = encuestaId;
+    public void setSurveyId(Long surveyId) {
+        this.surveyId = surveyId;
     }
 
     public List<Pregunta> getPreguntas() {
@@ -92,13 +92,13 @@ public class Cuestionario implements Serializable {
     }
 
     @Ignore
-    public Cuestionario(Long cuestionarioId, Integer orden, String titulo, String nombre, Boolean visible, Long encuestaId) {
+    public Cuestionario(Long cuestionarioId, Integer orden, String titulo, String nombre, Boolean visible, Long surveyId) {
         this.cuestionarioId = cuestionarioId;
         this.orden = orden;
         this.titulo = titulo;
         this.nombre = nombre;
         this.visible = visible;
-        this.encuestaId = encuestaId;
+        this.surveyId = surveyId;
     }
 
     @Override
@@ -109,7 +109,7 @@ public class Cuestionario implements Serializable {
                 ", titulo='" + titulo + '\'' +
                 ", nombre='" + nombre + '\'' +
                 ", visible=" + visible +
-                ", encuestaId=" + encuestaId +
+                ", surveyId=" + surveyId +
                 '}';
     }
 }

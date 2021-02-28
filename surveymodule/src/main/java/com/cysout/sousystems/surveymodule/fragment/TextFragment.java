@@ -4,7 +4,6 @@ import android.os.Bundle;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
-import androidx.fragment.app.Fragment;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 
@@ -22,8 +21,8 @@ import java.util.concurrent.Executors;
 
 import com.cysout.sousystems.surveymodule.R;
 import com.cysout.sousystems.surveymodule.entity.Cuestionario;
-import com.cysout.sousystems.surveymodule.entity.Encuesta;
-import com.cysout.sousystems.surveymodule.entity.EncuestaRespuesta;
+import com.cysout.sousystems.surveymodule.entity.Survey;
+import com.cysout.sousystems.surveymodule.entity.SurveyAnswer;
 import com.cysout.sousystems.surveymodule.entity.Pregunta;
 import com.cysout.sousystems.surveymodule.service.EncuestaService;
 import com.cysout.sousystems.surveymodule.service.impl.EncuestaServiceImpl;
@@ -33,10 +32,9 @@ import com.cysout.sousystems.surveymodule.validation.TextController;
 import com.cysout.sousystems.surveymodule.validation.text.TextFormState;
 
 /**
- * A simple {@link Fragment} subclass.
- * Use the {@link TextFragment} factory method to
- * create an instance of this fragment.
- */
+ *Developed by cysout.com and sousystems.com.mx
+ *Contact info@cysout.com or contacto@sousystems.com.mx
+**/
 public class TextFragment extends WidgetFragment {
     private TextView labelPrefix;
     private EditText editText;
@@ -88,11 +86,11 @@ public class TextFragment extends WidgetFragment {
         Long encuestaRegistroId = Utils.findPreferenceLong(getContext(), CustomConstants.PREFERENCE_NAME_CUESTIONARIO, CustomConstants.CUESTIONARIO_REGISTRO_ID);
         //Asignamos informacion al regresar a la encuesta anterior
         if (encuestaRegistroId > 0L) {
-            encuestaService.encuestaRespuestaByRegistroIdAndPregId(encuestaRegistroId, pregunta.getPreguntaId()).observe(getViewLifecycleOwner(), new Observer<EncuestaRespuesta>() {
+            encuestaService.encuestaRespuestaByRegistroIdAndPregId(encuestaRegistroId, pregunta.getPreguntaId()).observe(getViewLifecycleOwner(), new Observer<SurveyAnswer>() {
                 @Override
-                public void onChanged(EncuestaRespuesta encuestaRespuesta) {
-                    if(encuestaRespuesta != null) {
-                        editText.setText(String.valueOf(encuestaRespuesta.getRespuesta()));
+                public void onChanged(SurveyAnswer surveyAnswer) {
+                    if(surveyAnswer != null) {
+                        editText.setText(String.valueOf(surveyAnswer.getRespuesta()));
                     }
                 }
             });
@@ -144,14 +142,14 @@ public class TextFragment extends WidgetFragment {
     }
 
     @Override
-    public boolean save(Encuesta encuesta, Cuestionario cuestionario, Pregunta pregunta, Long encuestaRegistroId) {
+    public boolean save(Survey survey, Cuestionario cuestionario, Pregunta pregunta, Long encuestaRegistroId) {
         final boolean[] estatus = new boolean[1];
         Log.d(CustomConstants.TAG_LOG, "TextFragment.save()");
         Executors.newSingleThreadExecutor().execute(() -> {
             String  respuesta = String.valueOf(editText.getText());
             if(!respuesta.trim().equalsIgnoreCase("")) {
                 //Logica del guardado de la información
-                this.encuestaService.encuestaRespuesta(encuesta, cuestionario, pregunta, respuesta, encuestaRegistroId);
+                this.encuestaService.encuestaRespuesta(survey, cuestionario, pregunta, respuesta, encuestaRegistroId);
                 estatus[0] = true;
             }
         });

@@ -11,10 +11,10 @@ import com.cysout.sousystems.surveymodule.config.AppDatabase;
 import com.cysout.sousystems.surveymodule.dao.EncuestaRegistroDao;
 import com.cysout.sousystems.surveymodule.dao.EncuestaRespuestaDao;
 import com.cysout.sousystems.surveymodule.entity.Cuestionario;
-import com.cysout.sousystems.surveymodule.entity.Encuesta;
-import com.cysout.sousystems.surveymodule.entity.EncuestaRegistro;
-import com.cysout.sousystems.surveymodule.entity.EncuestaRespuesta;
+import com.cysout.sousystems.surveymodule.entity.Survey;
+import com.cysout.sousystems.surveymodule.entity.SurveyAnswer;
 import com.cysout.sousystems.surveymodule.entity.Pregunta;
+import com.cysout.sousystems.surveymodule.entity.SurveyRecord;
 import com.cysout.sousystems.surveymodule.entity.relation.EncuestaRegistroRespuestas;
 import com.cysout.sousystems.surveymodule.service.EncuestaService;
 import com.cysout.sousystems.surveymodule.utils.CustomConstants;
@@ -32,39 +32,39 @@ public class EncuestaServiceImpl extends AndroidViewModel implements EncuestaSer
     }
 
     @Override
-    public Long encuestaRegistro(Encuesta encuesta, Integer catEncuestaEstatusId, String fechaInicial, String fechaFinal) {
-        EncuestaRegistro encuestaRegistro = Utils.getEncuestaRegistro(encuesta, catEncuestaEstatusId,fechaInicial, fechaFinal);
+    public Long encuestaRegistro(Survey survey, Integer catEncuestaEstatusId, String fechaInicial, String fechaFinal) {
+        SurveyRecord encuestaRegistro = Utils.getEncuestaRegistro(survey, catEncuestaEstatusId,fechaInicial, fechaFinal);
         return this.encuestaRegistroDao.insert(encuestaRegistro);
     }
 
     @Override
-    public Long encuestaRespuesta(Encuesta encuesta, Cuestionario cuestionario, Pregunta pregunta, String respuesta, Long encuestaRegistroId) {
+    public Long encuestaRespuesta(Survey survey, Cuestionario cuestionario, Pregunta pregunta, String respuesta, Long encuestaRegistroId) {
         Long encuestaRespuestaId = 0L;
-        EncuestaRespuesta encuestaRespuesta = Utils.getEncuestaRespuesta(cuestionario, pregunta,respuesta, encuestaRegistroId);
-        Log.i(CustomConstants.TAG_LOG, "encuestaRespuesta() "+encuestaRespuesta.toString());
-        if( encuestaRespuesta.getTipo().equalsIgnoreCase(CustomConstants.TEXT) || encuestaRespuesta.getTipo().equalsIgnoreCase(CustomConstants.SELECT)){
-            Log.i(CustomConstants.TAG_LOG, "ENTRO TIPO "+encuestaRespuesta.getTipo());
-            EncuestaRespuesta encuestaRespuestaResult = this.encuestaRespuestaDao.encuestaRespuestaByRegistroIdAndPregIdSync(encuestaRegistroId, pregunta.getPreguntaId());
-            if( encuestaRespuestaResult != null ) {
-                encuestaRespuestaResult.setRespuesta(encuestaRespuesta.getRespuesta());
-                this.encuestaRespuestaDao.update(encuestaRespuestaResult);
-                Log.i(CustomConstants.TAG_LOG, "ENTRO ACTUALIZA "+encuestaRespuesta.getTipo()+": "+encuestaRespuestaResult.toString());
+        SurveyAnswer surveyAnswer = Utils.getEncuestaRespuesta(cuestionario, pregunta,respuesta, encuestaRegistroId);
+        Log.i(CustomConstants.TAG_LOG, "encuestaRespuesta() "+ surveyAnswer.toString());
+        if( surveyAnswer.getTipo().equalsIgnoreCase(CustomConstants.TEXT) || surveyAnswer.getTipo().equalsIgnoreCase(CustomConstants.SELECT)){
+            Log.i(CustomConstants.TAG_LOG, "ENTRO TIPO "+ surveyAnswer.getTipo());
+            SurveyAnswer surveyAnswerResult = this.encuestaRespuestaDao.surveyAnswerByRegistroIdAndPregIdSync(encuestaRegistroId, pregunta.getPreguntaId());
+            if( surveyAnswerResult != null ) {
+                surveyAnswerResult.setRespuesta(surveyAnswer.getRespuesta());
+                this.encuestaRespuestaDao.update(surveyAnswerResult);
+                Log.i(CustomConstants.TAG_LOG, "ENTRO ACTUALIZA "+ surveyAnswer.getTipo()+": "+ surveyAnswerResult.toString());
             } else {
-                encuestaRespuestaId = this.encuestaRespuestaDao.insert(encuestaRespuesta);
-                Log.i(CustomConstants.TAG_LOG, "ENTRO CREA "+encuestaRespuesta.getTipo()+": "+encuestaRespuesta.toString());
+                encuestaRespuestaId = this.encuestaRespuestaDao.insert(surveyAnswer);
+                Log.i(CustomConstants.TAG_LOG, "ENTRO CREA "+ surveyAnswer.getTipo()+": "+ surveyAnswer.toString());
             }
         }else {
-            encuestaRespuestaId = this.encuestaRespuestaDao.insert(encuestaRespuesta);
-            Log.i(CustomConstants.TAG_LOG, "ENTRO CREA "+encuestaRespuesta.toString());
+            encuestaRespuestaId = this.encuestaRespuestaDao.insert(surveyAnswer);
+            Log.i(CustomConstants.TAG_LOG, "ENTRO CREA "+ surveyAnswer.toString());
         }
         return encuestaRespuestaId;
     }
 
     @Override
-    public EncuestaRegistro findEncuestaregistro(Encuesta encuesta) {
-        EncuestaRegistro encuestaRegistro = null;
-        if( encuesta.getCatEncuestaTipoId() == CustomConstants.UNICA) {
-            encuestaRegistro = this.encuestaRegistroDao.encuestaRegistro(encuesta.getEncuestaId());
+    public SurveyRecord findEncuestaregistro(Survey survey) {
+        SurveyRecord surveyRecord = null;
+        if( survey.getSurveyType() == CustomConstants.UNICA) {
+            surveyRecord = this.encuestaRegistroDao.encuestaRegistro(survey.getSurveyId());
         /*Long encuestaRegistroId = 0L;
         EncuestaRegistro encuestaRegistro = this.encuestaRegistroDao.encuestaRegistro(encuesta.getEncuestaId());
             if( encuestaRegistro == null){
@@ -72,27 +72,27 @@ public class EncuestaServiceImpl extends AndroidViewModel implements EncuestaSer
                 encuestaRegistroId = this.encuestaRegistroDao.insert(encuestaRegistroAux);;
             }*/
         }
-        return encuestaRegistro;
+        return surveyRecord;
     }
 
     @Override
-    public LiveData<EncuestaRespuesta> encuestaRespuestaByRegistroIdAndPregId(Long encuestaRegistroId, Long preguntaId) {
-        return this.encuestaRespuestaDao.encuestaRespuestaByRegistroIdAndPregId(encuestaRegistroId, preguntaId);
+    public LiveData<SurveyAnswer> encuestaRespuestaByRegistroIdAndPregId(Long encuestaRegistroId, Long preguntaId) {
+        return this.encuestaRespuestaDao.surveyAnswerByRegistroIdAndPregId(encuestaRegistroId, preguntaId);
     }
 
     @Override
-    public EncuestaRespuesta encuestaRespuestaByRegistroIdAndPregIdSync(Long encuestaRegistroId, Long preguntaId) {
-        return this.encuestaRespuestaDao.encuestaRespuestaByRegistroIdAndPregIdSync(encuestaRegistroId, preguntaId);
+    public SurveyAnswer encuestaRespuestaByRegistroIdAndPregIdSync(Long encuestaRegistroId, Long preguntaId) {
+        return this.encuestaRespuestaDao.surveyAnswerByRegistroIdAndPregIdSync(encuestaRegistroId, preguntaId);
     }
 
     @Override
-    public LiveData<EncuestaRespuesta> encuestaRespuestaByRegtroIdAndPregIdAndRespId(Long encuestaRegistroId, Long preguntaId, String respuestaId) {
-        return this.encuestaRespuestaDao.encuestaRespuestaByRegtroIdAndPregIdAndRespId(encuestaRegistroId, preguntaId, respuestaId);
+    public LiveData<SurveyAnswer> encuestaRespuestaByRegtroIdAndPregIdAndRespId(Long encuestaRegistroId, Long preguntaId, String respuestaId) {
+        return this.encuestaRespuestaDao.surveyAnswerByRegtroIdAndPregIdAndRespId(encuestaRegistroId, preguntaId, respuestaId);
     }
 
     @Override
-    public EncuestaRespuesta encuestaRespuestaByRegtroIdAndPregIdAndRespIdSync(Long encuestaRegistroId, Long preguntaId, String respuestaId) {
-        return this.encuestaRespuestaDao.encuestaRespuestaByRegtroIdAndPregIdAndRespIdSync(encuestaRegistroId, preguntaId, respuestaId);
+    public SurveyAnswer encuestaRespuestaByRegtroIdAndPregIdAndRespIdSync(Long encuestaRegistroId, Long preguntaId, String respuestaId) {
+        return this.encuestaRespuestaDao.surveyAnswerByRegtroIdAndPregIdAndRespIdSync(encuestaRegistroId, preguntaId, respuestaId);
     }
 
     @Override
@@ -104,8 +104,8 @@ public class EncuestaServiceImpl extends AndroidViewModel implements EncuestaSer
     }
     @Override
     public void eliminarEncuestaRegistroByCuestionarioId(Long encuestaRegistroId, Long cuestionarioId){
-        EncuestaRespuesta encuestaRespuesta = this.encuestaRespuestaDao.encuestaRespuestaByRegistroIdAndCuestIdSync(encuestaRegistroId, cuestionarioId);
-        if( encuestaRespuesta != null ) {
+        SurveyAnswer surveyAnswer = this.encuestaRespuestaDao.surveyAnswerByRegistroIdAndCuestIdSync(encuestaRegistroId, cuestionarioId);
+        if( surveyAnswer != null ) {
             Log.i(CustomConstants.TAG_LOG, "Elimina eliminarEncuestaRegistroByCuestionarioId");
             this.encuestaRespuestaDao.deleteByEnctRegtIdAndCuestId(encuestaRegistroId, cuestionarioId);
         }

@@ -12,7 +12,7 @@ import java.util.concurrent.Executors;
 import com.cysout.sousystems.surveymodule.dao.CatEncuestaEstatusDao;
 import com.cysout.sousystems.surveymodule.dao.CatEncuestaTipoDao;
 import com.cysout.sousystems.surveymodule.dao.CuestionarioDao;
-import com.cysout.sousystems.surveymodule.dao.EncuestaDao;
+import com.cysout.sousystems.surveymodule.dao.SurveyDao;
 import com.cysout.sousystems.surveymodule.dao.EncuestaRegistroDao;
 import com.cysout.sousystems.surveymodule.dao.EncuestaRespuestaDao;
 import com.cysout.sousystems.surveymodule.dao.MostrarCuestionariosDao;
@@ -25,9 +25,8 @@ import com.cysout.sousystems.surveymodule.dao.RespuestaMostrarCuestionariosDao;
 import com.cysout.sousystems.surveymodule.entity.CatEncuestaEstatus;
 import com.cysout.sousystems.surveymodule.entity.CatEncuestaTipo;
 import com.cysout.sousystems.surveymodule.entity.Cuestionario;
-import com.cysout.sousystems.surveymodule.entity.Encuesta;
-import com.cysout.sousystems.surveymodule.entity.EncuestaRegistro;
-import com.cysout.sousystems.surveymodule.entity.EncuestaRespuesta;
+import com.cysout.sousystems.surveymodule.entity.Survey;
+import com.cysout.sousystems.surveymodule.entity.SurveyAnswer;
 import com.cysout.sousystems.surveymodule.entity.MostrarCuestionarios;
 import com.cysout.sousystems.surveymodule.entity.MostrarPreguntas;
 import com.cysout.sousystems.surveymodule.entity.MostrarRespuestas;
@@ -35,11 +34,15 @@ import com.cysout.sousystems.surveymodule.entity.MostrarSiSelecciona;
 import com.cysout.sousystems.surveymodule.entity.Pregunta;
 import com.cysout.sousystems.surveymodule.entity.Respuesta;
 import com.cysout.sousystems.surveymodule.entity.RespuestaMostrarCuestionarios;
+import com.cysout.sousystems.surveymodule.entity.SurveyRecord;
 import com.cysout.sousystems.surveymodule.utils.CustomConstants;
-
-@Database(entities = {CatEncuestaTipo.class, CatEncuestaEstatus.class, Encuesta.class, Cuestionario.class, Pregunta.class, Respuesta.class,
+/**
+ *Developed by cysout.com and sousystems.com.mx
+ *Contact info@cysout.com or contacto@sousystems.com.mx
+**/
+@Database(entities = {CatEncuestaTipo.class, CatEncuestaEstatus.class, Survey.class, Cuestionario.class, Pregunta.class, Respuesta.class,
         MostrarSiSelecciona.class, MostrarCuestionarios.class, MostrarPreguntas.class, MostrarRespuestas.class,
-        EncuestaRegistro.class, EncuestaRespuesta.class,
+        SurveyRecord.class, SurveyAnswer.class,
         RespuestaMostrarCuestionarios.class}, version = CustomConstants.DATABASE_VERSION, exportSchema = CustomConstants.FALSE)
 public abstract class AppDatabase  extends RoomDatabase {
 
@@ -47,7 +50,7 @@ public abstract class AppDatabase  extends RoomDatabase {
     public abstract CatEncuestaTipoDao catEncuestaTipoDao();
     public abstract CatEncuestaEstatusDao catEncuestaEstatusDao();
     public abstract CuestionarioDao cuestionarioDao();
-    public abstract EncuestaDao encuestaDao();
+    public abstract SurveyDao surveyDao();
     public abstract PreguntaDao preguntaDao();
     public abstract RespuestaDao respuestaDao();
     public abstract MostrarSiSeleccionaDao mostrarSiSeleccionaDao();

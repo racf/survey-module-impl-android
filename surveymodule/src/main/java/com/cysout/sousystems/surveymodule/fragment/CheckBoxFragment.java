@@ -2,7 +2,6 @@ package com.cysout.sousystems.surveymodule.fragment;
 
 import android.os.Bundle;
 
-import androidx.fragment.app.Fragment;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 
@@ -22,8 +21,8 @@ import java.util.concurrent.Executors;
 
 import com.cysout.sousystems.surveymodule.R;
 import com.cysout.sousystems.surveymodule.entity.Cuestionario;
-import com.cysout.sousystems.surveymodule.entity.Encuesta;
-import com.cysout.sousystems.surveymodule.entity.EncuestaRespuesta;
+import com.cysout.sousystems.surveymodule.entity.Survey;
+import com.cysout.sousystems.surveymodule.entity.SurveyAnswer;
 import com.cysout.sousystems.surveymodule.entity.MostrarSiSelecciona;
 import com.cysout.sousystems.surveymodule.entity.Pregunta;
 import com.cysout.sousystems.surveymodule.entity.Respuesta;
@@ -34,8 +33,9 @@ import com.cysout.sousystems.surveymodule.utils.Utils;
 import com.cysout.sousystems.surveymodule.view.QuestionaryActivity;
 
 /**
- * A simple {@link Fragment} subclass.
- */
+ *Developed by cysout.com and sousystems.com.mx
+ *Contact info@cysout.com or contacto@sousystems.com.mx
+**/
 public class CheckBoxFragment extends WidgetFragment {
     private LinearLayout checkboxesLinerLayout;
     private List<CheckBox> checkBoxes;
@@ -80,13 +80,13 @@ public class CheckBoxFragment extends WidgetFragment {
             //Asignamos informacion al regresar a la encuesta anterior
             if (encuestaRegistroId > 0L) {
                 String respuestaId = String.valueOf(respuesta.getRespuestaId());
-                encuestaService.encuestaRespuestaByRegtroIdAndPregIdAndRespId(encuestaRegistroId, pregunta.getPreguntaId(), respuestaId).observe(getViewLifecycleOwner(), new Observer<EncuestaRespuesta>() {
+                encuestaService.encuestaRespuestaByRegtroIdAndPregIdAndRespId(encuestaRegistroId, pregunta.getPreguntaId(), respuestaId).observe(getViewLifecycleOwner(), new Observer<SurveyAnswer>() {
                     @Override
-                    public void onChanged(EncuestaRespuesta encuestaRespuesta) {
+                    public void onChanged(SurveyAnswer surveyAnswer) {
                         Log.i(CustomConstants.TAG_LOG, "--------------------------- CHANGE - CheckBoxFragment--------------------------------------");
-                        if(encuestaRespuesta != null) {
+                        if(surveyAnswer != null) {
                             Log.i(CustomConstants.TAG_LOG, "NO NULL - encuestaRespuesta");
-                            if(pregunta.getPreguntaId() == encuestaRespuesta.getPreguntaId() && respuestaId.equalsIgnoreCase(encuestaRespuesta.getRespuesta())){
+                            if(pregunta.getPreguntaId() == surveyAnswer.getPreguntaId() && respuestaId.equalsIgnoreCase(surveyAnswer.getRespuesta())){
                                 checkBox.setChecked(CustomConstants.TRUE);
                                 Log.i(CustomConstants.TAG_LOG, "ENTRO CHECK");
                             }
@@ -139,7 +139,7 @@ public class CheckBoxFragment extends WidgetFragment {
     }
 
     @Override
-    public boolean save(Encuesta encuesta, Cuestionario cuestionario, Pregunta pregunta, Long encuestaRegistroId) {
+    public boolean save(Survey survey, Cuestionario cuestionario, Pregunta pregunta, Long encuestaRegistroId) {
         final boolean[] estatus = new boolean[1];
         Log.d(CustomConstants.TAG_LOG, "CheckboxFragment.save()");
         Executors.newSingleThreadExecutor().execute(() -> {
@@ -150,7 +150,7 @@ public class CheckBoxFragment extends WidgetFragment {
                     Log.i(CustomConstants.TAG_LOG, "CheckboxFragment.save() - GUARDAR RESPUESTA: "+respuesta.toString());
                     //String  respuesta = String.valueOf(opcion.getValor());
                     //Logica para guardar informacion
-                    this.encuestaService.encuestaRespuesta(encuesta, cuestionario, pregunta, opcion, encuestaRegistroId);
+                    this.encuestaService.encuestaRespuesta(survey, cuestionario, pregunta, opcion, encuestaRegistroId);
                     Map<Long, Long> preguntaRespuesta = new HashMap<>();
                     preguntaRespuesta.put(pregunta.getPreguntaId(), respuesta.getRespuestaId());
 

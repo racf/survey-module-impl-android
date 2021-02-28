@@ -5,7 +5,6 @@ import androidx.lifecycle.LiveData;
 import java.util.List;
 
 import com.cysout.sousystems.surveymodule.entity.CatEncuestaTipo;
-import com.cysout.sousystems.surveymodule.entity.TestModel;
 
 public interface CatEncuestaTipoRepository {
     Long insert(CatEncuestaTipo catEncuestaTipo);
@@ -15,5 +14,4 @@ public interface CatEncuestaTipoRepository {
     void deleteAllRows();
     LiveData<List<CatEncuestaTipo>> findAllLiveData();
     List<CatEncuestaTipo> findAllList();
-    List<TestModel> tipoEncuestas();
 }

@@ -11,6 +11,10 @@ import com.cysout.sousystems.surveymodule.utils.Validation;
 import com.cysout.sousystems.surveymodule.validation.Form.FormResult;
 import com.cysout.sousystems.surveymodule.validation.Form.ValidatedInFormView;
 
+/**
+ *Developed by cysout.com and sousystems.com.mx
+ *Contact info@cysout.com or contacto@sousystems.com.mx
+**/
 public class FormController extends AndroidViewModel {
     private MutableLiveData<FormResult> formResult = new MutableLiveData<>();
 

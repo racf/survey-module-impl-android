@@ -4,25 +4,25 @@ import androidx.lifecycle.LiveData;
 
 import java.util.List;
 
-import com.cysout.sousystems.surveymodule.entity.EncuestaRespuesta;
+import com.cysout.sousystems.surveymodule.entity.SurveyAnswer;
 
 public interface EncuestaRespuestaRepository {
-    Long insert(EncuestaRespuesta item);
-    Long[] insertList(List<EncuestaRespuesta> list);
-    void update(EncuestaRespuesta item);
+    Long insert(SurveyAnswer item);
+    Long[] insertList(List<SurveyAnswer> list);
+    void update(SurveyAnswer item);
     void deleteAll();
-    LiveData<List<EncuestaRespuesta>> loadAll();
-    List<EncuestaRespuesta> loadAllSync();
-    EncuestaRespuesta encuestaRespuestaByRegistroIdAndPregIdSync(Long encuestaRegistroId, Long preguntaId);
-    LiveData<EncuestaRespuesta> encuestaRespuestaByRegistroIdAndPregId(Long encuestaRegistroId, Long preguntaId);
-    LiveData<EncuestaRespuesta> encuestaRespuestaByRegtroIdAndPregIdAndRespId(Long encuestaRegistroId, Long preguntaId, String respuestaId);
-    EncuestaRespuesta encuestaRespuestaByRegtroIdAndPregIdAndRespIdSync(Long encuestaRegistroId, Long preguntaId, String respuestaId);
-    List<EncuestaRespuesta> loadByEncuestaRegistroIdSync(Long encuestaRegistroId);
-    LiveData<List<EncuestaRespuesta>> loadByEncuestaRegistroId(Long encuestaRegistroId);
-    LiveData<List<EncuestaRespuesta>> loadByCuestionarioId(Long cuestionarioId);
-    List<EncuestaRespuesta> loadByCuestionarioIdSync(Long cuestionarioId);
-    LiveData<EncuestaRespuesta> encuestaRespuestaByRegistroIdAndCuestId(Long encuestaRegistroId, Long cuestionarioId);
-    EncuestaRespuesta encuestaRespuestaByRegistroIdAndCuestIdSync(Long encuestaRegistroId, Long cuestionarioId);
+    LiveData<List<SurveyAnswer>> loadAll();
+    List<SurveyAnswer> loadAllSync();
+    SurveyAnswer encuestaRespuestaByRegistroIdAndPregIdSync(Long encuestaRegistroId, Long preguntaId);
+    LiveData<SurveyAnswer> encuestaRespuestaByRegistroIdAndPregId(Long encuestaRegistroId, Long preguntaId);
+    LiveData<SurveyAnswer> encuestaRespuestaByRegtroIdAndPregIdAndRespId(Long encuestaRegistroId, Long preguntaId, String respuestaId);
+    SurveyAnswer encuestaRespuestaByRegtroIdAndPregIdAndRespIdSync(Long encuestaRegistroId, Long preguntaId, String respuestaId);
+    List<SurveyAnswer> loadByEncuestaRegistroIdSync(Long encuestaRegistroId);
+    LiveData<List<SurveyAnswer>> loadByEncuestaRegistroId(Long encuestaRegistroId);
+    LiveData<List<SurveyAnswer>> loadByCuestionarioId(Long cuestionarioId);
+    List<SurveyAnswer> loadByCuestionarioIdSync(Long cuestionarioId);
+    LiveData<SurveyAnswer> encuestaRespuestaByRegistroIdAndCuestId(Long encuestaRegistroId, Long cuestionarioId);
+    SurveyAnswer encuestaRespuestaByRegistroIdAndCuestIdSync(Long encuestaRegistroId, Long cuestionarioId);
     void deleteByEnctRegtIdAndCuestId(Long encuestaRegistroId, Long cuestionarioId);
     void deleteByEnctRegtIdAndPreguntaId(Long encuestaRegistroId, Long preguntaId);
     void deleteByEnctRegtIdAndPregtIdAndResp(Long encuestaRegistroId, Long preguntaId, String respuesta);

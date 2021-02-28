@@ -8,7 +8,7 @@ import androidx.lifecycle.LiveData;
 
 import java.util.List;
 
-import com.cysout.sousystems.surveymodule.entity.EncuestaRegistro;
+import com.cysout.sousystems.surveymodule.entity.SurveyRecord;
 import com.cysout.sousystems.surveymodule.entity.relation.EncuestaRegistroRespuestas;
 import com.cysout.sousystems.surveymodule.repository.EncuestaRegistroRepository;
 import com.cysout.sousystems.surveymodule.repository.impl.EncuestaRegistroRepositoryImpl;
@@ -20,15 +20,15 @@ public class EncuestaRegistroController extends AndroidViewModel {
         super(application);
         this.encuestaRegistroRepository = new EncuestaRegistroRepositoryImpl(application);
     }
-    public Long insert(EncuestaRegistro encuestaRegistro) {
+    public Long insert(SurveyRecord encuestaRegistro) {
         return this.encuestaRegistroRepository.insert(encuestaRegistro);
     }
 
-    public Long[] insertList(List<EncuestaRegistro> list) {
+    public Long[] insertList(List<SurveyRecord> list) {
         return this.encuestaRegistroRepository.insertList(list);
     }
 
-    public void update(EncuestaRegistro encuestaRegistro) {
+    public void update(SurveyRecord encuestaRegistro) {
         this.encuestaRegistroRepository.update(encuestaRegistro);
     }
 
@@ -36,35 +36,35 @@ public class EncuestaRegistroController extends AndroidViewModel {
         this.encuestaRegistroRepository.deleteAll();
     }
 
-    public LiveData<List<EncuestaRegistro>> loadAll() {
+    public LiveData<List<SurveyRecord>> loadAll() {
         return this.encuestaRegistroRepository.loadAll();
     }
 
-    public List<EncuestaRegistro> loadAllSync() {
+    public List<SurveyRecord> loadAllSync() {
         return this.encuestaRegistroRepository.loadAllSync();
     }
 
-    public LiveData<List<EncuestaRegistro>> loadByEncuestaId(Long encuestaId) {
+    public LiveData<List<SurveyRecord>> loadByEncuestaId(Long encuestaId) {
         return this.encuestaRegistroRepository.loadByEncuestaId(encuestaId);
     }
 
-    public List<EncuestaRegistro> loadByEncuestaIdSync(Long encuestaId) {
+    public List<SurveyRecord> loadByEncuestaIdSync(Long encuestaId) {
         return this.encuestaRegistroRepository.loadByEncuestaIdSync(encuestaId);
     }
 
-    public EncuestaRegistro encuestaRegistro(Long encuestaId) {
+    public SurveyRecord encuestaRegistro(Long encuestaId) {
         return this.encuestaRegistroRepository.encuestaRegistro(encuestaId);
     }
 
-    public EncuestaRegistro encuestaRegistroByEncuestaIdAndCatEncuestaEstatusId(Long encuestaId, Integer catEncuestaEstatusId) {
+    public SurveyRecord encuestaRegistroByEncuestaIdAndCatEncuestaEstatusId(Long encuestaId, Integer catEncuestaEstatusId) {
         return this.encuestaRegistroRepository.encuestaRegistroByEncuestaIdAndCatEncuestaEstatusId(encuestaId, catEncuestaEstatusId);
     }
 
-    public LiveData<List<EncuestaRegistro>> loadByEncuestaIdAndCatEncuestaEstatusId(Long encuestaId, Integer catEncuestaEstatusId) {
+    public LiveData<List<SurveyRecord>> loadByEncuestaIdAndCatEncuestaEstatusId(Long encuestaId, Integer catEncuestaEstatusId) {
         return this.encuestaRegistroRepository.loadByEncuestaIdAndCatEncuestaEstatusId(encuestaId, catEncuestaEstatusId);
     }
 
-    public List<EncuestaRegistro> loadByEncuestaIdAndCatEncuestaEstatusIdSync(Long encuestaId, Integer catEncuestaEstatusId) {
+    public List<SurveyRecord> loadByEncuestaIdAndCatEncuestaEstatusIdSync(Long encuestaId, Integer catEncuestaEstatusId) {
         return this.encuestaRegistroRepository.loadByEncuestaIdAndCatEncuestaEstatusIdSync(encuestaId, catEncuestaEstatusId);
     }
 

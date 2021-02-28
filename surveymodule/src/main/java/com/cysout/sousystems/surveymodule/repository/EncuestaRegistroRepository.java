@@ -4,22 +4,22 @@ import androidx.lifecycle.LiveData;
 
 import java.util.List;
 
-import com.cysout.sousystems.surveymodule.entity.EncuestaRegistro;
+import com.cysout.sousystems.surveymodule.entity.SurveyRecord;
 import com.cysout.sousystems.surveymodule.entity.relation.EncuestaRegistroRespuestas;
 
 public interface EncuestaRegistroRepository {
-    Long insert(EncuestaRegistro item);
-    Long[] insertList(List<EncuestaRegistro> list);
-    void update(EncuestaRegistro item);
+    Long insert(SurveyRecord item);
+    Long[] insertList(List<SurveyRecord> list);
+    void update(SurveyRecord item);
     void deleteAll();
-    LiveData<List<EncuestaRegistro>> loadAll();
-    List<EncuestaRegistro> loadAllSync();
-    LiveData<List<EncuestaRegistro>> loadByEncuestaId(Long encuestaId);
-    List<EncuestaRegistro> loadByEncuestaIdSync(Long encuestaId);
-    EncuestaRegistro encuestaRegistro(Long encuestaId);
-    EncuestaRegistro encuestaRegistroByEncuestaIdAndCatEncuestaEstatusId(Long encuestaId, Integer catEncuestaEstatusId);
-    LiveData<List<EncuestaRegistro>> loadByEncuestaIdAndCatEncuestaEstatusId(Long encuestaId, Integer catEncuestaEstatusId);
-    List<EncuestaRegistro> loadByEncuestaIdAndCatEncuestaEstatusIdSync(Long encuestaId, Integer catEncuestaEstatusId);
+    LiveData<List<SurveyRecord>> loadAll();
+    List<SurveyRecord> loadAllSync();
+    LiveData<List<SurveyRecord>> loadByEncuestaId(Long encuestaId);
+    List<SurveyRecord> loadByEncuestaIdSync(Long encuestaId);
+    SurveyRecord encuestaRegistro(Long encuestaId);
+    SurveyRecord encuestaRegistroByEncuestaIdAndCatEncuestaEstatusId(Long encuestaId, Integer catEncuestaEstatusId);
+    LiveData<List<SurveyRecord>> loadByEncuestaIdAndCatEncuestaEstatusId(Long encuestaId, Integer catEncuestaEstatusId);
+    List<SurveyRecord> loadByEncuestaIdAndCatEncuestaEstatusIdSync(Long encuestaId, Integer catEncuestaEstatusId);
     void updateEncuestaRegistroByEnctRegtroId(Integer catEncuestaEstatusId, Long encuestaRegistroId);
     void updateEncuestaRegistroByEnctRegtroId(Integer catEncuestaEstatusId, String fechaFinal, Long encuestaRegistroId);
     LiveData<EncuestaRegistroRespuestas> loadRegistroRespByEnctRegtroId(Long encuestaRegistroId);

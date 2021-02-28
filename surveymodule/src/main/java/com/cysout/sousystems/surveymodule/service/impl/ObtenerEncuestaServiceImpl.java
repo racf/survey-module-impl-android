@@ -6,11 +6,11 @@ import android.util.Log;
 import androidx.annotation.NonNull;
 import androidx.lifecycle.AndroidViewModel;
 
+import com.cysout.sousystems.surveymodule.entity.Survey;
 import com.google.gson.Gson;
 import java.util.List;
 
 import com.cysout.sousystems.surveymodule.entity.Cuestionario;
-import com.cysout.sousystems.surveymodule.entity.Encuesta;
 import com.cysout.sousystems.surveymodule.entity.MostrarCuestionarios;
 import com.cysout.sousystems.surveymodule.entity.MostrarPreguntas;
 import com.cysout.sousystems.surveymodule.entity.MostrarRespuestas;
@@ -20,7 +20,7 @@ import com.cysout.sousystems.surveymodule.entity.Respuesta;
 import com.cysout.sousystems.surveymodule.entity.relation.EncuestaCuestionarios;
 import com.cysout.sousystems.surveymodule.entity.relation.RelacionSiSelecciona;
 import com.cysout.sousystems.surveymodule.repository.CuestionarioRepository;
-import com.cysout.sousystems.surveymodule.repository.EncuestaRepository;
+import com.cysout.sousystems.surveymodule.repository.SurveyRepository;
 import com.cysout.sousystems.surveymodule.repository.MostrarCuestionariosRepository;
 import com.cysout.sousystems.surveymodule.repository.MostrarPreguntasRepository;
 import com.cysout.sousystems.surveymodule.repository.MostrarRespuestasRepository;
@@ -28,7 +28,7 @@ import com.cysout.sousystems.surveymodule.repository.MostrarSiSeleccionaReposito
 import com.cysout.sousystems.surveymodule.repository.PreguntaRepository;
 import com.cysout.sousystems.surveymodule.repository.RespuestaRepository;
 import com.cysout.sousystems.surveymodule.repository.impl.CuestionarioRepositoryImpl;
-import com.cysout.sousystems.surveymodule.repository.impl.EncuestaRepositoryImpl;
+import com.cysout.sousystems.surveymodule.repository.impl.SurveyRepositoryImpl;
 import com.cysout.sousystems.surveymodule.repository.impl.MostrarCuestionariosRepositoryImpl;
 import com.cysout.sousystems.surveymodule.repository.impl.MostrarPreguntasRepositoryImpl;
 import com.cysout.sousystems.surveymodule.repository.impl.MostrarRespuestasRepositoryImpl;
@@ -41,7 +41,7 @@ import com.cysout.sousystems.surveymodule.utils.Utils;
 
 public class ObtenerEncuestaServiceImpl  extends AndroidViewModel implements ObtenerEncuestaService {
     Gson gson = new Gson();
-    private EncuestaRepository encuestaRepository;
+    private SurveyRepository surveyRepository;
     private CuestionarioRepository cuestionarioRepository;
     private PreguntaRepository preguntaRepository;
     private RespuestaRepository respuestaRepository;
@@ -52,7 +52,7 @@ public class ObtenerEncuestaServiceImpl  extends AndroidViewModel implements Obt
 
     public ObtenerEncuestaServiceImpl(@NonNull Application application) {
         super(application);
-        this.encuestaRepository = new EncuestaRepositoryImpl(application);
+        this.surveyRepository = new SurveyRepositoryImpl(application);
         this.cuestionarioRepository = new CuestionarioRepositoryImpl(application);
         this.preguntaRepository = new PreguntaRepositoryImpl(application);
         this.respuestaRepository = new RespuestaRepositoryImpl(application);
@@ -65,16 +65,16 @@ public class ObtenerEncuestaServiceImpl  extends AndroidViewModel implements Obt
     @Override
     public Boolean guardarEncuesta(String jsonEncuesta) {
         Boolean estatus = false;
-        Encuesta encuesta = gson.fromJson(jsonEncuesta, Encuesta.class);
-        //Log.i(CustomConstants.TAG_LOG, encuestaRepository.findEncuestaById(encuesta.getEncuestaId()).toString());
-        if(encuestaRepository.loadEncuestaByIdSync(encuesta.getEncuestaId()) == null){
+        Survey survey = gson.fromJson(jsonEncuesta, Survey.class);
+        //Log.i(CustomConstants.TAG_LOG, encuestaRepository.findEncuestaById(encuesta.getsurveyId()).toString());
+        if(surveyRepository.loadEncuestaByIdSync(survey.getSurveyId()) == null){
             //encuestaRepository.delete(encuesta);
-            Long encuestaId = this.encuestaRepository.insert(encuesta);
-            //Log.i(CustomConstants.TAG_LOG, "Encuesta ID: "+encuestaId);
+            Long surveyId = this.surveyRepository.insert(survey);
+            //Log.i(CustomConstants.TAG_LOG, "Encuesta ID: "+surveyId);
             //Log.i(CustomConstants.TAG_LOG, "Encuesta: "+encuesta.toString());
             //Obtenemos todos los cuestionarios de una determinada encuesta
-            for( Cuestionario cuestionario : encuesta.getCuestionarios() ){
-                cuestionario.setEncuestaId(encuestaId);
+            for( Cuestionario cuestionario : survey.getCuestionarios() ){
+                cuestionario.setSurveyId(surveyId);
                 Long cuestionarioId = cuestionarioRepository.insert(cuestionario);
                 //Log.i(CustomConstants.TAG_LOG, "Cuestionario ID: "+cuestionarioId);
                 //Log.i(CustomConstants.TAG_LOG, "Cuestionario: "+cuestionario.toString());
@@ -144,14 +144,14 @@ public class ObtenerEncuestaServiceImpl  extends AndroidViewModel implements Obt
     }
 
     @Override
-    public Encuesta obtenerEncuesta() {
-        Encuesta encuesta = null;
-        EncuestaCuestionarios encuestaCuestionarios = encuestaRepository.loadCuestionarioRespuestasSync();
+    public Survey obtenerEncuesta() {
+        Survey survey = null;
+        EncuestaCuestionarios encuestaCuestionarios = surveyRepository.loadCuestionarioRespuestasSync();
         if( !Utils.isEmpty(encuestaCuestionarios) ) {
-            encuesta = encuestaCuestionarios.getEncuesta();
-            encuesta.setCuestionarios(encuestaCuestionarios.getCuestionarios());
+            survey = encuestaCuestionarios.getSurvey();
+            survey.setCuestionarios(encuestaCuestionarios.getCuestionarios());
             //Recorremos cada uno de los cuestionarios para obtener las preguntas
-            for ( Cuestionario cuestionario : encuesta.getCuestionarios() ) {
+            for ( Cuestionario cuestionario : survey.getCuestionarios() ) {
                 cuestionario.setPreguntas(preguntaRepository.loadByCuestionarioIdSync(cuestionario.getCuestionarioId()));
                 for ( Pregunta pregunta : cuestionario.getPreguntas() ) {
                    if( !pregunta.getTipo().equalsIgnoreCase("text") ) {
@@ -176,7 +176,7 @@ public class ObtenerEncuestaServiceImpl  extends AndroidViewModel implements Obt
                 }
             }
         }
-        Log.i(CustomConstants.TAG_LOG, "Cuestionario INSERTADO: "+gson.toJson(encuesta));
-        return encuesta;
+        Log.i(CustomConstants.TAG_LOG, "Cuestionario INSERTADO: "+gson.toJson(survey));
+        return survey;
     }
 }

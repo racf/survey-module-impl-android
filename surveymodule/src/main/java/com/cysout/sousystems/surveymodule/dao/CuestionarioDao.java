@@ -36,10 +36,10 @@ public interface CuestionarioDao {
     @Query("SELECT * FROM cuestionario WHERE cuestionarioId = :id")
     List<Cuestionario> loadByCuestionarioIdSync(Long id);
 
-    @Query("SELECT * FROM cuestionario WHERE encuestaId = :id")
+    @Query("SELECT * FROM cuestionario WHERE surveyId = :id")
     LiveData<List<Cuestionario>> loadByEncuestaId(Long id);
 
-    @Query("SELECT * FROM cuestionario WHERE encuestaId = :id")
+    @Query("SELECT * FROM cuestionario WHERE surveyId = :id")
     List<Cuestionario> loadByEncuestaIdSync(Long id);
 
     @Query("DELETE FROM cuestionario")

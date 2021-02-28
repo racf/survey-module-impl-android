@@ -4,12 +4,16 @@ import androidx.room.Embedded;
 
 import java.io.Serializable;
 
-import com.cysout.sousystems.surveymodule.entity.Encuesta;
-import com.cysout.sousystems.surveymodule.entity.EncuestaRegistro;
+import com.cysout.sousystems.surveymodule.entity.Survey;
+import com.cysout.sousystems.surveymodule.entity.SurveyRecord;
 
+/**
+ *Developed by cysout.com and sousystems.com.mx
+ *Contact info@cysout.com or contacto@sousystems.com.mx
+**/
 public class SurveyRecords implements Serializable {
     @Embedded
-    Encuesta survey = new Encuesta();
+    Survey survey = new Survey();
 
    /* @Relation(parentColumn = "encuestaId", entityColumn = "encuestaId", entity = EncuestaRegistro.class)
     List<EncuestaRegistro> records = new ArrayList<>();
@@ -31,21 +35,21 @@ public class SurveyRecords implements Serializable {
     }*/
 
    @Embedded
-    EncuestaRegistro record = new EncuestaRegistro();
+   SurveyRecord record = new SurveyRecord();
 
-    public Encuesta getSurvey() {
+    public Survey getSurvey() {
         return survey;
     }
 
-    public void setSurvey(Encuesta survey) {
+    public void setSurvey(Survey survey) {
         this.survey = survey;
     }
 
-    public EncuestaRegistro getRecord() {
+    public SurveyRecord getRecord() {
         return record;
     }
 
-    public void setRecord(EncuestaRegistro record) {
+    public void setRecord(SurveyRecord record) {
         this.record = record;
     }
 
