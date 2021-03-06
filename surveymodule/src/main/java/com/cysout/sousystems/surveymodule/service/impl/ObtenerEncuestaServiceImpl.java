@@ -6,17 +6,17 @@ import android.util.Log;
 import androidx.annotation.NonNull;
 import androidx.lifecycle.AndroidViewModel;
 
+import com.cysout.sousystems.surveymodule.entity.Answer;
+import com.cysout.sousystems.surveymodule.entity.Question;
+import com.cysout.sousystems.surveymodule.entity.Questionnaire;
+import com.cysout.sousystems.surveymodule.entity.ShowSelect;
 import com.cysout.sousystems.surveymodule.entity.Survey;
 import com.google.gson.Gson;
 import java.util.List;
 
-import com.cysout.sousystems.surveymodule.entity.Cuestionario;
-import com.cysout.sousystems.surveymodule.entity.MostrarCuestionarios;
-import com.cysout.sousystems.surveymodule.entity.MostrarPreguntas;
-import com.cysout.sousystems.surveymodule.entity.MostrarRespuestas;
-import com.cysout.sousystems.surveymodule.entity.MostrarSiSelecciona;
-import com.cysout.sousystems.surveymodule.entity.Pregunta;
-import com.cysout.sousystems.surveymodule.entity.Respuesta;
+import com.cysout.sousystems.surveymodule.entity.ShowQuestionnaires;
+import com.cysout.sousystems.surveymodule.entity.ShowQuestions;
+import com.cysout.sousystems.surveymodule.entity.ShowAnswers;
 import com.cysout.sousystems.surveymodule.entity.relation.EncuestaCuestionarios;
 import com.cysout.sousystems.surveymodule.entity.relation.RelacionSiSelecciona;
 import com.cysout.sousystems.surveymodule.repository.CuestionarioRepository;
@@ -73,60 +73,60 @@ public class ObtenerEncuestaServiceImpl  extends AndroidViewModel implements Obt
             //Log.i(CustomConstants.TAG_LOG, "Encuesta ID: "+surveyId);
             //Log.i(CustomConstants.TAG_LOG, "Encuesta: "+encuesta.toString());
             //Obtenemos todos los cuestionarios de una determinada encuesta
-            for( Cuestionario cuestionario : survey.getCuestionarios() ){
-                cuestionario.setSurveyId(surveyId);
-                Long cuestionarioId = cuestionarioRepository.insert(cuestionario);
+            for( Questionnaire questionnaire : survey.getQuestionnaires() ){
+                questionnaire.setSurveyId(surveyId);
+                Long cuestionarioId = cuestionarioRepository.insert(questionnaire);
                 //Log.i(CustomConstants.TAG_LOG, "Cuestionario ID: "+cuestionarioId);
                 //Log.i(CustomConstants.TAG_LOG, "Cuestionario: "+cuestionario.toString());
                 //Obtenemos las preguntas de los cuestionarios
-                for (Pregunta pregunta : cuestionario.getPreguntas() ){
-                    pregunta.setCuestionarioId(cuestionarioId);
-                    Long preguntaId = preguntaRepository.insert(pregunta);
+                for (Question question : questionnaire.getQuestions() ){
+                    question.setQuestionnaireId(cuestionarioId);
+                    Long preguntaId = preguntaRepository.insert(question);
                     //Log.i(CustomConstants.TAG_LOG, "Pregunta ID: "+preguntaId);
                     //Log.i(CustomConstants.TAG_LOG, "Pregunta: "+pregunta.toString());
                     //Obtenemos las respuestas de las preguntas
-                    List<Respuesta> respuestas = pregunta.getRespuestas();
+                    List<Answer> answers = question.getAnswers();
                     //Si la pregunta tiene respuestas insertamos
-                    if ( respuestas.size() > 0 ){
-                        for (Respuesta respuesta : respuestas ) {
-                            respuesta.setPreguntaId(preguntaId);
-                            Long respuestaId = respuestaRepository.insert(respuesta);
+                    if ( answers.size() > 0 ){
+                        for (Answer answer : answers) {
+                            answer.setQuestionId(preguntaId);
+                            Long respuestaId = respuestaRepository.insert(answer);
                             //Log.i(CustomConstants.TAG_LOG, "Respuesta ID: "+respuestaId);
                             //Log.i(CustomConstants.TAG_LOG, "Respuesta: "+respuesta.toString());
-                            MostrarSiSelecciona mostrarSiSelecciona = respuesta.getMostrarSiSelecciona();
+                            ShowSelect showSelect = answer.getShowSelect();
                             //Si mostrar si selecciona no esta vacío
-                            if(!Utils.isEmpty(mostrarSiSelecciona)){
-                                List<MostrarCuestionarios> mostrarCuestionarios = mostrarSiSelecciona.getCuestionarios();
-                                List<MostrarPreguntas> mostrarPreguntas = mostrarSiSelecciona.getPreguntas();
-                                List<MostrarRespuestas> mostrarRespuestas = mostrarSiSelecciona.getRespuestas();
+                            if(!Utils.isEmpty(showSelect)){
+                                List<ShowQuestionnaires> mostrarCuestionarios = showSelect.getQuestionnaires();
+                                List<ShowQuestions> mostrarPreguntas = showSelect.getQuestions();
+                                List<ShowAnswers> mostrarRespuestas = showSelect.getAnswers();
                                 if( Utils.isEmpty(mostrarCuestionarios) && Utils.isEmpty(mostrarPreguntas) && Utils.isEmpty(mostrarRespuestas)){
                                     Log.i(CustomConstants.TAG_LOG, "MostrarSiSeleccion: SIN info");
                                 }else{
-                                    mostrarSiSelecciona.setRespuestaId(respuestaId);
-                                    Long mostrarSiSeleccionaId = mostrarSiSeleccionaRepository.insert(mostrarSiSelecciona);
+                                    showSelect.setAnswerId(respuestaId);
+                                    Long mostrarSiSeleccionaId = mostrarSiSeleccionaRepository.insert(showSelect);
                                     //Log.i(CustomConstants.TAG_LOG, "MostrarSiSeleccionaId ID: "+mostrarSiSeleccionaId);
                                     //Si no esta vacio se realiza la inserción en cada objeto
                                     if(!Utils.isEmpty(mostrarCuestionarios)){
-                                        for (MostrarCuestionarios mCuestionario : mostrarCuestionarios ) {
-                                            mCuestionario.setMostrarSiSeleccionaId(mostrarSiSeleccionaId);
+                                        for (ShowQuestionnaires mCuestionario : mostrarCuestionarios ) {
+                                            mCuestionario.setShowSelectId(mostrarSiSeleccionaId);
                                             Long mostrarCuestionarioId = mostrarCuestionariosRepository.insert(mCuestionario);
-                                            mCuestionario.setMostrarCuestionariosId(mostrarCuestionarioId);
+                                            mCuestionario.setShowQuestionnairesId(mostrarCuestionarioId);
                                            // Log.i(CustomConstants.TAG_LOG, "mCuestionario: "+mCuestionario.toString());
                                         }
                                     }
                                     if(!Utils.isEmpty(mostrarPreguntas)){
-                                        for (MostrarPreguntas mPregunta : mostrarPreguntas ) {
-                                            mPregunta.setMostrarSiSeleccionaId(mostrarSiSeleccionaId);
+                                        for (ShowQuestions mPregunta : mostrarPreguntas ) {
+                                            mPregunta.setShowSelectId(mostrarSiSeleccionaId);
                                             Long mostrarPreguntaId = mostrarPreguntasRepository.insert(mPregunta);
-                                            mPregunta.setMostrarPreguntasId(mostrarPreguntaId);
+                                            mPregunta.setShowQuestionsId(mostrarPreguntaId);
                                             //Log.i(CustomConstants.TAG_LOG, "mPregunta: "+mPregunta.toString());
                                         }
                                     }
                                     if(!Utils.isEmpty(mostrarRespuestas)){
-                                        for (MostrarRespuestas mRespuesta : mostrarRespuestas ) {
-                                            mRespuesta.setMostrarSiSeleccionaId(mostrarSiSeleccionaId);
+                                        for (ShowAnswers mRespuesta : mostrarRespuestas ) {
+                                            mRespuesta.setShowSelectId(mostrarSiSeleccionaId);
                                             Long mostrarRespuestaId = mostrarRespuestasRepository.insert(mRespuesta);
-                                            mRespuesta.setMostrarRespuestasId(mostrarRespuestaId);
+                                            mRespuesta.setShowAnswersId(mostrarRespuestaId);
                                            // Log.i(CustomConstants.TAG_LOG, "mRespuesta: "+mRespuesta.toString());
                                         }
                                     }
@@ -149,25 +149,25 @@ public class ObtenerEncuestaServiceImpl  extends AndroidViewModel implements Obt
         EncuestaCuestionarios encuestaCuestionarios = surveyRepository.loadCuestionarioRespuestasSync();
         if( !Utils.isEmpty(encuestaCuestionarios) ) {
             survey = encuestaCuestionarios.getSurvey();
-            survey.setCuestionarios(encuestaCuestionarios.getCuestionarios());
+            survey.setQuestionnaires(encuestaCuestionarios.getQuestionnaires());
             //Recorremos cada uno de los cuestionarios para obtener las preguntas
-            for ( Cuestionario cuestionario : survey.getCuestionarios() ) {
-                cuestionario.setPreguntas(preguntaRepository.loadByCuestionarioIdSync(cuestionario.getCuestionarioId()));
-                for ( Pregunta pregunta : cuestionario.getPreguntas() ) {
-                   if( !pregunta.getTipo().equalsIgnoreCase("text") ) {
-                       List<Respuesta> respuestas = respuestaRepository.loadByPreguntaIdSync(pregunta.getPreguntaId());
-                       pregunta.setRespuestas(respuestas);
+            for ( Questionnaire questionnaire : survey.getQuestionnaires() ) {
+                questionnaire.setQuestions(preguntaRepository.loadByCuestionarioIdSync(questionnaire.getQuestionnaireId()));
+                for ( Question question : questionnaire.getQuestions() ) {
+                   if( !question.getType().equalsIgnoreCase(CustomConstants.TEXT) ) {
+                       List<Answer> answers = respuestaRepository.loadByPreguntaIdSync(question.getQuestionId());
+                       question.setAnswers(answers);
                        //Validamos que el arreglo de objetos contenga informacion
-                       if( !Utils.isEmpty( pregunta.getRespuestas() )){
-                           for ( Respuesta respuesta : pregunta.getRespuestas() ) {
-                               RelacionSiSelecciona relacionSiSelecciona = mostrarSiSeleccionaRepository.loadMosstrarSiSeleccionaByRespuestaId(respuesta.getRespuestaId());
+                       if( !Utils.isEmpty( question.getAnswers() )){
+                           for ( Answer answer : question.getAnswers() ) {
+                               RelacionSiSelecciona relacionSiSelecciona = mostrarSiSeleccionaRepository.loadMosstrarSiSeleccionaByRespuestaId(answer.getAnswerId());
                                if (!Utils.isEmpty(relacionSiSelecciona)) {
-                                   MostrarSiSelecciona mostrarSiSelecciona = relacionSiSelecciona.getMostrarSiSelecciona();
-                                   if (!Utils.isEmpty(mostrarSiSelecciona)) {
-                                       mostrarSiSelecciona.setCuestionarios(relacionSiSelecciona.getCuestionarios());
-                                       mostrarSiSelecciona.setPreguntas(relacionSiSelecciona.getPreguntas());
-                                       mostrarSiSelecciona.setRespuestas(relacionSiSelecciona.getRespuestas());
-                                       respuesta.setMostrarSiSelecciona(mostrarSiSelecciona);
+                                   ShowSelect showSelect = relacionSiSelecciona.getShowSelect();
+                                   if (!Utils.isEmpty(showSelect)) {
+                                       showSelect.setQuestionnaires(relacionSiSelecciona.getCuestionarios());
+                                       showSelect.setQuestions(relacionSiSelecciona.getPreguntas());
+                                       showSelect.setAnswers(relacionSiSelecciona.getRespuestas());
+                                       answer.setShowSelect(showSelect);
                                    }
                                }
                            }

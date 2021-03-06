@@ -21,6 +21,9 @@ import android.widget.RadioGroup;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.cysout.sousystems.surveymodule.entity.Answer;
+import com.cysout.sousystems.surveymodule.entity.Question;
+import com.cysout.sousystems.surveymodule.entity.Questionnaire;
 import com.cysout.sousystems.surveymodule.entity.Survey;
 import com.cysout.sousystems.surveymodule.entity.SurveyRecord;
 import com.google.gson.Gson;
@@ -33,9 +36,6 @@ import java.util.concurrent.Executors;
 import com.cysout.sousystems.surveymodule.R;
 import com.cysout.sousystems.surveymodule.controller.RespuestaMostrarCuestionariosController;
 import com.cysout.sousystems.surveymodule.dto.ResponseMessageDto;
-import com.cysout.sousystems.surveymodule.entity.Cuestionario;
-import com.cysout.sousystems.surveymodule.entity.Pregunta;
-import com.cysout.sousystems.surveymodule.entity.Respuesta;
 import com.cysout.sousystems.surveymodule.entity.RespuestaMostrarCuestionarios;
 import com.cysout.sousystems.surveymodule.entity.relation.EncuestaRegistroRespuestas;
 import com.cysout.sousystems.surveymodule.entity.relation.SurveyRecords;
@@ -72,7 +72,7 @@ public class QuestionaryActivity extends AppCompatActivity{
     private EncuestaService encuestaService;
     private SurveyService surveyService;
     //Validadores
-    private List<Pregunta> listPreguntasInvalidas;
+    private List<Question> listPreguntasInvalidas;
     private boolean isValid = true;
 
     @Override
@@ -102,6 +102,7 @@ public class QuestionaryActivity extends AppCompatActivity{
         }
 
         //String jsonEncuesta = Utils.jsonStringFinal();
+        Log.i(CustomConstants.TAG_LOG, "PARAMETRO DE LA ENCUESTA " +surveyParameter.toString());
         startAdapter(surveyParameter);
 
         respuestaMostrarCuestionariosController.loadAll().observe(this, new Observer<List<RespuestaMostrarCuestionarios>>() {
@@ -184,8 +185,8 @@ public class QuestionaryActivity extends AppCompatActivity{
             //encuesta = new Gson().fromJson(jsonEncuesta, Encuesta.class);
             this.survey = new Gson().fromJson(survey.getJson(), Survey.class);
             Log.i(CustomConstants.TAG_LOG, "PARAMETER SURVEY: "+ this.survey.toString());
-            for (Cuestionario cuestionario: this.survey.getCuestionarios()) {
-                cuestionarios.add(new QuestionaryFragment(this.survey, cuestionario));
+            for (Questionnaire questionnaire : this.survey.getQuestionnaires()) {
+                cuestionarios.add(new QuestionaryFragment(this.survey, questionnaire));
             }
             mPagerAdapter = new QuestionaryViewPagerAdapter(getSupportFragmentManager(), FragmentPagerAdapter.BEHAVIOR_RESUME_ONLY_CURRENT_FRAGMENT, cuestionarios);
             questionaryViewPager.setAdapter(mPagerAdapter);
@@ -272,48 +273,48 @@ public class QuestionaryActivity extends AppCompatActivity{
                 Log.d(CustomConstants.TAG_LOG, "onAnimationStart()");
                 //Logica que permitira pasar al siguiente cuestionario
                 QuestionaryFragment questionaryFragment = (QuestionaryFragment) mPagerAdapter.getItem(questionaryViewPager.getCurrentItem());
-                Map<WidgetFragment, Pregunta> preguntas = questionaryFragment.getPreguntas();
-                for ( Map.Entry<WidgetFragment, Pregunta> entry : preguntas.entrySet() ) {
+                Map<WidgetFragment, Question> preguntas = questionaryFragment.getPreguntas();
+                for ( Map.Entry<WidgetFragment, Question> entry : preguntas.entrySet() ) {
                     WidgetFragment widgetFragment = entry.getKey();
-                    Pregunta pregunta = entry.getValue();
-                    if( pregunta.getRequerido() ){
+                    Question question = entry.getValue();
+                    if( question.getRequired() ){
                         if(widgetFragment.getView().getVisibility() == CustomConstants.VISIBLE){
-                            if( pregunta.getTipo().equalsIgnoreCase(CustomConstants.TEXT) ) {
+                            if( question.getType().equalsIgnoreCase(CustomConstants.TEXT) ) {
                                 EditText editText = widgetFragment.getView().findViewById(R.id.edit_text);
                                 if( !Validation.isTextValid(editText.getText().toString()) ) {
                                     isValid = CustomConstants.FALSE;
                                     editText.setError(getString(R.string.texto_requerido));
-                                    listPreguntasInvalidas.add(pregunta);
+                                    listPreguntasInvalidas.add(question);
                                 }
-                            } else if( pregunta.getTipo().equalsIgnoreCase(CustomConstants.SELECT) ) {
+                            } else if( question.getType().equalsIgnoreCase(CustomConstants.SELECT) ) {
                                 TextView tvTitleSpinner = widgetFragment.getView().findViewById(R.id.tvTitleSpinner);
-                                Respuesta respuesta = (Respuesta) tvTitleSpinner.getTag();
-                                if( respuesta.getRespuestaId() == CustomConstants.LONG_0L ) {
+                                Answer answer = (Answer) tvTitleSpinner.getTag();
+                                if( answer.getAnswerId() == CustomConstants.LONG_0L ) {
                                     isValid = CustomConstants.FALSE;
                                     tvTitleSpinner.setError(getString(R.string.texto_requerido));
                                     //editText.setError(getString(R.string.texto_requerido));
                                     TextView labelRequired = widgetFragment.getView().findViewById(R.id.label_required);
                                     labelRequired.setText(getString(R.string.texto_requerido).concat(" ").concat(getString(R.string.question_required)));
-                                    listPreguntasInvalidas.add(pregunta);
+                                    listPreguntasInvalidas.add(question);
                                 }
-                            } else if( pregunta.getTipo().equalsIgnoreCase(CustomConstants.RADIOGROUP) ) {
+                            } else if( question.getType().equalsIgnoreCase(CustomConstants.RADIOGROUP) ) {
                                 RadioGroup radioGroup = widgetFragment.getView().findViewById(R.id.radio_group);
                                 //Se valida que se encuentre seleccionado algun radio button dentro del RadioGroup
                                 if( radioGroup.getCheckedRadioButtonId() == -1 ) {
                                     isValid = CustomConstants.FALSE;
                                     TextView labelRequired = widgetFragment.getView().findViewById(R.id.label_required);
                                     labelRequired.setText(getString(R.string.texto_requerido).concat(" ").concat(getString(R.string.question_required)));
-                                    listPreguntasInvalidas.add(pregunta);
+                                    listPreguntasInvalidas.add(question);
                                 }
-                            } else if ( pregunta.getTipo().equalsIgnoreCase(CustomConstants.CHECKBOX) ) {
-                                List<Respuesta> listRespuestasValidadas = new ArrayList<>();
+                            } else if ( question.getType().equalsIgnoreCase(CustomConstants.CHECKBOX) ) {
+                                List<Answer> listRespuestasValidadas = new ArrayList<>();
                                 LinearLayout checkboxesLinerLayout =  widgetFragment.getView().findViewById(R.id.checkboxes_liner_layout);
                                 for ( int i = CustomConstants.INT_0; i < checkboxesLinerLayout.getChildCount(); i++) {
                                     CheckBox checkBox =  (CheckBox) checkboxesLinerLayout.getChildAt(i);
                                     if( checkBox.getVisibility() == CustomConstants.VISIBLE) {
-                                        Respuesta respuesta = (Respuesta) checkBox.getTag();
+                                        Answer answer = (Answer) checkBox.getTag();
                                         if( checkBox.isChecked() ){
-                                            listRespuestasValidadas.add(respuesta);
+                                            listRespuestasValidadas.add(answer);
                                         }
                                     }
 
@@ -322,7 +323,7 @@ public class QuestionaryActivity extends AppCompatActivity{
                                     isValid = CustomConstants.FALSE;
                                     TextView labelRequired = widgetFragment.getView().findViewById(R.id.label_required);
                                     labelRequired.setText(getString(R.string.texto_requerido).concat(" ").concat(getString(R.string.question_required)));
-                                    listPreguntasInvalidas.add(pregunta);
+                                    listPreguntasInvalidas.add(question);
                                 } else {
                                     listRespuestasValidadas.clear();
                                 }
@@ -352,10 +353,10 @@ public class QuestionaryActivity extends AppCompatActivity{
                         int next = questionaryViewPager.getCurrentItem() + 1;
                         if (next < mPagerAdapter.getCount()) {
                             QuestionaryFragment questionaryFragmentNext = (QuestionaryFragment) mPagerAdapter.getItem(next);
-                            Cuestionario cuestionario = questionaryFragmentNext.getCuestionario();
-                            Log.i(CustomConstants.TAG_LOG, "CUESTIONARIO SIGUIENTE: " + cuestionario.toString());
+                            Questionnaire questionnaire = questionaryFragmentNext.getQuestionnaire();
+                            Log.i(CustomConstants.TAG_LOG, "CUESTIONARIO SIGUIENTE: " + questionnaire.toString());
                             //Verifica si el cuestionario siguiente se encuentra oculto. Estatus false.
-                            if (!cuestionario.getVisible()) {
+                            if (!questionnaire.getVisible()) {
                                 Log.i(CustomConstants.TAG_LOG, "ENTRO 1: ");
                                 //Se verifica si existe alguna RespuestaMostrarCuestionarios que desencadene el siguiente cuestionario
                                 //En caso contrario finaliza la encuesta
@@ -365,17 +366,17 @@ public class QuestionaryActivity extends AppCompatActivity{
                                     // desencadena el siguiente cuestioanrio
                                     for (RespuestaMostrarCuestionarios respuestaMostrarCuestionario : listMostrarCuestionarios) {
                                         //Si se encuentra dentro de la lista el valor del siguiente cuestionario se cambia el estatus a true.
-                                        if (respuestaMostrarCuestionario.getCuestionarioId() == cuestionario.getCuestionarioId()) {
+                                        if (respuestaMostrarCuestionario.getCuestionarioId() == questionnaire.getQuestionnaireId()) {
                                             Log.i(CustomConstants.TAG_LOG, "ENTRO 3: ");
-                                            cuestionario.setVisible(CustomConstants.TRUE);
+                                            questionnaire.setVisible(CustomConstants.TRUE);
                                         }
                                     }
                                     //Si el estatus de visibilidad del cuestionario es verdadero mostramos el cuestionario y
                                     // regresamos al estatus anterior de visibilidad es decir false.
-                                    if (cuestionario.getVisible()) {
+                                    if (questionnaire.getVisible()) {
                                         Log.i(CustomConstants.TAG_LOG, "ENTRO 4: ");
                                         //Regresando el cuestionario a su estado anterior false
-                                        cuestionario.setVisible(CustomConstants.FALSE);
+                                        questionnaire.setVisible(CustomConstants.FALSE);
                                         //Mostramos el siguiente cuestionario
                                         questionaryViewPager.setCurrentItem(next, CustomConstants.TRUE);
                                     } else {
@@ -422,7 +423,7 @@ public class QuestionaryActivity extends AppCompatActivity{
         Executors.newSingleThreadExecutor().execute(() -> {
             Long encuestaRegistroId = Utils.findPreferenceLong(getApplicationContext(), CustomConstants.PREFERENCE_NAME_CUESTIONARIO, CustomConstants.CUESTIONARIO_REGISTRO_ID);
             EncuestaRegistroRespuestas encuestaRegistroRespuestas = encuestaService.encuentaFinaliza(encuestaRegistroId, CustomConstants.TERMINADA, Utils.dateTime());
-            Log.i(CustomConstants.TAG_LOG, "RETURN INFO QUESTIONARY : "+encuestaRegistroRespuestas.getEncuestaRegistro().toString());
+            Log.i(CustomConstants.TAG_LOG, "RETURN INFO QUESTIONARY : "+encuestaRegistroRespuestas.getSurveyRecord().toString());
             Intent returnIntent = new Intent();
             ResponseMessageDto responseMessage = new ResponseMessageDto(CustomConstants.MESSAGE_SURVEY_RESPONSE, "", CustomConstants.CODE_200,
                     getString(R.string.mensaje_encuesta_finalizada), encuestaRegistroRespuestas);
@@ -442,8 +443,8 @@ public class QuestionaryActivity extends AppCompatActivity{
             Long encuestaRegistroId = Utils.findPreferenceLong(getApplicationContext(), CustomConstants.PREFERENCE_NAME_CUESTIONARIO, CustomConstants.CUESTIONARIO_REGISTRO_ID);
             if( encuestaRegistroId > CustomConstants.LONG_0L ) {
                 QuestionaryFragment questionaryFragment = (QuestionaryFragment) mPagerAdapter.getItem(questionaryViewPager.getCurrentItem());
-                Long cuestionarioId = questionaryFragment.getCuestionario().getCuestionarioId();
-                Log.i(CustomConstants.TAG_LOG, "PREV-QUESTIONARY "+questionaryFragment.getCuestionario().toString());
+                Long cuestionarioId = questionaryFragment.getQuestionnaire().getQuestionnaireId();
+                Log.i(CustomConstants.TAG_LOG, "PREV-QUESTIONARY "+questionaryFragment.getQuestionnaire().toString());
                 encuestaService.eliminarEncuestaRegistroByCuestionarioId(encuestaRegistroId, cuestionarioId);
             }
         });

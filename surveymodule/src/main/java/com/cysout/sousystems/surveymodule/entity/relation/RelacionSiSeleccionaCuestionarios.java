@@ -7,30 +7,30 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
-import com.cysout.sousystems.surveymodule.entity.MostrarCuestionarios;
-import com.cysout.sousystems.surveymodule.entity.MostrarSiSelecciona;
+import com.cysout.sousystems.surveymodule.entity.ShowQuestionnaires;
+import com.cysout.sousystems.surveymodule.entity.ShowSelect;
 
 public class RelacionSiSeleccionaCuestionarios implements Serializable {
 
     @Embedded
-    MostrarSiSelecciona mostrarSiSelecciona = new MostrarSiSelecciona();
+    ShowSelect showSelect = new ShowSelect();
 
-    @Relation(parentColumn = "mostrarSiSeleccionaId", entityColumn = "mostrarSiSeleccionaId", entity = MostrarCuestionarios.class)
-    List<MostrarCuestionarios> cuestionarios = new ArrayList<>();
+    @Relation(parentColumn = "showSelectId", entityColumn = "showSelectId", entity = ShowQuestionnaires.class)
+    List<ShowQuestionnaires> cuestionarios = new ArrayList<>();
 
-    public MostrarSiSelecciona getMostrarSiSelecciona() {
-        return mostrarSiSelecciona;
+    public ShowSelect getShowSelect() {
+        return showSelect;
     }
 
-    public void setMostrarSiSelecciona(MostrarSiSelecciona mostrarSiSelecciona) {
-        this.mostrarSiSelecciona = mostrarSiSelecciona;
+    public void setShowSelect(ShowSelect showSelect) {
+        this.showSelect = showSelect;
     }
 
-    public List<MostrarCuestionarios> getCuestionarios() {
+    public List<ShowQuestionnaires> getCuestionarios() {
         return cuestionarios;
     }
 
-    public void setCuestionarios(List<MostrarCuestionarios> cuestionarios) {
+    public void setCuestionarios(List<ShowQuestionnaires> cuestionarios) {
         this.cuestionarios = cuestionarios;
     }
 }

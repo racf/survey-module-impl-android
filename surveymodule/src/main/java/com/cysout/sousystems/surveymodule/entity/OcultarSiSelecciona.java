@@ -10,7 +10,7 @@ import java.io.Serializable;
 
 @Entity(tableName = "ocultarSiSelecciona",
         foreignKeys = {
-                @ForeignKey(entity = Respuesta.class,
+                @ForeignKey(entity = Answer.class,
                         parentColumns = "respuestaId",
                         childColumns = "respuestaId",
                         onDelete = ForeignKey.CASCADE)

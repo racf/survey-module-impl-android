@@ -8,7 +8,7 @@ import androidx.lifecycle.LiveData;
 
 import java.util.List;
 
-import com.cysout.sousystems.surveymodule.entity.MostrarSiSelecciona;
+import com.cysout.sousystems.surveymodule.entity.ShowSelect;
 import com.cysout.sousystems.surveymodule.entity.relation.RelacionSiSelecciona;
 import com.cysout.sousystems.surveymodule.entity.relation.RelacionSiSeleccionaCuestionarios;
 import com.cysout.sousystems.surveymodule.repository.MostrarSiSeleccionaRepository;
@@ -23,33 +23,33 @@ public class MostrarSiSeleccionaController extends AndroidViewModel {
         this.mostrarSiSeleccionaRepository = new MostrarSiSeleccionaRepositoryImpl(application);
     }
 
-    public Long insert(MostrarSiSelecciona item) {
+    public Long insert(ShowSelect item) {
         return this.mostrarSiSeleccionaRepository.insert(item);
     }
 
-    public Long[] insertList(List<MostrarSiSelecciona> list) {
+    public Long[] insertList(List<ShowSelect> list) {
         return this.mostrarSiSeleccionaRepository.insertList(list);
     }
 
 
-    public void update(MostrarSiSelecciona item) {
+    public void update(ShowSelect item) {
         this.mostrarSiSeleccionaRepository.update(item);
     }
 
 
-    public LiveData<List<MostrarSiSelecciona>> loadAll() {
+    public LiveData<List<ShowSelect>> loadAll() {
         return this.mostrarSiSeleccionaRepository.loadAll();
     }
 
-    public List<MostrarSiSelecciona> loadAllSync() {
+    public List<ShowSelect> loadAllSync() {
         return this.mostrarSiSeleccionaRepository.loadAllSync();
     }
 
-    public LiveData<List<MostrarSiSelecciona>> loadByRespuestaId(Long id) {
+    public LiveData<List<ShowSelect>> loadByRespuestaId(Long id) {
         return this.mostrarSiSeleccionaRepository.loadByRespuestaId(id);
     }
 
-    public List<MostrarSiSelecciona> loadByRespuestaIdSync(Long id) {
+    public List<ShowSelect> loadByRespuestaIdSync(Long id) {
         return this.mostrarSiSeleccionaRepository.loadByRespuestaIdSync(id);
     }
 

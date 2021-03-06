@@ -4,14 +4,14 @@ import androidx.lifecycle.LiveData;
 
 import java.util.List;
 
-import com.cysout.sousystems.surveymodule.entity.Cuestionario;
+import com.cysout.sousystems.surveymodule.entity.Questionnaire;
 
 public interface CuestionarioRepository {
-    Long insert(Cuestionario cuestionario);
-    Long[] insertList(List<Cuestionario> list);
-    void update(Cuestionario cuestionario);
-    void delete(Cuestionario cuestionario);
+    Long insert(Questionnaire questionnaire);
+    Long[] insertList(List<Questionnaire> list);
+    void update(Questionnaire questionnaire);
+    void delete(Questionnaire questionnaire);
     void deleteAllRows();
-    LiveData<List<Cuestionario>> findAllLiveData();
-    List<Cuestionario> findAllList();
+    LiveData<List<Questionnaire>> findAllLiveData();
+    List<Questionnaire> findAllList();
 }

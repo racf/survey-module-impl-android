@@ -7,6 +7,10 @@ import androidx.room.Index;
 import androidx.room.PrimaryKey;
 
 import java.io.Serializable;
+/**
+ * Developed by cysout.com and sousystems.com.mx
+ * Contact info@cysout.com or contacto@sousystems.com.mx
+**/
 
 @Entity(tableName = "surveyAnswer",
         foreignKeys = {
@@ -19,33 +23,33 @@ import java.io.Serializable;
     })
 public class SurveyAnswer implements Serializable {
     @PrimaryKey(autoGenerate = true)
-    private Long encuestaRespuestaId;
+    private Long surveyAnswerId;
     private Long surveyRecordId;
-    private Long cuestionarioId;
-    private Long preguntaId;
-    private String tipo;
-    private String respuesta;
+    private Long questionnaireId;
+    private Long questionId;
+    private String type;
+    private String answer;
 
     public SurveyAnswer() {
 
     }
 
     @Ignore
-    public SurveyAnswer(Long encuestaRespuestaId, Long surveyRecordId, Long cuestionarioId, Long preguntaId, String tipo, String respuesta) {
-        this.encuestaRespuestaId = encuestaRespuestaId;
+    public SurveyAnswer(Long surveyAnswerId, Long surveyRecordId, Long questionnaireId, Long questionId, String type, String answer) {
+        this.surveyAnswerId = surveyAnswerId;
         this.surveyRecordId = surveyRecordId;
-        this.cuestionarioId = cuestionarioId;
-        this.preguntaId = preguntaId;
-        this.tipo = tipo;
-        this.respuesta = respuesta;
+        this.questionnaireId = questionnaireId;
+        this.questionId = questionId;
+        this.type = type;
+        this.answer = answer;
     }
 
-    public Long getEncuestaRespuestaId() {
-        return encuestaRespuestaId;
+    public Long getSurveyAnswerId() {
+        return surveyAnswerId;
     }
 
-    public void setEncuestaRespuestaId(Long encuestaRespuestaId) {
-        this.encuestaRespuestaId = encuestaRespuestaId;
+    public void setSurveyAnswerId(Long surveyAnswerId) {
+        this.surveyAnswerId = surveyAnswerId;
     }
 
     public Long getSurveyRecordId() {
@@ -56,47 +60,47 @@ public class SurveyAnswer implements Serializable {
         this.surveyRecordId = surveyRecordId;
     }
 
-    public Long getCuestionarioId() {
-        return cuestionarioId;
+    public Long getQuestionnaireId() {
+        return questionnaireId;
     }
 
-    public void setCuestionarioId(Long cuestionarioId) {
-        this.cuestionarioId = cuestionarioId;
+    public void setQuestionnaireId(Long questionnaireId) {
+        this.questionnaireId = questionnaireId;
     }
 
-    public Long getPreguntaId() {
-        return preguntaId;
+    public Long getQuestionId() {
+        return questionId;
     }
 
-    public void setPreguntaId(Long preguntaId) {
-        this.preguntaId = preguntaId;
+    public void setQuestionId(Long questionId) {
+        this.questionId = questionId;
     }
 
-    public String getTipo() {
-        return tipo;
+    public String getType() {
+        return type;
     }
 
-    public void setTipo(String tipo) {
-        this.tipo = tipo;
+    public void setType(String type) {
+        this.type = type;
     }
 
-    public String getRespuesta() {
-        return respuesta;
+    public String getAnswer() {
+        return answer;
     }
 
-    public void setRespuesta(String respuesta) {
-        this.respuesta = respuesta;
+    public void setAnswer(String answer) {
+        this.answer = answer;
     }
 
     @Override
     public String toString() {
-        return "EncuestaRespuesta{" +
-                "encuestaRespuestaId=" + encuestaRespuestaId +
+        return "SurveyAnswer{" +
+                "surveyAnswerId=" + surveyAnswerId +
                 ", surveyRecordId=" + surveyRecordId +
-                ", cuestionarioId=" + cuestionarioId +
-                ", preguntaId=" + preguntaId +
-                ", tipo='" + tipo + '\'' +
-                ", respuesta='" + respuesta + '\'' +
+                ", questionnaireId=" + questionnaireId +
+                ", questionId=" + questionId +
+                ", type='" + type + '\'' +
+                ", answer='" + answer + '\'' +
                 '}';
     }
 }

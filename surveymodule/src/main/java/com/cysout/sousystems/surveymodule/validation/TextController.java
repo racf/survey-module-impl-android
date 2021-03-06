@@ -7,7 +7,7 @@ import androidx.lifecycle.AndroidViewModel;
 import androidx.lifecycle.MutableLiveData;
 
 import com.cysout.sousystems.surveymodule.R;
-import com.cysout.sousystems.surveymodule.entity.Pregunta;
+import com.cysout.sousystems.surveymodule.entity.Question;
 import com.cysout.sousystems.surveymodule.utils.CustomConstants;
 import com.cysout.sousystems.surveymodule.utils.Validation;
 import com.cysout.sousystems.surveymodule.validation.text.TextFormState;
@@ -30,7 +30,7 @@ public class TextController extends AndroidViewModel {
         this.textFormState = textFormState;
     }
 
-    public void textDataChanged(String texto, Pregunta pregunta) {
+    public void textDataChanged(String texto, Question question) {
         if (!Validation.isTextValid(texto)) {
             textFormState.setValue( new TextFormState(R.string.texto_requerido));
         }else {

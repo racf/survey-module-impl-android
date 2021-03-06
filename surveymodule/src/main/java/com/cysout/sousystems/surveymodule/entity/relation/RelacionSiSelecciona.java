@@ -7,50 +7,50 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
-import com.cysout.sousystems.surveymodule.entity.MostrarCuestionarios;
-import com.cysout.sousystems.surveymodule.entity.MostrarPreguntas;
-import com.cysout.sousystems.surveymodule.entity.MostrarRespuestas;
-import com.cysout.sousystems.surveymodule.entity.MostrarSiSelecciona;
+import com.cysout.sousystems.surveymodule.entity.ShowQuestionnaires;
+import com.cysout.sousystems.surveymodule.entity.ShowQuestions;
+import com.cysout.sousystems.surveymodule.entity.ShowAnswers;
+import com.cysout.sousystems.surveymodule.entity.ShowSelect;
 
 public class RelacionSiSelecciona implements Serializable {
     @Embedded
-    MostrarSiSelecciona mostrarSiSelecciona = new MostrarSiSelecciona();
-    @Relation(parentColumn = "mostrarSiSeleccionaId", entityColumn = "mostrarSiSeleccionaId", entity = MostrarCuestionarios.class)
-    List<MostrarCuestionarios> cuestionarios = new ArrayList<>();
-    @Relation(parentColumn = "mostrarSiSeleccionaId", entityColumn = "mostrarSiSeleccionaId", entity = MostrarPreguntas.class)
-    List<MostrarPreguntas> preguntas = new ArrayList<>();
-    @Relation(parentColumn = "mostrarSiSeleccionaId", entityColumn = "mostrarSiSeleccionaId", entity = MostrarRespuestas.class)
-    List<MostrarRespuestas> respuestas = new ArrayList<>();
+    ShowSelect showSelect = new ShowSelect();
+    @Relation(parentColumn = "showSelectId", entityColumn = "showSelectId", entity = ShowQuestionnaires.class)
+    List<ShowQuestionnaires> cuestionarios = new ArrayList<>();
+    @Relation(parentColumn = "showSelectId", entityColumn = "showSelectId", entity = ShowQuestions.class)
+    List<ShowQuestions> preguntas = new ArrayList<>();
+    @Relation(parentColumn = "showSelectId", entityColumn = "showSelectId", entity = ShowAnswers.class)
+    List<ShowAnswers> respuestas = new ArrayList<>();
 
-    public MostrarSiSelecciona getMostrarSiSelecciona() {
-        return mostrarSiSelecciona;
+    public ShowSelect getShowSelect() {
+        return showSelect;
     }
 
-    public void setMostrarSiSelecciona(MostrarSiSelecciona mostrarSiSelecciona) {
-        this.mostrarSiSelecciona = mostrarSiSelecciona;
+    public void setShowSelect(ShowSelect showSelect) {
+        this.showSelect = showSelect;
     }
 
-    public List<MostrarCuestionarios> getCuestionarios() {
+    public List<ShowQuestionnaires> getCuestionarios() {
         return cuestionarios;
     }
 
-    public void setCuestionarios(List<MostrarCuestionarios> cuestionarios) {
+    public void setCuestionarios(List<ShowQuestionnaires> cuestionarios) {
         this.cuestionarios = cuestionarios;
     }
 
-    public List<MostrarPreguntas> getPreguntas() {
+    public List<ShowQuestions> getPreguntas() {
         return preguntas;
     }
 
-    public void setPreguntas(List<MostrarPreguntas> preguntas) {
+    public void setPreguntas(List<ShowQuestions> preguntas) {
         this.preguntas = preguntas;
     }
 
-    public List<MostrarRespuestas> getRespuestas() {
+    public List<ShowAnswers> getRespuestas() {
         return respuestas;
     }
 
-    public void setRespuestas(List<MostrarRespuestas> respuestas) {
+    public void setRespuestas(List<ShowAnswers> respuestas) {
         this.respuestas = respuestas;
     }
 }

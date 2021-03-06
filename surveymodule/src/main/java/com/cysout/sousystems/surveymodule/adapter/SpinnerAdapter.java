@@ -14,7 +14,7 @@ import androidx.annotation.Nullable;
 import java.util.List;
 
 import com.cysout.sousystems.surveymodule.R;
-import com.cysout.sousystems.surveymodule.entity.Respuesta;
+import com.cysout.sousystems.surveymodule.entity.Answer;
 /**
  *Developed by cysout.com and sousystems.com.mx
  *Contact info@cysout.com or contacto@sousystems.com.mx
@@ -22,7 +22,7 @@ import com.cysout.sousystems.surveymodule.entity.Respuesta;
 public class SpinnerAdapter extends ArrayAdapter<String> {
     private final LayoutInflater mInflater;
     private final Context mContext;
-    private final List<Respuesta> items;
+    private final List<Answer> items;
     private final int mResource;
 
     public SpinnerAdapter(@NonNull Context context, @LayoutRes int resource, @NonNull List objects) {
@@ -48,9 +48,9 @@ public class SpinnerAdapter extends ArrayAdapter<String> {
     private View createItemView(int position, View convertView, ViewGroup parent){
         final View view = mInflater.inflate(mResource, parent, false);
         TextView tvTitleSpinner = view.findViewById(R.id.tvTitleSpinner);
-        Respuesta respuesta = items.get(position);
-        tvTitleSpinner.setText(respuesta.getTexto());
-        tvTitleSpinner.setTag(respuesta);
+        Answer answer = items.get(position);
+        tvTitleSpinner.setText(answer.getText());
+        tvTitleSpinner.setTag(answer);
         return view;
     }
 }

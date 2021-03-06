@@ -10,46 +10,46 @@ import androidx.room.Update;
 
 import java.util.List;
 
-import com.cysout.sousystems.surveymodule.entity.Pregunta;
+import com.cysout.sousystems.surveymodule.entity.Question;
 import com.cysout.sousystems.surveymodule.entity.relation.PreguntaRespuestas;
 
 @Dao
 public interface PreguntaDao {
     //onConflict = OnConflictStrategy.REPLACE
     @Insert()
-    Long insert(Pregunta item);
+    Long insert(Question item);
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    Long[] insertList(List<Pregunta> list);
+    Long[] insertList(List<Question> list);
 
     @Update
-    void update(Pregunta item);
+    void update(Question item);
 
-    @Query("SELECT * FROM pregunta")
-    LiveData<List<Pregunta>> loadAll();
+    @Query("SELECT * FROM question")
+    LiveData<List<Question>> loadAll();
 
-    @Query("SELECT * FROM pregunta")
-    List<Pregunta> loadAllSync();
+    @Query("SELECT * FROM question")
+    List<Question> loadAllSync();
 
-    @Query("SELECT * FROM pregunta WHERE preguntaId = :id LIMIT 1")
-    Pregunta loadPreguntaSync(Long id);
+    @Query("SELECT * FROM question WHERE questionId = :id LIMIT 1")
+    Question loadPreguntaSync(Long id);
 
     @Transaction
-    @Query("SELECT * FROM pregunta WHERE cuestionarioId=:id")
+    @Query("SELECT * FROM question WHERE questionnaireId=:id")
     PreguntaRespuestas loadPreguntaRespuestasByCuestionarioId(Long id);
 
-    @Query("SELECT * FROM pregunta WHERE preguntaId = :id")
-    LiveData<List<Pregunta>> loadByPreguntaId(Long id);
+    @Query("SELECT * FROM question WHERE questionId = :id")
+    LiveData<List<Question>> loadByPreguntaId(Long id);
 
-    @Query("SELECT * FROM pregunta WHERE preguntaId = :id")
-    List<Pregunta> loadByPreguntaIdSync(Long id);
+    @Query("SELECT * FROM question WHERE questionId = :id")
+    List<Question> loadByPreguntaIdSync(Long id);
 
-    @Query("SELECT * FROM pregunta WHERE cuestionarioId = :id")
-    LiveData<List<Pregunta>> loadByCuestionarioId(Long id);
+    @Query("SELECT * FROM question WHERE questionnaireId = :id")
+    LiveData<List<Question>> loadByCuestionarioId(Long id);
 
-    @Query("SELECT * FROM pregunta WHERE cuestionarioId = :id")
-    List<Pregunta> loadByCuestionarioIdSync(Long id);
+    @Query("SELECT * FROM question WHERE questionnaireId = :id")
+    List<Question> loadByCuestionarioIdSync(Long id);
 
-    @Query("DELETE FROM pregunta")
+    @Query("DELETE FROM question")
     void deleteAll();
 }

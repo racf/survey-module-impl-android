@@ -8,7 +8,7 @@ import java.util.List;
 
 import com.cysout.sousystems.surveymodule.config.AppDatabase;
 import com.cysout.sousystems.surveymodule.dao.MostrarPreguntasDao;
-import com.cysout.sousystems.surveymodule.entity.MostrarPreguntas;
+import com.cysout.sousystems.surveymodule.entity.ShowQuestions;
 import com.cysout.sousystems.surveymodule.repository.MostrarPreguntasRepository;
 
 public class MostrarPreguntasRepositoryImpl implements MostrarPreguntasRepository {
@@ -20,37 +20,37 @@ public class MostrarPreguntasRepositoryImpl implements MostrarPreguntasRepositor
     }
 
     @Override
-    public Long insert(MostrarPreguntas item) {
+    public Long insert(ShowQuestions item) {
         return this.mostrarPreguntasDao.insert(item);
     }
 
     @Override
-    public Long[] insertList(List<MostrarPreguntas> list) {
+    public Long[] insertList(List<ShowQuestions> list) {
         return this.mostrarPreguntasDao.insertList(list);
     }
 
     @Override
-    public void update(MostrarPreguntas item) {
+    public void update(ShowQuestions item) {
         this.mostrarPreguntasDao.update(item);
     }
 
     @Override
-    public LiveData<List<MostrarPreguntas>> loadAll() {
+    public LiveData<List<ShowQuestions>> loadAll() {
         return this.mostrarPreguntasDao.loadAll();
     }
 
     @Override
-    public List<MostrarPreguntas> loadAllSync() {
+    public List<ShowQuestions> loadAllSync() {
         return this.mostrarPreguntasDao.loadAllSync();
     }
 
     @Override
-    public LiveData<List<MostrarPreguntas>> loadByMostrarSiSeleccionaId(Long id) {
+    public LiveData<List<ShowQuestions>> loadByMostrarSiSeleccionaId(Long id) {
         return this.mostrarPreguntasDao.loadByMostrarSiSeleccionaId(id);
     }
 
     @Override
-    public List<MostrarPreguntas> loadByMostrarSiSeleccionaIdSync(Long id) {
+    public List<ShowQuestions> loadByMostrarSiSeleccionaIdSync(Long id) {
         return this.mostrarPreguntasDao.loadByMostrarSiSeleccionaIdSync(id);
     }
 

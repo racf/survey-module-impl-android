@@ -7,41 +7,41 @@ import androidx.room.OnConflictStrategy;
 import androidx.room.Query;
 import androidx.room.Update;
 import java.util.List;
-import com.cysout.sousystems.surveymodule.entity.Cuestionario;
+import com.cysout.sousystems.surveymodule.entity.Questionnaire;
 
 @Dao
 public interface CuestionarioDao {
     //onConflict = OnConflictStrategy.REPLACE
     @Insert()
-    Long insert(Cuestionario item);
+    Long insert(Questionnaire item);
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    Long[] insertList(List<Cuestionario> list);
+    Long[] insertList(List<Questionnaire> list);
 
     @Update
-    void update(Cuestionario item);
+    void update(Questionnaire item);
 
-    @Query("select * from cuestionario where cuestionarioId = :cuestionarioId LIMIT 1")
-    Cuestionario loadCuestionarioSync(Long cuestionarioId);
+    @Query("select * from questionnaire where questionnaireId = :questionnaireId LIMIT 1")
+    Questionnaire loadCuestionarioSync(Long questionnaireId);
 
-    @Query("SELECT * FROM cuestionario")
-    LiveData<List<Cuestionario>> loadAll();
+    @Query("SELECT * FROM questionnaire")
+    LiveData<List<Questionnaire>> loadAll();
 
-    @Query("SELECT * FROM cuestionario")
-    List<Cuestionario> loadAllSync();
+    @Query("SELECT * FROM questionnaire")
+    List<Questionnaire> loadAllSync();
 
-    @Query("SELECT * FROM cuestionario WHERE cuestionarioId = :id")
-    LiveData<List<Cuestionario>> loadByCuestionarioId(Long id);
+    @Query("SELECT * FROM questionnaire WHERE questionnaireId = :id")
+    LiveData<List<Questionnaire>> loadByCuestionarioId(Long id);
 
-    @Query("SELECT * FROM cuestionario WHERE cuestionarioId = :id")
-    List<Cuestionario> loadByCuestionarioIdSync(Long id);
+    @Query("SELECT * FROM questionnaire WHERE questionnaireId = :id")
+    List<Questionnaire> loadByCuestionarioIdSync(Long id);
 
-    @Query("SELECT * FROM cuestionario WHERE surveyId = :id")
-    LiveData<List<Cuestionario>> loadByEncuestaId(Long id);
+    @Query("SELECT * FROM questionnaire WHERE surveyId = :id")
+    LiveData<List<Questionnaire>> loadByEncuestaId(Long id);
 
-    @Query("SELECT * FROM cuestionario WHERE surveyId = :id")
-    List<Cuestionario> loadByEncuestaIdSync(Long id);
+    @Query("SELECT * FROM questionnaire WHERE surveyId = :id")
+    List<Questionnaire> loadByEncuestaIdSync(Long id);
 
-    @Query("DELETE FROM cuestionario")
+    @Query("DELETE FROM questionnaire")
     void deleteAll();
 }

@@ -7,29 +7,29 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
-import com.cysout.sousystems.surveymodule.entity.Pregunta;
-import com.cysout.sousystems.surveymodule.entity.Respuesta;
+import com.cysout.sousystems.surveymodule.entity.Answer;
+import com.cysout.sousystems.surveymodule.entity.Question;
 
 public class PreguntaRespuestas implements Serializable {
     @Embedded
-    private Pregunta pregunta;
+    private Question question;
 
-    @Relation(parentColumn = "preguntaId", entityColumn = "preguntaId", entity = Respuesta.class)
-    List<Respuesta> respuestas = new ArrayList<>();
+    @Relation(parentColumn = "questionId", entityColumn = "questionId", entity = Answer.class)
+    List<Answer> answers = new ArrayList<>();
 
-    public Pregunta getPregunta() {
-        return pregunta;
+    public Question getQuestion() {
+        return question;
     }
 
-    public void setPregunta(Pregunta pregunta) {
-        this.pregunta = pregunta;
+    public void setQuestion(Question question) {
+        this.question = question;
     }
 
-    public List<Respuesta> getRespuestas() {
-        return respuestas;
+    public List<Answer> getAnswers() {
+        return answers;
     }
 
-    public void setRespuestas(List<Respuesta> respuestas) {
-        this.respuestas = respuestas;
+    public void setAnswers(List<Answer> answers) {
+        this.answers = answers;
     }
 }

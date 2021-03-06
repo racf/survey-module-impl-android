@@ -4,18 +4,18 @@ import androidx.lifecycle.LiveData;
 
 import java.util.List;
 
-import com.cysout.sousystems.surveymodule.entity.MostrarSiSelecciona;
+import com.cysout.sousystems.surveymodule.entity.ShowSelect;
 import com.cysout.sousystems.surveymodule.entity.relation.RelacionSiSelecciona;
 import com.cysout.sousystems.surveymodule.entity.relation.RelacionSiSeleccionaCuestionarios;
 
 public interface MostrarSiSeleccionaRepository {
-    Long insert(MostrarSiSelecciona item);
-    Long[] insertList(List<MostrarSiSelecciona> list);
-    void update(MostrarSiSelecciona item);
-    LiveData<List<MostrarSiSelecciona>> loadAll();
-    List<MostrarSiSelecciona> loadAllSync();
-    LiveData<List<MostrarSiSelecciona>> loadByRespuestaId(Long id);
-    List<MostrarSiSelecciona> loadByRespuestaIdSync(Long id);
+    Long insert(ShowSelect item);
+    Long[] insertList(List<ShowSelect> list);
+    void update(ShowSelect item);
+    LiveData<List<ShowSelect>> loadAll();
+    List<ShowSelect> loadAllSync();
+    LiveData<List<ShowSelect>> loadByRespuestaId(Long id);
+    List<ShowSelect> loadByRespuestaIdSync(Long id);
     void deleteAll();
     RelacionSiSelecciona loadMosstrarSiSeleccionaByRespuestaId(Long id);
     LiveData<List<RelacionSiSeleccionaCuestionarios>> loadMostrarCuestionarios();

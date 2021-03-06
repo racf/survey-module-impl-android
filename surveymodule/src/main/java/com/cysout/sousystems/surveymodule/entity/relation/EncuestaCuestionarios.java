@@ -7,15 +7,15 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
-import com.cysout.sousystems.surveymodule.entity.Cuestionario;
+import com.cysout.sousystems.surveymodule.entity.Questionnaire;
 import com.cysout.sousystems.surveymodule.entity.Survey;
 
 public class EncuestaCuestionarios implements Serializable {
     @Embedded
     private Survey survey;
 
-    @Relation(parentColumn = "surveyId", entityColumn = "surveyId", entity = Cuestionario.class)
-    private List<Cuestionario> cuestionarios = new ArrayList<>();
+    @Relation(parentColumn = "surveyId", entityColumn = "surveyId", entity = Questionnaire.class)
+    private List<Questionnaire> questionnaires = new ArrayList<>();
 
     public Survey getSurvey() {
         return survey;
@@ -25,11 +25,11 @@ public class EncuestaCuestionarios implements Serializable {
         this.survey = survey;
     }
 
-    public List<Cuestionario> getCuestionarios() {
-        return cuestionarios;
+    public List<Questionnaire> getQuestionnaires() {
+        return questionnaires;
     }
 
-    public void setCuestionarios(List<Cuestionario> cuestionarios) {
-        this.cuestionarios = cuestionarios;
+    public void setQuestionnaires(List<Questionnaire> questionnaires) {
+        this.questionnaires = questionnaires;
     }
 }

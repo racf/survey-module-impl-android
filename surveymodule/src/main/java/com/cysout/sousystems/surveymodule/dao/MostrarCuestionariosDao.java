@@ -9,32 +9,32 @@ import androidx.room.Update;
 
 import java.util.List;
 
-import com.cysout.sousystems.surveymodule.entity.MostrarCuestionarios;
+import com.cysout.sousystems.surveymodule.entity.ShowQuestionnaires;
 
 @Dao
 public interface MostrarCuestionariosDao {
     //onConflict = OnConflictStrategy.REPLACE
     @Insert()
-    Long insert(MostrarCuestionarios item);
+    Long insert(ShowQuestionnaires item);
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    Long[] insertList(List<MostrarCuestionarios> list);
+    Long[] insertList(List<ShowQuestionnaires> list);
 
     @Update
-    void update(MostrarCuestionarios item);
+    void update(ShowQuestionnaires item);
 
-    @Query("SELECT * FROM mostrarCuestionarios")
-    LiveData<List<MostrarCuestionarios>> loadAll();
+    @Query("SELECT * FROM showQuestionnaires")
+    LiveData<List<ShowQuestionnaires>> loadAll();
 
-    @Query("SELECT * FROM mostrarCuestionarios")
-    List<MostrarCuestionarios> loadAllSync();
+    @Query("SELECT * FROM showQuestionnaires")
+    List<ShowQuestionnaires> loadAllSync();
 
-    @Query("SELECT * FROM mostrarcuestionarios WHERE mostrarSiSeleccionaId = :id")
-    LiveData<List<MostrarCuestionarios>> loadByMostrarSiSeleccionaId(Long id);
+    @Query("SELECT * FROM showQuestionnaires WHERE showSelectId = :id")
+    LiveData<List<ShowQuestionnaires>> loadByMostrarSiSeleccionaId(Long id);
 
-    @Query("SELECT * FROM mostrarCuestionarios WHERE mostrarSiSeleccionaId = :id")
-    List<MostrarCuestionarios> loadByMostrarSiSeleccionaIdSync(Long id);
+    @Query("SELECT * FROM showQuestionnaires WHERE showSelectId = :id")
+    List<ShowQuestionnaires> loadByMostrarSiSeleccionaIdSync(Long id);
 
-    @Query("DELETE FROM mostrarCuestionarios")
+    @Query("DELETE FROM showQuestionnaires")
     void deleteAll();
 }

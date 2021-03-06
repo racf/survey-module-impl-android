@@ -8,7 +8,7 @@ import java.util.List;
 
 import com.cysout.sousystems.surveymodule.config.AppDatabase;
 import com.cysout.sousystems.surveymodule.dao.MostrarSiSeleccionaDao;
-import com.cysout.sousystems.surveymodule.entity.MostrarSiSelecciona;
+import com.cysout.sousystems.surveymodule.entity.ShowSelect;
 import com.cysout.sousystems.surveymodule.entity.relation.RelacionSiSelecciona;
 import com.cysout.sousystems.surveymodule.entity.relation.RelacionSiSeleccionaCuestionarios;
 import com.cysout.sousystems.surveymodule.repository.MostrarSiSeleccionaRepository;
@@ -21,37 +21,37 @@ public class MostrarSiSeleccionaRepositoryImpl implements MostrarSiSeleccionaRep
         this.mostrarSiSeleccionaDao = db.mostrarSiSeleccionaDao();
     }
     @Override
-    public Long insert(MostrarSiSelecciona item) {
+    public Long insert(ShowSelect item) {
         return this.mostrarSiSeleccionaDao.insert(item);
     }
 
     @Override
-    public Long[] insertList(List<MostrarSiSelecciona> list) {
+    public Long[] insertList(List<ShowSelect> list) {
         return this.mostrarSiSeleccionaDao.insertList(list);
     }
 
     @Override
-    public void update(MostrarSiSelecciona item) {
+    public void update(ShowSelect item) {
         this.mostrarSiSeleccionaDao.update(item);
     }
 
     @Override
-    public LiveData<List<MostrarSiSelecciona>> loadAll() {
+    public LiveData<List<ShowSelect>> loadAll() {
         return this.mostrarSiSeleccionaDao.loadAll();
     }
 
     @Override
-    public List<MostrarSiSelecciona> loadAllSync() {
+    public List<ShowSelect> loadAllSync() {
         return this.mostrarSiSeleccionaDao.loadAllSync();
     }
 
     @Override
-    public LiveData<List<MostrarSiSelecciona>> loadByRespuestaId(Long id) {
+    public LiveData<List<ShowSelect>> loadByRespuestaId(Long id) {
         return this.mostrarSiSeleccionaDao.loadByRespuestaId(id);
     }
 
     @Override
-    public List<MostrarSiSelecciona> loadByRespuestaIdSync(Long id) {
+    public List<ShowSelect> loadByRespuestaIdSync(Long id) {
         return this.mostrarSiSeleccionaDao.loadByRespuestaIdSync(id);
     }
 

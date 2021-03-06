@@ -47,9 +47,9 @@ public class MainActivity extends AppCompatActivity {
         surveyService.loadAllSurveys().observe(this, new Observer<List<Survey>>() {
             @Override
             public void onChanged(List<Survey> surveys) {
-                for(Survey survey1 : surveys){
+                /*for(Survey survey1 : surveys){
                     Log.i(CustomConstants.TAG_LOG, "ENCUESTA A MOSTRAR "+survey1.toString());
-                }
+                }*/
                 adapter = new SurveyAdapter(surveys, R.layout.cards_surveys_layout, new SurveyAdapter.CustomHolder.OnItemClickListener() {
                     @Override
                     public void onItemClick(Survey survey, int position) {

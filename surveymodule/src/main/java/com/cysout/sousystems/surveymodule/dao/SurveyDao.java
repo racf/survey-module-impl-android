@@ -27,72 +27,72 @@ public interface SurveyDao {
     @Update
     void update(Survey item);
 
-    @Query("SELECT * FROM Survey")
+    @Query("SELECT * FROM survey")
     LiveData<List<Survey>> loadAll();
 
-    @Query("SELECT * FROM Survey")
+    @Query("SELECT * FROM survey")
     List<Survey> loadAllSync();
 
     @Transaction
-    @Query("SELECT * FROM Survey")
+    @Query("SELECT * FROM survey")
     LiveData<List<EncuestaCuestionarios>> loadCuestionarios();
     @Transaction
-    @Query("SELECT * FROM Survey")
+    @Query("SELECT * FROM survey")
     List<EncuestaCuestionarios> loadCuestionariosSync();
     @Transaction
-    @Query("SELECT * FROM Survey LIMIT 1")
+    @Query("SELECT * FROM survey LIMIT 1")
     EncuestaCuestionarios loadCuestionarioRespuestasSync();
 
-    @Query("SELECT * FROM Survey WHERE surveyId = :encuestaId LIMIT 1")
+    @Query("SELECT * FROM survey WHERE surveyId = :encuestaId LIMIT 1")
     LiveData<Survey> loadEncuestaById(Long encuestaId);
 
-    @Query("SELECT * FROM Survey WHERE surveyId = :encuestaId LIMIT 1")
+    @Query("SELECT * FROM survey WHERE surveyId = :encuestaId LIMIT 1")
     Survey loadEncuestaByIdSync(Long encuestaId);
 
-    @Query("SELECT * FROM Survey WHERE surveyId=:encuestaId")
+    @Query("SELECT * FROM survey WHERE surveyId=:encuestaId")
     LiveData<List<Survey>> loadByEncuestaId(Long encuestaId);
 
-    @Query("SELECT * FROM Survey WHERE surveyId=:encuestaId")
+    @Query("SELECT * FROM survey WHERE surveyId=:encuestaId")
     List<Survey> loadByEncuestaIdSync(Long encuestaId);
 
-    @Query("DELETE FROM cuestionario")
+    @Query("DELETE FROM survey")
     void deleteAll();
 
     @Transaction
-    @Query("SELECT Survey.*, er.* FROM Survey INNER JOIN surveyRecord er ON Survey.surveyId = er.surveyIdFK ")
+    @Query("SELECT survey.*, er.* FROM Survey INNER JOIN surveyRecord er ON Survey.surveyId = er.surveyIdFK ")
     LiveData<List<SurveyRecords>> loadAllSurveyRecords();
 
     @Transaction
-    @Query("SELECT Survey.*, er.* FROM Survey INNER JOIN surveyRecord er ON Survey.surveyId = er.surveyIdFK ")
+    @Query("SELECT survey.*, er.* FROM Survey INNER JOIN surveyRecord er ON Survey.surveyId = er.surveyIdFK ")
     List<SurveyRecords> loadAllSurveyRecordsSync();
 
     @Transaction
-    @Query("SELECT Survey.*, er.* FROM Survey INNER JOIN surveyRecord er ON Survey.surveyId = er.surveyIdFK " +
+    @Query("SELECT survey.*, er.* FROM Survey INNER JOIN surveyRecord er ON Survey.surveyId = er.surveyIdFK " +
             "WHERE er.surveyStatus = "+ CustomConstants.TERMINADA)
     LiveData<List<SurveyRecords>> loadSurveyCompleted();
 
     @Transaction
-    @Query("SELECT Survey.*, er.* FROM Survey INNER JOIN surveyRecord er ON Survey.surveyId = er.surveyIdFK " +
+    @Query("SELECT survey.*, er.* FROM Survey INNER JOIN surveyRecord er ON Survey.surveyId = er.surveyIdFK " +
             "WHERE er.surveyStatus = "+ CustomConstants.TERMINADA)
     List<SurveyRecords> loadSurveyCompletedSync();
 
     @Transaction
-    @Query("SELECT Survey.*, er.* FROM Survey INNER JOIN surveyRecord er ON Survey.surveyId = er.surveyIdFK " +
+    @Query("SELECT survey.*, er.* FROM Survey INNER JOIN surveyRecord er ON Survey.surveyId = er.surveyIdFK " +
             "WHERE er.surveyStatus = "+ CustomConstants.PENDIENTE)
     LiveData<List<SurveyRecords>> loadSurveyPending();
 
     @Transaction
-    @Query("SELECT Survey.*, er.* FROM Survey INNER JOIN surveyRecord er ON Survey.surveyId = er.surveyIdFK " +
+    @Query("SELECT survey.*, er.* FROM Survey INNER JOIN surveyRecord er ON Survey.surveyId = er.surveyIdFK " +
             "WHERE er.surveyStatus = "+ CustomConstants.PENDIENTE)
     List<SurveyRecords> loadSurveyPendingSync();
 
     @Transaction
-    @Query("SELECT Survey.*, er.* FROM Survey INNER JOIN surveyRecord er ON Survey.surveyId = er.surveyIdFK " +
+    @Query("SELECT survey.*, er.* FROM Survey INNER JOIN surveyRecord er ON Survey.surveyId = er.surveyIdFK " +
             "WHERE er.surveyStatus = "+ CustomConstants.ENVIADA)
     LiveData<List<SurveyRecords>> loadSurveySent();
 
     @Transaction
-    @Query("SELECT Survey.*, er.* FROM Survey INNER JOIN surveyRecord er ON Survey.surveyId = er.surveyIdFK " +
+    @Query("SELECT survey.*, er.* FROM Survey INNER JOIN surveyRecord er ON Survey.surveyId = er.surveyIdFK " +
             "WHERE er.surveyStatus = "+ CustomConstants.ENVIADA)
     List<SurveyRecords> loadSurveySentSync();
 

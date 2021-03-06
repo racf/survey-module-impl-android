@@ -20,10 +20,10 @@ import android.widget.TextView;
 import java.util.concurrent.Executors;
 
 import com.cysout.sousystems.surveymodule.R;
-import com.cysout.sousystems.surveymodule.entity.Cuestionario;
+import com.cysout.sousystems.surveymodule.entity.Questionnaire;
 import com.cysout.sousystems.surveymodule.entity.Survey;
 import com.cysout.sousystems.surveymodule.entity.SurveyAnswer;
-import com.cysout.sousystems.surveymodule.entity.Pregunta;
+import com.cysout.sousystems.surveymodule.entity.Question;
 import com.cysout.sousystems.surveymodule.service.EncuestaService;
 import com.cysout.sousystems.surveymodule.service.impl.EncuestaServiceImpl;
 import com.cysout.sousystems.surveymodule.utils.CustomConstants;
@@ -81,37 +81,37 @@ public class TextFragment extends WidgetFragment {
     }
 
     @Override
-    public boolean load(Cuestionario cuestionario, Pregunta pregunta) {
+    public boolean load(Questionnaire questionnaire, Question question) {
         Log.i(CustomConstants.TAG_LOG, "TextFragment - load(Cuestionario cuestionario, Pregunta pregunta)");
         Long encuestaRegistroId = Utils.findPreferenceLong(getContext(), CustomConstants.PREFERENCE_NAME_CUESTIONARIO, CustomConstants.CUESTIONARIO_REGISTRO_ID);
         //Asignamos informacion al regresar a la encuesta anterior
         if (encuestaRegistroId > 0L) {
-            encuestaService.encuestaRespuestaByRegistroIdAndPregId(encuestaRegistroId, pregunta.getPreguntaId()).observe(getViewLifecycleOwner(), new Observer<SurveyAnswer>() {
+            encuestaService.encuestaRespuestaByRegistroIdAndPregId(encuestaRegistroId, question.getQuestionId()).observe(getViewLifecycleOwner(), new Observer<SurveyAnswer>() {
                 @Override
                 public void onChanged(SurveyAnswer surveyAnswer) {
                     if(surveyAnswer != null) {
-                        editText.setText(String.valueOf(surveyAnswer.getRespuesta()));
+                        editText.setText(String.valueOf(surveyAnswer.getAnswer()));
                     }
                 }
             });
         }
-        if (pregunta.getTipoInput().equalsIgnoreCase("phone")) {
+        if (question.getTypeInput().equalsIgnoreCase("phone")) {
             editText.setInputType(InputType.TYPE_CLASS_PHONE);
         }
-        if (pregunta.getTipoInput().equalsIgnoreCase("textPersonName")) {
+        if (question.getTypeInput().equalsIgnoreCase("textPersonName")) {
             editText.setInputType(InputType.TYPE_TEXT_VARIATION_PERSON_NAME);
         }
-        if (pregunta.getTipoInput().equalsIgnoreCase("number")) {
+        if (question.getTypeInput().equalsIgnoreCase("number")) {
             editText.setInputType(InputType.TYPE_CLASS_NUMBER);
         }
-        if (pregunta.getTitulo() != null || !pregunta.getTitulo().equals("")) {
+        if (question.getTitle() != null || !question.getTitle().equals("")) {
             editText.setHint(R.string.escribir_aqui_respuesta);
         } else {
             editText.setHint(R.string.escribir_aqui_respuesta);
         }
 
-        if (pregunta.getDescripcion() != null || !pregunta.getDescripcion().equals("")) {
-            labelDescription.setText(String.valueOf(pregunta.getDescripcion()));
+        if (question.getDescription() != null || !question.getDescription().equals("")) {
+            labelDescription.setText(String.valueOf(question.getDescription()));
         } else {
             labelDescription.setVisibility(View.GONE);
         }
@@ -119,7 +119,7 @@ public class TextFragment extends WidgetFragment {
         labelSuffix.setVisibility(View.GONE);
 
         //Validamos campos que sean requeridos para la validación minima
-        if (pregunta.getRequerido()) {
+        if (question.getRequired()) {
             //Evento para la validación de los campos de login
             TextWatcher afterTextChangedListener = new TextWatcher() {
                 @Override
@@ -132,7 +132,7 @@ public class TextFragment extends WidgetFragment {
 
                 @Override
                 public void afterTextChanged(Editable editable) {
-                    textController.textDataChanged(editText.getText().toString(), pregunta);
+                    textController.textDataChanged(editText.getText().toString(), question);
                 }
             };
             this.editText.addTextChangedListener(afterTextChangedListener);
@@ -142,14 +142,14 @@ public class TextFragment extends WidgetFragment {
     }
 
     @Override
-    public boolean save(Survey survey, Cuestionario cuestionario, Pregunta pregunta, Long encuestaRegistroId) {
+    public boolean save(Survey survey, Questionnaire questionnaire, Question question, Long encuestaRegistroId) {
         final boolean[] estatus = new boolean[1];
         Log.d(CustomConstants.TAG_LOG, "TextFragment.save()");
         Executors.newSingleThreadExecutor().execute(() -> {
             String  respuesta = String.valueOf(editText.getText());
             if(!respuesta.trim().equalsIgnoreCase("")) {
                 //Logica del guardado de la información
-                this.encuestaService.encuestaRespuesta(survey, cuestionario, pregunta, respuesta, encuestaRegistroId);
+                this.encuestaService.encuestaRespuesta(survey, questionnaire, question, respuesta, encuestaRegistroId);
                 estatus[0] = true;
             }
         });

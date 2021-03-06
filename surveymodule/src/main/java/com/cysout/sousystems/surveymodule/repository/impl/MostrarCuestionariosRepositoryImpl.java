@@ -8,7 +8,7 @@ import java.util.List;
 
 import com.cysout.sousystems.surveymodule.config.AppDatabase;
 import com.cysout.sousystems.surveymodule.dao.MostrarCuestionariosDao;
-import com.cysout.sousystems.surveymodule.entity.MostrarCuestionarios;
+import com.cysout.sousystems.surveymodule.entity.ShowQuestionnaires;
 import com.cysout.sousystems.surveymodule.repository.MostrarCuestionariosRepository;
 
 public class MostrarCuestionariosRepositoryImpl implements MostrarCuestionariosRepository {
@@ -19,37 +19,37 @@ public class MostrarCuestionariosRepositoryImpl implements MostrarCuestionariosR
         this.mostrarCuestionariosDao = db.mostrarCuestionariosDao();
     }
     @Override
-    public Long insert(MostrarCuestionarios item) {
+    public Long insert(ShowQuestionnaires item) {
         return this.mostrarCuestionariosDao.insert(item);
     }
 
     @Override
-    public Long[] insertList(List<MostrarCuestionarios> list) {
+    public Long[] insertList(List<ShowQuestionnaires> list) {
         return this.mostrarCuestionariosDao.insertList(list);
     }
 
     @Override
-    public void update(MostrarCuestionarios item) {
+    public void update(ShowQuestionnaires item) {
         this.mostrarCuestionariosDao.update(item);
     }
 
     @Override
-    public LiveData<List<MostrarCuestionarios>> loadAll() {
+    public LiveData<List<ShowQuestionnaires>> loadAll() {
         return this.mostrarCuestionariosDao.loadAll();
     }
 
     @Override
-    public List<MostrarCuestionarios> loadAllSync() {
+    public List<ShowQuestionnaires> loadAllSync() {
         return this.mostrarCuestionariosDao.loadAllSync();
     }
 
     @Override
-    public LiveData<List<MostrarCuestionarios>> loadByMostrarSiSeleccionaId(Long id) {
+    public LiveData<List<ShowQuestionnaires>> loadByMostrarSiSeleccionaId(Long id) {
         return this.mostrarCuestionariosDao.loadByMostrarSiSeleccionaId(id);
     }
 
     @Override
-    public List<MostrarCuestionarios> loadByMostrarSiSeleccionaIdSync(Long id) {
+    public List<ShowQuestionnaires> loadByMostrarSiSeleccionaIdSync(Long id) {
         return this.mostrarCuestionariosDao.loadByMostrarSiSeleccionaIdSync(id);
     }
 

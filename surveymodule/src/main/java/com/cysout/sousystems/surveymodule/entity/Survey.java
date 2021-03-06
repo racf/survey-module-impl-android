@@ -32,7 +32,7 @@ public class Survey implements Serializable {
     private String dateCreated;
     private String dateModified;
     @Ignore
-    private List<Cuestionario> cuestionarios = new ArrayList<>();
+    private List<Questionnaire> questionnaires = new ArrayList<>();
 
     public Boolean getVisible() {
         return visible;
@@ -114,12 +114,12 @@ public class Survey implements Serializable {
         this.dateModified = dateModified;
     }
 
-    public List<Cuestionario> getCuestionarios() {
-        return cuestionarios;
+    public List<Questionnaire> getQuestionnaires() {
+        return questionnaires;
     }
 
-    public void setCuestionarios(List<Cuestionario> cuestionarios) {
-        this.cuestionarios = cuestionarios;
+    public void setQuestionnaires(List<Questionnaire> questionnaire) {
+        this.questionnaires = questionnaire;
     }
 
     public Survey() {

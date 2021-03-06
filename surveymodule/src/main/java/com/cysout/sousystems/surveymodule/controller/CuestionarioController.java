@@ -8,7 +8,7 @@ import androidx.lifecycle.LiveData;
 
 import java.util.List;
 
-import com.cysout.sousystems.surveymodule.entity.Cuestionario;
+import com.cysout.sousystems.surveymodule.entity.Questionnaire;
 import com.cysout.sousystems.surveymodule.repository.CuestionarioRepository;
 import com.cysout.sousystems.surveymodule.repository.impl.CuestionarioRepositoryImpl;
 
@@ -20,19 +20,19 @@ public class CuestionarioController extends AndroidViewModel {
         this.cuestionarioRepository = new CuestionarioRepositoryImpl(application);
     }
 
-    public Long insert(Cuestionario cuestionario) {
-        return this.cuestionarioRepository.insert(cuestionario);
+    public Long insert(Questionnaire questionnaire) {
+        return this.cuestionarioRepository.insert(questionnaire);
     }
 
-    public Long[] insertList(List<Cuestionario> list) {
+    public Long[] insertList(List<Questionnaire> list) {
         return this.cuestionarioRepository.insertList(list);
     }
 
-    public LiveData<List<Cuestionario>> findAllLiveData() {
+    public LiveData<List<Questionnaire>> findAllLiveData() {
         return this.cuestionarioRepository.findAllLiveData();
     }
 
-    public List<Cuestionario> findAllList() {
+    public List<Questionnaire> findAllList() {
         return this.cuestionarioRepository.findAllList();
     }
 }

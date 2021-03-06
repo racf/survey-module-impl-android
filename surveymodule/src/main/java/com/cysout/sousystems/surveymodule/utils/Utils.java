@@ -5,6 +5,10 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 
+import com.cysout.sousystems.surveymodule.entity.Answer;
+import com.cysout.sousystems.surveymodule.entity.Question;
+import com.cysout.sousystems.surveymodule.entity.Questionnaire;
+import com.cysout.sousystems.surveymodule.entity.ShowSelect;
 import com.cysout.sousystems.surveymodule.entity.Survey;
 import com.cysout.sousystems.surveymodule.entity.SurveyAnswer;
 import com.cysout.sousystems.surveymodule.entity.SurveyRecord;
@@ -24,10 +28,6 @@ import java.util.regex.Pattern;
 import com.cysout.sousystems.surveymodule.R;
 import com.cysout.sousystems.surveymodule.entity.CatEncuestaEstatus;
 import com.cysout.sousystems.surveymodule.entity.CatEncuestaTipo;
-import com.cysout.sousystems.surveymodule.entity.Cuestionario;
-import com.cysout.sousystems.surveymodule.entity.MostrarSiSelecciona;
-import com.cysout.sousystems.surveymodule.entity.Pregunta;
-import com.cysout.sousystems.surveymodule.entity.Respuesta;
 import com.cysout.sousystems.surveymodule.view.QuestionaryActivity;
 
 /**
@@ -314,9 +314,8 @@ public class Utils {
                 "        \"description\": \"Información para guiar a personas con sospecha de haber contraido COVID-19\",\n" +
                 "        \"surveyType\": 1,\n" +
                 "        \"visible\": true,\n" +
-                "        \"versionCode\": 1,\n" +
                 "        \"questionnaires\": [{\n" +
-                "                \"questionaryId\": 10,\n" +
+                "                \"questionnaireId\": 10,\n" +
                 "                \"name\": \"sospechaCasos\",\n" +
                 "                \"order\": 1,\n" +
                 "                \"questions\": [{\n" +
@@ -354,23 +353,23 @@ public class Utils {
                 "                                \"showSelect\": {\n" +
                 "                                    \"questionnaires\": [],\n" +
                 "                                    \"questions\": [{\n" +
-                "                                            \"questionaryId\": 10,\n" +
+                "                                            \"questionnaireId\": 10,\n" +
                 "                                            \"questionId\": 4\n" +
                 "                                        },\n" +
                 "                                        {\n" +
-                "                                            \"questionaryId\": 10,\n" +
+                "                                            \"questionnaireId\": 10,\n" +
                 "                                            \"questionId\": 5\n" +
                 "                                        },\n" +
                 "                                        {\n" +
-                "                                            \"questionaryId\": 10,\n" +
+                "                                            \"questionnaireId\": 10,\n" +
                 "                                            \"questionId\": 30\n" +
                 "                                        },\n" +
                 "                                        {\n" +
-                "                                            \"questionaryId\": 10,\n" +
+                "                                            \"questionnaireId\": 10,\n" +
                 "                                            \"questionId\": 31\n" +
                 "                                        },\n" +
                 "                                        {\n" +
-                "                                            \"questionaryId\": 10,\n" +
+                "                                            \"questionnaireId\": 10,\n" +
                 "                                            \"questionId\": 32\n" +
                 "                                        }\n" +
                 "                                    ],\n" +
@@ -423,7 +422,7 @@ public class Utils {
                 "                    },\n" +
                 "                    {\n" +
                 "                        \"description\": \"Muestra checkBox y RadioButton - Opoción SI\",\n" +
-                "                        \"name\": \"presentaSintomasSaltaquestionary\",\n" +
+                "                        \"name\": \"presentaSintomasSaltaquestionnaire\",\n" +
                 "                        \"order\": 5,\n" +
                 "                        \"questionId\": 5,\n" +
                 "                        \"required\": true,\n" +
@@ -433,12 +432,12 @@ public class Utils {
                 "                                    \"questionnaires\": [],\n" +
                 "                                    \"questions\": [],\n" +
                 "                                    \"answers\": [{\n" +
-                "                                            \"questionaryId\": 10,\n" +
+                "                                            \"questionnaireId\": 10,\n" +
                 "                                            \"questionId\": 31,\n" +
                 "                                            \"answerId\": 31\n" +
                 "                                        },\n" +
                 "                                        {\n" +
-                "                                            \"questionaryId\": 10,\n" +
+                "                                            \"questionnaireId\": 10,\n" +
                 "                                            \"questionId\": 32,\n" +
                 "                                            \"answerId\": 35\n" +
                 "                                        }\n" +
@@ -519,7 +518,7 @@ public class Utils {
                 "                                \"finishSelect\": false,\n" +
                 "                                \"showSelect\": {\n" +
                 "                                    \"questionnaires\": [{\n" +
-                "                                        \"questionaryId\": 11\n" +
+                "                                        \"questionnaireId\": 11\n" +
                 "                                    }],\n" +
                 "                                    \"questions\": [],\n" +
                 "                                    \"answers\": []\n" +
@@ -547,7 +546,7 @@ public class Utils {
                 "                            }\n" +
                 "                        ],\n" +
                 "                        \"type\": \"radiogroup\",\n" +
-                "                        \"title\": \"¿SALTA AL SIGUIENTE questionary - OPCIÓN SI?\",\n" +
+                "                        \"title\": \"¿SALTA AL SIGUIENTE questionnaire - OPCIÓN SI?\",\n" +
                 "                        \"visible\": false\n" +
                 "                    }\n" +
                 "                ],\n" +
@@ -555,9 +554,9 @@ public class Utils {
                 "                \"visible\": true\n" +
                 "            },\n" +
                 "            {\n" +
-                "                \"questionaryId\": 11,\n" +
+                "                \"questionnaireId\": 11,\n" +
                 "                \"title\": \"Diagnostico\",\n" +
-                "                \"name\": \"questionaryDiagnostico\",\n" +
+                "                \"name\": \"questionnaireDiagnostico\",\n" +
                 "                \"order\": 2,\n" +
                 "                \"visible\": false,\n" +
                 "                \"questions\": [{\n" +
@@ -642,7 +641,7 @@ public class Utils {
                 "                                \"showSelect\": {\n" +
                 "                                    \"questionnaires\": [],\n" +
                 "                                    \"questions\": [{\n" +
-                "                                        \"questionaryId\": 11,\n" +
+                "                                        \"questionnaireId\": 11,\n" +
                 "                                        \"questionId\": 11\n" +
                 "                                    }],\n" +
                 "                                    \"answers\": []\n" +
@@ -732,10 +731,10 @@ public class Utils {
                 "                ]\n" +
                 "            },\n" +
                 "            {\n" +
-                "                \"questionaryId\": 12,\n" +
+                "                \"questionnaireId\": 12,\n" +
                 "                \"name\": \"datosFinales\",\n" +
                 "                \"order\": 3,\n" +
-                "                \"title\": \"questionary final\",\n" +
+                "                \"title\": \"questionnaire final\",\n" +
                 "                \"visible\": true,\n" +
                 "                \"questions\": [{\n" +
                 "                    \"description\": \"Alguna opinión\",\n" +
@@ -759,9 +758,8 @@ public class Utils {
                 "        \"description\": \"Autodiagnóstico influenza\",\n" +
                 "        \"surveyType\": 2,\n" +
                 "        \"visible\": true,\n" +
-                "        \"versionCode\": 2,\n" +
                 "        \"questionnaires\": [{\n" +
-                "                \"questionaryId\": 20,\n" +
+                "                \"questionnaireId\": 20,\n" +
                 "                \"order\": 1,\n" +
                 "                \"title\": \"Datos personales\",\n" +
                 "                \"name\": \"datosPersonales\",\n" +
@@ -856,10 +854,10 @@ public class Utils {
                 "                                \"text\": \"SI\",\n" +
                 "                                \"showSelect\": {\n" +
                 "                                    \"questionnaires\": [{\n" +
-                "                                        \"questionaryId\": 21\n" +
+                "                                        \"questionnaireId\": 21\n" +
                 "                                    }],\n" +
                 "                                    \"questions\": [{\n" +
-                "                                        \"questionaryId\": 20,\n" +
+                "                                        \"questionnaireId\": 20,\n" +
                 "                                        \"questionId\": 27\n" +
                 "                                    }],\n" +
                 "                                    \"answers\": []\n" +
@@ -893,10 +891,10 @@ public class Utils {
                 "                ]\n" +
                 "            },\n" +
                 "            {\n" +
-                "                \"questionaryId\": 21,\n" +
+                "                \"questionnaireId\": 21,\n" +
                 "                \"order\": 2,\n" +
                 "                \"title\": \"Datos de diagnóstico\",\n" +
-                "                \"name\": \"questionaryDiagnostico\",\n" +
+                "                \"name\": \"questionnaireDiagnostico\",\n" +
                 "                \"visible\": false,\n" +
                 "                \"questions\": [{\n" +
                 "                        \"questionId\": 30,\n" +
@@ -913,7 +911,7 @@ public class Utils {
                 "                                \"showSelect\": {\n" +
                 "                                    \"questionnaires\": [],\n" +
                 "                                    \"questions\": [{\n" +
-                "                                        \"questionaryId\": 21,\n" +
+                "                                        \"questionnaireId\": 21,\n" +
                 "                                        \"questionId\": 31\n" +
                 "                                    }],\n" +
                 "                                    \"answers\": []\n" +
@@ -1022,26 +1020,26 @@ public class Utils {
         surveyRecord.setEndDate(fechaFinal);
         return surveyRecord;
     }
-    public static SurveyAnswer getEncuestaRespuesta(Cuestionario cuestionario,
-                                                    Pregunta pregunta, String respuesta, Long encuestaRegistroId){
+    public static SurveyAnswer getEncuestaRespuesta(Questionnaire questionnaire,
+                                                    Question question, String respuesta, Long encuestaRegistroId){
         SurveyAnswer surveyAnswer = new SurveyAnswer();
         surveyAnswer.setSurveyRecordId(encuestaRegistroId);
-        surveyAnswer.setCuestionarioId(cuestionario.getCuestionarioId());
-        surveyAnswer.setPreguntaId(pregunta.getPreguntaId());
-        surveyAnswer.setTipo(pregunta.getTipo());
-        surveyAnswer.setRespuesta(respuesta);
+        surveyAnswer.setQuestionnaireId(questionnaire.getQuestionnaireId());
+        surveyAnswer.setQuestionId(question.getQuestionId());
+        surveyAnswer.setType(question.getType());
+        surveyAnswer.setAnswer(respuesta);
         return surveyAnswer;
     }
 
-    public static MostrarSiSelecciona infoMostrarSiSelecciona(Respuesta respuesta){
-        MostrarSiSelecciona mostrarSiSelecciona = null;
-        if(!Utils.isEmpty(respuesta.getMostrarSiSelecciona())){
-            if( !Utils.isEmpty(respuesta.getMostrarSiSelecciona().getCuestionarios()) || !Utils.isEmpty(respuesta.getMostrarSiSelecciona().getPreguntas())
-                    || !Utils.isEmpty(respuesta.getMostrarSiSelecciona().getRespuestas())){
-                mostrarSiSelecciona = respuesta.getMostrarSiSelecciona();
+    public static ShowSelect infoMostrarSiSelecciona(Answer answer){
+        ShowSelect showSelect = null;
+        if(!Utils.isEmpty(answer.getShowSelect())){
+            if( !Utils.isEmpty(answer.getShowSelect().getQuestionnaires()) || !Utils.isEmpty(answer.getShowSelect().getQuestions())
+                    || !Utils.isEmpty(answer.getShowSelect().getAnswers())){
+                showSelect = answer.getShowSelect();
             }
         }
-        return mostrarSiSelecciona;
+        return showSelect;
     }
 
     public static boolean isEmpty(Collection obj) {
@@ -1085,11 +1083,11 @@ public class Utils {
         activity.startActivityForResult(intent, CustomConstants.QUESTIONNAIRES_REQUEST);
     }*/
 
-    public static Respuesta getRespuestaSpinnerDefault(Context mContext){
-        Respuesta respuesta = new Respuesta();
-        respuesta.setRespuestaId(0L);
-        respuesta.setPreguntaId(0L);
-        respuesta.setTexto(mContext.getString(R.string.spinner_mensaje_default));
-        return respuesta;
+    public static Answer getRespuestaSpinnerDefault(Context mContext){
+        Answer answer = new Answer();
+        answer.setAnswerId(0L);
+        answer.setQuestionId(0L);
+        answer.setText(mContext.getString(R.string.spinner_mensaje_default));
+        return answer;
     }
 }

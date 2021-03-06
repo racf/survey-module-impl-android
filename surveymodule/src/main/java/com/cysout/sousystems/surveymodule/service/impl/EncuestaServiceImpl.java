@@ -10,10 +10,10 @@ import androidx.lifecycle.LiveData;
 import com.cysout.sousystems.surveymodule.config.AppDatabase;
 import com.cysout.sousystems.surveymodule.dao.EncuestaRegistroDao;
 import com.cysout.sousystems.surveymodule.dao.EncuestaRespuestaDao;
-import com.cysout.sousystems.surveymodule.entity.Cuestionario;
+import com.cysout.sousystems.surveymodule.entity.Question;
+import com.cysout.sousystems.surveymodule.entity.Questionnaire;
 import com.cysout.sousystems.surveymodule.entity.Survey;
 import com.cysout.sousystems.surveymodule.entity.SurveyAnswer;
-import com.cysout.sousystems.surveymodule.entity.Pregunta;
 import com.cysout.sousystems.surveymodule.entity.SurveyRecord;
 import com.cysout.sousystems.surveymodule.entity.relation.EncuestaRegistroRespuestas;
 import com.cysout.sousystems.surveymodule.service.EncuestaService;
@@ -38,20 +38,20 @@ public class EncuestaServiceImpl extends AndroidViewModel implements EncuestaSer
     }
 
     @Override
-    public Long encuestaRespuesta(Survey survey, Cuestionario cuestionario, Pregunta pregunta, String respuesta, Long encuestaRegistroId) {
+    public Long encuestaRespuesta(Survey survey, Questionnaire questionnaire, Question question, String respuesta, Long encuestaRegistroId) {
         Long encuestaRespuestaId = 0L;
-        SurveyAnswer surveyAnswer = Utils.getEncuestaRespuesta(cuestionario, pregunta,respuesta, encuestaRegistroId);
+        SurveyAnswer surveyAnswer = Utils.getEncuestaRespuesta(questionnaire, question,respuesta, encuestaRegistroId);
         Log.i(CustomConstants.TAG_LOG, "encuestaRespuesta() "+ surveyAnswer.toString());
-        if( surveyAnswer.getTipo().equalsIgnoreCase(CustomConstants.TEXT) || surveyAnswer.getTipo().equalsIgnoreCase(CustomConstants.SELECT)){
-            Log.i(CustomConstants.TAG_LOG, "ENTRO TIPO "+ surveyAnswer.getTipo());
-            SurveyAnswer surveyAnswerResult = this.encuestaRespuestaDao.surveyAnswerByRegistroIdAndPregIdSync(encuestaRegistroId, pregunta.getPreguntaId());
+        if( surveyAnswer.getType().equalsIgnoreCase(CustomConstants.TEXT) || surveyAnswer.getType().equalsIgnoreCase(CustomConstants.SELECT)){
+            Log.i(CustomConstants.TAG_LOG, "ENTRO TIPO "+ surveyAnswer.getType());
+            SurveyAnswer surveyAnswerResult = this.encuestaRespuestaDao.surveyAnswerByRegistroIdAndPregIdSync(encuestaRegistroId, question.getQuestionId());
             if( surveyAnswerResult != null ) {
-                surveyAnswerResult.setRespuesta(surveyAnswer.getRespuesta());
+                surveyAnswerResult.setAnswer(surveyAnswer.getAnswer());
                 this.encuestaRespuestaDao.update(surveyAnswerResult);
-                Log.i(CustomConstants.TAG_LOG, "ENTRO ACTUALIZA "+ surveyAnswer.getTipo()+": "+ surveyAnswerResult.toString());
+                Log.i(CustomConstants.TAG_LOG, "ENTRO ACTUALIZA "+ surveyAnswer.getType()+": "+ surveyAnswerResult.toString());
             } else {
                 encuestaRespuestaId = this.encuestaRespuestaDao.insert(surveyAnswer);
-                Log.i(CustomConstants.TAG_LOG, "ENTRO CREA "+ surveyAnswer.getTipo()+": "+ surveyAnswer.toString());
+                Log.i(CustomConstants.TAG_LOG, "ENTRO CREA "+ surveyAnswer.getType()+": "+ surveyAnswer.toString());
             }
         }else {
             encuestaRespuestaId = this.encuestaRespuestaDao.insert(surveyAnswer);

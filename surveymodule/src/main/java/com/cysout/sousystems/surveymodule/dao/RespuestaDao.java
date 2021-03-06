@@ -9,41 +9,41 @@ import androidx.room.Update;
 
 import java.util.List;
 
-import com.cysout.sousystems.surveymodule.entity.Respuesta;
+import com.cysout.sousystems.surveymodule.entity.Answer;
 
 @Dao
 public interface RespuestaDao {
     //onConflict = OnConflictStrategy.REPLACE
     @Insert()
-    Long insert(Respuesta item);
+    Long insert(Answer item);
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    Long[] insertList(List<Respuesta> list);
+    Long[] insertList(List<Answer> list);
 
     @Update
-    void update(Respuesta item);
+    void update(Answer item);
 
-    @Query("SELECT * FROM respuesta")
-    LiveData<List<Respuesta>> loadAll();
+    @Query("SELECT * FROM answer")
+    LiveData<List<Answer>> loadAll();
 
-    @Query("SELECT * FROM respuesta")
-    List<Respuesta> loadAllSync();
+    @Query("SELECT * FROM answer")
+    List<Answer> loadAllSync();
 
-    @Query("SELECT * FROM respuesta WHERE respuestaId = :id LIMIT 1")
-    Respuesta loadRespuestaSync(Long id);
+    @Query("SELECT * FROM answer WHERE answerId = :id LIMIT 1")
+    Answer loadRespuestaSync(Long id);
 
-    @Query("SELECT * FROM respuesta WHERE respuestaId = :id")
-    LiveData<List<Respuesta>> loadByRespuestaId(Long id);
+    @Query("SELECT * FROM answer WHERE answerId = :id")
+    LiveData<List<Answer>> loadByRespuestaId(Long id);
 
-    @Query("SELECT * FROM respuesta WHERE respuestaId = :id")
-    List<Respuesta> loadByRespuestaIdSync(Long id);
+    @Query("SELECT * FROM answer WHERE answerId = :id")
+    List<Answer> loadByRespuestaIdSync(Long id);
 
-    @Query("SELECT * FROM respuesta WHERE preguntaId = :id")
-    LiveData<List<Respuesta>> loadByPreguntaId(Long id);
+    @Query("SELECT * FROM answer WHERE answerId = :id")
+    LiveData<List<Answer>> loadByPreguntaId(Long id);
 
-    @Query("SELECT * FROM respuesta WHERE preguntaId = :id")
-    List<Respuesta> loadByPreguntaIdSync(Long id);
+    @Query("SELECT * FROM answer WHERE answerId = :id")
+    List<Answer> loadByPreguntaIdSync(Long id);
 
-    @Query("DELETE FROM respuesta")
+    @Query("DELETE FROM answer")
     void deleteAll();
 }

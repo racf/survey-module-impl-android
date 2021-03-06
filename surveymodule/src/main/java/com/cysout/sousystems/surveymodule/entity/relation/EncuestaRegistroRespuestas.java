@@ -15,17 +15,17 @@ import com.cysout.sousystems.surveymodule.entity.SurveyRecord;
 **/
 public class EncuestaRegistroRespuestas implements Serializable {
     @Embedded
-    private SurveyRecord encuestaRegistro;
+    private SurveyRecord surveyRecord;
 
     @Relation(parentColumn = "surveyRecordId", entityColumn = "surveyRecordId", entity = SurveyAnswer.class)
     private List<SurveyAnswer> surveyAnswers = new ArrayList<>();
 
-    public SurveyRecord getEncuestaRegistro() {
-        return encuestaRegistro;
+    public SurveyRecord getSurveyRecord() {
+        return surveyRecord;
     }
 
-    public void setEncuestaRegistro(SurveyRecord encuestaRegistro) {
-        this.encuestaRegistro = encuestaRegistro;
+    public void setSurveyRecord(SurveyRecord surveyRecord) {
+        this.surveyRecord = surveyRecord;
     }
 
     public List<SurveyAnswer> getSurveyAnswers() {

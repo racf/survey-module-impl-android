@@ -4,15 +4,15 @@ import androidx.lifecycle.LiveData;
 
 import java.util.List;
 
-import com.cysout.sousystems.surveymodule.entity.MostrarCuestionarios;
+import com.cysout.sousystems.surveymodule.entity.ShowQuestionnaires;
 
 public interface MostrarCuestionariosRepository {
-    Long insert(MostrarCuestionarios item);
-    Long[] insertList(List<MostrarCuestionarios> list);
-    void update(MostrarCuestionarios item);
-    LiveData<List<MostrarCuestionarios>> loadAll();
-    List<MostrarCuestionarios> loadAllSync();
-    LiveData<List<MostrarCuestionarios>> loadByMostrarSiSeleccionaId(Long id);
-    List<MostrarCuestionarios> loadByMostrarSiSeleccionaIdSync(Long id);
+    Long insert(ShowQuestionnaires item);
+    Long[] insertList(List<ShowQuestionnaires> list);
+    void update(ShowQuestionnaires item);
+    LiveData<List<ShowQuestionnaires>> loadAll();
+    List<ShowQuestionnaires> loadAllSync();
+    LiveData<List<ShowQuestionnaires>> loadByMostrarSiSeleccionaId(Long id);
+    List<ShowQuestionnaires> loadByMostrarSiSeleccionaIdSync(Long id);
     void deleteAll();
 }

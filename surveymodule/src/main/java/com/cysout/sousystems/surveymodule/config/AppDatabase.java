@@ -24,15 +24,15 @@ import com.cysout.sousystems.surveymodule.dao.RespuestaDao;
 import com.cysout.sousystems.surveymodule.dao.RespuestaMostrarCuestionariosDao;
 import com.cysout.sousystems.surveymodule.entity.CatEncuestaEstatus;
 import com.cysout.sousystems.surveymodule.entity.CatEncuestaTipo;
-import com.cysout.sousystems.surveymodule.entity.Cuestionario;
+import com.cysout.sousystems.surveymodule.entity.Questionnaire;
+import com.cysout.sousystems.surveymodule.entity.ShowQuestionnaires;
+import com.cysout.sousystems.surveymodule.entity.ShowQuestions;
 import com.cysout.sousystems.surveymodule.entity.Survey;
 import com.cysout.sousystems.surveymodule.entity.SurveyAnswer;
-import com.cysout.sousystems.surveymodule.entity.MostrarCuestionarios;
-import com.cysout.sousystems.surveymodule.entity.MostrarPreguntas;
-import com.cysout.sousystems.surveymodule.entity.MostrarRespuestas;
-import com.cysout.sousystems.surveymodule.entity.MostrarSiSelecciona;
-import com.cysout.sousystems.surveymodule.entity.Pregunta;
-import com.cysout.sousystems.surveymodule.entity.Respuesta;
+import com.cysout.sousystems.surveymodule.entity.ShowAnswers;
+import com.cysout.sousystems.surveymodule.entity.ShowSelect;
+import com.cysout.sousystems.surveymodule.entity.Question;
+import com.cysout.sousystems.surveymodule.entity.Answer;
 import com.cysout.sousystems.surveymodule.entity.RespuestaMostrarCuestionarios;
 import com.cysout.sousystems.surveymodule.entity.SurveyRecord;
 import com.cysout.sousystems.surveymodule.utils.CustomConstants;
@@ -40,8 +40,8 @@ import com.cysout.sousystems.surveymodule.utils.CustomConstants;
  *Developed by cysout.com and sousystems.com.mx
  *Contact info@cysout.com or contacto@sousystems.com.mx
 **/
-@Database(entities = {CatEncuestaTipo.class, CatEncuestaEstatus.class, Survey.class, Cuestionario.class, Pregunta.class, Respuesta.class,
-        MostrarSiSelecciona.class, MostrarCuestionarios.class, MostrarPreguntas.class, MostrarRespuestas.class,
+@Database(entities = {CatEncuestaTipo.class, CatEncuestaEstatus.class, Survey.class, Questionnaire.class, Question.class, Answer.class,
+        ShowSelect.class, ShowQuestionnaires.class, ShowQuestions.class, ShowAnswers.class,
         SurveyRecord.class, SurveyAnswer.class,
         RespuestaMostrarCuestionarios.class}, version = CustomConstants.DATABASE_VERSION, exportSchema = CustomConstants.FALSE)
 public abstract class AppDatabase  extends RoomDatabase {
