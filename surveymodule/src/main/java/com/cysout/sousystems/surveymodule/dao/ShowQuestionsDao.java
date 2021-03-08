@@ -12,7 +12,7 @@ import java.util.List;
 import com.cysout.sousystems.surveymodule.entity.ShowQuestions;
 
 @Dao
-public interface MostrarPreguntasDao {
+public interface ShowQuestionsDao {
     //onConflict = OnConflictStrategy.REPLACE
     @Insert()
     Long insert(ShowQuestions item);

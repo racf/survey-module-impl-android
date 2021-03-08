@@ -9,17 +9,17 @@ import androidx.room.RoomDatabase;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
-import com.cysout.sousystems.surveymodule.dao.CuestionarioDao;
-import com.cysout.sousystems.surveymodule.dao.RespuestaMostrarCuestionariosDao;
+import com.cysout.sousystems.surveymodule.dao.AnswerShowQuestionnairesDao;
+import com.cysout.sousystems.surveymodule.dao.QuestionDao;
+import com.cysout.sousystems.surveymodule.dao.QuestionnaireDao;
+import com.cysout.sousystems.surveymodule.dao.ShowAnswersDao;
+import com.cysout.sousystems.surveymodule.dao.ShowQuestionnairesDao;
+import com.cysout.sousystems.surveymodule.dao.ShowSelectDao;
 import com.cysout.sousystems.surveymodule.dao.SurveyDao;
-import com.cysout.sousystems.surveymodule.dao.EncuestaRegistroDao;
-import com.cysout.sousystems.surveymodule.dao.EncuestaRespuestaDao;
-import com.cysout.sousystems.surveymodule.dao.MostrarCuestionariosDao;
-import com.cysout.sousystems.surveymodule.dao.MostrarPreguntasDao;
-import com.cysout.sousystems.surveymodule.dao.MostrarRespuestasDao;
-import com.cysout.sousystems.surveymodule.dao.MostrarSiSeleccionaDao;
-import com.cysout.sousystems.surveymodule.dao.PreguntaDao;
-import com.cysout.sousystems.surveymodule.dao.RespuestaDao;
+import com.cysout.sousystems.surveymodule.dao.SurveyRecordDao;
+import com.cysout.sousystems.surveymodule.dao.SurveyAnswerDao;
+import com.cysout.sousystems.surveymodule.dao.ShowQuestionsDao;
+import com.cysout.sousystems.surveymodule.dao.AnswerDao;
 import com.cysout.sousystems.surveymodule.entity.Questionnaire;
 import com.cysout.sousystems.surveymodule.entity.AnswerShowQuestionnaires;
 import com.cysout.sousystems.surveymodule.entity.ShowQuestionnaires;
@@ -33,8 +33,8 @@ import com.cysout.sousystems.surveymodule.entity.Answer;
 import com.cysout.sousystems.surveymodule.entity.SurveyRecord;
 import com.cysout.sousystems.surveymodule.utils.CustomConstants;
 /**
- *Developed by cysout.com and sousystems.com.mx
- *Contact info@cysout.com or contacto@sousystems.com.mx
+ * Developed by cysout.com and sousystems.com.mx
+ * Contact info@cysout.com or contacto@sousystems.com.mx
 **/
 @Database(entities = {Survey.class, Questionnaire.class, Question.class, Answer.class,
         ShowSelect.class, ShowQuestionnaires.class, ShowQuestions.class, ShowAnswers.class,
@@ -43,17 +43,17 @@ import com.cysout.sousystems.surveymodule.utils.CustomConstants;
 public abstract class AppDatabase  extends RoomDatabase {
 
     //DAOs
-    public abstract CuestionarioDao cuestionarioDao();
+    public abstract QuestionnaireDao questionnaireDao();
     public abstract SurveyDao surveyDao();
-    public abstract PreguntaDao preguntaDao();
-    public abstract RespuestaDao respuestaDao();
-    public abstract MostrarSiSeleccionaDao mostrarSiSeleccionaDao();
-    public abstract MostrarCuestionariosDao mostrarCuestionariosDao();
-    public abstract MostrarPreguntasDao mostrarPreguntasDao();
-    public abstract MostrarRespuestasDao mostrarRespuestasDao();
-    public abstract EncuestaRegistroDao encuestaRegistroDao();
-    public abstract EncuestaRespuestaDao encuestaRespuestaDao();
-    public abstract RespuestaMostrarCuestionariosDao respuestaMostrarCuestionariosDao();
+    public abstract QuestionDao questionDao();
+    public abstract AnswerDao answerDao();
+    public abstract ShowSelectDao showSelectDao();
+    public abstract ShowQuestionnairesDao showQuestionnairesDao();
+    public abstract ShowQuestionsDao showQuestionsDao();
+    public abstract ShowAnswersDao showAnswersDao();
+    public abstract SurveyRecordDao surveyRecordDao();
+    public abstract SurveyAnswerDao surveyAnswerDao();
+    public abstract AnswerShowQuestionnairesDao answerShowQuestionnairesDao();
 
     private static volatile AppDatabase INSTANCE;
     private static final int NUMBER_OF_THREADS = 10;

@@ -8,7 +8,10 @@ import androidx.room.Index;
 import androidx.room.PrimaryKey;
 
 import java.io.Serializable;
-
+/**
+ * Developed by cysout.com and sousystems.com.mx
+ * Contact info@cysout.com or contacto@sousystems.com.mx
+**/
 @Entity(tableName = "surveyRecord", foreignKeys = {
         @ForeignKey(entity = Survey.class,
                 parentColumns = "surveyId",
@@ -17,20 +20,6 @@ import java.io.Serializable;
         indices = {
                 @Index(value = {"surveyIdFK"})
         })
-/*,
-        foreignKeys = {
-@ForeignKey(entity = survey.class,
-        parentColumns = "surveyId",
-        childColumns = "surveyId"),
-@ForeignKey(entity = CatsurveyEstatus.class,
-        parentColumns = "catsurveyEstatusId",
-        childColumns = "catsurveyEstatusId")
-        },
-                indices = {
-@Index(value = {"surveyId"}),
-@Index(value = {"catsurveyEstatusId"})
-    }*/
-
 public class SurveyRecord implements Serializable {
     @PrimaryKey(autoGenerate = true)
     private Long surveyRecordId;

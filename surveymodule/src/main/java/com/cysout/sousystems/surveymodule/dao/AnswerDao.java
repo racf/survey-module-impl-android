@@ -12,7 +12,7 @@ import java.util.List;
 import com.cysout.sousystems.surveymodule.entity.Answer;
 
 @Dao
-public interface RespuestaDao {
+public interface AnswerDao {
     //onConflict = OnConflictStrategy.REPLACE
     @Insert()
     Long insert(Answer item);

@@ -14,7 +14,7 @@ import com.cysout.sousystems.surveymodule.entity.Question;
 import com.cysout.sousystems.surveymodule.entity.relation.QuestionAnswers;
 
 @Dao
-public interface PreguntaDao {
+public interface QuestionDao {
     //onConflict = OnConflictStrategy.REPLACE
     @Insert()
     Long insert(Question item);

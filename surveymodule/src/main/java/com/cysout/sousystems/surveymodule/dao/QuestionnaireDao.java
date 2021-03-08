@@ -10,7 +10,7 @@ import java.util.List;
 import com.cysout.sousystems.surveymodule.entity.Questionnaire;
 
 @Dao
-public interface CuestionarioDao {
+public interface QuestionnaireDao {
     //onConflict = OnConflictStrategy.REPLACE
     @Insert()
     Long insert(Questionnaire item);

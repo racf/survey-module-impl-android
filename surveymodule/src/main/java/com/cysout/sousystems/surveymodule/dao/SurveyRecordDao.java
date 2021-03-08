@@ -14,7 +14,7 @@ import com.cysout.sousystems.surveymodule.entity.relation.SurveyRecordAnswers;
 
 
 @Dao
-public interface EncuestaRegistroDao {
+public interface SurveyRecordDao {
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     Long insert(SurveyRecord item);

@@ -12,7 +12,7 @@ import java.util.List;
 import com.cysout.sousystems.surveymodule.entity.SurveyAnswer;
 
 @Dao
-public interface EncuestaRespuestaDao {
+public interface SurveyAnswerDao {
     @Insert()
     Long insert(SurveyAnswer item);
 

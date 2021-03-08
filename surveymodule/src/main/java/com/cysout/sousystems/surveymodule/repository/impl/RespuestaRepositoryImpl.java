@@ -7,69 +7,69 @@ import androidx.lifecycle.LiveData;
 import java.util.List;
 
 import com.cysout.sousystems.surveymodule.config.AppDatabase;
-import com.cysout.sousystems.surveymodule.dao.RespuestaDao;
+import com.cysout.sousystems.surveymodule.dao.AnswerDao;
 import com.cysout.sousystems.surveymodule.entity.Answer;
 import com.cysout.sousystems.surveymodule.repository.RespuestaRepository;
 
 public class RespuestaRepositoryImpl implements RespuestaRepository {
-    private RespuestaDao respuestaDao;
+    private AnswerDao answerDao;
 
     public RespuestaRepositoryImpl (Application application){
         AppDatabase db = AppDatabase.getDataBase(application);
-        this.respuestaDao = db.respuestaDao();
+        this.answerDao = db.answerDao();
     }
     @Override
     public Long insert(Answer item) {
-        return this.respuestaDao.insert(item);
+        return this.answerDao.insert(item);
     }
 
     @Override
     public Long[] insertList(List<Answer> list) {
-        return this.respuestaDao.insertList(list);
+        return this.answerDao.insertList(list);
     }
 
     @Override
     public void update(Answer item) {
-        this.respuestaDao.update(item);
+        this.answerDao.update(item);
     }
 
     @Override
     public LiveData<List<Answer>> loadAll() {
-        return this.respuestaDao.loadAll();
+        return this.answerDao.loadAll();
     }
 
     @Override
     public List<Answer> loadAllSync() {
-        return this.respuestaDao.loadAllSync();
+        return this.answerDao.loadAllSync();
     }
 
     @Override
     public Answer loadRespuestaSync(Long id) {
-        return this.respuestaDao.loadRespuestaSync(id);
+        return this.answerDao.loadRespuestaSync(id);
     }
 
     @Override
     public LiveData<List<Answer>> loadByRespuestaId(Long id) {
-        return this.respuestaDao.loadByRespuestaId(id);
+        return this.answerDao.loadByRespuestaId(id);
     }
 
     @Override
     public List<Answer> loadByRespuestaIdSync(Long id) {
-        return this.respuestaDao.loadByRespuestaIdSync(id);
+        return this.answerDao.loadByRespuestaIdSync(id);
     }
 
     @Override
     public LiveData<List<Answer>> loadByPreguntaId(Long id) {
-        return this.respuestaDao.loadByPreguntaId(id);
+        return this.answerDao.loadByPreguntaId(id);
     }
 
     @Override
     public List<Answer> loadByPreguntaIdSync(Long id) {
-        return this.respuestaDao.loadByPreguntaIdSync(id);
+        return this.answerDao.loadByPreguntaIdSync(id);
     }
 
     @Override
     public void deleteAll() {
-        this.respuestaDao.deleteAll();
+        this.answerDao.deleteAll();
     }
 }

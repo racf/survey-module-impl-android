@@ -16,7 +16,7 @@ import com.cysout.sousystems.surveymodule.entity.AnswerShowQuestionnaires;
  * Contact info@cysout.com or contacto@sousystems.com.mx
 **/
 @Dao
-public interface RespuestaMostrarCuestionariosDao {
+public interface AnswerShowQuestionnairesDao {
     @Insert()
     Long insert(AnswerShowQuestionnaires item);
 

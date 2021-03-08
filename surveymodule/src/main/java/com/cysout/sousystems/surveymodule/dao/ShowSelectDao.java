@@ -15,7 +15,7 @@ import com.cysout.sousystems.surveymodule.entity.relation.RelationSelectQuestion
 import com.cysout.sousystems.surveymodule.entity.relation.RelationShowSelect;
 
 @Dao
-public interface MostrarSiSeleccionaDao {
+public interface ShowSelectDao {
     //onConflict = OnConflictStrategy.REPLACE
     @Insert()
     Long insert(ShowSelect item);
