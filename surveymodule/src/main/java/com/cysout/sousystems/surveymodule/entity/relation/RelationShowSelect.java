@@ -12,15 +12,15 @@ import com.cysout.sousystems.surveymodule.entity.ShowQuestions;
 import com.cysout.sousystems.surveymodule.entity.ShowAnswers;
 import com.cysout.sousystems.surveymodule.entity.ShowSelect;
 
-public class RelacionSiSelecciona implements Serializable {
+public class RelationShowSelect implements Serializable {
     @Embedded
     ShowSelect showSelect = new ShowSelect();
     @Relation(parentColumn = "showSelectId", entityColumn = "showSelectId", entity = ShowQuestionnaires.class)
-    List<ShowQuestionnaires> cuestionarios = new ArrayList<>();
+    List<ShowQuestionnaires> questionnaires = new ArrayList<>();
     @Relation(parentColumn = "showSelectId", entityColumn = "showSelectId", entity = ShowQuestions.class)
-    List<ShowQuestions> preguntas = new ArrayList<>();
+    List<ShowQuestions> questions = new ArrayList<>();
     @Relation(parentColumn = "showSelectId", entityColumn = "showSelectId", entity = ShowAnswers.class)
-    List<ShowAnswers> respuestas = new ArrayList<>();
+    List<ShowAnswers> answers = new ArrayList<>();
 
     public ShowSelect getShowSelect() {
         return showSelect;
@@ -30,27 +30,27 @@ public class RelacionSiSelecciona implements Serializable {
         this.showSelect = showSelect;
     }
 
-    public List<ShowQuestionnaires> getCuestionarios() {
-        return cuestionarios;
+    public List<ShowQuestionnaires> getQuestionnaires() {
+        return questionnaires;
     }
 
-    public void setCuestionarios(List<ShowQuestionnaires> cuestionarios) {
-        this.cuestionarios = cuestionarios;
+    public void setQuestionnaires(List<ShowQuestionnaires> questionnaires) {
+        this.questionnaires = questionnaires;
     }
 
-    public List<ShowQuestions> getPreguntas() {
-        return preguntas;
+    public List<ShowQuestions> getQuestions() {
+        return questions;
     }
 
-    public void setPreguntas(List<ShowQuestions> preguntas) {
-        this.preguntas = preguntas;
+    public void setQuestions(List<ShowQuestions> questions) {
+        this.questions = questions;
     }
 
-    public List<ShowAnswers> getRespuestas() {
-        return respuestas;
+    public List<ShowAnswers> getAnswers() {
+        return answers;
     }
 
-    public void setRespuestas(List<ShowAnswers> respuestas) {
-        this.respuestas = respuestas;
+    public void setAnswers(List<ShowAnswers> answers) {
+        this.answers = answers;
     }
 }

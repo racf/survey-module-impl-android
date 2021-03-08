@@ -9,8 +9,8 @@ import androidx.lifecycle.LiveData;
 import java.util.List;
 
 import com.cysout.sousystems.surveymodule.entity.ShowSelect;
-import com.cysout.sousystems.surveymodule.entity.relation.RelacionSiSelecciona;
-import com.cysout.sousystems.surveymodule.entity.relation.RelacionSiSeleccionaCuestionarios;
+import com.cysout.sousystems.surveymodule.entity.relation.RelationSelectQuestionnaires;
+import com.cysout.sousystems.surveymodule.entity.relation.RelationShowSelect;
 import com.cysout.sousystems.surveymodule.repository.MostrarSiSeleccionaRepository;
 import com.cysout.sousystems.surveymodule.repository.impl.MostrarSiSeleccionaRepositoryImpl;
 
@@ -57,15 +57,15 @@ public class MostrarSiSeleccionaController extends AndroidViewModel {
         this.mostrarSiSeleccionaRepository.deleteAll();
     }
 
-    public RelacionSiSelecciona loadMosstrarSiSeleccionaByRespuestaId(Long id) {
+    public RelationShowSelect loadMosstrarSiSeleccionaByRespuestaId(Long id) {
         return this.mostrarSiSeleccionaRepository.loadMosstrarSiSeleccionaByRespuestaId(id);
     }
 
-    public LiveData<List<RelacionSiSeleccionaCuestionarios>> loadMostrarCuestionarios() {
+    public LiveData<List<RelationSelectQuestionnaires>> loadMostrarCuestionarios() {
         return this.mostrarSiSeleccionaRepository.loadMostrarCuestionarios();
     }
 
-    public List<RelacionSiSeleccionaCuestionarios> loadMostrarCuestionariosSync() {
+    public List<RelationSelectQuestionnaires> loadMostrarCuestionariosSync() {
         return this.mostrarSiSeleccionaRepository.loadMostrarCuestionariosSync();
     }
 }

@@ -5,7 +5,7 @@ import androidx.lifecycle.LiveData;
 import java.util.List;
 
 import com.cysout.sousystems.surveymodule.entity.Survey;
-import com.cysout.sousystems.surveymodule.entity.relation.EncuestaCuestionarios;
+import com.cysout.sousystems.surveymodule.entity.relation.SurveyQuestionnaires;
 import com.cysout.sousystems.surveymodule.entity.relation.SurveyRecords;
 
 
@@ -20,8 +20,8 @@ public interface SurveyRepository {
     List<Survey> findEncuestasById(Long encuestaId);
     LiveData<List<Survey>> loadAll();
     List<Survey> loadAllSync();
-    List<EncuestaCuestionarios> loadEncuestaCuestionarios();
-    EncuestaCuestionarios loadCuestionarioRespuestasSync();
+    List<SurveyQuestionnaires> loadEncuestaCuestionarios();
+    SurveyQuestionnaires loadCuestionarioRespuestasSync();
     LiveData<List<SurveyRecords>> loadAllSurveyRecords();
     List<SurveyRecords> loadAllSurveyRecordsSync();
     LiveData<List<SurveyRecords>> loadSurveyCompleted();

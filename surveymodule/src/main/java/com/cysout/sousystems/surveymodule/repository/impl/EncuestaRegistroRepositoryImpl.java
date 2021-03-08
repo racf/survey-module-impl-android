@@ -9,7 +9,7 @@ import java.util.List;
 import com.cysout.sousystems.surveymodule.config.AppDatabase;
 import com.cysout.sousystems.surveymodule.dao.EncuestaRegistroDao;
 import com.cysout.sousystems.surveymodule.entity.SurveyRecord;
-import com.cysout.sousystems.surveymodule.entity.relation.EncuestaRegistroRespuestas;
+import com.cysout.sousystems.surveymodule.entity.relation.SurveyRecordAnswers;
 import com.cysout.sousystems.surveymodule.repository.EncuestaRegistroRepository;
 
 /**
@@ -95,32 +95,32 @@ public class EncuestaRegistroRepositoryImpl implements EncuestaRegistroRepositor
     }
 
     @Override
-    public LiveData<EncuestaRegistroRespuestas> loadRegistroRespByEnctRegtroId(Long encuestaRegistroId) {
+    public LiveData<SurveyRecordAnswers> loadRegistroRespByEnctRegtroId(Long encuestaRegistroId) {
         return this.encuestaRegistroDao.loadRegistroRespByEnctRegtroId(encuestaRegistroId);
     }
 
     @Override
-    public EncuestaRegistroRespuestas loadRegistroRespByEnctRegtroIdSync(Long encuestaRegistroId) {
+    public SurveyRecordAnswers loadRegistroRespByEnctRegtroIdSync(Long encuestaRegistroId) {
         return this.encuestaRegistroDao.loadRegistroRespByEnctRegtroIdSync(encuestaRegistroId);
     }
 
     @Override
-    public LiveData<List<EncuestaRegistroRespuestas>> loadRegistrosRespByEnctRegtroId(Long encuestaRegistroId) {
+    public LiveData<List<SurveyRecordAnswers>> loadRegistrosRespByEnctRegtroId(Long encuestaRegistroId) {
         return this.encuestaRegistroDao.loadRegistrosRespByEnctRegtroId(encuestaRegistroId);
     }
 
     @Override
-    public List<EncuestaRegistroRespuestas> loadRegistrosRespByEnctRegtroIdSync(Long encuestaRegistroId) {
+    public List<SurveyRecordAnswers> loadRegistrosRespByEnctRegtroIdSync(Long encuestaRegistroId) {
         return this.encuestaRegistroDao.loadRegistrosRespByEnctRegtroIdSync(encuestaRegistroId);
     }
 
     @Override
-    public LiveData<List<EncuestaRegistroRespuestas>> loadRegistrosRespuestasByEstatus(Integer catEncuestaEstatusId) {
+    public LiveData<List<SurveyRecordAnswers>> loadRegistrosRespuestasByEstatus(Integer catEncuestaEstatusId) {
         return this.encuestaRegistroDao.loadRegistrosRespuestasByEstatus(catEncuestaEstatusId);
     }
 
     @Override
-    public List<EncuestaRegistroRespuestas> loadRegistrosRespuestasByEstatusSync(Integer catEncuestaEstatusId) {
+    public List<SurveyRecordAnswers> loadRegistrosRespuestasByEstatusSync(Integer catEncuestaEstatusId) {
         return this.encuestaRegistroDao.loadRegistrosRespuestasByEstatusSync(catEncuestaEstatusId);
     }
 

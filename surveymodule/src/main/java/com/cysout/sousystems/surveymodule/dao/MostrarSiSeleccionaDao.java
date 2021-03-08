@@ -11,8 +11,8 @@ import androidx.room.Update;
 import java.util.List;
 
 import com.cysout.sousystems.surveymodule.entity.ShowSelect;
-import com.cysout.sousystems.surveymodule.entity.relation.RelacionSiSelecciona;
-import com.cysout.sousystems.surveymodule.entity.relation.RelacionSiSeleccionaCuestionarios;
+import com.cysout.sousystems.surveymodule.entity.relation.RelationSelectQuestionnaires;
+import com.cysout.sousystems.surveymodule.entity.relation.RelationShowSelect;
 
 @Dao
 public interface MostrarSiSeleccionaDao {
@@ -43,13 +43,13 @@ public interface MostrarSiSeleccionaDao {
 
     @Transaction
     @Query("SELECT * FROM showSelect WHERE answerId=:id LIMIT 1")
-    RelacionSiSelecciona loadMosstrarSiSeleccionaByRespuestaId(Long id);
+    RelationShowSelect loadMosstrarSiSeleccionaByRespuestaId(Long id);
 
     @Transaction
     @Query("SELECT * FROM showSelect")
-    LiveData<List<RelacionSiSeleccionaCuestionarios>> loadMostrarCuestionarios();
+    LiveData<List<RelationSelectQuestionnaires>> loadMostrarCuestionarios();
 
     @Transaction
     @Query("SELECT * FROM showSelect")
-    List<RelacionSiSeleccionaCuestionarios> loadMostrarCuestionariosSync();
+    List<RelationSelectQuestionnaires> loadMostrarCuestionariosSync();
 }

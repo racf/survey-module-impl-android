@@ -9,7 +9,7 @@ import androidx.lifecycle.LiveData;
 import java.util.List;
 
 import com.cysout.sousystems.surveymodule.entity.Survey;
-import com.cysout.sousystems.surveymodule.entity.relation.EncuestaCuestionarios;
+import com.cysout.sousystems.surveymodule.entity.relation.SurveyQuestionnaires;
 import com.cysout.sousystems.surveymodule.repository.SurveyRepository;
 import com.cysout.sousystems.surveymodule.repository.impl.SurveyRepositoryImpl;
 
@@ -37,7 +37,7 @@ public class SurveyController extends AndroidViewModel {
         return this.surveyRepository.loadAllSync();
     }
 
-    public List<EncuestaCuestionarios> findEncuestaCuestionarios() {
+    public List<SurveyQuestionnaires> findEncuestaCuestionarios() {
         return this.surveyRepository.loadEncuestaCuestionarios();
     }
 }

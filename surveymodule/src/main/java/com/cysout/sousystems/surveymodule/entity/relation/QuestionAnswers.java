@@ -10,7 +10,7 @@ import java.util.List;
 import com.cysout.sousystems.surveymodule.entity.Answer;
 import com.cysout.sousystems.surveymodule.entity.Question;
 
-public class PreguntaRespuestas implements Serializable {
+public class QuestionAnswers implements Serializable {
     @Embedded
     private Question question;
 

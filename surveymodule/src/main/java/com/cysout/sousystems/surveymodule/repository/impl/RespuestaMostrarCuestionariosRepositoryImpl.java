@@ -8,7 +8,7 @@ import java.util.List;
 
 import com.cysout.sousystems.surveymodule.config.AppDatabase;
 import com.cysout.sousystems.surveymodule.dao.RespuestaMostrarCuestionariosDao;
-import com.cysout.sousystems.surveymodule.entity.RespuestaMostrarCuestionarios;
+import com.cysout.sousystems.surveymodule.entity.AnswerShowQuestionnaires;
 import com.cysout.sousystems.surveymodule.repository.RespuestaMostrarCuestionariosRepository;
 
 public class RespuestaMostrarCuestionariosRepositoryImpl implements RespuestaMostrarCuestionariosRepository {
@@ -19,22 +19,22 @@ public class RespuestaMostrarCuestionariosRepositoryImpl implements RespuestaMos
         this.respuestaMostrarCuestionariosDao = db.respuestaMostrarCuestionariosDao();
     }
     @Override
-    public Long insert(RespuestaMostrarCuestionarios item) {
+    public Long insert(AnswerShowQuestionnaires item) {
         return this.respuestaMostrarCuestionariosDao.insert(item);
     }
 
     @Override
-    public Long[] insertList(List<RespuestaMostrarCuestionarios> list) {
+    public Long[] insertList(List<AnswerShowQuestionnaires> list) {
         return this.respuestaMostrarCuestionariosDao.insertList(list);
     }
 
     @Override
-    public LiveData<List<RespuestaMostrarCuestionarios>> loadAll() {
+    public LiveData<List<AnswerShowQuestionnaires>> loadAll() {
         return this.respuestaMostrarCuestionariosDao.loadAll();
     }
 
     @Override
-    public List<RespuestaMostrarCuestionarios> loadAllSync() {
+    public List<AnswerShowQuestionnaires> loadAllSync() {
         return this.respuestaMostrarCuestionariosDao.loadAllSync();
     }
 

@@ -15,7 +15,7 @@ import com.cysout.sousystems.surveymodule.entity.Questionnaire;
 import com.cysout.sousystems.surveymodule.entity.Survey;
 import com.cysout.sousystems.surveymodule.entity.SurveyAnswer;
 import com.cysout.sousystems.surveymodule.entity.SurveyRecord;
-import com.cysout.sousystems.surveymodule.entity.relation.EncuestaRegistroRespuestas;
+import com.cysout.sousystems.surveymodule.entity.relation.SurveyRecordAnswers;
 import com.cysout.sousystems.surveymodule.service.EncuestaService;
 import com.cysout.sousystems.surveymodule.utils.CustomConstants;
 import com.cysout.sousystems.surveymodule.utils.Utils;
@@ -96,11 +96,11 @@ public class EncuestaServiceImpl extends AndroidViewModel implements EncuestaSer
     }
 
     @Override
-    public EncuestaRegistroRespuestas encuentaFinaliza(Long encuestaRegistroId, Integer catEncuestaEstatusId, String fechaFinal) {
+    public SurveyRecordAnswers encuentaFinaliza(Long encuestaRegistroId, Integer catEncuestaEstatusId, String fechaFinal) {
         //Actualizamos el estatus del registro de la encuesta a 1 que es una encuesta terminada
         this.encuestaRegistroDao.updateEncuestaRegistroByEnctRegtroId(catEncuestaEstatusId, fechaFinal, encuestaRegistroId);
-        EncuestaRegistroRespuestas encuestaRegistroRespuestas = this.encuestaRegistroDao.loadRegistroRespByEnctRegtroIdSync(encuestaRegistroId);
-        return encuestaRegistroRespuestas;
+        SurveyRecordAnswers surveyRecordAnswers = this.encuestaRegistroDao.loadRegistroRespByEnctRegtroIdSync(encuestaRegistroId);
+        return surveyRecordAnswers;
     }
     @Override
     public void eliminarEncuestaRegistroByCuestionarioId(Long encuestaRegistroId, Long cuestionarioId){

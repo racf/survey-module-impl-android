@@ -9,7 +9,7 @@ import java.util.List;
 import com.cysout.sousystems.surveymodule.config.AppDatabase;
 import com.cysout.sousystems.surveymodule.dao.SurveyDao;
 import com.cysout.sousystems.surveymodule.entity.Survey;
-import com.cysout.sousystems.surveymodule.entity.relation.EncuestaCuestionarios;
+import com.cysout.sousystems.surveymodule.entity.relation.SurveyQuestionnaires;
 import com.cysout.sousystems.surveymodule.entity.relation.SurveyRecords;
 import com.cysout.sousystems.surveymodule.repository.SurveyRepository;
 
@@ -83,12 +83,12 @@ public class SurveyRepositoryImpl implements SurveyRepository {
     }
 
     @Override
-    public List<EncuestaCuestionarios> loadEncuestaCuestionarios() {
+    public List<SurveyQuestionnaires> loadEncuestaCuestionarios() {
         return this.surveyDao.loadCuestionariosSync();
     }
 
     @Override
-    public EncuestaCuestionarios loadCuestionarioRespuestasSync() {
+    public SurveyQuestionnaires loadCuestionarioRespuestasSync() {
         return this.surveyDao.loadCuestionarioRespuestasSync();
     }
 

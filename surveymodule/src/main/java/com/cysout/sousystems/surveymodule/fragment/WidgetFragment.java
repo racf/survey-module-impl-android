@@ -26,6 +26,7 @@ import java.util.concurrent.Executors;
 import com.cysout.sousystems.surveymodule.R;
 import com.cysout.sousystems.surveymodule.controller.RespuestaMostrarCuestionariosController;
 import com.cysout.sousystems.surveymodule.entity.Answer;
+import com.cysout.sousystems.surveymodule.entity.AnswerShowQuestionnaires;
 import com.cysout.sousystems.surveymodule.entity.Question;
 import com.cysout.sousystems.surveymodule.entity.Questionnaire;
 import com.cysout.sousystems.surveymodule.entity.ShowAnswers;
@@ -33,7 +34,6 @@ import com.cysout.sousystems.surveymodule.entity.ShowQuestionnaires;
 import com.cysout.sousystems.surveymodule.entity.ShowQuestions;
 import com.cysout.sousystems.surveymodule.entity.ShowSelect;
 import com.cysout.sousystems.surveymodule.entity.Survey;
-import com.cysout.sousystems.surveymodule.entity.RespuestaMostrarCuestionarios;
 import com.cysout.sousystems.surveymodule.service.EncuestaService;
 import com.cysout.sousystems.surveymodule.service.impl.EncuestaServiceImpl;
 import com.cysout.sousystems.surveymodule.utils.CustomConstants;
@@ -128,13 +128,13 @@ public abstract class WidgetFragment extends Fragment {
             List<ShowQuestionnaires> mostrarCuestionarios = showSelect.getQuestionnaires();
             if (!Utils.isEmpty(mostrarCuestionarios)) {
                 for (ShowQuestionnaires mostrarCuestionario : mostrarCuestionarios) {
-                    RespuestaMostrarCuestionarios respuestaMostrarCuestionarios = new RespuestaMostrarCuestionarios();
-                    respuestaMostrarCuestionarios.setCuestionarioId(mostrarCuestionario.getQuestionnaireId());
-                    respuestaMostrarCuestionarios.setPreguntaId(question.getQuestionId());
-                    respuestaMostrarCuestionarios.setRespuestaId(answer.getAnswerId());
-                    respuestaMostrarCuestionarios.setCuestionarioOrigenId(questionnaire.getQuestionnaireId());
-                    Long respuestaMostrarCuestionariosId = respuestaMostrarCuestionariosController.insert(respuestaMostrarCuestionarios);
-                    Log.i(CustomConstants.TAG_LOG, "INSERTO EN LA BASE DE DATOS PARA MOSTRAR ENCUESTA  " + respuestaMostrarCuestionariosId+" "+respuestaMostrarCuestionarios.toString());
+                    AnswerShowQuestionnaires answerShowQuestionnaires = new AnswerShowQuestionnaires();
+                    answerShowQuestionnaires.setQuestionnaireId(mostrarCuestionario.getQuestionnaireId());
+                    answerShowQuestionnaires.setQuestionId(question.getQuestionId());
+                    answerShowQuestionnaires.setAnswerId(answer.getAnswerId());
+                    answerShowQuestionnaires.setQuestionnaireOriginId(questionnaire.getQuestionnaireId());
+                    Long respuestaMostrarCuestionariosId = respuestaMostrarCuestionariosController.insert(answerShowQuestionnaires);
+                    Log.i(CustomConstants.TAG_LOG, "INSERTO EN LA BASE DE DATOS PARA MOSTRAR ENCUESTA  " + respuestaMostrarCuestionariosId+" "+ answerShowQuestionnaires.toString());
                 }
             }
         });
@@ -238,7 +238,7 @@ public abstract class WidgetFragment extends Fragment {
                                         checkBox.setVisibility(View.VISIBLE);
                                     } else {
                                         checkBox.setVisibility(View.GONE);
-                                        checkBox.setChecked(false);
+                                        checkBox.setChecked(CustomConstants.FALSE);
                                         deleteRespuesta(encuestaRegistroId, question.getQuestionId(), respuestaStringId);
                                     }
                                 } else if (question.getType().equalsIgnoreCase(CustomConstants.RADIOGROUP)) {
@@ -313,7 +313,7 @@ public abstract class WidgetFragment extends Fragment {
             CheckBox checkBox = widgetFragment.rootView.findViewById(checkBoxId);
             if( checkBox.isChecked() ){
                 Log.i(CustomConstants.TAG_LOG, "CHECKBOX - clearCheckBox");
-                checkBox.setChecked(false);
+                checkBox.setChecked(CustomConstants.FALSE);
             }
         }
     }
@@ -328,9 +328,9 @@ public abstract class WidgetFragment extends Fragment {
                 RadioGroup.LayoutParams.MATCH_PARENT,
                 RadioGroup.LayoutParams.WRAP_CONTENT));
         if (value != null && value.equals(tag)) {
-            radioButton.setChecked(true);
+            radioButton.setChecked(CustomConstants.TRUE);
         }else {
-            radioButton.setChecked(false);
+            radioButton.setChecked(CustomConstants.FALSE);
         }
         return radioButton;
     }

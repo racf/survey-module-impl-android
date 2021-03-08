@@ -9,7 +9,7 @@ import androidx.lifecycle.LiveData;
 import java.util.List;
 
 import com.cysout.sousystems.surveymodule.entity.SurveyRecord;
-import com.cysout.sousystems.surveymodule.entity.relation.EncuestaRegistroRespuestas;
+import com.cysout.sousystems.surveymodule.entity.relation.SurveyRecordAnswers;
 import com.cysout.sousystems.surveymodule.repository.EncuestaRegistroRepository;
 import com.cysout.sousystems.surveymodule.repository.impl.EncuestaRegistroRepositoryImpl;
 
@@ -68,11 +68,11 @@ public class EncuestaRegistroController extends AndroidViewModel {
         return this.encuestaRegistroRepository.loadByEncuestaIdAndCatEncuestaEstatusIdSync(encuestaId, catEncuestaEstatusId);
     }
 
-    public LiveData<List<EncuestaRegistroRespuestas>> loadRegistrosRespuestasByEstatus(Integer catEncuestaEstatusId) {
+    public LiveData<List<SurveyRecordAnswers>> loadRegistrosRespuestasByEstatus(Integer catEncuestaEstatusId) {
         return this.encuestaRegistroRepository.loadRegistrosRespuestasByEstatus(catEncuestaEstatusId);
     }
 
-    public List<EncuestaRegistroRespuestas> loadRegistrosRespuestasByEstatusSync(Integer catEncuestaEstatusId) {
+    public List<SurveyRecordAnswers> loadRegistrosRespuestasByEstatusSync(Integer catEncuestaEstatusId) {
         return this.encuestaRegistroRepository.loadRegistrosRespuestasByEstatusSync(catEncuestaEstatusId);
     }
 }

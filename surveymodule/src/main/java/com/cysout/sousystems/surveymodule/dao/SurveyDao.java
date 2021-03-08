@@ -11,7 +11,7 @@ import androidx.room.Update;
 import java.util.List;
 
 import com.cysout.sousystems.surveymodule.entity.Survey;
-import com.cysout.sousystems.surveymodule.entity.relation.EncuestaCuestionarios;
+import com.cysout.sousystems.surveymodule.entity.relation.SurveyQuestionnaires;
 import com.cysout.sousystems.surveymodule.entity.relation.SurveyRecords;
 import com.cysout.sousystems.surveymodule.utils.CustomConstants;
 
@@ -35,13 +35,13 @@ public interface SurveyDao {
 
     @Transaction
     @Query("SELECT * FROM survey")
-    LiveData<List<EncuestaCuestionarios>> loadCuestionarios();
+    LiveData<List<SurveyQuestionnaires>> loadCuestionarios();
     @Transaction
     @Query("SELECT * FROM survey")
-    List<EncuestaCuestionarios> loadCuestionariosSync();
+    List<SurveyQuestionnaires> loadCuestionariosSync();
     @Transaction
     @Query("SELECT * FROM survey LIMIT 1")
-    EncuestaCuestionarios loadCuestionarioRespuestasSync();
+    SurveyQuestionnaires loadCuestionarioRespuestasSync();
 
     @Query("SELECT * FROM survey WHERE surveyId = :encuestaId LIMIT 1")
     LiveData<Survey> loadEncuestaById(Long encuestaId);

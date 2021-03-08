@@ -9,34 +9,38 @@ import androidx.room.Update;
 
 import java.util.List;
 
-import com.cysout.sousystems.surveymodule.entity.RespuestaMostrarCuestionarios;
+import com.cysout.sousystems.surveymodule.entity.AnswerShowQuestionnaires;
 
+/**
+ * Developed by cysout.com and sousystems.com.mx
+ * Contact info@cysout.com or contacto@sousystems.com.mx
+**/
 @Dao
 public interface RespuestaMostrarCuestionariosDao {
     @Insert()
-    Long insert(RespuestaMostrarCuestionarios item);
+    Long insert(AnswerShowQuestionnaires item);
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    Long[] insertList(List<RespuestaMostrarCuestionarios> list);
+    Long[] insertList(List<AnswerShowQuestionnaires> list);
 
     @Update
-    void update(RespuestaMostrarCuestionarios item);
+    void update(AnswerShowQuestionnaires item);
 
-    @Query("SELECT * FROM respuestaMostrarCuestionarios")
-    LiveData<List<RespuestaMostrarCuestionarios>> loadAll();
+    @Query("SELECT * FROM answerShowQuestionnaires")
+    LiveData<List<AnswerShowQuestionnaires>> loadAll();
 
-    @Query("SELECT * FROM respuestaMostrarCuestionarios")
-    List<RespuestaMostrarCuestionarios> loadAllSync();
+    @Query("SELECT * FROM answerShowQuestionnaires")
+    List<AnswerShowQuestionnaires> loadAllSync();
 
-    @Query("DELETE FROM respuestaMostrarCuestionarios")
+    @Query("DELETE FROM answerShowQuestionnaires")
     void deleteAll();
 
-    @Query("DELETE FROM respuestaMostrarCuestionarios WHERE preguntaId=:preguntaId")
-    void deleteByPreguntaId(Long preguntaId);
+    @Query("DELETE FROM answerShowQuestionnaires WHERE questionId=:questionId")
+    void deleteByPreguntaId(Long questionId);
 
-    @Query("DELETE FROM respuestaMostrarCuestionarios WHERE cuestionarioOrigenId=:cuestionarioOrigenId")
-    void deleteByCuestionarioOrigenId(Long cuestionarioOrigenId);
+    @Query("DELETE FROM answerShowQuestionnaires WHERE questionnaireOriginId=:questionnaireOriginId")
+    void deleteByCuestionarioOrigenId(Long questionnaireOriginId);
 
-    @Query("DELETE FROM respuestaMostrarCuestionarios WHERE preguntaId=:preguntaId AND respuestaId=:respuestaId")
-    void deleteByPreguntaIdAndRespuestaId(Long preguntaId, Long respuestaId);
+    @Query("DELETE FROM answerShowQuestionnaires WHERE questionId=:questionId AND answerId=:answerId")
+    void deleteByPreguntaIdAndRespuestaId(Long questionId, Long answerId);
 }

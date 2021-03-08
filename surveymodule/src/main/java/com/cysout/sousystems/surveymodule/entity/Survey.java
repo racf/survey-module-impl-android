@@ -7,7 +7,10 @@ import androidx.room.PrimaryKey;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
-
+/**
+ * Developed by cysout.com and sousystems.com.mx
+ * Contact info@cysout.com or contacto@sousystems.com.mx
+**/
 @Entity(tableName = "survey")
 /*,
         foreignKeys = {

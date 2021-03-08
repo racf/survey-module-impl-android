@@ -26,8 +26,6 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 import com.cysout.sousystems.surveymodule.R;
-import com.cysout.sousystems.surveymodule.entity.CatEncuestaEstatus;
-import com.cysout.sousystems.surveymodule.entity.CatEncuestaTipo;
 import com.cysout.sousystems.surveymodule.view.QuestionaryActivity;
 
 /**
@@ -254,7 +252,7 @@ public class Utils {
         return randomUUIDString;
     }
 
-    public static List<CatEncuestaTipo> listCatEncuestaTipo(){
+    /*public static List<CatEncuestaTipo> listCatEncuestaTipo(){
         List<CatEncuestaTipo> list = new ArrayList<>();
         list.add(getCatEncuestaTipo(1,"Única", "Este tipo de encuesta solo se aplica una sola vez"));
         list.add(getCatEncuestaTipo(2,"Libre multiple", "Este tipo de encuesta generará una nueva encuesta cada vez que se aplique"));
@@ -284,7 +282,7 @@ public class Utils {
         cat.setNombre(nombre);
         cat.setDescripcion(descripcion);
         return cat;
-    }
+    }*/
 
     public static ArrayList<Survey> convertJsonToObjectSurveys(String surveys){
         Gson gson = new Gson();

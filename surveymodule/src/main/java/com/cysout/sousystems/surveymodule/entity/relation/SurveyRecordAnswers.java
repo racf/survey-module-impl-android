@@ -13,7 +13,7 @@ import com.cysout.sousystems.surveymodule.entity.SurveyRecord;
  *Developed by cysout.com and sousystems.com.mx
  *Contact info@cysout.com or contacto@sousystems.com.mx
 **/
-public class EncuestaRegistroRespuestas implements Serializable {
+public class SurveyRecordAnswers implements Serializable {
     @Embedded
     private SurveyRecord surveyRecord;
 

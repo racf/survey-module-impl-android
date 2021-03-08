@@ -9,9 +9,8 @@ import androidx.room.RoomDatabase;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
-import com.cysout.sousystems.surveymodule.dao.CatEncuestaEstatusDao;
-import com.cysout.sousystems.surveymodule.dao.CatEncuestaTipoDao;
 import com.cysout.sousystems.surveymodule.dao.CuestionarioDao;
+import com.cysout.sousystems.surveymodule.dao.RespuestaMostrarCuestionariosDao;
 import com.cysout.sousystems.surveymodule.dao.SurveyDao;
 import com.cysout.sousystems.surveymodule.dao.EncuestaRegistroDao;
 import com.cysout.sousystems.surveymodule.dao.EncuestaRespuestaDao;
@@ -21,10 +20,8 @@ import com.cysout.sousystems.surveymodule.dao.MostrarRespuestasDao;
 import com.cysout.sousystems.surveymodule.dao.MostrarSiSeleccionaDao;
 import com.cysout.sousystems.surveymodule.dao.PreguntaDao;
 import com.cysout.sousystems.surveymodule.dao.RespuestaDao;
-import com.cysout.sousystems.surveymodule.dao.RespuestaMostrarCuestionariosDao;
-import com.cysout.sousystems.surveymodule.entity.CatEncuestaEstatus;
-import com.cysout.sousystems.surveymodule.entity.CatEncuestaTipo;
 import com.cysout.sousystems.surveymodule.entity.Questionnaire;
+import com.cysout.sousystems.surveymodule.entity.AnswerShowQuestionnaires;
 import com.cysout.sousystems.surveymodule.entity.ShowQuestionnaires;
 import com.cysout.sousystems.surveymodule.entity.ShowQuestions;
 import com.cysout.sousystems.surveymodule.entity.Survey;
@@ -33,22 +30,19 @@ import com.cysout.sousystems.surveymodule.entity.ShowAnswers;
 import com.cysout.sousystems.surveymodule.entity.ShowSelect;
 import com.cysout.sousystems.surveymodule.entity.Question;
 import com.cysout.sousystems.surveymodule.entity.Answer;
-import com.cysout.sousystems.surveymodule.entity.RespuestaMostrarCuestionarios;
 import com.cysout.sousystems.surveymodule.entity.SurveyRecord;
 import com.cysout.sousystems.surveymodule.utils.CustomConstants;
 /**
  *Developed by cysout.com and sousystems.com.mx
  *Contact info@cysout.com or contacto@sousystems.com.mx
 **/
-@Database(entities = {CatEncuestaTipo.class, CatEncuestaEstatus.class, Survey.class, Questionnaire.class, Question.class, Answer.class,
+@Database(entities = {Survey.class, Questionnaire.class, Question.class, Answer.class,
         ShowSelect.class, ShowQuestionnaires.class, ShowQuestions.class, ShowAnswers.class,
         SurveyRecord.class, SurveyAnswer.class,
-        RespuestaMostrarCuestionarios.class}, version = CustomConstants.DATABASE_VERSION, exportSchema = CustomConstants.FALSE)
+        AnswerShowQuestionnaires.class}, version = CustomConstants.DATABASE_VERSION, exportSchema = CustomConstants.FALSE)
 public abstract class AppDatabase  extends RoomDatabase {
 
     //DAOs
-    public abstract CatEncuestaTipoDao catEncuestaTipoDao();
-    public abstract CatEncuestaEstatusDao catEncuestaEstatusDao();
     public abstract CuestionarioDao cuestionarioDao();
     public abstract SurveyDao surveyDao();
     public abstract PreguntaDao preguntaDao();

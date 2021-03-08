@@ -11,7 +11,7 @@ import androidx.room.Update;
 import java.util.List;
 
 import com.cysout.sousystems.surveymodule.entity.Question;
-import com.cysout.sousystems.surveymodule.entity.relation.PreguntaRespuestas;
+import com.cysout.sousystems.surveymodule.entity.relation.QuestionAnswers;
 
 @Dao
 public interface PreguntaDao {
@@ -36,7 +36,7 @@ public interface PreguntaDao {
 
     @Transaction
     @Query("SELECT * FROM question WHERE questionnaireId=:id")
-    PreguntaRespuestas loadPreguntaRespuestasByCuestionarioId(Long id);
+    QuestionAnswers loadPreguntaRespuestasByCuestionarioId(Long id);
 
     @Query("SELECT * FROM question WHERE questionId = :id")
     LiveData<List<Question>> loadByPreguntaId(Long id);

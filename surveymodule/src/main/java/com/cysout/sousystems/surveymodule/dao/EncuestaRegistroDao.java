@@ -10,7 +10,7 @@ import androidx.room.Update;
 
 import java.util.List;
 import com.cysout.sousystems.surveymodule.entity.SurveyRecord;
-import com.cysout.sousystems.surveymodule.entity.relation.EncuestaRegistroRespuestas;
+import com.cysout.sousystems.surveymodule.entity.relation.SurveyRecordAnswers;
 
 
 @Dao
@@ -60,26 +60,26 @@ public interface EncuestaRegistroDao {
 
     @Transaction
     @Query("SELECT * FROM surveyRecord WHERE surveyRecordId=:surveyRecordId")
-    LiveData<EncuestaRegistroRespuestas> loadRegistroRespByEnctRegtroId(Long surveyRecordId);
+    LiveData<SurveyRecordAnswers> loadRegistroRespByEnctRegtroId(Long surveyRecordId);
 
     @Transaction
     @Query("SELECT * FROM surveyRecord WHERE surveyRecordId=:surveyRecordId")
-    EncuestaRegistroRespuestas loadRegistroRespByEnctRegtroIdSync(Long surveyRecordId);
+    SurveyRecordAnswers loadRegistroRespByEnctRegtroIdSync(Long surveyRecordId);
 
     @Transaction
     @Query("SELECT * FROM surveyRecord WHERE surveyRecordId=:surveyRecordId")
-    LiveData<List<EncuestaRegistroRespuestas>> loadRegistrosRespByEnctRegtroId(Long surveyRecordId);
+    LiveData<List<SurveyRecordAnswers>> loadRegistrosRespByEnctRegtroId(Long surveyRecordId);
 
     @Transaction
     @Query("SELECT * FROM surveyRecord WHERE surveyRecordId=:surveyRecordId")
-    List<EncuestaRegistroRespuestas> loadRegistrosRespByEnctRegtroIdSync(Long surveyRecordId);
+    List<SurveyRecordAnswers> loadRegistrosRespByEnctRegtroIdSync(Long surveyRecordId);
 
     @Transaction
     @Query("SELECT * FROM surveyRecord WHERE surveyStatus=:catEncuestaEstatusId")
-    LiveData<List<EncuestaRegistroRespuestas>> loadRegistrosRespuestasByEstatus(Integer catEncuestaEstatusId);
+    LiveData<List<SurveyRecordAnswers>> loadRegistrosRespuestasByEstatus(Integer catEncuestaEstatusId);
 
     @Transaction
     @Query("SELECT * FROM surveyRecord WHERE surveyStatus=:catEncuestaEstatusId")
-    List<EncuestaRegistroRespuestas> loadRegistrosRespuestasByEstatusSync(Integer catEncuestaEstatusId);
+    List<SurveyRecordAnswers> loadRegistrosRespuestasByEstatusSync(Integer catEncuestaEstatusId);
 
 }

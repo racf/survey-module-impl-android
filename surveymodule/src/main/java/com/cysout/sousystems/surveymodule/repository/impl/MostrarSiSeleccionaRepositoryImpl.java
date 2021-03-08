@@ -9,8 +9,8 @@ import java.util.List;
 import com.cysout.sousystems.surveymodule.config.AppDatabase;
 import com.cysout.sousystems.surveymodule.dao.MostrarSiSeleccionaDao;
 import com.cysout.sousystems.surveymodule.entity.ShowSelect;
-import com.cysout.sousystems.surveymodule.entity.relation.RelacionSiSelecciona;
-import com.cysout.sousystems.surveymodule.entity.relation.RelacionSiSeleccionaCuestionarios;
+import com.cysout.sousystems.surveymodule.entity.relation.RelationSelectQuestionnaires;
+import com.cysout.sousystems.surveymodule.entity.relation.RelationShowSelect;
 import com.cysout.sousystems.surveymodule.repository.MostrarSiSeleccionaRepository;
 
 public class MostrarSiSeleccionaRepositoryImpl implements MostrarSiSeleccionaRepository {
@@ -61,17 +61,17 @@ public class MostrarSiSeleccionaRepositoryImpl implements MostrarSiSeleccionaRep
     }
 
     @Override
-    public RelacionSiSelecciona loadMosstrarSiSeleccionaByRespuestaId(Long id) {
+    public RelationShowSelect loadMosstrarSiSeleccionaByRespuestaId(Long id) {
         return this.mostrarSiSeleccionaDao.loadMosstrarSiSeleccionaByRespuestaId(id);
     }
 
     @Override
-    public LiveData<List<RelacionSiSeleccionaCuestionarios>> loadMostrarCuestionarios() {
+    public LiveData<List<RelationSelectQuestionnaires>> loadMostrarCuestionarios() {
         return this.mostrarSiSeleccionaDao.loadMostrarCuestionarios();
     }
 
     @Override
-    public List<RelacionSiSeleccionaCuestionarios> loadMostrarCuestionariosSync() {
+    public List<RelationSelectQuestionnaires> loadMostrarCuestionariosSync() {
         return this.mostrarSiSeleccionaDao.loadMostrarCuestionariosSync();
     }
 

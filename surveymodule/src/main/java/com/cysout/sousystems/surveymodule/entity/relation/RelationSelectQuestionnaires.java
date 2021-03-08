@@ -10,13 +10,13 @@ import java.util.List;
 import com.cysout.sousystems.surveymodule.entity.ShowQuestionnaires;
 import com.cysout.sousystems.surveymodule.entity.ShowSelect;
 
-public class RelacionSiSeleccionaCuestionarios implements Serializable {
+public class RelationSelectQuestionnaires implements Serializable {
 
     @Embedded
     ShowSelect showSelect = new ShowSelect();
 
     @Relation(parentColumn = "showSelectId", entityColumn = "showSelectId", entity = ShowQuestionnaires.class)
-    List<ShowQuestionnaires> cuestionarios = new ArrayList<>();
+    List<ShowQuestionnaires> questionnaires = new ArrayList<>();
 
     public ShowSelect getShowSelect() {
         return showSelect;
@@ -26,11 +26,11 @@ public class RelacionSiSeleccionaCuestionarios implements Serializable {
         this.showSelect = showSelect;
     }
 
-    public List<ShowQuestionnaires> getCuestionarios() {
-        return cuestionarios;
+    public List<ShowQuestionnaires> getQuestionnaires() {
+        return questionnaires;
     }
 
-    public void setCuestionarios(List<ShowQuestionnaires> cuestionarios) {
-        this.cuestionarios = cuestionarios;
+    public void setQuestionnaires(List<ShowQuestionnaires> questionnaires) {
+        this.questionnaires = questionnaires;
     }
 }

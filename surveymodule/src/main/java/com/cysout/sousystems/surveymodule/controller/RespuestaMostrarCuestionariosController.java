@@ -8,10 +8,13 @@ import androidx.lifecycle.LiveData;
 
 import java.util.List;
 
-import com.cysout.sousystems.surveymodule.entity.RespuestaMostrarCuestionarios;
+import com.cysout.sousystems.surveymodule.entity.AnswerShowQuestionnaires;
 import com.cysout.sousystems.surveymodule.repository.RespuestaMostrarCuestionariosRepository;
 import com.cysout.sousystems.surveymodule.repository.impl.RespuestaMostrarCuestionariosRepositoryImpl;
-
+/**
+ * Developed by cysout.com and sousystems.com.mx
+ * Contact info@cysout.com or contacto@sousystems.com.mx
+**/
 public class RespuestaMostrarCuestionariosController extends AndroidViewModel {
     private RespuestaMostrarCuestionariosRepository respuestaMostrarCuestionariosRepository;
     public RespuestaMostrarCuestionariosController(@NonNull Application application) {
@@ -19,20 +22,20 @@ public class RespuestaMostrarCuestionariosController extends AndroidViewModel {
         this.respuestaMostrarCuestionariosRepository = new RespuestaMostrarCuestionariosRepositoryImpl(application);
     }
 
-    public Long insert(RespuestaMostrarCuestionarios item) {
+    public Long insert(AnswerShowQuestionnaires item) {
         return this.respuestaMostrarCuestionariosRepository.insert(item);
     }
 
-    public Long[] insertList(List<RespuestaMostrarCuestionarios> list) {
+    public Long[] insertList(List<AnswerShowQuestionnaires> list) {
         return this.respuestaMostrarCuestionariosRepository.insertList(list);
     }
 
-    public LiveData<List<RespuestaMostrarCuestionarios>> loadAll() {
+    public LiveData<List<AnswerShowQuestionnaires>> loadAll() {
         return this.respuestaMostrarCuestionariosRepository.loadAll();
     }
 
 
-    public List<RespuestaMostrarCuestionarios> loadAllSync() {
+    public List<AnswerShowQuestionnaires> loadAllSync() {
         return this.respuestaMostrarCuestionariosRepository.loadAllSync();
     }
 

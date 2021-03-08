@@ -11,14 +11,14 @@ import com.cysout.sousystems.surveymodule.entity.Question;
 import com.cysout.sousystems.surveymodule.entity.Questionnaire;
 import com.cysout.sousystems.surveymodule.entity.ShowSelect;
 import com.cysout.sousystems.surveymodule.entity.Survey;
+import com.cysout.sousystems.surveymodule.entity.relation.SurveyQuestionnaires;
 import com.google.gson.Gson;
 import java.util.List;
 
 import com.cysout.sousystems.surveymodule.entity.ShowQuestionnaires;
 import com.cysout.sousystems.surveymodule.entity.ShowQuestions;
 import com.cysout.sousystems.surveymodule.entity.ShowAnswers;
-import com.cysout.sousystems.surveymodule.entity.relation.EncuestaCuestionarios;
-import com.cysout.sousystems.surveymodule.entity.relation.RelacionSiSelecciona;
+import com.cysout.sousystems.surveymodule.entity.relation.RelationShowSelect;
 import com.cysout.sousystems.surveymodule.repository.CuestionarioRepository;
 import com.cysout.sousystems.surveymodule.repository.SurveyRepository;
 import com.cysout.sousystems.surveymodule.repository.MostrarCuestionariosRepository;
@@ -146,10 +146,10 @@ public class ObtenerEncuestaServiceImpl  extends AndroidViewModel implements Obt
     @Override
     public Survey obtenerEncuesta() {
         Survey survey = null;
-        EncuestaCuestionarios encuestaCuestionarios = surveyRepository.loadCuestionarioRespuestasSync();
-        if( !Utils.isEmpty(encuestaCuestionarios) ) {
-            survey = encuestaCuestionarios.getSurvey();
-            survey.setQuestionnaires(encuestaCuestionarios.getQuestionnaires());
+        SurveyQuestionnaires surveyQuestionnaires = surveyRepository.loadCuestionarioRespuestasSync();
+        if( !Utils.isEmpty(surveyQuestionnaires) ) {
+            survey = surveyQuestionnaires.getSurvey();
+            survey.setQuestionnaires(surveyQuestionnaires.getQuestionnaires());
             //Recorremos cada uno de los cuestionarios para obtener las preguntas
             for ( Questionnaire questionnaire : survey.getQuestionnaires() ) {
                 questionnaire.setQuestions(preguntaRepository.loadByCuestionarioIdSync(questionnaire.getQuestionnaireId()));
@@ -160,13 +160,13 @@ public class ObtenerEncuestaServiceImpl  extends AndroidViewModel implements Obt
                        //Validamos que el arreglo de objetos contenga informacion
                        if( !Utils.isEmpty( question.getAnswers() )){
                            for ( Answer answer : question.getAnswers() ) {
-                               RelacionSiSelecciona relacionSiSelecciona = mostrarSiSeleccionaRepository.loadMosstrarSiSeleccionaByRespuestaId(answer.getAnswerId());
-                               if (!Utils.isEmpty(relacionSiSelecciona)) {
-                                   ShowSelect showSelect = relacionSiSelecciona.getShowSelect();
+                               RelationShowSelect relationShowSelect = mostrarSiSeleccionaRepository.loadMosstrarSiSeleccionaByRespuestaId(answer.getAnswerId());
+                               if (!Utils.isEmpty(relationShowSelect)) {
+                                   ShowSelect showSelect = relationShowSelect.getShowSelect();
                                    if (!Utils.isEmpty(showSelect)) {
-                                       showSelect.setQuestionnaires(relacionSiSelecciona.getCuestionarios());
-                                       showSelect.setQuestions(relacionSiSelecciona.getPreguntas());
-                                       showSelect.setAnswers(relacionSiSelecciona.getRespuestas());
+                                       showSelect.setQuestionnaires(relationShowSelect.getQuestionnaires());
+                                       showSelect.setQuestions(relationShowSelect.getQuestions());
+                                       showSelect.setAnswers(relationShowSelect.getAnswers());
                                        answer.setShowSelect(showSelect);
                                    }
                                }

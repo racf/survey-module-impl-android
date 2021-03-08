@@ -21,11 +21,14 @@ import android.widget.RadioGroup;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.cysout.sousystems.surveymodule.controller.RespuestaMostrarCuestionariosController;
 import com.cysout.sousystems.surveymodule.entity.Answer;
+import com.cysout.sousystems.surveymodule.entity.AnswerShowQuestionnaires;
 import com.cysout.sousystems.surveymodule.entity.Question;
 import com.cysout.sousystems.surveymodule.entity.Questionnaire;
 import com.cysout.sousystems.surveymodule.entity.Survey;
 import com.cysout.sousystems.surveymodule.entity.SurveyRecord;
+import com.cysout.sousystems.surveymodule.entity.relation.SurveyRecordAnswers;
 import com.google.gson.Gson;
 
 import java.util.ArrayList;
@@ -34,10 +37,7 @@ import java.util.Map;
 import java.util.concurrent.Executors;
 
 import com.cysout.sousystems.surveymodule.R;
-import com.cysout.sousystems.surveymodule.controller.RespuestaMostrarCuestionariosController;
 import com.cysout.sousystems.surveymodule.dto.ResponseMessageDto;
-import com.cysout.sousystems.surveymodule.entity.RespuestaMostrarCuestionarios;
-import com.cysout.sousystems.surveymodule.entity.relation.EncuestaRegistroRespuestas;
 import com.cysout.sousystems.surveymodule.entity.relation.SurveyRecords;
 import com.cysout.sousystems.surveymodule.fragment.QuestionaryFragment;
 import com.cysout.sousystems.surveymodule.fragment.WidgetFragment;
@@ -65,7 +65,7 @@ public class QuestionaryActivity extends AppCompatActivity{
     private Survey survey;
     private final List<QuestionaryFragment> cuestionarios = new ArrayList<>();
 
-    private List<RespuestaMostrarCuestionarios> listMostrarCuestionarios;
+    private List<AnswerShowQuestionnaires> listMostrarCuestionarios;
     //DB
     private ObtenerEncuestaService obtenerEncuestaService;
     private RespuestaMostrarCuestionariosController respuestaMostrarCuestionariosController;
@@ -105,9 +105,9 @@ public class QuestionaryActivity extends AppCompatActivity{
         Log.i(CustomConstants.TAG_LOG, "PARAMETRO DE LA ENCUESTA " +surveyParameter.toString());
         startAdapter(surveyParameter);
 
-        respuestaMostrarCuestionariosController.loadAll().observe(this, new Observer<List<RespuestaMostrarCuestionarios>>() {
+        respuestaMostrarCuestionariosController.loadAll().observe(this, new Observer<List<AnswerShowQuestionnaires>>() {
             @Override
-            public void onChanged(List<RespuestaMostrarCuestionarios> respuestaMostrarCuestionarios) {
+            public void onChanged(List<AnswerShowQuestionnaires> respuestaMostrarCuestionarios) {
                 listMostrarCuestionarios = respuestaMostrarCuestionarios;
             }
         });
@@ -364,9 +364,9 @@ public class QuestionaryActivity extends AppCompatActivity{
                                     Log.i(CustomConstants.TAG_LOG, "ENTRO 2: ");
                                     //Recorremos listMostrarCuestionarios para verificar si alguna de la respuesta anterior
                                     // desencadena el siguiente cuestioanrio
-                                    for (RespuestaMostrarCuestionarios respuestaMostrarCuestionario : listMostrarCuestionarios) {
+                                    for (AnswerShowQuestionnaires respuestaMostrarCuestionario : listMostrarCuestionarios) {
                                         //Si se encuentra dentro de la lista el valor del siguiente cuestionario se cambia el estatus a true.
-                                        if (respuestaMostrarCuestionario.getCuestionarioId() == questionnaire.getQuestionnaireId()) {
+                                        if (respuestaMostrarCuestionario.getQuestionnaireId() == questionnaire.getQuestionnaireId()) {
                                             Log.i(CustomConstants.TAG_LOG, "ENTRO 3: ");
                                             questionnaire.setVisible(CustomConstants.TRUE);
                                         }
@@ -422,11 +422,11 @@ public class QuestionaryActivity extends AppCompatActivity{
     private void surveyResponse(){
         Executors.newSingleThreadExecutor().execute(() -> {
             Long encuestaRegistroId = Utils.findPreferenceLong(getApplicationContext(), CustomConstants.PREFERENCE_NAME_CUESTIONARIO, CustomConstants.CUESTIONARIO_REGISTRO_ID);
-            EncuestaRegistroRespuestas encuestaRegistroRespuestas = encuestaService.encuentaFinaliza(encuestaRegistroId, CustomConstants.TERMINADA, Utils.dateTime());
-            Log.i(CustomConstants.TAG_LOG, "RETURN INFO QUESTIONARY : "+encuestaRegistroRespuestas.getSurveyRecord().toString());
+            SurveyRecordAnswers surveyRecordAnswers = encuestaService.encuentaFinaliza(encuestaRegistroId, CustomConstants.TERMINADA, Utils.dateTime());
+            Log.i(CustomConstants.TAG_LOG, "RETURN INFO QUESTIONARY : "+ surveyRecordAnswers.getSurveyRecord().toString());
             Intent returnIntent = new Intent();
             ResponseMessageDto responseMessage = new ResponseMessageDto(CustomConstants.MESSAGE_SURVEY_RESPONSE, "", CustomConstants.CODE_200,
-                    getString(R.string.mensaje_encuesta_finalizada), encuestaRegistroRespuestas);
+                    getString(R.string.mensaje_encuesta_finalizada), surveyRecordAnswers);
             String responseMessageString = Utils.convertirObjToJson(responseMessage);
             returnIntent.putExtra(CustomConstants.SURVEY_RESPONSE, responseMessageString);
             Log.i(CustomConstants.TAG_LOG, responseMessageString);
