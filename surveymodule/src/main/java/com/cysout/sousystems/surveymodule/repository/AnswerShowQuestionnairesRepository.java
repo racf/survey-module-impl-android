@@ -10,7 +10,7 @@ import com.cysout.sousystems.surveymodule.entity.AnswerShowQuestionnaires;
  * Developed by cysout.com and sousystems.com.mx
  * Contact info@cysout.com or contacto@sousystems.com.mx
 **/
-public interface RespuestaMostrarCuestionariosRepository {
+public interface AnswerShowQuestionnairesRepository {
     Long insert(AnswerShowQuestionnaires item);
     Long[] insertList(List<AnswerShowQuestionnaires> list);
     LiveData<List<AnswerShowQuestionnaires>> loadAll();

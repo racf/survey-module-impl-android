@@ -12,7 +12,10 @@ import com.cysout.sousystems.surveymodule.entity.Survey;
 import com.cysout.sousystems.surveymodule.entity.relation.SurveyQuestionnaires;
 import com.cysout.sousystems.surveymodule.entity.relation.SurveyRecords;
 import com.cysout.sousystems.surveymodule.repository.SurveyRepository;
-
+/**
+ * Developed by cysout.com and sousystems.com.mx
+ * Contact info@cysout.com or contacto@sousystems.com.mx
+**/
 public class SurveyRepositoryImpl implements SurveyRepository {
     private SurveyDao surveyDao;
 

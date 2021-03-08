@@ -10,16 +10,16 @@ import com.cysout.sousystems.surveymodule.config.AppDatabase;
 import com.cysout.sousystems.surveymodule.dao.SurveyRecordDao;
 import com.cysout.sousystems.surveymodule.entity.SurveyRecord;
 import com.cysout.sousystems.surveymodule.entity.relation.SurveyRecordAnswers;
-import com.cysout.sousystems.surveymodule.repository.EncuestaRegistroRepository;
+import com.cysout.sousystems.surveymodule.repository.SurveyRecordRepository;
 
 /**
  *Developed by cysout.com and sousystems.com.mx
  *Contact info@cysout.com or contacto@sousystems.com.mx
 **/
-public class EncuestaRegistroRepositoryImpl implements EncuestaRegistroRepository {
+public class SurveyRecordRepositoryImpl implements SurveyRecordRepository {
     private SurveyRecordDao surveyRecordDao;
 
-    public EncuestaRegistroRepositoryImpl(Application application) {
+    public SurveyRecordRepositoryImpl(Application application) {
         AppDatabase db = AppDatabase.getDataBase(application);
         this.surveyRecordDao = db.surveyRecordDao();
     }

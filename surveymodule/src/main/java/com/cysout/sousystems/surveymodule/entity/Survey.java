@@ -12,16 +12,6 @@ import java.util.List;
  * Contact info@cysout.com or contacto@sousystems.com.mx
 **/
 @Entity(tableName = "survey")
-/*,
-        foreignKeys = {
-@ForeignKey(entity = CatEncuestaTipo.class,
-        parentColumns = "catEncuestaTipoId",
-        childColumns = "catEncuestaTipoId",
-        onDelete = ForeignKey.CASCADE)
-        },
-                indices = {
-@Index(value = {"catEncuestaTipoId"})
-        }*/
 public class Survey implements Serializable {
     @PrimaryKey
     private Long surveyId;

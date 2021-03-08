@@ -24,7 +24,7 @@ import java.util.Map;
 import java.util.concurrent.Executors;
 
 import com.cysout.sousystems.surveymodule.R;
-import com.cysout.sousystems.surveymodule.controller.RespuestaMostrarCuestionariosController;
+import com.cysout.sousystems.surveymodule.controller.AnswerShowQuestionnairesController;
 import com.cysout.sousystems.surveymodule.entity.Answer;
 import com.cysout.sousystems.surveymodule.entity.AnswerShowQuestionnaires;
 import com.cysout.sousystems.surveymodule.entity.Question;
@@ -52,7 +52,7 @@ public abstract class WidgetFragment extends Fragment {
     protected View rootView;
     private FragmentCallback callback;
     //DB
-    private RespuestaMostrarCuestionariosController respuestaMostrarCuestionariosController;
+    private AnswerShowQuestionnairesController answerShowQuestionnairesController;
     private EncuestaService encuestaService;
 
     public WidgetFragment(){
@@ -73,7 +73,7 @@ public abstract class WidgetFragment extends Fragment {
         labelName = view.findViewById(R.id.label_name);
         labelRequired = view.findViewById(R.id.label_required);
         labelDescription = view.findViewById(R.id.label_description);
-        respuestaMostrarCuestionariosController = new ViewModelProvider(this).get(RespuestaMostrarCuestionariosController.class);;//new RespuestaMostrarCuestionariosController(getActivity().getApplication());
+        answerShowQuestionnairesController = new ViewModelProvider(this).get(AnswerShowQuestionnairesController.class);;//new RespuestaMostrarCuestionariosController(getActivity().getApplication());
         encuestaService = new ViewModelProvider(this).get(EncuestaServiceImpl.class);
     }
 
@@ -133,7 +133,7 @@ public abstract class WidgetFragment extends Fragment {
                     answerShowQuestionnaires.setQuestionId(question.getQuestionId());
                     answerShowQuestionnaires.setAnswerId(answer.getAnswerId());
                     answerShowQuestionnaires.setQuestionnaireOriginId(questionnaire.getQuestionnaireId());
-                    Long respuestaMostrarCuestionariosId = respuestaMostrarCuestionariosController.insert(answerShowQuestionnaires);
+                    Long respuestaMostrarCuestionariosId = answerShowQuestionnairesController.insert(answerShowQuestionnaires);
                     Log.i(CustomConstants.TAG_LOG, "INSERTO EN LA BASE DE DATOS PARA MOSTRAR ENCUESTA  " + respuestaMostrarCuestionariosId+" "+ answerShowQuestionnaires.toString());
                 }
             }
@@ -154,14 +154,14 @@ public abstract class WidgetFragment extends Fragment {
                     if (showSelect !=null) {
                         List<ShowQuestionnaires> mostrarCuestionarios = showSelect.getQuestionnaires();
                         if (!Utils.isEmpty(mostrarCuestionarios)) {
-                            respuestaMostrarCuestionariosController.deleteByPreguntaId(question.getQuestionId());
+                            answerShowQuestionnairesController.deleteByPreguntaId(question.getQuestionId());
                         }
                     } else {
-                        respuestaMostrarCuestionariosController.deleteByCuestionarioOrigenId(questionnaire.getQuestionnaireId());
+                        answerShowQuestionnairesController.deleteByCuestionarioOrigenId(questionnaire.getQuestionnaireId());
                     }
                 }
             } else {
-               respuestaMostrarCuestionariosController.deleteByCuestionarioOrigenId(questionnaire.getQuestionnaireId());
+               answerShowQuestionnairesController.deleteByCuestionarioOrigenId(questionnaire.getQuestionnaireId());
             }
         });
     }

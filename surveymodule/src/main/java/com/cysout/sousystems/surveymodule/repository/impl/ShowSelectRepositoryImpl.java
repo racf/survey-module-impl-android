@@ -11,12 +11,15 @@ import com.cysout.sousystems.surveymodule.dao.ShowSelectDao;
 import com.cysout.sousystems.surveymodule.entity.ShowSelect;
 import com.cysout.sousystems.surveymodule.entity.relation.RelationSelectQuestionnaires;
 import com.cysout.sousystems.surveymodule.entity.relation.RelationShowSelect;
-import com.cysout.sousystems.surveymodule.repository.MostrarSiSeleccionaRepository;
-
-public class MostrarSiSeleccionaRepositoryImpl implements MostrarSiSeleccionaRepository {
+import com.cysout.sousystems.surveymodule.repository.ShowSelectRepository;
+/**
+ * Developed by cysout.com and sousystems.com.mx
+ * Contact info@cysout.com or contacto@sousystems.com.mx
+**/
+public class ShowSelectRepositoryImpl implements ShowSelectRepository {
     private ShowSelectDao showSelectDao;
 
-    public MostrarSiSeleccionaRepositoryImpl(Application application){
+    public ShowSelectRepositoryImpl(Application application){
         AppDatabase db = AppDatabase.getDataBase(application);
         this.showSelectDao = db.showSelectDao();
     }

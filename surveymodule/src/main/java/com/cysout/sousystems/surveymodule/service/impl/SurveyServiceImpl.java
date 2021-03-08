@@ -13,9 +13,9 @@ import java.util.concurrent.Executors;
 import java.util.concurrent.atomic.AtomicReference;
 
 import com.cysout.sousystems.surveymodule.entity.relation.SurveyRecords;
-import com.cysout.sousystems.surveymodule.repository.EncuestaRegistroRepository;
+import com.cysout.sousystems.surveymodule.repository.SurveyRecordRepository;
 import com.cysout.sousystems.surveymodule.repository.SurveyRepository;
-import com.cysout.sousystems.surveymodule.repository.impl.EncuestaRegistroRepositoryImpl;
+import com.cysout.sousystems.surveymodule.repository.impl.SurveyRecordRepositoryImpl;
 import com.cysout.sousystems.surveymodule.repository.impl.SurveyRepositoryImpl;
 import com.cysout.sousystems.surveymodule.service.SurveyService;
 import com.cysout.sousystems.surveymodule.utils.Utils;
@@ -28,12 +28,12 @@ import com.cysout.sousystems.surveymodule.utils.Utils;
 public class SurveyServiceImpl extends AndroidViewModel implements SurveyService {
     Gson gson = new Gson();
     private SurveyRepository surveyRepository;
-    private EncuestaRegistroRepository encuestaRegistroRepository;
+    private SurveyRecordRepository surveyRecordRepository;
 
     public SurveyServiceImpl(@NonNull Application application) {
         super(application);
         this.surveyRepository = new SurveyRepositoryImpl(application);
-        this.encuestaRegistroRepository = new EncuestaRegistroRepositoryImpl(application);
+        this.surveyRecordRepository = new SurveyRecordRepositoryImpl(application);
     }
 
     /**

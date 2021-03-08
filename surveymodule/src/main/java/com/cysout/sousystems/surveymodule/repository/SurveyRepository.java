@@ -8,7 +8,10 @@ import com.cysout.sousystems.surveymodule.entity.Survey;
 import com.cysout.sousystems.surveymodule.entity.relation.SurveyQuestionnaires;
 import com.cysout.sousystems.surveymodule.entity.relation.SurveyRecords;
 
-
+/**
+ * Developed by cysout.com and sousystems.com.mx
+ * Contact info@cysout.com or contacto@sousystems.com.mx
+**/
 public interface SurveyRepository {
     Long insert(Survey survey);
     Long[] insertList(List<Survey> list);

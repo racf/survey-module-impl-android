@@ -6,7 +6,7 @@ import java.util.List;
 
 import com.cysout.sousystems.surveymodule.entity.Answer;
 
-public interface RespuestaRepository {
+public interface AnswerRepository {
     Long insert(Answer item);
     Long[] insertList(List<Answer> list);
     void update(Answer item);

@@ -6,8 +6,11 @@ import java.util.List;
 
 import com.cysout.sousystems.surveymodule.entity.SurveyRecord;
 import com.cysout.sousystems.surveymodule.entity.relation.SurveyRecordAnswers;
-
-public interface EncuestaRegistroRepository {
+/**
+ * Developed by cysout.com and sousystems.com.mx
+ * Contact info@cysout.com or contacto@sousystems.com.mx
+**/
+public interface SurveyRecordRepository {
     Long insert(SurveyRecord item);
     Long[] insertList(List<SurveyRecord> list);
     void update(SurveyRecord item);

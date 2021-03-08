@@ -21,7 +21,7 @@ import android.widget.RadioGroup;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.cysout.sousystems.surveymodule.controller.RespuestaMostrarCuestionariosController;
+import com.cysout.sousystems.surveymodule.controller.AnswerShowQuestionnairesController;
 import com.cysout.sousystems.surveymodule.entity.Answer;
 import com.cysout.sousystems.surveymodule.entity.AnswerShowQuestionnaires;
 import com.cysout.sousystems.surveymodule.entity.Question;
@@ -68,7 +68,7 @@ public class QuestionaryActivity extends AppCompatActivity{
     private List<AnswerShowQuestionnaires> listMostrarCuestionarios;
     //DB
     private ObtenerEncuestaService obtenerEncuestaService;
-    private RespuestaMostrarCuestionariosController respuestaMostrarCuestionariosController;
+    private AnswerShowQuestionnairesController answerShowQuestionnairesController;
     private EncuestaService encuestaService;
     private SurveyService surveyService;
     //Validadores
@@ -105,7 +105,7 @@ public class QuestionaryActivity extends AppCompatActivity{
         Log.i(CustomConstants.TAG_LOG, "PARAMETRO DE LA ENCUESTA " +surveyParameter.toString());
         startAdapter(surveyParameter);
 
-        respuestaMostrarCuestionariosController.loadAll().observe(this, new Observer<List<AnswerShowQuestionnaires>>() {
+        answerShowQuestionnairesController.loadAll().observe(this, new Observer<List<AnswerShowQuestionnaires>>() {
             @Override
             public void onChanged(List<AnswerShowQuestionnaires> respuestaMostrarCuestionarios) {
                 listMostrarCuestionarios = respuestaMostrarCuestionarios;
@@ -148,7 +148,7 @@ public class QuestionaryActivity extends AppCompatActivity{
 
     private void startObj(){
         obtenerEncuestaService = new ViewModelProvider(this).get(ObtenerEncuestaServiceImpl.class);
-        respuestaMostrarCuestionariosController = new ViewModelProvider(this).get(RespuestaMostrarCuestionariosController.class);
+        answerShowQuestionnairesController = new ViewModelProvider(this).get(AnswerShowQuestionnairesController.class);
         encuestaService = new ViewModelProvider(this).get(EncuestaServiceImpl.class);
         surveyService = new ViewModelProvider(this).get(SurveyServiceImpl.class);
         listPreguntasInvalidas = new ArrayList<>();

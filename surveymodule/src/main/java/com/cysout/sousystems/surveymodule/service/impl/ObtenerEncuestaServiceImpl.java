@@ -19,22 +19,22 @@ import com.cysout.sousystems.surveymodule.entity.ShowQuestionnaires;
 import com.cysout.sousystems.surveymodule.entity.ShowQuestions;
 import com.cysout.sousystems.surveymodule.entity.ShowAnswers;
 import com.cysout.sousystems.surveymodule.entity.relation.RelationShowSelect;
-import com.cysout.sousystems.surveymodule.repository.CuestionarioRepository;
+import com.cysout.sousystems.surveymodule.repository.QuestionnaireRepository;
 import com.cysout.sousystems.surveymodule.repository.SurveyRepository;
-import com.cysout.sousystems.surveymodule.repository.MostrarCuestionariosRepository;
-import com.cysout.sousystems.surveymodule.repository.MostrarPreguntasRepository;
-import com.cysout.sousystems.surveymodule.repository.MostrarRespuestasRepository;
-import com.cysout.sousystems.surveymodule.repository.MostrarSiSeleccionaRepository;
-import com.cysout.sousystems.surveymodule.repository.PreguntaRepository;
-import com.cysout.sousystems.surveymodule.repository.RespuestaRepository;
-import com.cysout.sousystems.surveymodule.repository.impl.CuestionarioRepositoryImpl;
+import com.cysout.sousystems.surveymodule.repository.ShowQuestionnairesRepository;
+import com.cysout.sousystems.surveymodule.repository.ShowQuestionsRepository;
+import com.cysout.sousystems.surveymodule.repository.ShowAnswersRepository;
+import com.cysout.sousystems.surveymodule.repository.ShowSelectRepository;
+import com.cysout.sousystems.surveymodule.repository.QuestionRepository;
+import com.cysout.sousystems.surveymodule.repository.AnswerRepository;
+import com.cysout.sousystems.surveymodule.repository.impl.QuestionnaireRepositoryImpl;
 import com.cysout.sousystems.surveymodule.repository.impl.SurveyRepositoryImpl;
-import com.cysout.sousystems.surveymodule.repository.impl.MostrarCuestionariosRepositoryImpl;
-import com.cysout.sousystems.surveymodule.repository.impl.MostrarPreguntasRepositoryImpl;
-import com.cysout.sousystems.surveymodule.repository.impl.MostrarRespuestasRepositoryImpl;
-import com.cysout.sousystems.surveymodule.repository.impl.MostrarSiSeleccionaRepositoryImpl;
-import com.cysout.sousystems.surveymodule.repository.impl.PreguntaRepositoryImpl;
-import com.cysout.sousystems.surveymodule.repository.impl.RespuestaRepositoryImpl;
+import com.cysout.sousystems.surveymodule.repository.impl.ShowQuestionnairesRepositoryImpl;
+import com.cysout.sousystems.surveymodule.repository.impl.ShowQuestionsRepositoryImpl;
+import com.cysout.sousystems.surveymodule.repository.impl.ShowAnswersRepositoryImpl;
+import com.cysout.sousystems.surveymodule.repository.impl.ShowSelectRepositoryImpl;
+import com.cysout.sousystems.surveymodule.repository.impl.QuestionRepositoryImpl;
+import com.cysout.sousystems.surveymodule.repository.impl.AnswerRepositoryImpl;
 import com.cysout.sousystems.surveymodule.service.ObtenerEncuestaService;
 import com.cysout.sousystems.surveymodule.utils.CustomConstants;
 import com.cysout.sousystems.surveymodule.utils.Utils;
@@ -42,24 +42,24 @@ import com.cysout.sousystems.surveymodule.utils.Utils;
 public class ObtenerEncuestaServiceImpl  extends AndroidViewModel implements ObtenerEncuestaService {
     Gson gson = new Gson();
     private SurveyRepository surveyRepository;
-    private CuestionarioRepository cuestionarioRepository;
-    private PreguntaRepository preguntaRepository;
-    private RespuestaRepository respuestaRepository;
-    private MostrarSiSeleccionaRepository mostrarSiSeleccionaRepository;
-    private MostrarCuestionariosRepository mostrarCuestionariosRepository;
-    private MostrarPreguntasRepository mostrarPreguntasRepository;
-    private MostrarRespuestasRepository mostrarRespuestasRepository;
+    private QuestionnaireRepository questionnaireRepository;
+    private QuestionRepository questionRepository;
+    private AnswerRepository answerRepository;
+    private ShowSelectRepository showSelectRepository;
+    private ShowQuestionnairesRepository showQuestionnairesRepository;
+    private ShowQuestionsRepository showQuestionsRepository;
+    private ShowAnswersRepository showAnswersRepository;
 
     public ObtenerEncuestaServiceImpl(@NonNull Application application) {
         super(application);
         this.surveyRepository = new SurveyRepositoryImpl(application);
-        this.cuestionarioRepository = new CuestionarioRepositoryImpl(application);
-        this.preguntaRepository = new PreguntaRepositoryImpl(application);
-        this.respuestaRepository = new RespuestaRepositoryImpl(application);
-        this.mostrarSiSeleccionaRepository = new MostrarSiSeleccionaRepositoryImpl(application);
-        this.mostrarCuestionariosRepository = new MostrarCuestionariosRepositoryImpl(application);
-        this.mostrarPreguntasRepository = new MostrarPreguntasRepositoryImpl(application);
-        this.mostrarRespuestasRepository = new MostrarRespuestasRepositoryImpl(application);
+        this.questionnaireRepository = new QuestionnaireRepositoryImpl(application);
+        this.questionRepository = new QuestionRepositoryImpl(application);
+        this.answerRepository = new AnswerRepositoryImpl(application);
+        this.showSelectRepository = new ShowSelectRepositoryImpl(application);
+        this.showQuestionnairesRepository = new ShowQuestionnairesRepositoryImpl(application);
+        this.showQuestionsRepository = new ShowQuestionsRepositoryImpl(application);
+        this.showAnswersRepository = new ShowAnswersRepositoryImpl(application);
     }
 
     @Override
@@ -75,13 +75,13 @@ public class ObtenerEncuestaServiceImpl  extends AndroidViewModel implements Obt
             //Obtenemos todos los cuestionarios de una determinada encuesta
             for( Questionnaire questionnaire : survey.getQuestionnaires() ){
                 questionnaire.setSurveyId(surveyId);
-                Long cuestionarioId = cuestionarioRepository.insert(questionnaire);
+                Long cuestionarioId = questionnaireRepository.insert(questionnaire);
                 //Log.i(CustomConstants.TAG_LOG, "Cuestionario ID: "+cuestionarioId);
                 //Log.i(CustomConstants.TAG_LOG, "Cuestionario: "+cuestionario.toString());
                 //Obtenemos las preguntas de los cuestionarios
                 for (Question question : questionnaire.getQuestions() ){
                     question.setQuestionnaireId(cuestionarioId);
-                    Long preguntaId = preguntaRepository.insert(question);
+                    Long preguntaId = questionRepository.insert(question);
                     //Log.i(CustomConstants.TAG_LOG, "Pregunta ID: "+preguntaId);
                     //Log.i(CustomConstants.TAG_LOG, "Pregunta: "+pregunta.toString());
                     //Obtenemos las respuestas de las preguntas
@@ -90,7 +90,7 @@ public class ObtenerEncuestaServiceImpl  extends AndroidViewModel implements Obt
                     if ( answers.size() > 0 ){
                         for (Answer answer : answers) {
                             answer.setQuestionId(preguntaId);
-                            Long respuestaId = respuestaRepository.insert(answer);
+                            Long respuestaId = answerRepository.insert(answer);
                             //Log.i(CustomConstants.TAG_LOG, "Respuesta ID: "+respuestaId);
                             //Log.i(CustomConstants.TAG_LOG, "Respuesta: "+respuesta.toString());
                             ShowSelect showSelect = answer.getShowSelect();
@@ -103,13 +103,13 @@ public class ObtenerEncuestaServiceImpl  extends AndroidViewModel implements Obt
                                     Log.i(CustomConstants.TAG_LOG, "MostrarSiSeleccion: SIN info");
                                 }else{
                                     showSelect.setAnswerId(respuestaId);
-                                    Long mostrarSiSeleccionaId = mostrarSiSeleccionaRepository.insert(showSelect);
+                                    Long mostrarSiSeleccionaId = showSelectRepository.insert(showSelect);
                                     //Log.i(CustomConstants.TAG_LOG, "MostrarSiSeleccionaId ID: "+mostrarSiSeleccionaId);
                                     //Si no esta vacio se realiza la inserción en cada objeto
                                     if(!Utils.isEmpty(mostrarCuestionarios)){
                                         for (ShowQuestionnaires mCuestionario : mostrarCuestionarios ) {
                                             mCuestionario.setShowSelectId(mostrarSiSeleccionaId);
-                                            Long mostrarCuestionarioId = mostrarCuestionariosRepository.insert(mCuestionario);
+                                            Long mostrarCuestionarioId = showQuestionnairesRepository.insert(mCuestionario);
                                             mCuestionario.setShowQuestionnairesId(mostrarCuestionarioId);
                                            // Log.i(CustomConstants.TAG_LOG, "mCuestionario: "+mCuestionario.toString());
                                         }
@@ -117,7 +117,7 @@ public class ObtenerEncuestaServiceImpl  extends AndroidViewModel implements Obt
                                     if(!Utils.isEmpty(mostrarPreguntas)){
                                         for (ShowQuestions mPregunta : mostrarPreguntas ) {
                                             mPregunta.setShowSelectId(mostrarSiSeleccionaId);
-                                            Long mostrarPreguntaId = mostrarPreguntasRepository.insert(mPregunta);
+                                            Long mostrarPreguntaId = showQuestionsRepository.insert(mPregunta);
                                             mPregunta.setShowQuestionsId(mostrarPreguntaId);
                                             //Log.i(CustomConstants.TAG_LOG, "mPregunta: "+mPregunta.toString());
                                         }
@@ -125,7 +125,7 @@ public class ObtenerEncuestaServiceImpl  extends AndroidViewModel implements Obt
                                     if(!Utils.isEmpty(mostrarRespuestas)){
                                         for (ShowAnswers mRespuesta : mostrarRespuestas ) {
                                             mRespuesta.setShowSelectId(mostrarSiSeleccionaId);
-                                            Long mostrarRespuestaId = mostrarRespuestasRepository.insert(mRespuesta);
+                                            Long mostrarRespuestaId = showAnswersRepository.insert(mRespuesta);
                                             mRespuesta.setShowAnswersId(mostrarRespuestaId);
                                            // Log.i(CustomConstants.TAG_LOG, "mRespuesta: "+mRespuesta.toString());
                                         }
@@ -152,15 +152,15 @@ public class ObtenerEncuestaServiceImpl  extends AndroidViewModel implements Obt
             survey.setQuestionnaires(surveyQuestionnaires.getQuestionnaires());
             //Recorremos cada uno de los cuestionarios para obtener las preguntas
             for ( Questionnaire questionnaire : survey.getQuestionnaires() ) {
-                questionnaire.setQuestions(preguntaRepository.loadByCuestionarioIdSync(questionnaire.getQuestionnaireId()));
+                questionnaire.setQuestions(questionRepository.loadByCuestionarioIdSync(questionnaire.getQuestionnaireId()));
                 for ( Question question : questionnaire.getQuestions() ) {
                    if( !question.getType().equalsIgnoreCase(CustomConstants.TEXT) ) {
-                       List<Answer> answers = respuestaRepository.loadByPreguntaIdSync(question.getQuestionId());
+                       List<Answer> answers = answerRepository.loadByPreguntaIdSync(question.getQuestionId());
                        question.setAnswers(answers);
                        //Validamos que el arreglo de objetos contenga informacion
                        if( !Utils.isEmpty( question.getAnswers() )){
                            for ( Answer answer : question.getAnswers() ) {
-                               RelationShowSelect relationShowSelect = mostrarSiSeleccionaRepository.loadMosstrarSiSeleccionaByRespuestaId(answer.getAnswerId());
+                               RelationShowSelect relationShowSelect = showSelectRepository.loadMosstrarSiSeleccionaByRespuestaId(answer.getAnswerId());
                                if (!Utils.isEmpty(relationShowSelect)) {
                                    ShowSelect showSelect = relationShowSelect.getShowSelect();
                                    if (!Utils.isEmpty(showSelect)) {

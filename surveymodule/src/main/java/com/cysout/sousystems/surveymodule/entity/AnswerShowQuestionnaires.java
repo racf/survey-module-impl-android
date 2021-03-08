@@ -18,7 +18,7 @@ public class AnswerShowQuestionnaires implements Serializable {
     public AnswerShowQuestionnaires() {
     }
     @Ignore
-    public AnswerShowQuestionnaires(Long answerShowQuestionnairesId, Long questionId, Long answerId, Long questionnaireId, Long cuestionarioOrigenId) {
+    public AnswerShowQuestionnaires(Long answerShowQuestionnairesId, Long questionId, Long answerId, Long questionnaireId, Long questionnaireOriginId) {
         this.answerShowQuestionnairesId = answerShowQuestionnairesId;
         this.questionId = questionId;
         this.answerId = answerId;

@@ -5,8 +5,11 @@ import androidx.lifecycle.LiveData;
 import java.util.List;
 
 import com.cysout.sousystems.surveymodule.entity.ShowQuestions;
-
-public interface MostrarPreguntasRepository {
+/**
+ * Developed by cysout.com and sousystems.com.mx
+ * Contact info@cysout.com or contacto@sousystems.com.mx
+**/
+public interface ShowQuestionsRepository {
     Long insert(ShowQuestions item);
     Long[] insertList(List<ShowQuestions> list);
     void update(ShowQuestions item);

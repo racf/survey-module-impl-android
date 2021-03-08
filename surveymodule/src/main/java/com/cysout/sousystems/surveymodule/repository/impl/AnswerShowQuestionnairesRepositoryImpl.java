@@ -9,12 +9,15 @@ import java.util.List;
 import com.cysout.sousystems.surveymodule.config.AppDatabase;
 import com.cysout.sousystems.surveymodule.dao.AnswerShowQuestionnairesDao;
 import com.cysout.sousystems.surveymodule.entity.AnswerShowQuestionnaires;
-import com.cysout.sousystems.surveymodule.repository.RespuestaMostrarCuestionariosRepository;
-
-public class RespuestaMostrarCuestionariosRepositoryImpl implements RespuestaMostrarCuestionariosRepository {
+import com.cysout.sousystems.surveymodule.repository.AnswerShowQuestionnairesRepository;
+/**
+ * Developed by cysout.com and sousystems.com.mx
+ * Contact info@cysout.com or contacto@sousystems.com.mx
+**/
+public class AnswerShowQuestionnairesRepositoryImpl implements AnswerShowQuestionnairesRepository {
     private AnswerShowQuestionnairesDao answerShowQuestionnairesDao;
 
-    public RespuestaMostrarCuestionariosRepositoryImpl(Application application) {
+    public AnswerShowQuestionnairesRepositoryImpl(Application application) {
         AppDatabase db = AppDatabase.getDataBase(application);
         this.answerShowQuestionnairesDao = db.answerShowQuestionnairesDao();
     }
