@@ -4,7 +4,7 @@
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="seleccion_requerida">Selección requerida</string>
-    <string name="escribir_aqui_respuesta">Escribir aquí su respuesta</string>
+    <string name="escribir_aqui_respuesta">Escribir aquí su answer</string>
     <string name="question_required">*</string>
     <string name="iniciar_encuesta">INICIAR ENCUESTA</string>
     <string name="texto_siguiente">SIGUIENTE</string>

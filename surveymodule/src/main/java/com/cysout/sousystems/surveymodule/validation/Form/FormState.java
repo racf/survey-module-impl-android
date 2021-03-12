@@ -2,6 +2,10 @@ package com.cysout.sousystems.surveymodule.validation.Form;
 
 import androidx.annotation.Nullable;
 
+/**
+ *Developed by cysout.com and sousystems.com.mx
+ *Contact info@cysout.com or contacto@sousystems.com.mx
+**/
 public class FormState {
     @Nullable
     private Integer textError;
