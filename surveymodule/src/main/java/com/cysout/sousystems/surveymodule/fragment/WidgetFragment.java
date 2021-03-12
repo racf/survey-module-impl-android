@@ -34,8 +34,8 @@ import com.cysout.sousystems.surveymodule.entity.ShowQuestionnaires;
 import com.cysout.sousystems.surveymodule.entity.ShowQuestions;
 import com.cysout.sousystems.surveymodule.entity.ShowSelect;
 import com.cysout.sousystems.surveymodule.entity.Survey;
-import com.cysout.sousystems.surveymodule.service.EncuestaService;
-import com.cysout.sousystems.surveymodule.service.impl.EncuestaServiceImpl;
+import com.cysout.sousystems.surveymodule.service.PrivateSurveyService;
+import com.cysout.sousystems.surveymodule.service.impl.PrivateSurveyServiceImpl;
 import com.cysout.sousystems.surveymodule.utils.CustomConstants;
 import com.cysout.sousystems.surveymodule.utils.Utils;
 
@@ -53,7 +53,7 @@ public abstract class WidgetFragment extends Fragment {
     private FragmentCallback callback;
     //DB
     private AnswerShowQuestionnairesController answerShowQuestionnairesController;
-    private EncuestaService encuestaService;
+    private PrivateSurveyService privateSurveyService;
 
     public WidgetFragment(){
 
@@ -74,7 +74,7 @@ public abstract class WidgetFragment extends Fragment {
         labelRequired = view.findViewById(R.id.label_required);
         labelDescription = view.findViewById(R.id.label_description);
         answerShowQuestionnairesController = new ViewModelProvider(this).get(AnswerShowQuestionnairesController.class);;//new RespuestaMostrarCuestionariosController(getActivity().getApplication());
-        encuestaService = new ViewModelProvider(this).get(EncuestaServiceImpl.class);
+        privateSurveyService = new ViewModelProvider(this).get(PrivateSurveyServiceImpl.class);
     }
 
     @Override
@@ -208,7 +208,7 @@ public abstract class WidgetFragment extends Fragment {
                         //Logica para eliminar preguntas registradas en encuestaRespuesta al ocultar las preguntas que dependen
                         if (encuestaRegistroId > 0L) {
                             Executors.newSingleThreadExecutor().execute(() -> {
-                                encuestaService.eliminarEncuestaRegistroByPreguntaId(encuestaRegistroId, question.getQuestionId());
+                                privateSurveyService.eliminarEncuestaRegistroByPreguntaId(encuestaRegistroId, question.getQuestionId());
                             });
                         }
                     }
@@ -269,7 +269,7 @@ public abstract class WidgetFragment extends Fragment {
     private void deleteRespuesta(Long encuestaRegistroId, Long preguntaId, String respuesta){
         if (encuestaRegistroId > 0L) {
             Executors.newSingleThreadExecutor().execute(() -> {
-                encuestaService.eliminarEncuestaRegistroByPregtIdAndResp(encuestaRegistroId, preguntaId, respuesta);
+                privateSurveyService.eliminarEncuestaRegistroByPregtIdAndResp(encuestaRegistroId, preguntaId, respuesta);
             });
         }
     }

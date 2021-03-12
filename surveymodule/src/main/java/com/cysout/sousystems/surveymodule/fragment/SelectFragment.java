@@ -24,8 +24,8 @@ import com.cysout.sousystems.surveymodule.entity.Questionnaire;
 import com.cysout.sousystems.surveymodule.entity.ShowSelect;
 import com.cysout.sousystems.surveymodule.entity.Survey;
 import com.cysout.sousystems.surveymodule.entity.SurveyAnswer;
-import com.cysout.sousystems.surveymodule.service.EncuestaService;
-import com.cysout.sousystems.surveymodule.service.impl.EncuestaServiceImpl;
+import com.cysout.sousystems.surveymodule.service.PrivateSurveyService;
+import com.cysout.sousystems.surveymodule.service.impl.PrivateSurveyServiceImpl;
 import com.cysout.sousystems.surveymodule.utils.CustomConstants;
 import com.cysout.sousystems.surveymodule.utils.Utils;
 import com.cysout.sousystems.surveymodule.view.QuestionaryActivity;
@@ -38,7 +38,7 @@ public class SelectFragment extends WidgetFragment {
 
    // private NestedScrollView scrollView;
     private RadioGroup radioGroup;
-    private EncuestaService encuestaService;
+    private PrivateSurveyService privateSurveyService;
 
     public SelectFragment() {
         // Required empty public constructor
@@ -51,7 +51,7 @@ public class SelectFragment extends WidgetFragment {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_select, container, false);
         //Cargamos el servicio para gestionar encuestas
-        this.encuestaService = new ViewModelProvider(this).get(EncuestaServiceImpl.class);
+        this.privateSurveyService = new ViewModelProvider(this).get(PrivateSurveyServiceImpl.class);
         bindView(view);
         return view;
     }
@@ -78,7 +78,7 @@ public class SelectFragment extends WidgetFragment {
             }
             //Asignamos informacion al regresar a la encuesta anterior
             if (encuestaRegistroId > 0L) {
-                encuestaService.encuestaRespuestaByRegistroIdAndPregId(encuestaRegistroId, question.getQuestionId()).observe(getViewLifecycleOwner(), new Observer<SurveyAnswer>() {
+                privateSurveyService.encuestaRespuestaByRegistroIdAndPregId(encuestaRegistroId, question.getQuestionId()).observe(getViewLifecycleOwner(), new Observer<SurveyAnswer>() {
                     @Override
                     public void onChanged(SurveyAnswer surveyAnswer) {
                         if(surveyAnswer != null) {
@@ -121,7 +121,7 @@ public class SelectFragment extends WidgetFragment {
                         if (encuestaRegistroId > 0L) {
                             Executors.newSingleThreadExecutor().execute(() -> {
                                 String respuestaId = String.valueOf(opcionChecked.getAnswerId());
-                                encuestaService.eliminarEncuestaRegistroByPregtIdAndResp(encuestaRegistroId, question.getQuestionId(), respuestaId);
+                                privateSurveyService.eliminarEncuestaRegistroByPregtIdAndResp(encuestaRegistroId, question.getQuestionId(), respuestaId);
                             });
                         }
                     }
@@ -153,7 +153,7 @@ public class SelectFragment extends WidgetFragment {
                     String  opcion = String.valueOf(answer.getAnswerId());
                     Log.i(CustomConstants.TAG_LOG, "SelectFragment.save() - GUARDAR RESPUESTA: "+ answer.toString());
                     //Logica para guardar informacion localmente
-                    this.encuestaService.encuestaRespuesta(survey, questionnaire, question, opcion, encuestaRegistroId);
+                    this.privateSurveyService.encuestaRespuesta(survey, questionnaire, question, opcion, encuestaRegistroId);
                     Map<Long, Long> preguntaRespuesta = new HashMap<>();
                     preguntaRespuesta.put(question.getQuestionId(), answer.getAnswerId());
 

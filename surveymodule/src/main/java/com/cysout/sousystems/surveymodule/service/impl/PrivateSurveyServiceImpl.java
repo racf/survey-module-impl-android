@@ -16,15 +16,15 @@ import com.cysout.sousystems.surveymodule.entity.Survey;
 import com.cysout.sousystems.surveymodule.entity.SurveyAnswer;
 import com.cysout.sousystems.surveymodule.entity.SurveyRecord;
 import com.cysout.sousystems.surveymodule.entity.relation.SurveyRecordAnswers;
-import com.cysout.sousystems.surveymodule.service.EncuestaService;
+import com.cysout.sousystems.surveymodule.service.PrivateSurveyService;
 import com.cysout.sousystems.surveymodule.utils.CustomConstants;
 import com.cysout.sousystems.surveymodule.utils.Utils;
 
-public class EncuestaServiceImpl extends AndroidViewModel implements EncuestaService {
+public class PrivateSurveyServiceImpl extends AndroidViewModel implements PrivateSurveyService {
     private SurveyRecordDao surveyRecordDao;
     private SurveyAnswerDao surveyAnswerDao;
 
-    public EncuestaServiceImpl(@NonNull Application application) {
+    public PrivateSurveyServiceImpl(@NonNull Application application) {
         super(application);
         AppDatabase db = AppDatabase.getDataBase(application);
         this.surveyRecordDao = db.surveyRecordDao();

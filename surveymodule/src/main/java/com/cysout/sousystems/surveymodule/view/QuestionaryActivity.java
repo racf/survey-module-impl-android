@@ -38,15 +38,10 @@ import java.util.concurrent.Executors;
 
 import com.cysout.sousystems.surveymodule.R;
 import com.cysout.sousystems.surveymodule.dto.ResponseMessageDto;
-import com.cysout.sousystems.surveymodule.entity.relation.SurveyRecords;
 import com.cysout.sousystems.surveymodule.fragment.QuestionaryFragment;
 import com.cysout.sousystems.surveymodule.fragment.WidgetFragment;
-import com.cysout.sousystems.surveymodule.service.EncuestaService;
-import com.cysout.sousystems.surveymodule.service.ObtenerEncuestaService;
-import com.cysout.sousystems.surveymodule.service.SurveyService;
-import com.cysout.sousystems.surveymodule.service.impl.EncuestaServiceImpl;
-import com.cysout.sousystems.surveymodule.service.impl.ObtenerEncuestaServiceImpl;
-import com.cysout.sousystems.surveymodule.service.impl.SurveyServiceImpl;
+import com.cysout.sousystems.surveymodule.service.PrivateSurveyService;
+import com.cysout.sousystems.surveymodule.service.impl.PrivateSurveyServiceImpl;
 import com.cysout.sousystems.surveymodule.utils.CustomConstants;
 import com.cysout.sousystems.surveymodule.utils.Utils;
 import com.cysout.sousystems.surveymodule.utils.Validation;
@@ -67,10 +62,8 @@ public class QuestionaryActivity extends AppCompatActivity{
 
     private List<AnswerShowQuestionnaires> listMostrarCuestionarios;
     //DB
-    private ObtenerEncuestaService obtenerEncuestaService;
     private AnswerShowQuestionnairesController answerShowQuestionnairesController;
-    private EncuestaService encuestaService;
-    private SurveyService surveyService;
+    private PrivateSurveyService privateSurveyService;
     //Validadores
     private List<Question> listPreguntasInvalidas;
     private boolean isValid = true;
@@ -147,31 +140,11 @@ public class QuestionaryActivity extends AppCompatActivity{
 
 
     private void startObj(){
-        obtenerEncuestaService = new ViewModelProvider(this).get(ObtenerEncuestaServiceImpl.class);
         answerShowQuestionnairesController = new ViewModelProvider(this).get(AnswerShowQuestionnairesController.class);
-        encuestaService = new ViewModelProvider(this).get(EncuestaServiceImpl.class);
-        surveyService = new ViewModelProvider(this).get(SurveyServiceImpl.class);
+        privateSurveyService = new ViewModelProvider(this).get(PrivateSurveyServiceImpl.class);
         listPreguntasInvalidas = new ArrayList<>();
     }
-    private void testMethods(){
-        Log.i(CustomConstants.TAG_LOG, "testMethods");
-        surveyService.saveSurveys(Utils.jsonArrayTest());
-        //Todas las encuesta registradas
-        for (Survey survey : surveyService.loadAllSurveysSync()){
-            survey.setJson("");
-            Log.i(CustomConstants.TAG_LOG, "DATA: "+Utils.convertirObjToJson(survey));
-        }
 
-        for( SurveyRecords surveyRecordCompleted : surveyService.loadSurveyCompletedSync() ) {
-            surveyRecordCompleted.getSurvey().setJson("");
-            Log.i(CustomConstants.TAG_LOG, "DATA-surveyRecordCompleted : "+Utils.convertirObjToJson(surveyRecordCompleted));
-        }
-
-        for( SurveyRecords surveyRecordPending : surveyService.loadSurveyPendingSync() ) {
-            surveyRecordPending.getSurvey().setJson("");
-            Log.i(CustomConstants.TAG_LOG, "DATA-surveyRecordPending : "+Utils.convertirObjToJson(surveyRecordPending));
-        }
-    }
     private void startAdapter(Survey survey){
         Executors.newSingleThreadExecutor().execute(() -> {
             //testMethods();
@@ -422,7 +395,7 @@ public class QuestionaryActivity extends AppCompatActivity{
     private void surveyResponse(){
         Executors.newSingleThreadExecutor().execute(() -> {
             Long encuestaRegistroId = Utils.findPreferenceLong(getApplicationContext(), CustomConstants.PREFERENCE_NAME_CUESTIONARIO, CustomConstants.CUESTIONARIO_REGISTRO_ID);
-            SurveyRecordAnswers surveyRecordAnswers = encuestaService.encuentaFinaliza(encuestaRegistroId, CustomConstants.TERMINADA, Utils.dateTime());
+            SurveyRecordAnswers surveyRecordAnswers = privateSurveyService.encuentaFinaliza(encuestaRegistroId, CustomConstants.TERMINADA, Utils.dateTime());
             Log.i(CustomConstants.TAG_LOG, "RETURN INFO QUESTIONARY : "+ surveyRecordAnswers.getSurveyRecord().toString());
             Intent returnIntent = new Intent();
             ResponseMessageDto responseMessage = new ResponseMessageDto(CustomConstants.MESSAGE_SURVEY_RESPONSE, "", CustomConstants.CODE_200,
@@ -445,7 +418,7 @@ public class QuestionaryActivity extends AppCompatActivity{
                 QuestionaryFragment questionaryFragment = (QuestionaryFragment) mPagerAdapter.getItem(questionaryViewPager.getCurrentItem());
                 Long cuestionarioId = questionaryFragment.getQuestionnaire().getQuestionnaireId();
                 Log.i(CustomConstants.TAG_LOG, "PREV-QUESTIONARY "+questionaryFragment.getQuestionnaire().toString());
-                encuestaService.eliminarEncuestaRegistroByCuestionarioId(encuestaRegistroId, cuestionarioId);
+                privateSurveyService.eliminarEncuestaRegistroByCuestionarioId(encuestaRegistroId, cuestionarioId);
             }
         });
     }

@@ -23,8 +23,8 @@ import com.cysout.sousystems.surveymodule.R;
 import com.cysout.sousystems.surveymodule.entity.Questionnaire;
 import com.cysout.sousystems.surveymodule.entity.Survey;
 import com.cysout.sousystems.surveymodule.entity.Question;
-import com.cysout.sousystems.surveymodule.service.EncuestaService;
-import com.cysout.sousystems.surveymodule.service.impl.EncuestaServiceImpl;
+import com.cysout.sousystems.surveymodule.service.PrivateSurveyService;
+import com.cysout.sousystems.surveymodule.service.impl.PrivateSurveyServiceImpl;
 import com.cysout.sousystems.surveymodule.utils.CustomConstants;
 import com.cysout.sousystems.surveymodule.utils.Utils;
 
@@ -39,7 +39,7 @@ public class QuestionaryFragment extends Fragment implements WidgetFragment.Frag
     private Map<WidgetFragment, Question> preguntas = new HashMap<WidgetFragment, Question>();
     private LinearLayout fieldset;
     private TextView cuestionarioTitulo;
-    private EncuestaService encuestaService;
+    private PrivateSurveyService privateSurveyService;
     private static final int NUMBER_OF_THREADS = 10;
     public static final ExecutorService executorService = Executors.newFixedThreadPool(NUMBER_OF_THREADS);
     private String fechaInicial = "";
@@ -70,7 +70,7 @@ public class QuestionaryFragment extends Fragment implements WidgetFragment.Frag
         super.onResume();
         Log.d(CustomConstants.TAG_LOG, "RESUMEN QuestionaryFragment");
         load();
-        this.encuestaService = new EncuestaServiceImpl(getActivity().getApplication());
+        this.privateSurveyService = new PrivateSurveyServiceImpl(getActivity().getApplication());
     }
 
     public void save(){
@@ -79,7 +79,7 @@ public class QuestionaryFragment extends Fragment implements WidgetFragment.Frag
             Long encuestaRegistroId = Utils.findPreferenceLong(getContext(), CustomConstants.PREFERENCE_NAME_CUESTIONARIO, CustomConstants.CUESTIONARIO_REGISTRO_ID);
             //Si es la primera vez que se guarda una encuesta_registro, en caso contrario obtiene el identificador que se ha generado anteriormente
             if( encuestaRegistroId == 0L){
-                encuestaRegistroId = encuestaService.encuestaRegistro(survey, CustomConstants.ENCUESTA_EN_PROCESO, this.fechaInicial, this.fechaInicial);
+                encuestaRegistroId = privateSurveyService.encuestaRegistro(survey, CustomConstants.ENCUESTA_EN_PROCESO, this.fechaInicial, this.fechaInicial);
                     Log.d(CustomConstants.TAG_LOG, "PRIMERA VEZ PARA GUARDAR " + encuestaRegistroId + " --- "+ this.fechaInicial);
                     //Guardamos el ID auto-increment de la encuesta que se esta encuestaRegistroId
                     Utils.saveOnPreferenceLong(getContext(), CustomConstants.PREFERENCE_NAME_CUESTIONARIO, CustomConstants.CUESTIONARIO_REGISTRO_ID, encuestaRegistroId);

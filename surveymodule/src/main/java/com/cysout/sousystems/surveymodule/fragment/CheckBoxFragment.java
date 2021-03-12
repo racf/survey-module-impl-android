@@ -26,8 +26,8 @@ import com.cysout.sousystems.surveymodule.entity.Questionnaire;
 import com.cysout.sousystems.surveymodule.entity.ShowSelect;
 import com.cysout.sousystems.surveymodule.entity.Survey;
 import com.cysout.sousystems.surveymodule.entity.SurveyAnswer;
-import com.cysout.sousystems.surveymodule.service.EncuestaService;
-import com.cysout.sousystems.surveymodule.service.impl.EncuestaServiceImpl;
+import com.cysout.sousystems.surveymodule.service.PrivateSurveyService;
+import com.cysout.sousystems.surveymodule.service.impl.PrivateSurveyServiceImpl;
 import com.cysout.sousystems.surveymodule.utils.CustomConstants;
 import com.cysout.sousystems.surveymodule.utils.Utils;
 import com.cysout.sousystems.surveymodule.view.QuestionaryActivity;
@@ -39,7 +39,7 @@ import com.cysout.sousystems.surveymodule.view.QuestionaryActivity;
 public class CheckBoxFragment extends WidgetFragment {
     private LinearLayout checkboxesLinerLayout;
     private List<CheckBox> checkBoxes;
-    private EncuestaService encuestaService;
+    private PrivateSurveyService privateSurveyService;
     public CheckBoxFragment() {
         // Required empty public constructor
     }
@@ -51,7 +51,7 @@ public class CheckBoxFragment extends WidgetFragment {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_check_box, container, false);
         //Cargamos el servicio para gestionar encuestas
-        this.encuestaService = new ViewModelProvider(this).get(EncuestaServiceImpl.class);
+        this.privateSurveyService = new ViewModelProvider(this).get(PrivateSurveyServiceImpl.class);
         bindView(view);
         return view;
     }
@@ -80,7 +80,7 @@ public class CheckBoxFragment extends WidgetFragment {
             //Asignamos informacion al regresar a la encuesta anterior
             if (encuestaRegistroId > 0L) {
                 String respuestaId = String.valueOf(answer.getAnswerId());
-                encuestaService.encuestaRespuestaByRegtroIdAndPregIdAndRespId(encuestaRegistroId, question.getQuestionId(), respuestaId).observe(getViewLifecycleOwner(), new Observer<SurveyAnswer>() {
+                privateSurveyService.encuestaRespuestaByRegtroIdAndPregIdAndRespId(encuestaRegistroId, question.getQuestionId(), respuestaId).observe(getViewLifecycleOwner(), new Observer<SurveyAnswer>() {
                     @Override
                     public void onChanged(SurveyAnswer surveyAnswer) {
                         Log.i(CustomConstants.TAG_LOG, "--------------------------- CHANGE - CheckBoxFragment--------------------------------------");
@@ -128,7 +128,7 @@ public class CheckBoxFragment extends WidgetFragment {
                         if (encuestaRegistroId > 0L) {
                             Executors.newSingleThreadExecutor().execute(() -> {
                                 String respuestaId = String.valueOf(opcionChecked.getAnswerId());
-                                encuestaService.eliminarEncuestaRegistroByPregtIdAndResp(encuestaRegistroId, question.getQuestionId(), respuestaId);
+                                privateSurveyService.eliminarEncuestaRegistroByPregtIdAndResp(encuestaRegistroId, question.getQuestionId(), respuestaId);
                             });
                         }
                     }
@@ -150,7 +150,7 @@ public class CheckBoxFragment extends WidgetFragment {
                     Log.i(CustomConstants.TAG_LOG, "CheckboxFragment.save() - GUARDAR RESPUESTA: "+ answer.toString());
                     //String  respuesta = String.valueOf(opcion.getValor());
                     //Logica para guardar informacion
-                    this.encuestaService.encuestaRespuesta(survey, questionnaire, question, opcion, encuestaRegistroId);
+                    this.privateSurveyService.encuestaRespuesta(survey, questionnaire, question, opcion, encuestaRegistroId);
                     Map<Long, Long> preguntaRespuesta = new HashMap<>();
                     preguntaRespuesta.put(question.getQuestionId(), answer.getAnswerId());
 

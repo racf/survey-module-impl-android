@@ -24,8 +24,8 @@ import com.cysout.sousystems.surveymodule.entity.Questionnaire;
 import com.cysout.sousystems.surveymodule.entity.Survey;
 import com.cysout.sousystems.surveymodule.entity.SurveyAnswer;
 import com.cysout.sousystems.surveymodule.entity.Question;
-import com.cysout.sousystems.surveymodule.service.EncuestaService;
-import com.cysout.sousystems.surveymodule.service.impl.EncuestaServiceImpl;
+import com.cysout.sousystems.surveymodule.service.PrivateSurveyService;
+import com.cysout.sousystems.surveymodule.service.impl.PrivateSurveyServiceImpl;
 import com.cysout.sousystems.surveymodule.utils.CustomConstants;
 import com.cysout.sousystems.surveymodule.utils.Utils;
 import com.cysout.sousystems.surveymodule.validation.TextController;
@@ -39,7 +39,7 @@ public class TextFragment extends WidgetFragment {
     private TextView labelPrefix;
     private EditText editText;
     private TextView labelSuffix;
-    private EncuestaService encuestaService;
+    private PrivateSurveyService privateSurveyService;
     private TextController textController;
     public TextFragment() {
         // Required empty public constructor
@@ -50,7 +50,7 @@ public class TextFragment extends WidgetFragment {
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_text, container, false);
         //Cargamos el servicio para gestionar encuestas
-        this.encuestaService = new ViewModelProvider(this).get(EncuestaServiceImpl.class);
+        this.privateSurveyService = new ViewModelProvider(this).get(PrivateSurveyServiceImpl.class);
         bindView(view);
         textControllerChange();
         return view;
@@ -86,7 +86,7 @@ public class TextFragment extends WidgetFragment {
         Long encuestaRegistroId = Utils.findPreferenceLong(getContext(), CustomConstants.PREFERENCE_NAME_CUESTIONARIO, CustomConstants.CUESTIONARIO_REGISTRO_ID);
         //Asignamos informacion al regresar a la encuesta anterior
         if (encuestaRegistroId > 0L) {
-            encuestaService.encuestaRespuestaByRegistroIdAndPregId(encuestaRegistroId, question.getQuestionId()).observe(getViewLifecycleOwner(), new Observer<SurveyAnswer>() {
+            privateSurveyService.encuestaRespuestaByRegistroIdAndPregId(encuestaRegistroId, question.getQuestionId()).observe(getViewLifecycleOwner(), new Observer<SurveyAnswer>() {
                 @Override
                 public void onChanged(SurveyAnswer surveyAnswer) {
                     if(surveyAnswer != null) {
@@ -149,7 +149,7 @@ public class TextFragment extends WidgetFragment {
             String  respuesta = String.valueOf(editText.getText());
             if(!respuesta.trim().equalsIgnoreCase("")) {
                 //Logica del guardado de la información
-                this.encuestaService.encuestaRespuesta(survey, questionnaire, question, respuesta, encuestaRegistroId);
+                this.privateSurveyService.encuestaRespuesta(survey, questionnaire, question, respuesta, encuestaRegistroId);
                 estatus[0] = true;
             }
         });

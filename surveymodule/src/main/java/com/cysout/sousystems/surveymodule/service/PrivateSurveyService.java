@@ -9,7 +9,7 @@ import com.cysout.sousystems.surveymodule.entity.Question;
 import com.cysout.sousystems.surveymodule.entity.SurveyRecord;
 import com.cysout.sousystems.surveymodule.entity.relation.SurveyRecordAnswers;
 
-public interface EncuestaService {
+public interface PrivateSurveyService {
     Long encuestaRegistro(Survey survey, Integer catEncuestaEstatusId, String fechaInicial, String fechaFinal);
     Long encuestaRespuesta(Survey survey, Questionnaire questionnaire, Question question, String respuesta, Long encuestaRegistroId);
     SurveyRecord findEncuestaregistro(Survey survey);
