@@ -66,8 +66,8 @@ public class SelectFragment extends WidgetFragment {
 
     @Override
     public boolean load(Questionnaire questionnaire, Question question) {
-        Log.i(CustomConstants.TAG_LOG, "SelectFragment - load(Cuestionario cuestionario, Pregunta pregunta)");
-        Long encuestaRegistroId = Utils.findPreferenceLong(getContext(), CustomConstants.PREFERENCE_NAME_CUESTIONARIO, CustomConstants.CUESTIONARIO_REGISTRO_ID);
+        Log.i(CustomConstants.TAG_LOG, "SelectFragment - load(Questionnaire questionnaire, Question question)");
+        Long surveyRecordId = Utils.findPreferenceLong(getContext(), CustomConstants.PREFERENCE_NAME_CUESTIONARIO, CustomConstants.CUESTIONARIO_REGISTRO_ID);
         final boolean[] status = {false};
         radioGroup.removeAllViews();
         for (Answer answer : question.getAnswers()) {
@@ -77,8 +77,8 @@ public class SelectFragment extends WidgetFragment {
                 radioButton.setVisibility(View.GONE);
             }
             //Asignamos informacion al regresar a la encuesta anterior
-            if (encuestaRegistroId > 0L) {
-                privateSurveyService.encuestaRespuestaByRegistroIdAndPregId(encuestaRegistroId, question.getQuestionId()).observe(getViewLifecycleOwner(), new Observer<SurveyAnswer>() {
+            if (surveyRecordId > 0L) {
+                privateSurveyService.encuestaRespuestaByRegistroIdAndPregId(surveyRecordId, question.getQuestionId()).observe(getViewLifecycleOwner(), new Observer<SurveyAnswer>() {
                     @Override
                     public void onChanged(SurveyAnswer surveyAnswer) {
                         if(surveyAnswer != null) {
@@ -94,14 +94,14 @@ public class SelectFragment extends WidgetFragment {
                 @Override
                 public void onCheckedChanged(CompoundButton compoundButton, boolean isChecked) {
                     QuestionaryFragment questionaryFragment = (QuestionaryFragment) getParentFragment();
-                    Map<WidgetFragment, Question> preguntas = questionaryFragment.getPreguntas();
-                    Answer opcionChecked = (Answer) compoundButton.getTag();
-                    ShowSelect showSelect = Utils.infoMostrarSiSelecciona(opcionChecked);
+                    Map<WidgetFragment, Question> answers = questionaryFragment.getQuestions();
+                    Answer optionChecked = (Answer) compoundButton.getTag();
+                    ShowSelect showSelect = Utils.infoMostrarSiSelecciona(optionChecked);
                     if( compoundButton.isChecked() ){
                         if ( showSelect != null ) {
-                            Log.d(CustomConstants.TAG_LOG, "Radio - Checked - Muestra preguntas");
-                            showQuestions(preguntas, showSelect);
-                            showSurvey(questionnaire, question, opcionChecked, showSelect);
+                            Log.d(CustomConstants.TAG_LOG, "Radio - Checked - Show questions");
+                            showQuestions(answers, showSelect);
+                            showSurvey(questionnaire, question, optionChecked, showSelect);
                         }
                         if( answer.getFinishSelect() ) {
                             QuestionaryActivity.btnNext.setText(R.string.texto_terminar);
@@ -113,15 +113,15 @@ public class SelectFragment extends WidgetFragment {
                     }
                     if( !compoundButton.isChecked() ){
                         if ( showSelect != null ) {
-                            Log.d(CustomConstants.TAG_LOG, "Radio - No Checked - Oculta preguntas");
-                            hideQuestions(preguntas, showSelect, encuestaRegistroId);
-                            //hideSurvey(pregunta, opcionChecked, mostrarSiSelecciona);
+                            Log.d(CustomConstants.TAG_LOG, "Radio - No Checked - Hide questions");
+                            hideQuestions(answers, showSelect, surveyRecordId);
+                            //hideSurvey(pregunta, optionChecked, mostrarSiSelecciona);
                         }
                         //Eliminamos la respuesta de la pregunta que se deschequea
-                        if (encuestaRegistroId > 0L) {
+                        if (surveyRecordId > 0L) {
                             Executors.newSingleThreadExecutor().execute(() -> {
-                                String respuestaId = String.valueOf(opcionChecked.getAnswerId());
-                                privateSurveyService.eliminarEncuestaRegistroByPregtIdAndResp(encuestaRegistroId, question.getQuestionId(), respuestaId);
+                                String respuestaId = String.valueOf(optionChecked.getAnswerId());
+                                privateSurveyService.eliminarEncuestaRegistroByPregtIdAndResp(surveyRecordId, question.getQuestionId(), respuestaId);
                             });
                         }
                     }
@@ -140,8 +140,8 @@ public class SelectFragment extends WidgetFragment {
 
 
     @Override
-    public boolean save(Survey survey, Questionnaire questionnaire, Question question, Long encuestaRegistroId) {
-        final boolean[] estatus = new boolean[1];
+    public boolean save(Survey survey, Questionnaire questionnaire, Question question, Long surveyRecordId) {
+        final boolean[] status = new boolean[1];
         Log.d(CustomConstants.TAG_LOG, "SelectFragment.save()");
         Executors.newSingleThreadExecutor().execute(() -> {
             //RespuestaDto respuesta =  null;
@@ -150,12 +150,12 @@ public class SelectFragment extends WidgetFragment {
                 RadioButton radioButton = (RadioButton)radioGroup.findViewById(buttonID);
                 if (radioButton != null) {
                     Answer answer = (Answer) radioButton.getTag();
-                    String  opcion = String.valueOf(answer.getAnswerId());
-                    Log.i(CustomConstants.TAG_LOG, "SelectFragment.save() - GUARDAR RESPUESTA: "+ answer.toString());
+                    String  option = String.valueOf(answer.getAnswerId());
+                    Log.i(CustomConstants.TAG_LOG, "SelectFragment.save() - Save answer: "+ answer.toString());
                     //Logica para guardar informacion localmente
-                    this.privateSurveyService.encuestaRespuesta(survey, questionnaire, question, opcion, encuestaRegistroId);
-                    Map<Long, Long> preguntaRespuesta = new HashMap<>();
-                    preguntaRespuesta.put(question.getQuestionId(), answer.getAnswerId());
+                    this.privateSurveyService.encuestaRespuesta(survey, questionnaire, question, option, surveyRecordId);
+                    Map<Long, Long> questionAnswer = new HashMap<>();
+                    questionAnswer.put(question.getQuestionId(), answer.getAnswerId());
 
                 }else {
                     //Log.i(this, "save %s none selected", question.name);
@@ -169,15 +169,15 @@ public class SelectFragment extends WidgetFragment {
             if (question.getRequired()) {
                 radioGroup.requestFocus();
                 // Toast.makeText(getContext(), R.string.seleccion_requerida, Toast.LENGTH_SHORT).show();
-                estatus[0] = false;
+                status[0] = false;
             }
            /* if (pregunta.getRequerido() && respuesta == null) {
                 radioGroup.requestFocus();
                // Toast.makeText(getContext(), R.string.seleccion_requerida, Toast.LENGTH_SHORT).show();
-                estatus[0] = false;
+                status[0] = false;
             }*/
         });
-        return estatus[0];
+        return status[0];
     }
 
 }

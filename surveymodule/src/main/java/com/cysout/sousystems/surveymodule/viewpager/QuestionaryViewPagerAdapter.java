@@ -12,20 +12,20 @@ import com.cysout.sousystems.surveymodule.fragment.QuestionaryFragment;
  *Contact info@cysout.com or contacto@sousystems.com.mx
 **/
 public class QuestionaryViewPagerAdapter extends FragmentPagerAdapter {
-    private final List<QuestionaryFragment> cuestionarios;
-    public QuestionaryViewPagerAdapter(@NonNull FragmentManager fm, int behavior, List<QuestionaryFragment> cuestionarios) {
+    private final List<QuestionaryFragment> questionnaires;
+    public QuestionaryViewPagerAdapter(@NonNull FragmentManager fm, int behavior, List<QuestionaryFragment> questionnaires) {
         super(fm, behavior);
-        this.cuestionarios = cuestionarios;
+        this.questionnaires = questionnaires;
     }
     @NonNull
     @Override
     public Fragment getItem(int position) {
-        return this.cuestionarios.get(position);
+        return this.questionnaires.get(position);
     }
 
     @Override
     public int getCount() {
-        return this.cuestionarios.size();
+        return this.questionnaires.size();
     }
 
 }

@@ -1081,7 +1081,7 @@ public class Utils {
         activity.startActivityForResult(intent, CustomConstants.QUESTIONNAIRES_REQUEST);
     }*/
 
-    public static Answer getRespuestaSpinnerDefault(Context mContext){
+    public static Answer getAnswerSpinnerDefault(Context mContext){
         Answer answer = new Answer();
         answer.setAnswerId(0L);
         answer.setQuestionId(0L);

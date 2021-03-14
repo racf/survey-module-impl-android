@@ -72,13 +72,11 @@ public class SpinnerFragment extends WidgetFragment {
             answers.remove(selectedAnswer);
             answers.add(0, selectedAnswer);
             if( answers.get(listSize-1).getAnswerId() != CustomConstants.LONG_0L){
-                Log.i(CustomConstants.TAG_LOG, "AGREGO DEFAULT 1");
-                answers.add(listSize, Utils.getRespuestaSpinnerDefault(getContext()));
+                answers.add(listSize, Utils.getAnswerSpinnerDefault(getContext()));
             }
         } else {
             if( answers.get(CustomConstants.INT_0).getAnswerId() != CustomConstants.LONG_0L){
-                Log.i(CustomConstants.TAG_LOG, "AGREGO DEFAULT 2");
-                answers.add(CustomConstants.INT_0, Utils.getRespuestaSpinnerDefault(getContext()));
+                answers.add(CustomConstants.INT_0, Utils.getAnswerSpinnerDefault(getContext()));
             }
         }
         adapter = new com.cysout.sousystems.surveymodule.adapter.SpinnerAdapter(getContext(), R.layout.spinner_item_layout, answers);
@@ -89,7 +87,7 @@ public class SpinnerFragment extends WidgetFragment {
                 if( view != null ){
                     TextView tvTitleSpinner = view.findViewById(R.id.tvTitleSpinner);
                     answer = (Answer) tvTitleSpinner.getTag();
-                    Log.i(CustomConstants.TAG_LOG, "SpinnerFragment - SELECTED "+ answer.toString());
+                    Log.i(CustomConstants.TAG_LOG, "SpinnerFragment-loadSpinner-SELECTED "+ answer.toString());
                 }
             }
 
@@ -101,35 +99,34 @@ public class SpinnerFragment extends WidgetFragment {
     @Override
     public boolean load(Questionnaire questionnaire, Question question) {
         //boolean status = false;
-        Log.i(CustomConstants.TAG_LOG, "SpinnerFragment - load(Cuestionario cuestionario, Pregunta pregunta)");
-        Long encuestaRegistroId = Utils.findPreferenceLong(getContext(), CustomConstants.PREFERENCE_NAME_CUESTIONARIO, CustomConstants.CUESTIONARIO_REGISTRO_ID);
+        Log.i(CustomConstants.TAG_LOG, "SpinnerFragment - load(Questionnaire questionnaire, Question question)");
+        Long surveyRecordId = Utils.findPreferenceLong(getContext(), CustomConstants.PREFERENCE_NAME_CUESTIONARIO, CustomConstants.CUESTIONARIO_REGISTRO_ID);
         List<Answer> listAnswer = question.getAnswers();
         //Asignamos informacion al regresar a la encuesta anterior
-        if (encuestaRegistroId > 0L) {
-            privateSurveyService.encuestaRespuestaByRegistroIdAndPregId(encuestaRegistroId, question.getQuestionId()).observe(getViewLifecycleOwner(), new Observer<SurveyAnswer>() {
+        if (surveyRecordId > 0L) {
+            privateSurveyService.encuestaRespuestaByRegistroIdAndPregId(surveyRecordId, question.getQuestionId()).observe(getViewLifecycleOwner(), new Observer<SurveyAnswer>() {
                 @Override
                 public void onChanged(SurveyAnswer surveyAnswer) {
                     if(surveyAnswer != null) {
                         if(question.getQuestionId() == surveyAnswer.getQuestionId()){
-                            Log.i(CustomConstants.TAG_LOG, "ORDENAR INFORMACION "+ surveyAnswer.toString());
-                            Long respuestaId = Long.parseLong(surveyAnswer.getAnswer());
+                            Log.i(CustomConstants.TAG_LOG, "Sort information"+ surveyAnswer.toString());
+                            Long answerId = Long.parseLong(surveyAnswer.getAnswer());
+                            Answer respSelected;
                             if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.N) {
-                               Answer respSelected = listAnswer.stream()
-                                                .filter(resp -> resp.getAnswerId() == respuestaId)
-                                                .findAny()
-                                                .orElse(null);
-                                loadSpinner(listAnswer, respSelected);
+                                respSelected = listAnswer.stream()
+                                        .filter(resp -> resp.getAnswerId() == answerId)
+                                        .findAny()
+                                        .orElse(null);
                             } else {
-                                Answer respSelected = null;
+                                respSelected = null;
                                 for ( Answer answer : listAnswer) {
-                                    if ( answer.getAnswerId() == respuestaId ) {
+                                    if ( answer.getAnswerId() == answerId ) {
                                         respSelected = answer;
                                         break;
                                     }
                                 }
-                                loadSpinner(listAnswer, respSelected);
-                                Log.i(CustomConstants.TAG_LOG, "VERSIONES MENORES LOGICA ");
                             }
+                            loadSpinner(listAnswer, respSelected);
                         }
                     } else {
                         loadSpinner(listAnswer, null);
@@ -143,20 +140,19 @@ public class SpinnerFragment extends WidgetFragment {
     }
 
     @Override
-    public boolean save(Survey survey, Questionnaire questionnaire, Question question, Long encuestaRegistroId) {
+    public boolean save(Survey survey, Questionnaire questionnaire, Question question, Long surveyRecordId) {
         //boolean status = false;
-        Log.i(CustomConstants.TAG_LOG, "SpinnerFragment.save()");
+        Log.i(CustomConstants.TAG_LOG, "SpinnerFragment-save()");
         //if ( spinnerCustom != null){
             Executors.newSingleThreadExecutor().execute(() -> {
                 if(answer != null && answer.getAnswerId() > CustomConstants.LONG_0L){
-                    Log.i(CustomConstants.TAG_LOG, "RESPUESTA SpinnerFragment "+ answer.toString());
-                    String respuestaString  = String.valueOf(answer.getAnswerId());
+                    Log.i(CustomConstants.TAG_LOG, "SpinnerFragment-save()-answer "+ answer.toString());
+                    String answerString  = String.valueOf(answer.getAnswerId());
                     //Logica del guardado de la información
-                    this.privateSurveyService.encuestaRespuesta(survey, questionnaire, question, respuestaString, encuestaRegistroId);
+                    this.privateSurveyService.encuestaRespuesta(survey, questionnaire, question, answerString, surveyRecordId);
                 } else {
-                    Log.i(CustomConstants.TAG_LOG, "NO HA SELECCIONADO");
                     if( !question.getRequired() ) {
-                        this.privateSurveyService.eliminarEncuestaRegistroByPreguntaId(encuestaRegistroId, question.getQuestionId());
+                        this.privateSurveyService.eliminarEncuestaRegistroByPreguntaId(surveyRecordId, question.getQuestionId());
                     }
                 }
             });

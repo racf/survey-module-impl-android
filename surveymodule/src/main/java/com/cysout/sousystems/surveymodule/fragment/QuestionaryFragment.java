@@ -36,7 +36,7 @@ public class QuestionaryFragment extends Fragment implements WidgetFragment.Frag
     private Questionnaire questionnaire;
     private Survey survey;
     private TextView tvQuestionaryTitle;
-    private Map<WidgetFragment, Question> preguntas = new HashMap<WidgetFragment, Question>();
+    private Map<WidgetFragment, Question> questions = new HashMap<WidgetFragment, Question>();
     private LinearLayout fieldset;
     private TextView cuestionarioTitulo;
     private PrivateSurveyService privateSurveyService;
@@ -62,8 +62,8 @@ public class QuestionaryFragment extends Fragment implements WidgetFragment.Frag
         return rootView;
     }
 
-    public Map<WidgetFragment, Question> getPreguntas(){
-        return this.preguntas;
+    public Map<WidgetFragment, Question> getQuestions(){
+        return this.questions;
     }
     @Override
     public void onResume() {
@@ -84,7 +84,7 @@ public class QuestionaryFragment extends Fragment implements WidgetFragment.Frag
                     //Guardamos el ID auto-increment de la encuesta que se esta encuestaRegistroId
                     Utils.saveOnPreferenceLong(getContext(), CustomConstants.PREFERENCE_NAME_CUESTIONARIO, CustomConstants.CUESTIONARIO_REGISTRO_ID, encuestaRegistroId);
             }
-            for ( Map.Entry<WidgetFragment, Question> entry : preguntas.entrySet() ) {
+            for ( Map.Entry<WidgetFragment, Question> entry : questions.entrySet() ) {
                 WidgetFragment widgetFragment = entry.getKey();
                 Question question = entry.getValue();
                 Log.d(CustomConstants.TAG_LOG, "id: "+ question.getQuestionId() + " titulo: " + question.getTitle());
@@ -97,10 +97,10 @@ public class QuestionaryFragment extends Fragment implements WidgetFragment.Frag
         //executorService.execute(() -> {
             FragmentManager fragmentManager = getChildFragmentManager();
             FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
-            for (WidgetFragment widgetFragment : preguntas.keySet()) {
+            for (WidgetFragment widgetFragment : questions.keySet()) {
                 fragmentTransaction.remove(widgetFragment);
             }
-            preguntas.clear();
+            questions.clear();
             fieldset.removeAllViews();
             for (Question question : questionnaire.getQuestions()) {
                 //Log.d(CustomConstants.TAG_LOG, "GENERA LOS TIPOS DE PREGUNTAS DE LOS CUESTIONARIOS "+pregunta.getPreguntaId()+" - "+ pregunta.getTipo());
@@ -110,21 +110,21 @@ public class QuestionaryFragment extends Fragment implements WidgetFragment.Frag
                     widgetFragment.setCallback(this);
                     widgetFragment.setMenuVisibility(CustomConstants.FALSE);
                     fragmentTransaction.add(R.id.fieldset, widgetFragment);
-                    preguntas.put(widgetFragment, question);
+                    questions.put(widgetFragment, question);
                 }
                 if(question.getType().equalsIgnoreCase(CustomConstants.RADIOGROUP)){
                     WidgetFragment widgetFragment = new SelectFragment();
                     widgetFragment.setCallback(this);
                     widgetFragment.setMenuVisibility(CustomConstants.FALSE);
                     fragmentTransaction.add(R.id.fieldset, widgetFragment);
-                    preguntas.put(widgetFragment, question);
+                    questions.put(widgetFragment, question);
                 }
                 if(question.getType().equalsIgnoreCase(CustomConstants.CHECKBOX)){
                     WidgetFragment widgetFragment = new CheckBoxFragment();
                     widgetFragment.setCallback(this);
                     widgetFragment.setMenuVisibility(CustomConstants.FALSE);
                     fragmentTransaction.add(R.id.fieldset, widgetFragment);
-                    preguntas.put(widgetFragment, question);
+                    questions.put(widgetFragment, question);
                 }
                 if(question.getType().equalsIgnoreCase(CustomConstants.SELECT)){
                     Log.i(CustomConstants.TAG_LOG, "--------------------------------ENTRO SELECT-----------------------------");
@@ -132,7 +132,7 @@ public class QuestionaryFragment extends Fragment implements WidgetFragment.Frag
                     widgetFragment.setCallback(this);
                     widgetFragment.setMenuVisibility(CustomConstants.FALSE);
                     fragmentTransaction.add(R.id.fieldset, widgetFragment);
-                    preguntas.put(widgetFragment, question);
+                    questions.put(widgetFragment, question);
                 }
             }
             fragmentTransaction.commit();
@@ -144,7 +144,7 @@ public class QuestionaryFragment extends Fragment implements WidgetFragment.Frag
     public void onFragmentResume(WidgetFragment widgetFragment) {
         //Log.d(CustomConstants.TAG_LOG, "onFragmentResume Tamanio Lista " +preguntas.size());
        // for (WidgetFragment widgetFragment : preguntas.keySet()) {
-            Question question = preguntas.get(widgetFragment);
+            Question question = questions.get(widgetFragment);
             // Answer answer = submission.answerForQuestion(question);
             if (question != null) { //&& answer != null) {
                 //Log.d(CustomConstants.TAG_LOG, "onFragmentResume " +pregunta.getTitulo());
