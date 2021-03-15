@@ -5,7 +5,7 @@ package com.cysout.sousystems.surveymodule.utils;
  *Contact info@cysout.com or contacto@sousystems.com.mx
 **/
 public class Validation {
-    public static boolean isTextValid(String texto) {
-        return texto != null && texto.trim().length() > 0;
+    public static boolean isTextValid(String text) {
+        return text != null && text.trim().length() > 0;
     }
 }

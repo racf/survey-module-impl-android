@@ -90,7 +90,7 @@ public abstract class WidgetFragment extends Fragment {
      * @return true si contiene pregunta en casa contrario false
      */
     public boolean init(Questionnaire questionnaire, Question question) {
-        Log.i(CustomConstants.TAG_LOG, "INICIA CUESTIONARIO "+ question.toString());
+        Log.i(CustomConstants.TAG_LOG, "Start questionnaire - "+ question.toString());
         if (question != null) {
             rootView.setVisibility(View.GONE);
             labelDescription.setVisibility(View.GONE);
@@ -121,20 +121,20 @@ public abstract class WidgetFragment extends Fragment {
 
     public abstract boolean load(Questionnaire questionnaire, Question question);
 
-    public abstract boolean save(Survey survey, Questionnaire questionnaire, Question question, Long encuestaRegistroId);
+    public abstract boolean save(Survey survey, Questionnaire questionnaire, Question question, Long surveyRecordId);
 
     protected void showSurvey(Questionnaire questionnaire, Question question, Answer answer, ShowSelect showSelect) {
         Executors.newSingleThreadExecutor().execute(() -> {
-            List<ShowQuestionnaires> mostrarCuestionarios = showSelect.getQuestionnaires();
-            if (!Utils.isEmpty(mostrarCuestionarios)) {
-                for (ShowQuestionnaires mostrarCuestionario : mostrarCuestionarios) {
+            List<ShowQuestionnaires> showQuestionnaires = showSelect.getQuestionnaires();
+            if (!Utils.isEmpty(showQuestionnaires)) {
+                for (ShowQuestionnaires showQuestionnaire : showQuestionnaires) {
                     AnswerShowQuestionnaires answerShowQuestionnaires = new AnswerShowQuestionnaires();
-                    answerShowQuestionnaires.setQuestionnaireId(mostrarCuestionario.getQuestionnaireId());
+                    answerShowQuestionnaires.setQuestionnaireId(showQuestionnaire.getQuestionnaireId());
                     answerShowQuestionnaires.setQuestionId(question.getQuestionId());
                     answerShowQuestionnaires.setAnswerId(answer.getAnswerId());
                     answerShowQuestionnaires.setQuestionnaireOriginId(questionnaire.getQuestionnaireId());
-                    Long respuestaMostrarCuestionariosId = answerShowQuestionnairesController.insert(answerShowQuestionnaires);
-                    Log.i(CustomConstants.TAG_LOG, "INSERTO EN LA BASE DE DATOS PARA MOSTRAR ENCUESTA  " + respuestaMostrarCuestionariosId+" "+ answerShowQuestionnaires.toString());
+                    Long answerShowQuestionnairesId = answerShowQuestionnairesController.insert(answerShowQuestionnaires);
+                    Log.i(CustomConstants.TAG_LOG, "WidgetFragment - showSurvey " + answerShowQuestionnairesId+" "+ answerShowQuestionnaires.toString());
                 }
             }
         });
@@ -152,8 +152,8 @@ public abstract class WidgetFragment extends Fragment {
                 for ( Answer auxAnswer : listAnswers){
                     ShowSelect showSelect = Utils.infoMostrarSiSelecciona(auxAnswer);
                     if (showSelect !=null) {
-                        List<ShowQuestionnaires> mostrarCuestionarios = showSelect.getQuestionnaires();
-                        if (!Utils.isEmpty(mostrarCuestionarios)) {
+                        List<ShowQuestionnaires> showQuestionnaires = showSelect.getQuestionnaires();
+                        if (!Utils.isEmpty(showQuestionnaires)) {
                             answerShowQuestionnairesController.deleteByPreguntaId(question.getQuestionId());
                         }
                     } else {
@@ -166,12 +166,11 @@ public abstract class WidgetFragment extends Fragment {
         });
     }
 
-    protected void showQuestions(Map<WidgetFragment, Question> preguntas, ShowSelect showSelect){
-        for ( Map.Entry<WidgetFragment, Question> entry : preguntas.entrySet() ) {
+    protected void showQuestions(Map<WidgetFragment, Question> questions, ShowSelect showSelect){
+        for ( Map.Entry<WidgetFragment, Question> entry : questions.entrySet() ) {
             WidgetFragment widgetFragment = entry.getKey();
             Question question = entry.getValue();
             Log.i(CustomConstants.TAG_LOG, " WidgetFragment - showQuestions");
-            Log.i(CustomConstants.TAG_LOG, question.getTitle());
             //Preguntas
             List<ShowQuestions> mostrarPreguntas = showSelect.getQuestions();
             //Muestra una determinada pregunta completa
@@ -187,63 +186,60 @@ public abstract class WidgetFragment extends Fragment {
                 }
             }
             //Respuesta
-            showHideAnswer(widgetFragment, question, showSelect, 0L,1);
+            showHideAnswer(widgetFragment, question, showSelect, CustomConstants.LONG_0L,CustomConstants.INT_1);
         }
     }
 
-    protected void hideQuestions(Map<WidgetFragment, Question> preguntas, ShowSelect showSelect, Long encuestaRegistroId){
-        for (Map.Entry<WidgetFragment, Question> entry : preguntas.entrySet()) {
+    protected void hideQuestions(Map<WidgetFragment, Question> questionMap, ShowSelect showSelect, Long surveyRecordId){
+        for (Map.Entry<WidgetFragment, Question> entry : questionMap.entrySet()) {
             WidgetFragment widgetFragment = entry.getKey();
             Question question = entry.getValue();
-            Log.i(CustomConstants.TAG_LOG, " -------------------------- WidgetFragment - hideQuestions ---------------------------");
-            Log.i(CustomConstants.TAG_LOG, question.getTitle());
+            Log.i(CustomConstants.TAG_LOG, "WidgetFragment - hideQuestions");
             //Preguntas
-            List<ShowQuestions> mostrarPreguntas = showSelect.getQuestions();
-            if (!Utils.isEmpty(mostrarPreguntas)) {
-                for (ShowQuestions mostrarPregunta : mostrarPreguntas) {
+            List<ShowQuestions> showQuestions = showSelect.getQuestions();
+            if (!Utils.isEmpty(showQuestions)) {
+                for (ShowQuestions mostrarPregunta : showQuestions) {
                     if (question.getQuestionId() == mostrarPregunta.getQuestionId()) {
                         //Ocultamos la pregunta anteriormente mostrada
                         widgetFragment.rootView.setVisibility(View.GONE);
-                        clearRespuestas(widgetFragment, question);
+                        clearAnswers(widgetFragment, question);
                         //Logica para eliminar preguntas registradas en encuestaRespuesta al ocultar las preguntas que dependen
-                        if (encuestaRegistroId > 0L) {
+                        if (surveyRecordId > CustomConstants.LONG_0L) {
                             Executors.newSingleThreadExecutor().execute(() -> {
-                                privateSurveyService.eliminarEncuestaRegistroByPreguntaId(encuestaRegistroId, question.getQuestionId());
+                                privateSurveyService.eliminarEncuestaRegistroByPreguntaId(surveyRecordId, question.getQuestionId());
                             });
                         }
                     }
                 }
             }
 
-            //Respuesta
-            showHideAnswer(widgetFragment, question, showSelect, encuestaRegistroId,2);
+            //Answer
+            showHideAnswer(widgetFragment, question, showSelect, surveyRecordId, CustomConstants.INT_2);
         }
-        Log.i(CustomConstants.TAG_LOG, " -------------------------- WidgetFragment - hideQuestions ---------------------------");
-
     }
-    private void showHideAnswer(WidgetFragment widgetFragment, Question question, ShowSelect showSelect, Long encuestaRegistroId, int option){
-        List<ShowAnswers> mostrarRespuestas = showSelect.getAnswers();
-        if( !Utils.isEmpty( mostrarRespuestas ) ){
-            for ( ShowAnswers mostrarRespuesta : mostrarRespuestas ) {
-                if( question.getQuestionId() == mostrarRespuesta.getQuestionId() ){
+    private void showHideAnswer(WidgetFragment widgetFragment, Question question, ShowSelect showSelect, Long surveyRecordId, int option){
+        List<ShowAnswers> showAnswers = showSelect.getAnswers();
+        if( !Utils.isEmpty( showAnswers ) ){
+            for ( ShowAnswers showAnswer : showAnswers ) {
+                if( question.getQuestionId() == showAnswer.getQuestionId() ){
                     for (Answer answer : question.getAnswers() ) {
                         //Validamos que la vista no este vacía esto aplica en el momento que se regresa al cuestionario anterior
                         if ( widgetFragment.rootView != null) {
-                            if(mostrarRespuesta.getAnswerId() == answer.getAnswerId()) {
+                            if(showAnswer.getAnswerId() == answer.getAnswerId()) {
                                 String respuestaStringId = String.valueOf(answer.getAnswerId());
                                 if (question.getType().equalsIgnoreCase(CustomConstants.CHECKBOX)) {
                                     int checkBoxId = Integer.parseInt(question.getQuestionId() + "" + answer.getAnswerId());
                                     CheckBox checkBox = widgetFragment.rootView.findViewById(checkBoxId);
-                                    if (option == 1) {
+                                    if (option == CustomConstants.INT_1) {
                                         checkBox.setVisibility(View.VISIBLE);
                                     } else {
                                         checkBox.setVisibility(View.GONE);
                                         checkBox.setChecked(CustomConstants.FALSE);
-                                        deleteRespuesta(encuestaRegistroId, question.getQuestionId(), respuestaStringId);
+                                        deleteAnswer(surveyRecordId, question.getQuestionId(), respuestaStringId);
                                     }
                                 } else if (question.getType().equalsIgnoreCase(CustomConstants.RADIOGROUP)) {
                                     RadioButton radioButton = widgetFragment.rootView.findViewWithTag(answer);
-                                    if (option == 1) {
+                                    if (option == CustomConstants.INT_1) {
                                         radioButton.setVisibility(View.VISIBLE);
                                     } else {
                                         radioButton.setVisibility(View.GONE);
@@ -252,7 +248,7 @@ public abstract class WidgetFragment extends Fragment {
                                             // y posteriormente lo limpiamos
                                             if (radioButton.getParent() instanceof RadioGroup) {
                                                 ((RadioGroup) radioButton.getParent()).clearCheck();
-                                                deleteRespuesta(encuestaRegistroId, question.getQuestionId(), respuestaStringId);
+                                                deleteAnswer(surveyRecordId, question.getQuestionId(), respuestaStringId);
                                             }
                                         }
                                     }
@@ -266,14 +262,14 @@ public abstract class WidgetFragment extends Fragment {
         }
     }
 
-    private void deleteRespuesta(Long encuestaRegistroId, Long preguntaId, String respuesta){
-        if (encuestaRegistroId > 0L) {
+    private void deleteAnswer(Long surveyRecordId, Long answerId, String answer){
+        if (surveyRecordId > CustomConstants.LONG_0L) {
             Executors.newSingleThreadExecutor().execute(() -> {
-                privateSurveyService.eliminarEncuestaRegistroByPregtIdAndResp(encuestaRegistroId, preguntaId, respuesta);
+                privateSurveyService.eliminarEncuestaRegistroByPregtIdAndResp(surveyRecordId, answerId, answer);
             });
         }
     }
-    private void clearRespuestas(WidgetFragment widgetFragment, Question question) {
+    private void clearAnswers(WidgetFragment widgetFragment, Question question) {
         switch (question.getType()){
             case CustomConstants.TEXT:
                 EditText editText = widgetFragment.rootView.findViewById(R.id.edit_text);

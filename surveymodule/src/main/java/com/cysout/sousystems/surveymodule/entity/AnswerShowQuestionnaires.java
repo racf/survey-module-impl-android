@@ -66,4 +66,14 @@ public class AnswerShowQuestionnaires implements Serializable {
         this.questionnaireOriginId = questionnaireOriginId;
     }
 
+    @Override
+    public String toString() {
+        return "AnswerShowQuestionnaires{" +
+                "answerShowQuestionnairesId=" + answerShowQuestionnairesId +
+                ", questionId=" + questionId +
+                ", answerId=" + answerId +
+                ", questionnaireId=" + questionnaireId +
+                ", questionnaireOriginId=" + questionnaireOriginId +
+                '}';
+    }
 }

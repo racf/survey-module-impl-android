@@ -82,11 +82,11 @@ public class TextFragment extends WidgetFragment {
 
     @Override
     public boolean load(Questionnaire questionnaire, Question question) {
-        Log.i(CustomConstants.TAG_LOG, "TextFragment - load(Cuestionario cuestionario, Pregunta pregunta)");
-        Long encuestaRegistroId = Utils.findPreferenceLong(getContext(), CustomConstants.PREFERENCE_NAME_CUESTIONARIO, CustomConstants.CUESTIONARIO_REGISTRO_ID);
+        Log.i(CustomConstants.TAG_LOG, "TextFragment - load(Questionnaire questionnaire, Question question)");
+        Long surveyRecordId = Utils.findPreferenceLong(getContext(), CustomConstants.PREFERENCE_NAME_CUESTIONARIO, CustomConstants.CUESTIONARIO_REGISTRO_ID);
         //Asignamos informacion al regresar a la encuesta anterior
-        if (encuestaRegistroId > 0L) {
-            privateSurveyService.encuestaRespuestaByRegistroIdAndPregId(encuestaRegistroId, question.getQuestionId()).observe(getViewLifecycleOwner(), new Observer<SurveyAnswer>() {
+        if (surveyRecordId > 0L) {
+            privateSurveyService.encuestaRespuestaByRegistroIdAndPregId(surveyRecordId, question.getQuestionId()).observe(getViewLifecycleOwner(), new Observer<SurveyAnswer>() {
                 @Override
                 public void onChanged(SurveyAnswer surveyAnswer) {
                     if(surveyAnswer != null) {
@@ -105,9 +105,9 @@ public class TextFragment extends WidgetFragment {
             editText.setInputType(InputType.TYPE_CLASS_NUMBER);
         }
         if (question.getTitle() != null || !question.getTitle().equals("")) {
-            editText.setHint(R.string.escribir_aqui_respuesta);
+            editText.setHint(R.string.message_write_answer);
         } else {
-            editText.setHint(R.string.escribir_aqui_respuesta);
+            editText.setHint(R.string.message_write_answer);
         }
 
         if (question.getDescription() != null || !question.getDescription().equals("")) {
@@ -142,17 +142,17 @@ public class TextFragment extends WidgetFragment {
     }
 
     @Override
-    public boolean save(Survey survey, Questionnaire questionnaire, Question question, Long encuestaRegistroId) {
-        final boolean[] estatus = new boolean[1];
+    public boolean save(Survey survey, Questionnaire questionnaire, Question question, Long surveyRecordId) {
+        final boolean[] status = new boolean[1];
         Log.d(CustomConstants.TAG_LOG, "TextFragment.save()");
         Executors.newSingleThreadExecutor().execute(() -> {
-            String  respuesta = String.valueOf(editText.getText());
-            if(!respuesta.trim().equalsIgnoreCase("")) {
+            String answer = String.valueOf(editText.getText());
+            if(!answer.trim().equalsIgnoreCase("")) {
                 //Logica del guardado de la información
-                this.privateSurveyService.encuestaRespuesta(survey, questionnaire, question, respuesta, encuestaRegistroId);
-                estatus[0] = true;
+                this.privateSurveyService.encuestaRespuesta(survey, questionnaire, question, answer, surveyRecordId);
+                status[0] = true;
             }
         });
-        return estatus[0];
+        return status[0];
     }
 }

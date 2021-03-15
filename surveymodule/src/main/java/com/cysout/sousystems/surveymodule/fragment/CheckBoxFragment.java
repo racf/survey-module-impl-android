@@ -64,8 +64,8 @@ public class CheckBoxFragment extends WidgetFragment {
 
     @Override
     public boolean load(Questionnaire questionnaire, Question question) {
-        Log.i(CustomConstants.TAG_LOG, "CheckBoxFragment - load(Cuestionario cuestionario, Pregunta pregunta)");
-        Long encuestaRegistroId = Utils.findPreferenceLong(getContext(), CustomConstants.PREFERENCE_NAME_CUESTIONARIO, CustomConstants.CUESTIONARIO_REGISTRO_ID);
+        Log.i(CustomConstants.TAG_LOG, "CheckBoxFragment - load(Questionnaire questionnaire, Question question)");
+        Long surveyRecordId = Utils.findPreferenceLong(getContext(), CustomConstants.PREFERENCE_NAME_CUESTIONARIO, CustomConstants.CUESTIONARIO_REGISTRO_ID);
         final boolean[] status = {false};
         checkboxesLinerLayout.removeAllViews();
         checkBoxes = new ArrayList<>();
@@ -78,21 +78,16 @@ public class CheckBoxFragment extends WidgetFragment {
                 checkBox.setVisibility(View.GONE);
             }
             //Asignamos informacion al regresar a la encuesta anterior
-            if (encuestaRegistroId > 0L) {
-                String respuestaId = String.valueOf(answer.getAnswerId());
-                privateSurveyService.encuestaRespuestaByRegtroIdAndPregIdAndRespId(encuestaRegistroId, question.getQuestionId(), respuestaId).observe(getViewLifecycleOwner(), new Observer<SurveyAnswer>() {
+            if (surveyRecordId > 0L) {
+                String answerId = String.valueOf(answer.getAnswerId());
+                privateSurveyService.encuestaRespuestaByRegtroIdAndPregIdAndRespId(surveyRecordId, question.getQuestionId(), answerId).observe(getViewLifecycleOwner(), new Observer<SurveyAnswer>() {
                     @Override
                     public void onChanged(SurveyAnswer surveyAnswer) {
-                        Log.i(CustomConstants.TAG_LOG, "--------------------------- CHANGE - CheckBoxFragment--------------------------------------");
                         if(surveyAnswer != null) {
-                            Log.i(CustomConstants.TAG_LOG, "NO NULL - encuestaRespuesta");
-                            if(question.getQuestionId() == surveyAnswer.getQuestionId() && respuestaId.equalsIgnoreCase(surveyAnswer.getAnswer())){
+                            if(question.getQuestionId() == surveyAnswer.getQuestionId() && answerId.equalsIgnoreCase(surveyAnswer.getAnswer())){
                                 checkBox.setChecked(CustomConstants.TRUE);
-                                Log.i(CustomConstants.TAG_LOG, "ENTRO CHECK");
                             }
                         }
-
-                        Log.i(CustomConstants.TAG_LOG, "--------------------------- CHANGE - CheckBoxFragment--------------------------------------");
                     }
                 });
             }
@@ -102,33 +97,33 @@ public class CheckBoxFragment extends WidgetFragment {
                 @Override
                 public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
                     QuestionaryFragment questionaryFragment = (QuestionaryFragment) getParentFragment();
-                    Map<WidgetFragment, Question> preguntas = questionaryFragment.getPreguntas();
-                    Answer opcionChecked = (Answer) compoundButton.getTag();
-                    ShowSelect showSelect = Utils.infoMostrarSiSelecciona(opcionChecked);
+                    Map<WidgetFragment, Question> preguntas = questionaryFragment.getQuestions();
+                    Answer optionChecked = (Answer) compoundButton.getTag();
+                    ShowSelect showSelect = Utils.infoMostrarSiSelecciona(optionChecked);
                     if(compoundButton.isChecked()){
                         if (showSelect != null) {
-                            Log.d(CustomConstants.TAG_LOG, "CheckBox - Checked - Muestra preguntas");
+                            Log.d(CustomConstants.TAG_LOG, "CheckBox - Checked - Show questions");
                             showQuestions(preguntas, showSelect);
-                            showSurvey(questionnaire, question, opcionChecked, showSelect);
+                            showSurvey(questionnaire, question, optionChecked, showSelect);
                         }
                         if( answer.getFinishSelect() ) {
-                            QuestionaryActivity.btnNext.setText(R.string.texto_terminar);
+                            QuestionaryActivity.btnNext.setText(R.string.finish);
                             hideSurvey(questionnaire, question);
                         } else {
-                            QuestionaryActivity.btnNext.setText(R.string.texto_siguiente);
+                            QuestionaryActivity.btnNext.setText(R.string.next);
                         }
                     }
                     if(!compoundButton.isChecked()){
-                        Log.d(CustomConstants.TAG_LOG, "CheckBox - No checked - Oculta preguntas "  + opcionChecked.getText());
+                        Log.d(CustomConstants.TAG_LOG, "CheckBox - No checked - Hide questions "  + optionChecked.getText());
                         if (showSelect != null) {
-                           hideQuestions(preguntas, showSelect, encuestaRegistroId);
+                           hideQuestions(preguntas, showSelect, surveyRecordId);
                            //hideSurvey(pregunta, opcionChecked, mostrarSiSelecciona);
                         }
                         //Eliminamos la respuesta de la pregunta que se deschequea
-                        if (encuestaRegistroId > 0L) {
+                        if (surveyRecordId > 0L) {
                             Executors.newSingleThreadExecutor().execute(() -> {
-                                String respuestaId = String.valueOf(opcionChecked.getAnswerId());
-                                privateSurveyService.eliminarEncuestaRegistroByPregtIdAndResp(encuestaRegistroId, question.getQuestionId(), respuestaId);
+                                String respuestaId = String.valueOf(optionChecked.getAnswerId());
+                                privateSurveyService.eliminarEncuestaRegistroByPregtIdAndResp(surveyRecordId, question.getQuestionId(), respuestaId);
                             });
                         }
                     }
@@ -139,25 +134,25 @@ public class CheckBoxFragment extends WidgetFragment {
     }
 
     @Override
-    public boolean save(Survey survey, Questionnaire questionnaire, Question question, Long encuestaRegistroId) {
-        final boolean[] estatus = new boolean[1];
+    public boolean save(Survey survey, Questionnaire questionnaire, Question question, Long surveyRecordId) {
+        final boolean[] status = new boolean[1];
         Log.d(CustomConstants.TAG_LOG, "CheckboxFragment.save()");
         Executors.newSingleThreadExecutor().execute(() -> {
             for (CheckBox checkBox: checkBoxes){
                 if (checkBox.isChecked()){
                     Answer answer = (Answer) checkBox.getTag();
-                    String  opcion = String.valueOf(answer.getAnswerId());
-                    Log.i(CustomConstants.TAG_LOG, "CheckboxFragment.save() - GUARDAR RESPUESTA: "+ answer.toString());
+                    String  option = String.valueOf(answer.getAnswerId());
+                    Log.i(CustomConstants.TAG_LOG, "CheckboxFragment.save() - Save answer: "+ answer.toString());
                     //String  respuesta = String.valueOf(opcion.getValor());
                     //Logica para guardar informacion
-                    this.privateSurveyService.encuestaRespuesta(survey, questionnaire, question, opcion, encuestaRegistroId);
-                    Map<Long, Long> preguntaRespuesta = new HashMap<>();
-                    preguntaRespuesta.put(question.getQuestionId(), answer.getAnswerId());
+                    this.privateSurveyService.encuestaRespuesta(survey, questionnaire, question, option, surveyRecordId);
+                    Map<Long, Long> questionAnswer = new HashMap<>();
+                    questionAnswer.put(question.getQuestionId(), answer.getAnswerId());
 
                 }
             }
-            estatus[0] = true;
+            status[0] = true;
         });
-        return estatus[0];
+        return status[0];
     }
 }

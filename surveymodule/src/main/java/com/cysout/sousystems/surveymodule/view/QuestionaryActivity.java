@@ -58,14 +58,14 @@ public class QuestionaryActivity extends AppCompatActivity{
     public static Button btnPrev;
     public static Button btnNext;
     private Survey survey;
-    private final List<QuestionaryFragment> cuestionarios = new ArrayList<>();
+    private final List<QuestionaryFragment> questionnaires = new ArrayList<>();
 
-    private List<AnswerShowQuestionnaires> listMostrarCuestionarios;
+    private List<AnswerShowQuestionnaires> answerShowQuestionnaires;
     //DB
     private AnswerShowQuestionnairesController answerShowQuestionnairesController;
     private PrivateSurveyService privateSurveyService;
     //Validadores
-    private List<Question> listPreguntasInvalidas;
+    private List<Question> invalidQuestions;
     private boolean isValid = true;
 
     @Override
@@ -80,52 +80,30 @@ public class QuestionaryActivity extends AppCompatActivity{
         //Obtenemos el parametro del Intent
         Intent intent = getIntent();
         Survey surveyParameter = (Survey) intent.getSerializableExtra(CustomConstants.SURVEY_KEY);
-        SurveyRecord encuestaRegistro = (SurveyRecord) intent.getSerializableExtra(CustomConstants.REGISTRATION_SURVEY_KEY);
-        if ( surveyParameter != null && encuestaRegistro != null ){ //Para una encuesta con información que se ha iniciado
+        SurveyRecord surveyRecord = (SurveyRecord) intent.getSerializableExtra(CustomConstants.REGISTRATION_SURVEY_KEY);
+        if ( surveyParameter != null && surveyRecord != null ){ //Para una encuesta con información que se ha iniciado
             //Guardamos el ID auto-increment de EncuestaRegistro, es util para encuestas que se han quedado sin concluir
-            Utils.saveOnPreferenceLong(getApplicationContext(), CustomConstants.PREFERENCE_NAME_CUESTIONARIO, CustomConstants.CUESTIONARIO_REGISTRO_ID, encuestaRegistro.getSurveyRecordId());
-            Log.i(CustomConstants.TAG_LOG, "ENCUESTA PENDIENTE");
+            Utils.saveOnPreferenceLong(getApplicationContext(), CustomConstants.PREFERENCE_NAME_CUESTIONARIO, CustomConstants.CUESTIONARIO_REGISTRO_ID, surveyRecord.getSurveyRecordId());
+            Log.i(CustomConstants.TAG_LOG, "Pending survey");
         }else if ( surveyParameter != null ){ //Es para una encuesta nueva
             Utils.deleteSinglePreference(getApplicationContext(), CustomConstants.PREFERENCE_NAME_CUESTIONARIO, CustomConstants.CUESTIONARIO_REGISTRO_ID);
-            Log.i(CustomConstants.TAG_LOG, "ENCUESTA NUEVA");
+            Log.i(CustomConstants.TAG_LOG, "New survey");
         } else {
             //Logica para el result de error
-            Log.i(CustomConstants.TAG_LOG, "INTENT NULL");
+            Log.i(CustomConstants.TAG_LOG, "Error");
             Utils.deleteSinglePreference(getApplicationContext(), CustomConstants.PREFERENCE_NAME_CUESTIONARIO, CustomConstants.CUESTIONARIO_REGISTRO_ID);
         }
 
         //String jsonEncuesta = Utils.jsonStringFinal();
-        Log.i(CustomConstants.TAG_LOG, "PARAMETRO DE LA ENCUESTA " +surveyParameter.toString());
+        Log.i(CustomConstants.TAG_LOG, "Survey " +surveyParameter.toString());
         startAdapter(surveyParameter);
 
         answerShowQuestionnairesController.loadAll().observe(this, new Observer<List<AnswerShowQuestionnaires>>() {
             @Override
             public void onChanged(List<AnswerShowQuestionnaires> respuestaMostrarCuestionarios) {
-                listMostrarCuestionarios = respuestaMostrarCuestionarios;
+                answerShowQuestionnaires = respuestaMostrarCuestionarios;
             }
         });
-
-        //TEst
-        /*surveyService.loadAllSurveys().observe(this, new Observer<List<Encuesta>>() {
-            @Override
-            public void onChanged(List<Encuesta> encuestas) {
-                for( Encuesta encuesta : encuestas ) {
-                    Log.i(CustomConstants.TAG_LOG, "DATA: "+encuesta.toString());
-                }
-            }
-        });*/
-
-        /*surveyService.loadSurveyCompleted().observe(this, new Observer<List<SurveyRecords>>() {
-            @Override
-            public void onChanged(List<SurveyRecords> surveyRecords) {
-                for( SurveyRecords surveyRecord : surveyRecords ) {
-                    Log.i(CustomConstants.TAG_LOG, "DATA1: "+surveyRecord.getSurvey().toString());
-                    Log.i(CustomConstants.TAG_LOG, "DATA2: "+surveyRecord.getRecord().toString());
-                }
-            }
-        });*/
-
-
     }
 
     @Override
@@ -142,7 +120,7 @@ public class QuestionaryActivity extends AppCompatActivity{
     private void startObj(){
         answerShowQuestionnairesController = new ViewModelProvider(this).get(AnswerShowQuestionnairesController.class);
         privateSurveyService = new ViewModelProvider(this).get(PrivateSurveyServiceImpl.class);
-        listPreguntasInvalidas = new ArrayList<>();
+        invalidQuestions = new ArrayList<>();
     }
 
     private void startAdapter(Survey survey){
@@ -157,11 +135,10 @@ public class QuestionaryActivity extends AppCompatActivity{
             //Encuesta encuestaReturn = surveyService.loadSurveyByIdSync(2L);
             //encuesta = new Gson().fromJson(jsonEncuesta, Encuesta.class);
             this.survey = new Gson().fromJson(survey.getJson(), Survey.class);
-            Log.i(CustomConstants.TAG_LOG, "PARAMETER SURVEY: "+ this.survey.toString());
             for (Questionnaire questionnaire : this.survey.getQuestionnaires()) {
-                cuestionarios.add(new QuestionaryFragment(this.survey, questionnaire));
+                questionnaires.add(new QuestionaryFragment(this.survey, questionnaire));
             }
-            mPagerAdapter = new QuestionaryViewPagerAdapter(getSupportFragmentManager(), FragmentPagerAdapter.BEHAVIOR_RESUME_ONLY_CURRENT_FRAGMENT, cuestionarios);
+            mPagerAdapter = new QuestionaryViewPagerAdapter(getSupportFragmentManager(), FragmentPagerAdapter.BEHAVIOR_RESUME_ONLY_CURRENT_FRAGMENT, questionnaires);
             questionaryViewPager.setAdapter(mPagerAdapter);
             questionaryViewPager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
                 @Override
@@ -191,10 +168,10 @@ public class QuestionaryActivity extends AppCompatActivity{
             btnPrev.setVisibility(View.INVISIBLE);
         }
         if (position + 1 < mPagerAdapter.getCount()) {
-            btnNext.setText(getString(R.string.texto_siguiente));
+            btnNext.setText(getString(R.string.next));
             btnNext.setVisibility(View.VISIBLE);
         } else {
-            btnNext.setText(getString(R.string.texto_terminar));
+            btnNext.setText(getString(R.string.finish));
         }
     }
 
@@ -210,7 +187,7 @@ public class QuestionaryActivity extends AppCompatActivity{
             @Override
             public void onAnimationStart(Animation animation) {
                 Log.i(CustomConstants.TAG_LOG, "prevQuestionary - onAnimationStart");
-                eliminarEncuestaRegistroByCuestionario();
+                deleteSurveyRecordByQuestionnaire();
             }
             @Override
             public void onAnimationEnd(Animation animation) {
@@ -246,8 +223,8 @@ public class QuestionaryActivity extends AppCompatActivity{
                 Log.d(CustomConstants.TAG_LOG, "onAnimationStart()");
                 //Logica que permitira pasar al siguiente cuestionario
                 QuestionaryFragment questionaryFragment = (QuestionaryFragment) mPagerAdapter.getItem(questionaryViewPager.getCurrentItem());
-                Map<WidgetFragment, Question> preguntas = questionaryFragment.getPreguntas();
-                for ( Map.Entry<WidgetFragment, Question> entry : preguntas.entrySet() ) {
+                Map<WidgetFragment, Question> questions = questionaryFragment.getQuestions();
+                for ( Map.Entry<WidgetFragment, Question> entry : questions.entrySet() ) {
                     WidgetFragment widgetFragment = entry.getKey();
                     Question question = entry.getValue();
                     if( question.getRequired() ){
@@ -256,19 +233,19 @@ public class QuestionaryActivity extends AppCompatActivity{
                                 EditText editText = widgetFragment.getView().findViewById(R.id.edit_text);
                                 if( !Validation.isTextValid(editText.getText().toString()) ) {
                                     isValid = CustomConstants.FALSE;
-                                    editText.setError(getString(R.string.texto_requerido));
-                                    listPreguntasInvalidas.add(question);
+                                    editText.setError(getString(R.string.required));
+                                    invalidQuestions.add(question);
                                 }
                             } else if( question.getType().equalsIgnoreCase(CustomConstants.SELECT) ) {
                                 TextView tvTitleSpinner = widgetFragment.getView().findViewById(R.id.tvTitleSpinner);
                                 Answer answer = (Answer) tvTitleSpinner.getTag();
                                 if( answer.getAnswerId() == CustomConstants.LONG_0L ) {
                                     isValid = CustomConstants.FALSE;
-                                    tvTitleSpinner.setError(getString(R.string.texto_requerido));
+                                    tvTitleSpinner.setError(getString(R.string.required));
                                     //editText.setError(getString(R.string.texto_requerido));
                                     TextView labelRequired = widgetFragment.getView().findViewById(R.id.label_required);
-                                    labelRequired.setText(getString(R.string.texto_requerido).concat(" ").concat(getString(R.string.question_required)));
-                                    listPreguntasInvalidas.add(question);
+                                    labelRequired.setText(getString(R.string.required).concat(" ").concat(getString(R.string.question_required)));
+                                    invalidQuestions.add(question);
                                 }
                             } else if( question.getType().equalsIgnoreCase(CustomConstants.RADIOGROUP) ) {
                                 RadioGroup radioGroup = widgetFragment.getView().findViewById(R.id.radio_group);
@@ -276,29 +253,29 @@ public class QuestionaryActivity extends AppCompatActivity{
                                 if( radioGroup.getCheckedRadioButtonId() == -1 ) {
                                     isValid = CustomConstants.FALSE;
                                     TextView labelRequired = widgetFragment.getView().findViewById(R.id.label_required);
-                                    labelRequired.setText(getString(R.string.texto_requerido).concat(" ").concat(getString(R.string.question_required)));
-                                    listPreguntasInvalidas.add(question);
+                                    labelRequired.setText(getString(R.string.required).concat(" ").concat(getString(R.string.question_required)));
+                                    invalidQuestions.add(question);
                                 }
                             } else if ( question.getType().equalsIgnoreCase(CustomConstants.CHECKBOX) ) {
-                                List<Answer> listRespuestasValidadas = new ArrayList<>();
+                                List<Answer> listValidatedAnswers = new ArrayList<>();
                                 LinearLayout checkboxesLinerLayout =  widgetFragment.getView().findViewById(R.id.checkboxes_liner_layout);
                                 for ( int i = CustomConstants.INT_0; i < checkboxesLinerLayout.getChildCount(); i++) {
                                     CheckBox checkBox =  (CheckBox) checkboxesLinerLayout.getChildAt(i);
                                     if( checkBox.getVisibility() == CustomConstants.VISIBLE) {
                                         Answer answer = (Answer) checkBox.getTag();
                                         if( checkBox.isChecked() ){
-                                            listRespuestasValidadas.add(answer);
+                                            listValidatedAnswers.add(answer);
                                         }
                                     }
 
                                 }
-                                if( Utils.isEmpty(listRespuestasValidadas) ){
+                                if( Utils.isEmpty(listValidatedAnswers) ){
                                     isValid = CustomConstants.FALSE;
                                     TextView labelRequired = widgetFragment.getView().findViewById(R.id.label_required);
-                                    labelRequired.setText(getString(R.string.texto_requerido).concat(" ").concat(getString(R.string.question_required)));
-                                    listPreguntasInvalidas.add(question);
+                                    labelRequired.setText(getString(R.string.required).concat(" ").concat(getString(R.string.question_required)));
+                                    invalidQuestions.add(question);
                                 } else {
-                                    listRespuestasValidadas.clear();
+                                    listValidatedAnswers.clear();
                                 }
                             }
                         }
@@ -306,13 +283,13 @@ public class QuestionaryActivity extends AppCompatActivity{
                 }
                 //Validamos si no hay alguna pregunta que no sea valida
                 // Si la lista esta vacía significa que el formulario es correcto
-                if( Utils.isEmpty(listPreguntasInvalidas) ){
+                if( Utils.isEmpty(invalidQuestions) ){
                     // establecemos la bandera del formulario a valido true
                     isValid = CustomConstants.TRUE;
                     //Guardamos las preguntas con sus respectivas respuestas.
                     questionaryFragment.save();
                 } else {
-                  listPreguntasInvalidas.clear();
+                    invalidQuestions.clear();
                 }
             }
             @Override
@@ -327,60 +304,60 @@ public class QuestionaryActivity extends AppCompatActivity{
                         if (next < mPagerAdapter.getCount()) {
                             QuestionaryFragment questionaryFragmentNext = (QuestionaryFragment) mPagerAdapter.getItem(next);
                             Questionnaire questionnaire = questionaryFragmentNext.getQuestionnaire();
-                            Log.i(CustomConstants.TAG_LOG, "CUESTIONARIO SIGUIENTE: " + questionnaire.toString());
+                            Log.i(CustomConstants.TAG_LOG, "Next questionnaire: " + questionnaire.toString());
                             //Verifica si el cuestionario siguiente se encuentra oculto. Estatus false.
                             if (!questionnaire.getVisible()) {
-                                Log.i(CustomConstants.TAG_LOG, "ENTRO 1: ");
+                                Log.i(CustomConstants.TAG_LOG, "onAnimationEnd-1: ");
                                 //Se verifica si existe alguna RespuestaMostrarCuestionarios que desencadene el siguiente cuestionario
                                 //En caso contrario finaliza la encuesta
-                                if (!Utils.isEmpty(listMostrarCuestionarios)) {
-                                    Log.i(CustomConstants.TAG_LOG, "ENTRO 2: ");
+                                if (!Utils.isEmpty(answerShowQuestionnaires)) {
+                                    Log.i(CustomConstants.TAG_LOG, "onAnimationEnd-2: ");
                                     //Recorremos listMostrarCuestionarios para verificar si alguna de la respuesta anterior
                                     // desencadena el siguiente cuestioanrio
-                                    for (AnswerShowQuestionnaires respuestaMostrarCuestionario : listMostrarCuestionarios) {
+                                    for (AnswerShowQuestionnaires answerShowQuestionnaire : answerShowQuestionnaires) {
                                         //Si se encuentra dentro de la lista el valor del siguiente cuestionario se cambia el estatus a true.
-                                        if (respuestaMostrarCuestionario.getQuestionnaireId() == questionnaire.getQuestionnaireId()) {
-                                            Log.i(CustomConstants.TAG_LOG, "ENTRO 3: ");
+                                        if (answerShowQuestionnaire.getQuestionnaireId() == questionnaire.getQuestionnaireId()) {
+                                            Log.i(CustomConstants.TAG_LOG, "onAnimationEnd-3: ");
                                             questionnaire.setVisible(CustomConstants.TRUE);
                                         }
                                     }
                                     //Si el estatus de visibilidad del cuestionario es verdadero mostramos el cuestionario y
                                     // regresamos al estatus anterior de visibilidad es decir false.
                                     if (questionnaire.getVisible()) {
-                                        Log.i(CustomConstants.TAG_LOG, "ENTRO 4: ");
+                                        Log.i(CustomConstants.TAG_LOG, "onAnimationEnd-4: ");
                                         //Regresando el cuestionario a su estado anterior false
                                         questionnaire.setVisible(CustomConstants.FALSE);
                                         //Mostramos el siguiente cuestionario
                                         questionaryViewPager.setCurrentItem(next, CustomConstants.TRUE);
                                     } else {
-                                        Log.i(CustomConstants.TAG_LOG, "ENTRO 5: ");
+                                        Log.i(CustomConstants.TAG_LOG, "onAnimationEnd-5: ");
                                         surveyResponse();
                                         /*Intent returnIntent = new Intent();
                                         setResult(Activity.RESULT_OK, returnIntent);
                                         finish();*/
                                     }
                                 } else {
-                                    Log.i(CustomConstants.TAG_LOG, "ENTRO 6: ");
+                                    Log.i(CustomConstants.TAG_LOG, "onAnimationEnd-6: ");
                                     surveyResponse();
                                 }
                             }else {
                                 if (next > mPagerAdapter.getCount()) {
-                                    Log.i(CustomConstants.TAG_LOG, "ENTRO 7: ");
+                                    Log.i(CustomConstants.TAG_LOG, "onAnimationEnd-7: ");
                                     surveyResponse();
                                 } else {
-                                    Log.i(CustomConstants.TAG_LOG, "ENTRO 8: ");
+                                    Log.i(CustomConstants.TAG_LOG, "onAnimationEnd-8: ");
                                     questionaryViewPager.setCurrentItem(next, true);
                                 }
                             }
                         } else {
-                            Log.i(CustomConstants.TAG_LOG, "ENTRO 9: ");
+                            Log.i(CustomConstants.TAG_LOG, "onAnimationEnd-9: ");
                             if (next == mPagerAdapter.getCount()) {
-                                Log.i(CustomConstants.TAG_LOG, "ENTRO 10: ");
+                                Log.i(CustomConstants.TAG_LOG, "onAnimationEnd-10: ");
                                 surveyResponse();
                             }
                         }
                     } else {
-                        Toast.makeText(getApplicationContext(),getString(R.string.mensaje_campos_requeridos), Toast.LENGTH_LONG).show();
+                        Toast.makeText(getApplicationContext(),getString(R.string.message_questions_required), Toast.LENGTH_LONG).show();
                     }
                     Log.i(CustomConstants.TAG_LOG, "----------------------nextQuestionary--------------------------------");
             }
@@ -394,12 +371,12 @@ public class QuestionaryActivity extends AppCompatActivity{
     }
     private void surveyResponse(){
         Executors.newSingleThreadExecutor().execute(() -> {
-            Long encuestaRegistroId = Utils.findPreferenceLong(getApplicationContext(), CustomConstants.PREFERENCE_NAME_CUESTIONARIO, CustomConstants.CUESTIONARIO_REGISTRO_ID);
-            SurveyRecordAnswers surveyRecordAnswers = privateSurveyService.encuentaFinaliza(encuestaRegistroId, CustomConstants.TERMINADA, Utils.dateTime());
+            Long surveyRecordId = Utils.findPreferenceLong(getApplicationContext(), CustomConstants.PREFERENCE_NAME_CUESTIONARIO, CustomConstants.CUESTIONARIO_REGISTRO_ID);
+            SurveyRecordAnswers surveyRecordAnswers = privateSurveyService.encuentaFinaliza(surveyRecordId, CustomConstants.TERMINADA, Utils.dateTime());
             Log.i(CustomConstants.TAG_LOG, "RETURN INFO QUESTIONARY : "+ surveyRecordAnswers.getSurveyRecord().toString());
             Intent returnIntent = new Intent();
             ResponseMessageDto responseMessage = new ResponseMessageDto(CustomConstants.MESSAGE_SURVEY_RESPONSE, "", CustomConstants.CODE_200,
-                    getString(R.string.mensaje_encuesta_finalizada), surveyRecordAnswers);
+                    getString(R.string.message_finished_survey), surveyRecordAnswers);
             String responseMessageString = Utils.convertirObjToJson(responseMessage);
             returnIntent.putExtra(CustomConstants.SURVEY_RESPONSE, responseMessageString);
             Log.i(CustomConstants.TAG_LOG, responseMessageString);
@@ -411,14 +388,14 @@ public class QuestionaryActivity extends AppCompatActivity{
         });
     }
 
-    private void eliminarEncuestaRegistroByCuestionario(){
+    private void deleteSurveyRecordByQuestionnaire(){
         Executors.newSingleThreadExecutor().execute(() -> {
-            Long encuestaRegistroId = Utils.findPreferenceLong(getApplicationContext(), CustomConstants.PREFERENCE_NAME_CUESTIONARIO, CustomConstants.CUESTIONARIO_REGISTRO_ID);
-            if( encuestaRegistroId > CustomConstants.LONG_0L ) {
+            Long surveyRecordId = Utils.findPreferenceLong(getApplicationContext(), CustomConstants.PREFERENCE_NAME_CUESTIONARIO, CustomConstants.CUESTIONARIO_REGISTRO_ID);
+            if( surveyRecordId > CustomConstants.LONG_0L ) {
                 QuestionaryFragment questionaryFragment = (QuestionaryFragment) mPagerAdapter.getItem(questionaryViewPager.getCurrentItem());
-                Long cuestionarioId = questionaryFragment.getQuestionnaire().getQuestionnaireId();
+                Long questionnaireId = questionaryFragment.getQuestionnaire().getQuestionnaireId();
                 Log.i(CustomConstants.TAG_LOG, "PREV-QUESTIONARY "+questionaryFragment.getQuestionnaire().toString());
-                privateSurveyService.eliminarEncuestaRegistroByCuestionarioId(encuestaRegistroId, cuestionarioId);
+                privateSurveyService.eliminarEncuestaRegistroByCuestionarioId(surveyRecordId, questionnaireId);
             }
         });
     }

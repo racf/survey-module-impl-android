@@ -30,9 +30,9 @@ public class TextController extends AndroidViewModel {
         this.textFormState = textFormState;
     }
 
-    public void textDataChanged(String texto, Question question) {
-        if (!Validation.isTextValid(texto)) {
-            textFormState.setValue( new TextFormState(R.string.texto_requerido));
+    public void textDataChanged(String text, Question question) {
+        if (!Validation.isTextValid(text)) {
+            textFormState.setValue( new TextFormState(R.string.required));
         }else {
             textFormState.setValue(new TextFormState(CustomConstants.TRUE));
         }

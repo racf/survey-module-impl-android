@@ -12,6 +12,8 @@ public class CustomConstants {
     //Numeric
     public static final Long LONG_0L = 0L;
     public static final int INT_0 = 0;
+    public static final int INT_1 = 1;
+    public static final int INT_2 = 2;
     //Code
     public static final int CODE_200 = 200;
     public static final int CODE_500 = 500;
