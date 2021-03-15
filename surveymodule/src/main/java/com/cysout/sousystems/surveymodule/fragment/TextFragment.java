@@ -105,9 +105,9 @@ public class TextFragment extends WidgetFragment {
             editText.setInputType(InputType.TYPE_CLASS_NUMBER);
         }
         if (question.getTitle() != null || !question.getTitle().equals("")) {
-            editText.setHint(R.string.escribir_aqui_respuesta);
+            editText.setHint(R.string.message_write_answer);
         } else {
-            editText.setHint(R.string.escribir_aqui_respuesta);
+            editText.setHint(R.string.message_write_answer);
         }
 
         if (question.getDescription() != null || !question.getDescription().equals("")) {

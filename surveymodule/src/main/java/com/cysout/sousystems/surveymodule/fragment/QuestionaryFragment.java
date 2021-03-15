@@ -35,18 +35,17 @@ import com.cysout.sousystems.surveymodule.utils.Utils;
 public class QuestionaryFragment extends Fragment implements WidgetFragment.FragmentCallback {
     private Questionnaire questionnaire;
     private Survey survey;
-    private TextView tvQuestionaryTitle;
     private Map<WidgetFragment, Question> questions = new HashMap<WidgetFragment, Question>();
     private LinearLayout fieldset;
-    private TextView cuestionarioTitulo;
+    private TextView tvQuestionnaireTitle;
     private PrivateSurveyService privateSurveyService;
     private static final int NUMBER_OF_THREADS = 10;
     public static final ExecutorService executorService = Executors.newFixedThreadPool(NUMBER_OF_THREADS);
-    private String fechaInicial = "";
+    private String startDate = "";
     public QuestionaryFragment(Survey survey, Questionnaire questionnaire) {
         this.survey = survey;
         this.questionnaire = questionnaire;
-        this.fechaInicial = Utils.dateTime();
+        this.startDate = Utils.dateTime();
     }
     public Questionnaire getQuestionnaire(){
       return this.questionnaire;
@@ -57,8 +56,8 @@ public class QuestionaryFragment extends Fragment implements WidgetFragment.Frag
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         ViewGroup rootView = (ViewGroup) inflater.inflate(R.layout.fragment_questionary, container, CustomConstants.FALSE);
         fieldset = rootView.findViewById(R.id.fieldset);
-        cuestionarioTitulo = rootView.findViewById(R.id.tvCuestionarioTitulo);
-        cuestionarioTitulo.setText(this.questionnaire.getTitle());
+        tvQuestionnaireTitle = rootView.findViewById(R.id.tvQuestionnaireTitle);
+        tvQuestionnaireTitle.setText(this.questionnaire.getTitle());
         return rootView;
     }
 
@@ -68,27 +67,26 @@ public class QuestionaryFragment extends Fragment implements WidgetFragment.Frag
     @Override
     public void onResume() {
         super.onResume();
-        Log.d(CustomConstants.TAG_LOG, "RESUMEN QuestionaryFragment");
         load();
         this.privateSurveyService = new PrivateSurveyServiceImpl(getActivity().getApplication());
     }
 
     public void save(){
-        Log.d(CustomConstants.TAG_LOG, "Master save() ");
+        Log.d(CustomConstants.TAG_LOG, "QuestionaryFragment - save()");
         executorService.execute(() -> {
-            Long encuestaRegistroId = Utils.findPreferenceLong(getContext(), CustomConstants.PREFERENCE_NAME_CUESTIONARIO, CustomConstants.CUESTIONARIO_REGISTRO_ID);
+            Long surveyRecordId = Utils.findPreferenceLong(getContext(), CustomConstants.PREFERENCE_NAME_CUESTIONARIO, CustomConstants.CUESTIONARIO_REGISTRO_ID);
             //Si es la primera vez que se guarda una encuesta_registro, en caso contrario obtiene el identificador que se ha generado anteriormente
-            if( encuestaRegistroId == 0L){
-                encuestaRegistroId = privateSurveyService.encuestaRegistro(survey, CustomConstants.ENCUESTA_EN_PROCESO, this.fechaInicial, this.fechaInicial);
-                    Log.d(CustomConstants.TAG_LOG, "PRIMERA VEZ PARA GUARDAR " + encuestaRegistroId + " --- "+ this.fechaInicial);
+            if( surveyRecordId == CustomConstants.LONG_0L){
+                surveyRecordId = privateSurveyService.encuestaRegistro(survey, CustomConstants.ENCUESTA_EN_PROCESO, this.startDate, this.startDate);
+                    Log.d(CustomConstants.TAG_LOG, "Information is saved for the first time " + surveyRecordId + " --- "+ this.startDate);
                     //Guardamos el ID auto-increment de la encuesta que se esta encuestaRegistroId
-                    Utils.saveOnPreferenceLong(getContext(), CustomConstants.PREFERENCE_NAME_CUESTIONARIO, CustomConstants.CUESTIONARIO_REGISTRO_ID, encuestaRegistroId);
+                    Utils.saveOnPreferenceLong(getContext(), CustomConstants.PREFERENCE_NAME_CUESTIONARIO, CustomConstants.CUESTIONARIO_REGISTRO_ID, surveyRecordId);
             }
             for ( Map.Entry<WidgetFragment, Question> entry : questions.entrySet() ) {
                 WidgetFragment widgetFragment = entry.getKey();
                 Question question = entry.getValue();
-                Log.d(CustomConstants.TAG_LOG, "id: "+ question.getQuestionId() + " titulo: " + question.getTitle());
-                widgetFragment.save(survey, questionnaire, question, encuestaRegistroId);
+                Log.d(CustomConstants.TAG_LOG, "id: "+ question.getQuestionId() + " title: " + question.getTitle());
+                widgetFragment.save(survey, questionnaire, question, surveyRecordId);
             }
         });
     }
@@ -127,7 +125,6 @@ public class QuestionaryFragment extends Fragment implements WidgetFragment.Frag
                     questions.put(widgetFragment, question);
                 }
                 if(question.getType().equalsIgnoreCase(CustomConstants.SELECT)){
-                    Log.i(CustomConstants.TAG_LOG, "--------------------------------ENTRO SELECT-----------------------------");
                     WidgetFragment widgetFragment = new SpinnerFragment();
                     widgetFragment.setCallback(this);
                     widgetFragment.setMenuVisibility(CustomConstants.FALSE);

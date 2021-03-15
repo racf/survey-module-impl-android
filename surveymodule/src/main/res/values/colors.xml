@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="colorPrimary">@color/gobierno_rojo</color>
-    <color name="colorPrimaryDark">@color/gobierno_rojo</color>
-    <color name="colorAccent">@color/gobierno_verde</color>
+    <color name="colorPrimary">#190043</color>
+    <color name="colorPrimaryDark">#190043</color>
+    <color name="colorAccent">#99c073</color>
     <color name="swipe_first">#34651b</color>
     <color name="swipe_second">#5c8845</color>
     <color name="swipe_third">#98c084</color>
@@ -41,8 +41,4 @@
     <color name="button_secondary_dark">#606060</color>
     <color name="button_disabled">#e7e7e7</color>
     <color name="button_disabled_dark">#d6d6d6</color>
-    <!--<color name="gobierno_verde">#235B51</color>
-    <color name="gobierno_rojo">#9d2449</color>-->
-    <color name="gobierno_verde">#99c073</color>
-    <color name="gobierno_rojo">#190043</color>
 </resources>

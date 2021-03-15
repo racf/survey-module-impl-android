@@ -32,7 +32,7 @@ public class FormController extends AndroidViewModel {
 
     public void isValidForm(String texto) {
         if (!Validation.isTextValid(texto)) {
-            formResult.setValue(new FormResult(R.string.texto_requerido));
+            formResult.setValue(new FormResult(R.string.required));
         } else {
             formResult.setValue(new FormResult( new ValidatedInFormView("Mensaje prueba")));
         }

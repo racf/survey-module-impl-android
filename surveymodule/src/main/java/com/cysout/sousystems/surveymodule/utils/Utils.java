@@ -1085,7 +1085,7 @@ public class Utils {
         Answer answer = new Answer();
         answer.setAnswerId(0L);
         answer.setQuestionId(0L);
-        answer.setText(mContext.getString(R.string.spinner_mensaje_default));
+        answer.setText(mContext.getString(R.string.message_spinner_default));
         return answer;
     }
 }

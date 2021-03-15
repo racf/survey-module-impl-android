@@ -168,10 +168,10 @@ public class QuestionaryActivity extends AppCompatActivity{
             btnPrev.setVisibility(View.INVISIBLE);
         }
         if (position + 1 < mPagerAdapter.getCount()) {
-            btnNext.setText(getString(R.string.texto_siguiente));
+            btnNext.setText(getString(R.string.next));
             btnNext.setVisibility(View.VISIBLE);
         } else {
-            btnNext.setText(getString(R.string.texto_terminar));
+            btnNext.setText(getString(R.string.finish));
         }
     }
 
@@ -233,7 +233,7 @@ public class QuestionaryActivity extends AppCompatActivity{
                                 EditText editText = widgetFragment.getView().findViewById(R.id.edit_text);
                                 if( !Validation.isTextValid(editText.getText().toString()) ) {
                                     isValid = CustomConstants.FALSE;
-                                    editText.setError(getString(R.string.texto_requerido));
+                                    editText.setError(getString(R.string.required));
                                     invalidQuestions.add(question);
                                 }
                             } else if( question.getType().equalsIgnoreCase(CustomConstants.SELECT) ) {
@@ -241,10 +241,10 @@ public class QuestionaryActivity extends AppCompatActivity{
                                 Answer answer = (Answer) tvTitleSpinner.getTag();
                                 if( answer.getAnswerId() == CustomConstants.LONG_0L ) {
                                     isValid = CustomConstants.FALSE;
-                                    tvTitleSpinner.setError(getString(R.string.texto_requerido));
+                                    tvTitleSpinner.setError(getString(R.string.required));
                                     //editText.setError(getString(R.string.texto_requerido));
                                     TextView labelRequired = widgetFragment.getView().findViewById(R.id.label_required);
-                                    labelRequired.setText(getString(R.string.texto_requerido).concat(" ").concat(getString(R.string.question_required)));
+                                    labelRequired.setText(getString(R.string.required).concat(" ").concat(getString(R.string.question_required)));
                                     invalidQuestions.add(question);
                                 }
                             } else if( question.getType().equalsIgnoreCase(CustomConstants.RADIOGROUP) ) {
@@ -253,7 +253,7 @@ public class QuestionaryActivity extends AppCompatActivity{
                                 if( radioGroup.getCheckedRadioButtonId() == -1 ) {
                                     isValid = CustomConstants.FALSE;
                                     TextView labelRequired = widgetFragment.getView().findViewById(R.id.label_required);
-                                    labelRequired.setText(getString(R.string.texto_requerido).concat(" ").concat(getString(R.string.question_required)));
+                                    labelRequired.setText(getString(R.string.required).concat(" ").concat(getString(R.string.question_required)));
                                     invalidQuestions.add(question);
                                 }
                             } else if ( question.getType().equalsIgnoreCase(CustomConstants.CHECKBOX) ) {
@@ -272,7 +272,7 @@ public class QuestionaryActivity extends AppCompatActivity{
                                 if( Utils.isEmpty(listValidatedAnswers) ){
                                     isValid = CustomConstants.FALSE;
                                     TextView labelRequired = widgetFragment.getView().findViewById(R.id.label_required);
-                                    labelRequired.setText(getString(R.string.texto_requerido).concat(" ").concat(getString(R.string.question_required)));
+                                    labelRequired.setText(getString(R.string.required).concat(" ").concat(getString(R.string.question_required)));
                                     invalidQuestions.add(question);
                                 } else {
                                     listValidatedAnswers.clear();
@@ -357,7 +357,7 @@ public class QuestionaryActivity extends AppCompatActivity{
                             }
                         }
                     } else {
-                        Toast.makeText(getApplicationContext(),getString(R.string.mensaje_campos_requeridos), Toast.LENGTH_LONG).show();
+                        Toast.makeText(getApplicationContext(),getString(R.string.message_questions_required), Toast.LENGTH_LONG).show();
                     }
                     Log.i(CustomConstants.TAG_LOG, "----------------------nextQuestionary--------------------------------");
             }
@@ -376,7 +376,7 @@ public class QuestionaryActivity extends AppCompatActivity{
             Log.i(CustomConstants.TAG_LOG, "RETURN INFO QUESTIONARY : "+ surveyRecordAnswers.getSurveyRecord().toString());
             Intent returnIntent = new Intent();
             ResponseMessageDto responseMessage = new ResponseMessageDto(CustomConstants.MESSAGE_SURVEY_RESPONSE, "", CustomConstants.CODE_200,
-                    getString(R.string.mensaje_encuesta_finalizada), surveyRecordAnswers);
+                    getString(R.string.message_finished_survey), surveyRecordAnswers);
             String responseMessageString = Utils.convertirObjToJson(responseMessage);
             returnIntent.putExtra(CustomConstants.SURVEY_RESPONSE, responseMessageString);
             Log.i(CustomConstants.TAG_LOG, responseMessageString);

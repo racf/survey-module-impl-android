@@ -104,10 +104,10 @@ public class SelectFragment extends WidgetFragment {
                             showSurvey(questionnaire, question, optionChecked, showSelect);
                         }
                         if( answer.getFinishSelect() ) {
-                            QuestionaryActivity.btnNext.setText(R.string.texto_terminar);
+                            QuestionaryActivity.btnNext.setText(R.string.finish);
                             hideSurvey(questionnaire, question);
                         } else {
-                            QuestionaryActivity.btnNext.setText(R.string.texto_siguiente);
+                            QuestionaryActivity.btnNext.setText(R.string.next);
                         }
 
                     }

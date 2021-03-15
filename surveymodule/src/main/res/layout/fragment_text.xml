@@ -22,7 +22,7 @@
                     style="@style/TextView.Prefix" />
                 <EditText
                     android:id="@+id/edit_text"
-                    android:hint="@string/escribir_aqui_respuesta"
+                    android:hint="@string/message_write_answer"
                     android:layout_weight="1"
                     android:inputType="text|textCapSentences"
                     style="@style/EditText" />
