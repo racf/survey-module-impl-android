@@ -108,13 +108,14 @@ public class TextFragment extends WidgetFragment {
         }
         if (question.getTypeInput().equalsIgnoreCase("phone")) {
             editText.setInputType(InputType.TYPE_CLASS_PHONE);
-        }
-        if (question.getTypeInput().equalsIgnoreCase("textPersonName")) {
+        } else if (question.getTypeInput().equalsIgnoreCase("textPersonName")) {
             editText.setInputType(InputType.TYPE_TEXT_VARIATION_PERSON_NAME);
-        }
-        if (question.getTypeInput().equalsIgnoreCase("number")) {
+        } else if (question.getTypeInput().equalsIgnoreCase("number")) {
             editText.setInputType(InputType.TYPE_CLASS_NUMBER);
+        } else {
+            editText.setInputType(InputType.TYPE_CLASS_TEXT);
         }
+
         if (question.getTitle() != null || !question.getTitle().equals("")) {
             editText.setHint(R.string.message_write_answer);
         } else {

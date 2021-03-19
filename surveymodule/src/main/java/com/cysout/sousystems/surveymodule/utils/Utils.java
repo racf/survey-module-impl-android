@@ -318,11 +318,12 @@ public class Utils {
         //json en ingles
         String json = "[{\n" +
                 "        \"surveyId\": 2,\n" +
-                "        \"title\": \"AUTODIAGNÓSTICO COVID-19\",\n" +
+                "        \"title\": \"AUTODIAGNÓSTICO COVID-11\",\n" +
                 "        \"phase\": 2,\n" +
                 "        \"description\": \"Información para guiar a personas con sospecha de haber contraido COVID-19\",\n" +
                 "        \"surveyType\": 1,\n" +
                 "        \"visible\": true,\n" +
+                "        \"versionCode\": 7,\n" +
                 "        \"questionnaires\": [{\n" +
                 "                \"questionnaireId\": 10,\n" +
                 "                \"name\": \"sospechaCasos\",\n" +
@@ -767,6 +768,7 @@ public class Utils {
                 "        \"description\": \"Autodiagnóstico influenza\",\n" +
                 "        \"surveyType\": 2,\n" +
                 "        \"visible\": true,\n" +
+                "        \"versionCode\": 1,\n" +
                 "        \"questionnaires\": [{\n" +
                 "                \"questionnaireId\": 20,\n" +
                 "                \"order\": 1,\n" +
