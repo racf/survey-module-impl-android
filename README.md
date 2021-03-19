@@ -16,6 +16,13 @@
 1. From the menu bar, click **File** -> **Import module...**
 2. Navigate to the **surveymoduleimplandroid**
 3. Select the **surveymodule** and click **Finish**
+4. From the menu bar, click **File** -> **Project Structure...**
+5. Select the menu **Dependencies**
+6. Select the **app** folder
+7. Click on the **add dependency** button (+)
+8. Click the menu **module dependency**
+9. Select the module **surveymodule** and click **Ok**
+10. Click **Apply** and click **Ok**
 
 ## Implementation in a project
 
