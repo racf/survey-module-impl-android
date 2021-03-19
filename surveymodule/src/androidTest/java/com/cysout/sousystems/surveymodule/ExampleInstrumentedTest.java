@@ -22,6 +22,6 @@ public class ExampleInstrumentedTest {
         // Context of the app under test.
         Context appContext = InstrumentationRegistry.getInstrumentation().getTargetContext();
 
-        assertEquals("mx.gob.bienestar.encuestasmodule", appContext.getPackageName());
+        assertEquals("com.cysout.sousystems.surveymodule", appContext.getPackageName());
     }
 }

@@ -32,8 +32,19 @@ import com.cysout.sousystems.surveymodule.validation.TextController;
 import com.cysout.sousystems.surveymodule.validation.text.TextFormState;
 
 /**
- *Developed by cysout.com and sousystems.com.mx
- *Contact info@cysout.com or contacto@sousystems.com.mx
+* Copyright 2021 CysOut Solutions and SouSystems
+*
+* Licensed under the Apache License, Version 2.0 (the "License");
+* you may not use this file except in compliance with the License.
+* You may obtain a copy of the License at
+*
+*      http://www.apache.org/licenses/LICENSE-2.0
+*
+* Unless required by applicable law or agreed to in writing, software
+* distributed under the License is distributed on an "AS IS" BASIS,
+* WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+* See the License for the specific language governing permissions and
+* limitations under the License.
 **/
 public class TextFragment extends WidgetFragment {
     private TextView labelPrefix;
@@ -97,13 +108,14 @@ public class TextFragment extends WidgetFragment {
         }
         if (question.getTypeInput().equalsIgnoreCase("phone")) {
             editText.setInputType(InputType.TYPE_CLASS_PHONE);
-        }
-        if (question.getTypeInput().equalsIgnoreCase("textPersonName")) {
+        } else if (question.getTypeInput().equalsIgnoreCase("textPersonName")) {
             editText.setInputType(InputType.TYPE_TEXT_VARIATION_PERSON_NAME);
-        }
-        if (question.getTypeInput().equalsIgnoreCase("number")) {
+        } else if (question.getTypeInput().equalsIgnoreCase("number")) {
             editText.setInputType(InputType.TYPE_CLASS_NUMBER);
+        } else {
+            editText.setInputType(InputType.TYPE_CLASS_TEXT);
         }
+
         if (question.getTitle() != null || !question.getTitle().equals("")) {
             editText.setHint(R.string.message_write_answer);
         } else {

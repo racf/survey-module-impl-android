@@ -29,8 +29,19 @@ import com.cysout.sousystems.surveymodule.R;
 import com.cysout.sousystems.surveymodule.view.QuestionaryActivity;
 
 /**
- *Developed by cysout.com and sousystems.com.mx
- *Contact info@cysout.com or contacto@sousystems.com.mx
+* Copyright 2021 CysOut Solutions and SouSystems
+*
+* Licensed under the Apache License, Version 2.0 (the "License");
+* you may not use this file except in compliance with the License.
+* You may obtain a copy of the License at
+*
+*      http://www.apache.org/licenses/LICENSE-2.0
+*
+* Unless required by applicable law or agreed to in writing, software
+* distributed under the License is distributed on an "AS IS" BASIS,
+* WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+* See the License for the specific language governing permissions and
+* limitations under the License.
 **/
 public class Utils {
     /**
@@ -307,11 +318,12 @@ public class Utils {
         //json en ingles
         String json = "[{\n" +
                 "        \"surveyId\": 2,\n" +
-                "        \"title\": \"AUTODIAGNÓSTICO COVID-19\",\n" +
+                "        \"title\": \"AUTODIAGNÓSTICO COVID-11\",\n" +
                 "        \"phase\": 2,\n" +
                 "        \"description\": \"Información para guiar a personas con sospecha de haber contraido COVID-19\",\n" +
                 "        \"surveyType\": 1,\n" +
                 "        \"visible\": true,\n" +
+                "        \"versionCode\": 7,\n" +
                 "        \"questionnaires\": [{\n" +
                 "                \"questionnaireId\": 10,\n" +
                 "                \"name\": \"sospechaCasos\",\n" +
@@ -756,6 +768,7 @@ public class Utils {
                 "        \"description\": \"Autodiagnóstico influenza\",\n" +
                 "        \"surveyType\": 2,\n" +
                 "        \"visible\": true,\n" +
+                "        \"versionCode\": 1,\n" +
                 "        \"questionnaires\": [{\n" +
                 "                \"questionnaireId\": 20,\n" +
                 "                \"order\": 1,\n" +
