@@ -78,5 +78,17 @@ public class MainActivity extends AppCompatActivity {
         });
     }
 
+   /* @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (requestCode == CustomConstants.QUESTIONNAIRES_REQUEST) {
+            if (resultCode == RESULT_OK) {
+                String surveyResponses = data.getStringExtra(CustomConstants.SURVEY_RESPONSE);
+                Log.i(CustomConstants.TAG_LOG+" FINAL: ", surveyResponses);
+                //Toast.makeText(this, getString(R.string.terminar_encuesta), Toast.LENGTH_LONG).show();
+            }
+        }
+    }*/
+
 
 }

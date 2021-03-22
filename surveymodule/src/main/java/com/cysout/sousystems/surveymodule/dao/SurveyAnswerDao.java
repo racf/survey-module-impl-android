@@ -81,6 +81,9 @@ public interface SurveyAnswerDao {
     @Query("DELETE FROM surveyAnswer WHERE surveyRecordId=:surveyRecordId AND questionId=:questionId")
     void deleteByEnctRegtIdAndPreguntaId(Long surveyRecordId, Long questionId);
 
-    @Query("DELETE FROM surveyAnswer WHERE surveyRecordId=:surveyRecordId AND questionId=:questionId AND answer=:answerId")
-    void deleteByEnctRegtIdAndPregtIdAndResp(Long surveyRecordId, Long questionId, String answerId);
+    @Query("DELETE FROM surveyAnswer WHERE surveyRecordId=:surveyRecordId AND questionId=:questionId AND answer=:answer")
+    void deleteByEnctRegtIdAndPregtIdAndResp(Long surveyRecordId, Long questionId, String answer);
+
+    @Query("DELETE FROM surveyAnswer WHERE surveyRecordId=:surveyRecordId AND questionnaireId=:questionnaireId AND questionId=:questionId AND answer=:answer")
+    void delete(Long surveyRecordId, Long questionnaireId, Long questionId, String answer);
 }
