@@ -11,6 +11,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.widget.Toast;
 
 import com.cysout.sousystems.survey.impl.adapter.SurveyAdapter;
 import com.cysout.sousystems.surveymodule.entity.Survey;
@@ -90,7 +91,7 @@ public class MainActivity extends AppCompatActivity {
             if (resultCode == RESULT_OK) {
                 String surveyResponses = data.getStringExtra(CustomConstants.SURVEY_RESPONSE);
                 Log.i(CustomConstants.TAG_LOG+" RESULT ", surveyResponses);
-                //Toast.makeText(this, getString(R.string.terminar_encuesta), Toast.LENGTH_LONG).show();
+                Toast.makeText(this, getString(R.string.message_finished_survey), Toast.LENGTH_LONG).show();
             }
         }
     }

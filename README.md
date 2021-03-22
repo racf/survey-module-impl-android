@@ -48,5 +48,7 @@ The image shows the **surveymodule** in the project dependencies:
 3. **Checkbox** : This type of component allows you to select one or more answers from a group of answers.
 4. **Select** : This type of component allows you to select a single option from a list of options.
 
+## **Join us to improve SurveyModule!** &hearts; :page_with_curl:
+
 ## License
     Apache 2.0
