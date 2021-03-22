@@ -88,7 +88,7 @@ public class QuestionaryFragment extends Fragment implements WidgetFragment.Frag
             Long surveyRecordId = Utils.findPreferenceLong(getContext(), CustomConstants.PREFERENCE_NAME_CUESTIONARIO, CustomConstants.CUESTIONARIO_REGISTRO_ID);
             //Si es la primera vez que se guarda una encuesta_registro, en caso contrario obtiene el identificador que se ha generado anteriormente
             if( surveyRecordId == CustomConstants.LONG_0L){
-                surveyRecordId = privateSurveyService.encuestaRegistro(survey, CustomConstants.ENCUESTA_EN_PROCESO, this.startDate, this.startDate);
+                surveyRecordId = privateSurveyService.surveyRecord(survey, CustomConstants.PENDING, this.startDate, this.startDate);
                     Log.d(CustomConstants.TAG_LOG, "Information is saved for the first time " + surveyRecordId + " --- "+ this.startDate);
                     //Guardamos el ID auto-increment de la encuesta que se esta encuestaRegistroId
                     Utils.saveOnPreferenceLong(getContext(), CustomConstants.PREFERENCE_NAME_CUESTIONARIO, CustomConstants.CUESTIONARIO_REGISTRO_ID, surveyRecordId);

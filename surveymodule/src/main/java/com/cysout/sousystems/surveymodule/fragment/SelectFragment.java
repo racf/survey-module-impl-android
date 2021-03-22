@@ -46,13 +46,11 @@ import com.cysout.sousystems.surveymodule.view.QuestionaryActivity;
 * limitations under the License.
 **/
 public class SelectFragment extends WidgetFragment {
-
-   // private NestedScrollView scrollView;
     private RadioGroup radioGroup;
     private PrivateSurveyService privateSurveyService;
 
     public SelectFragment() {
-        // Required empty public constructor
+        //
     }
 
 
@@ -89,7 +87,7 @@ public class SelectFragment extends WidgetFragment {
             }
             //Asignamos informacion al regresar a la encuesta anterior
             if (surveyRecordId > 0L) {
-                privateSurveyService.encuestaRespuestaByRegistroIdAndPregId(surveyRecordId, question.getQuestionId()).observe(getViewLifecycleOwner(), new Observer<SurveyAnswer>() {
+                privateSurveyService.surveyAnswer(surveyRecordId, question.getQuestionId()).observe(getViewLifecycleOwner(), new Observer<SurveyAnswer>() {
                     @Override
                     public void onChanged(SurveyAnswer surveyAnswer) {
                         if(surveyAnswer != null) {
@@ -107,7 +105,7 @@ public class SelectFragment extends WidgetFragment {
                     QuestionaryFragment questionaryFragment = (QuestionaryFragment) getParentFragment();
                     Map<WidgetFragment, Question> answers = questionaryFragment.getQuestions();
                     Answer optionChecked = (Answer) compoundButton.getTag();
-                    ShowSelect showSelect = Utils.infoMostrarSiSelecciona(optionChecked);
+                    ShowSelect showSelect = Utils.infoShowSelect(optionChecked);
                     if( compoundButton.isChecked() ){
                         if ( showSelect != null ) {
                             Log.d(CustomConstants.TAG_LOG, "Radio - Checked - Show questions");
@@ -132,7 +130,7 @@ public class SelectFragment extends WidgetFragment {
                         if (surveyRecordId > 0L) {
                             Executors.newSingleThreadExecutor().execute(() -> {
                                 String respuestaId = String.valueOf(optionChecked.getAnswerId());
-                                privateSurveyService.eliminarEncuestaRegistroByPregtIdAndResp(surveyRecordId, question.getQuestionId(), respuestaId);
+                                privateSurveyService.deleteSurveyRecordByQuestionIdAndAnswer(surveyRecordId, question.getQuestionId(), respuestaId);
                             });
                         }
                     }
@@ -164,7 +162,7 @@ public class SelectFragment extends WidgetFragment {
                     String  option = String.valueOf(answer.getAnswerId());
                     Log.i(CustomConstants.TAG_LOG, "SelectFragment.save() - Save answer: "+ answer.toString());
                     //Logica para guardar informacion localmente
-                    this.privateSurveyService.encuestaRespuesta(survey, questionnaire, question, option, surveyRecordId);
+                    this.privateSurveyService.surveyAnswer(survey, questionnaire, question, option, surveyRecordId);
                     Map<Long, Long> questionAnswer = new HashMap<>();
                     questionAnswer.put(question.getQuestionId(), answer.getAnswerId());
 

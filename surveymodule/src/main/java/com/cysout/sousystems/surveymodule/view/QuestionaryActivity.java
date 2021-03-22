@@ -384,7 +384,7 @@ public class QuestionaryActivity extends AppCompatActivity{
     private void surveyResponse(){
         Executors.newSingleThreadExecutor().execute(() -> {
             Long surveyRecordId = Utils.findPreferenceLong(getApplicationContext(), CustomConstants.PREFERENCE_NAME_CUESTIONARIO, CustomConstants.CUESTIONARIO_REGISTRO_ID);
-            SurveyRecordAnswers surveyRecordAnswers = privateSurveyService.encuentaFinaliza(surveyRecordId, CustomConstants.FINISHED, Utils.dateTime());
+            SurveyRecordAnswers surveyRecordAnswers = privateSurveyService.surveyFinished(surveyRecordId, CustomConstants.FINISHED, Utils.dateTime());
            // Log.i(CustomConstants.TAG_LOG, "RETURN INFO QUESTIONARY : "+ surveyRecordAnswers.getSurveyRecord().toString());
             Intent returnIntent = new Intent();
             ResponseMessageDto responseMessage = new ResponseMessageDto(CustomConstants.MESSAGE_SURVEY_RESPONSE, "", CustomConstants.CODE_200,
@@ -407,7 +407,7 @@ public class QuestionaryActivity extends AppCompatActivity{
                 QuestionaryFragment questionaryFragment = (QuestionaryFragment) mPagerAdapter.getItem(questionaryViewPager.getCurrentItem());
                 Long questionnaireId = questionaryFragment.getQuestionnaire().getQuestionnaireId();
                 Log.i(CustomConstants.TAG_LOG, "PREV-QUESTIONARY "+questionaryFragment.getQuestionnaire().toString());
-                privateSurveyService.eliminarEncuestaRegistroByCuestionarioId(surveyRecordId, questionnaireId);
+                privateSurveyService.deleteSurveyRecordByQuestionnaireId(surveyRecordId, questionnaireId);
             }
         });
     }

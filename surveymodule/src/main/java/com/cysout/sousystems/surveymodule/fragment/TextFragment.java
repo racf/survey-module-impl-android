@@ -97,7 +97,7 @@ public class TextFragment extends WidgetFragment {
         Long surveyRecordId = Utils.findPreferenceLong(getContext(), CustomConstants.PREFERENCE_NAME_CUESTIONARIO, CustomConstants.CUESTIONARIO_REGISTRO_ID);
         //Asignamos informacion al regresar a la encuesta anterior
         if (surveyRecordId > 0L) {
-            privateSurveyService.encuestaRespuestaByRegistroIdAndPregId(surveyRecordId, question.getQuestionId()).observe(getViewLifecycleOwner(), new Observer<SurveyAnswer>() {
+            privateSurveyService.surveyAnswer(surveyRecordId, question.getQuestionId()).observe(getViewLifecycleOwner(), new Observer<SurveyAnswer>() {
                 @Override
                 public void onChanged(SurveyAnswer surveyAnswer) {
                     if(surveyAnswer != null) {
@@ -161,7 +161,7 @@ public class TextFragment extends WidgetFragment {
             String answer = String.valueOf(editText.getText());
             if(!answer.trim().equalsIgnoreCase("")) {
                 //Logica del guardado de la información
-                this.privateSurveyService.encuestaRespuesta(survey, questionnaire, question, answer, surveyRecordId);
+                this.privateSurveyService.surveyAnswer(survey, questionnaire, question, answer, surveyRecordId);
                 status[0] = true;
             }
         });

@@ -46,21 +46,21 @@ public class PrivateSurveyServiceImpl extends AndroidViewModel implements Privat
     }
 
     @Override
-    public Long encuestaRegistro(Survey survey, Integer catEncuestaEstatusId, String fechaInicial, String fechaFinal) {
-        SurveyRecord encuestaRegistro = Utils.getEncuestaRegistro(survey, catEncuestaEstatusId,fechaInicial, fechaFinal);
-        return this.surveyRecordDao.insert(encuestaRegistro);
+    public Long surveyRecord(Survey survey, Integer surveyStatus, String startDate, String endDate) {
+        SurveyRecord surveyRecord = Utils.getSurveyRecord(survey, surveyStatus, startDate, endDate);
+        return this.surveyRecordDao.insert(surveyRecord);
     }
 
     @Override
-    public Long encuestaRespuesta(Survey survey, Questionnaire questionnaire, Question question, String answer, Long surveyRecordId) {
+    public Long surveyAnswer(Survey survey, Questionnaire questionnaire, Question question, String answer, Long surveyRecordId) {
         Long surveyAnswerId = 0L;
-        SurveyAnswer surveyAnswer = Utils.getEncuestaRespuesta(questionnaire, question, answer, surveyRecordId);
-        Log.i(CustomConstants.TAG_LOG, "PrivateSurveyServiceImpl - encuestaRespuesta");
+        SurveyAnswer surveyAnswer = Utils.getSurveyAnswer(questionnaire, question, answer, surveyRecordId);
+        Log.i(CustomConstants.TAG_LOG, "PrivateSurveyServiceImpl - surveyAnswer");
         Log.i(CustomConstants.TAG_LOG, surveyAnswer.toString());
         //Validamos las preguntas que solo pueden tener una sola respuesta (text, radiogroup and select)
         if( surveyAnswer.getType().equalsIgnoreCase(CustomConstants.TEXT) || surveyAnswer.getType().equalsIgnoreCase(CustomConstants.SELECT)
                 || surveyAnswer.getType().equalsIgnoreCase(CustomConstants.RADIOGROUP)){
-            SurveyAnswer surveyAnswerResult = this.surveyAnswerDao.surveyAnswerByRegistroIdAndPregIdSync(surveyRecordId, question.getQuestionId());
+            SurveyAnswer surveyAnswerResult = this.surveyAnswerDao.surveyAnswerSync(surveyRecordId, question.getQuestionId());
             //Validamos si ya se ha contestado la pregunta
             //Si existe solo se actualiza la informacion
             //Caso contrarío se inserta la pregunta con su respuesta
@@ -79,10 +79,10 @@ public class PrivateSurveyServiceImpl extends AndroidViewModel implements Privat
     }
 
     @Override
-    public SurveyRecord findEncuestaregistro(Survey survey) {
+    public SurveyRecord findSurveyRecord(Survey survey) {
         SurveyRecord surveyRecord = null;
         if( survey.getSurveyType() == CustomConstants.UNICA) {
-            surveyRecord = this.surveyRecordDao.encuestaRegistro(survey.getSurveyId());
+            surveyRecord = this.surveyRecordDao.surveyRecord(survey.getSurveyId());
         /*Long encuestaRegistroId = 0L;
         EncuestaRegistro encuestaRegistro = this.encuestaRegistroDao.encuestaRegistro(encuesta.getEncuestaId());
             if( encuestaRegistro == null){
@@ -94,50 +94,50 @@ public class PrivateSurveyServiceImpl extends AndroidViewModel implements Privat
     }
 
     @Override
-    public LiveData<SurveyAnswer> encuestaRespuestaByRegistroIdAndPregId(Long encuestaRegistroId, Long preguntaId) {
-        return this.surveyAnswerDao.surveyAnswerByRegistroIdAndPregId(encuestaRegistroId, preguntaId);
+    public LiveData<SurveyAnswer> surveyAnswer(Long surveyRecordId, Long answerId) {
+        return this.surveyAnswerDao.surveyAnswer(surveyRecordId, answerId);
     }
 
     @Override
-    public SurveyAnswer encuestaRespuestaByRegistroIdAndPregIdSync(Long encuestaRegistroId, Long preguntaId) {
-        return this.surveyAnswerDao.surveyAnswerByRegistroIdAndPregIdSync(encuestaRegistroId, preguntaId);
+    public SurveyAnswer surveyAnswerSync(Long surveyRecordId, Long questionId) {
+        return this.surveyAnswerDao.surveyAnswerSync(surveyRecordId, questionId);
     }
 
     @Override
-    public LiveData<SurveyAnswer> encuestaRespuestaByRegtroIdAndPregIdAndRespId(Long encuestaRegistroId, Long preguntaId, String respuestaId) {
-        return this.surveyAnswerDao.surveyAnswerByRegtroIdAndPregIdAndRespId(encuestaRegistroId, preguntaId, respuestaId);
+    public LiveData<SurveyAnswer> surveyAnswer(Long surveyRecordId, Long questionId, String answerId) {
+        return this.surveyAnswerDao.surveyAnswer(surveyRecordId, questionId, answerId);
     }
 
     @Override
-    public SurveyAnswer encuestaRespuestaByRegtroIdAndPregIdAndRespIdSync(Long encuestaRegistroId, Long preguntaId, String respuestaId) {
-        return this.surveyAnswerDao.surveyAnswerByRegtroIdAndPregIdAndRespIdSync(encuestaRegistroId, preguntaId, respuestaId);
+    public SurveyAnswer surveyAnswerSync(Long surveyRecordId, Long questionId, String answerId) {
+        return this.surveyAnswerDao.surveyAnswerSync(surveyRecordId, questionId, answerId);
     }
 
     @Override
-    public SurveyRecordAnswers encuentaFinaliza(Long encuestaRegistroId, Integer catEncuestaEstatusId, String fechaFinal) {
+    public SurveyRecordAnswers surveyFinished(Long surveyRecordId, Integer surveyStatus, String endDate) {
         //Actualizamos el estatus del registro de la encuesta a 1 que es una encuesta terminada
-        this.surveyRecordDao.updateEncuestaRegistroByEnctRegtroId(catEncuestaEstatusId, fechaFinal, encuestaRegistroId);
-        SurveyRecordAnswers surveyRecordAnswers = this.surveyRecordDao.loadRegistroRespByEnctRegtroIdSync(encuestaRegistroId);
+        this.surveyRecordDao.update(surveyStatus, endDate, surveyRecordId);
+        SurveyRecordAnswers surveyRecordAnswers = this.surveyRecordDao.surveyRecordAnswersSync(surveyRecordId);
         return surveyRecordAnswers;
     }
     @Override
-    public void eliminarEncuestaRegistroByCuestionarioId(Long encuestaRegistroId, Long cuestionarioId){
-        SurveyAnswer surveyAnswer = this.surveyAnswerDao.surveyAnswerByRegistroIdAndCuestIdSync(encuestaRegistroId, cuestionarioId);
+    public void deleteSurveyRecordByQuestionnaireId(Long surveyRecordId, Long questionnaireId){
+        Log.i(CustomConstants.TAG_LOG, "PrivateSurveyServiceImpl - deleteSurveyRecordByQuestionnaireId");
+        SurveyAnswer surveyAnswer = this.surveyAnswerDao.surveyAnswerByRecordIdAndQuestionnaireIdSync(surveyRecordId, questionnaireId);
         if( surveyAnswer != null ) {
-            Log.i(CustomConstants.TAG_LOG, "Elimina eliminarEncuestaRegistroByCuestionarioId");
-            this.surveyAnswerDao.deleteByEnctRegtIdAndCuestId(encuestaRegistroId, cuestionarioId);
+            this.surveyAnswerDao.deleteByRecordIdQuestionnaireId(surveyRecordId, questionnaireId);
         }
 
     }
 
     @Override
-    public void eliminarEncuestaRegistroByPreguntaId(Long encuestaRegistroId, Long preguntaId) {
-        this.surveyAnswerDao.deleteByEnctRegtIdAndPreguntaId(encuestaRegistroId, preguntaId);
+    public void deleteSurveyRecordByQuestionId(Long surveyRecordId, Long questionId) {
+        this.surveyAnswerDao.deleteSurveyRecordByQuestionId(surveyRecordId, questionId);
     }
 
     @Override
-    public void eliminarEncuestaRegistroByPregtIdAndResp(Long encuestaRegistroId, Long preguntaId, String respuesta) {
-        this.surveyAnswerDao.deleteByEnctRegtIdAndPregtIdAndResp(encuestaRegistroId, preguntaId, respuesta);
+    public void deleteSurveyRecordByQuestionIdAndAnswer(Long surveyRecordId, Long questionId, String answer) {
+        this.surveyAnswerDao.deleteSurveyRecordByQuestionIdAndAnswer(surveyRecordId, questionId, answer);
     }
 
 }

@@ -116,12 +116,12 @@ public class SurveyServiceImpl extends AndroidViewModel implements SurveyService
     }
 
     @Override
-    public LiveData<List<SurveyRecords>> loadSurveyCompleted() {
+    public LiveData<List<SurveyRecords>> loadSurveyFinished() {
         return this.surveyRepository.loadSurveyCompleted();
     }
 
     @Override
-    public List<SurveyRecords> loadSurveyCompletedSync() {
+    public List<SurveyRecords> loadSurveyFinishedSync() {
         return this.surveyRepository.loadSurveyCompletedSync();
     }
 
@@ -136,12 +136,12 @@ public class SurveyServiceImpl extends AndroidViewModel implements SurveyService
     }
 
     @Override
-    public LiveData<List<SurveyRecords>> loadSurveySent() {
+    public LiveData<List<SurveyRecords>> loadSurveyUploaded() {
         return this.surveyRepository.loadSurveySent();
     }
 
     @Override
-    public List<SurveyRecords> loadSurveySentSync() {
+    public List<SurveyRecords> loadSurveyUploadedSync() {
         return this.surveyRepository.loadSurveySentSync();
     }
 }

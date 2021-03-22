@@ -46,43 +46,43 @@ public interface SurveyAnswerDao {
     List<SurveyAnswer> loadAllSync();
 
     @Query("SELECT * FROM surveyAnswer WHERE surveyRecordId =:surveyRecordId AND questionId=:questionId LIMIT 1")
-    LiveData<SurveyAnswer> surveyAnswerByRegistroIdAndPregId(Long surveyRecordId, Long questionId);
+    LiveData<SurveyAnswer> surveyAnswer(Long surveyRecordId, Long questionId);
 
     @Query("SELECT * FROM surveyAnswer WHERE surveyRecordId =:surveyRecordId AND questionId=:questionId LIMIT 1")
-    SurveyAnswer surveyAnswerByRegistroIdAndPregIdSync(Long surveyRecordId, Long questionId);
+    SurveyAnswer surveyAnswerSync(Long surveyRecordId, Long questionId);
 
     @Query("SELECT * FROM surveyAnswer WHERE surveyRecordId =:surveyRecordId AND questionId=:questionId AND answer=:answerId LIMIT 1")
-    LiveData<SurveyAnswer> surveyAnswerByRegtroIdAndPregIdAndRespId(Long surveyRecordId, Long questionId, String answerId);
+    LiveData<SurveyAnswer> surveyAnswer(Long surveyRecordId, Long questionId, String answerId);
 
     @Query("SELECT * FROM surveyAnswer WHERE surveyRecordId =:surveyRecordId AND questionId=:questionId AND answer=:answerId LIMIT 1")
-    SurveyAnswer surveyAnswerByRegtroIdAndPregIdAndRespIdSync(Long surveyRecordId, Long questionId, String answerId);
+    SurveyAnswer surveyAnswerSync(Long surveyRecordId, Long questionId, String answerId);
 
     @Query("SELECT * FROM surveyAnswer WHERE surveyRecordId =:surveyRecordId")
-    List<SurveyAnswer> loadBysurveyRecordIdSync(Long surveyRecordId);
+    List<SurveyAnswer> loadBySurveyRecordIdSync(Long surveyRecordId);
 
     @Query("SELECT * FROM surveyAnswer WHERE surveyRecordId =:surveyRecordId")
-    LiveData<List<SurveyAnswer>> loadBysurveyRecordId(Long surveyRecordId);
+    LiveData<List<SurveyAnswer>> loadBySurveyRecordId(Long surveyRecordId);
 
     @Query("SELECT * FROM surveyAnswer WHERE questionnaireId=:questionnaireId")
-    LiveData<List<SurveyAnswer>> loadByCuestionarioId(Long questionnaireId);
+    LiveData<List<SurveyAnswer>> loadByQuestionnaireId(Long questionnaireId);
 
     @Query("SELECT * FROM surveyAnswer WHERE questionnaireId=:questionnaireId")
-    List<SurveyAnswer> loadByCuestionarioIdSync(Long questionnaireId);
+    List<SurveyAnswer> loadByQuestionnaireIdSync(Long questionnaireId);
 
     @Query("SELECT * FROM surveyAnswer WHERE surveyRecordId =:surveyRecordId AND questionnaireId=:questionnaireId LIMIT 1")
-    LiveData<SurveyAnswer> surveyAnswerByRegistroIdAndCuestId(Long surveyRecordId, Long questionnaireId);
+    LiveData<SurveyAnswer> surveyAnswerByRecordIdAndQuestionnaireId(Long surveyRecordId, Long questionnaireId);
 
     @Query("SELECT * FROM surveyAnswer WHERE surveyRecordId =:surveyRecordId AND questionnaireId=:questionnaireId LIMIT 1")
-    SurveyAnswer surveyAnswerByRegistroIdAndCuestIdSync(Long surveyRecordId, Long questionnaireId);
+    SurveyAnswer surveyAnswerByRecordIdAndQuestionnaireIdSync(Long surveyRecordId, Long questionnaireId);
 
     @Query("DELETE FROM surveyAnswer WHERE surveyRecordId=:surveyRecordId AND questionnaireId=:questionnaireId")
-    void deleteByEnctRegtIdAndCuestId(Long surveyRecordId, Long questionnaireId);
+    void deleteByRecordIdQuestionnaireId(Long surveyRecordId, Long questionnaireId);
 
     @Query("DELETE FROM surveyAnswer WHERE surveyRecordId=:surveyRecordId AND questionId=:questionId")
-    void deleteByEnctRegtIdAndPreguntaId(Long surveyRecordId, Long questionId);
+    void deleteSurveyRecordByQuestionId(Long surveyRecordId, Long questionId);
 
     @Query("DELETE FROM surveyAnswer WHERE surveyRecordId=:surveyRecordId AND questionId=:questionId AND answer=:answer")
-    void deleteByEnctRegtIdAndPregtIdAndResp(Long surveyRecordId, Long questionId, String answer);
+    void deleteSurveyRecordByQuestionIdAndAnswer(Long surveyRecordId, Long questionId, String answer);
 
     @Query("DELETE FROM surveyAnswer WHERE surveyRecordId=:surveyRecordId AND questionnaireId=:questionnaireId AND questionId=:questionId AND answer=:answer")
     void delete(Long surveyRecordId, Long questionnaireId, Long questionId, String answer);

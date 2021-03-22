@@ -161,7 +161,7 @@ public abstract class WidgetFragment extends Fragment {
             List<Answer> listAnswers = question.getAnswers();
             if( !Utils.isEmpty(listAnswers) ) {
                 for ( Answer auxAnswer : listAnswers){
-                    ShowSelect showSelect = Utils.infoMostrarSiSelecciona(auxAnswer);
+                    ShowSelect showSelect = Utils.infoShowSelect(auxAnswer);
                     if (showSelect !=null) {
                         List<ShowQuestionnaires> showQuestionnaires = showSelect.getQuestionnaires();
                         if (!Utils.isEmpty(showQuestionnaires)) {
@@ -217,7 +217,7 @@ public abstract class WidgetFragment extends Fragment {
                         //Logica para eliminar preguntas registradas en encuestaRespuesta al ocultar las preguntas que dependen
                         if (surveyRecordId > CustomConstants.LONG_0L) {
                             Executors.newSingleThreadExecutor().execute(() -> {
-                                privateSurveyService.eliminarEncuestaRegistroByPreguntaId(surveyRecordId, question.getQuestionId());
+                                privateSurveyService.deleteSurveyRecordByQuestionId(surveyRecordId, question.getQuestionId());
                             });
                         }
                     }
@@ -276,7 +276,7 @@ public abstract class WidgetFragment extends Fragment {
     private void deleteAnswer(Long surveyRecordId, Long answerId, String answer){
         if (surveyRecordId > CustomConstants.LONG_0L) {
             Executors.newSingleThreadExecutor().execute(() -> {
-                privateSurveyService.eliminarEncuestaRegistroByPregtIdAndResp(surveyRecordId, answerId, answer);
+                privateSurveyService.deleteSurveyRecordByQuestionIdAndAnswer(surveyRecordId, answerId, answer);
             });
         }
     }

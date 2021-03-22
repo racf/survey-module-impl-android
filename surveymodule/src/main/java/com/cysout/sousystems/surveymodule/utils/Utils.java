@@ -105,154 +105,6 @@ public class Utils {
         preferences.edit().remove(preferenceKey).commit();
     }
 
-    public static boolean isValidCURP( String curp, int option){
-        boolean status = false;
-        if( curp.trim().length() == 18) {
-            int divisor = 10;
-            String pattern = "^([a-zA-Z]{4})([0-9]{6})(H|M{1})([a-zA-Z]{2})([a-zA-Z]{3})([a-kA-K0-9]{1})([0-9]{1})$";
-            // Create a Pattern object
-            Pattern r = Pattern.compile(pattern);
-            // Now create matcher object.
-            Matcher m = r.matcher(curp);
-            if (m.find()) {
-                String dateCurp = m.group(2);
-                isValidDateByCurp(dateCurp);
-                status = true;
-            } else {
-                status = false;
-            }
-        } else  {
-            status = false;
-        }
-
-        return status;
-    }
-
-    public static boolean isValidDateByCurp( String dateCurp ){
-        System.out.println(dateCurp);
-        return true;
-    }
-
-   /* public static void main(String []srg){
-        System.out.println(isValidCURP("RACF910228HGRMPR02", 1));
-    }*/
-
-
-    /**
-     * Método que verifica si la INE es valida
-     * @param ife clave del INE
-     * @param option Si la opción es 1 solo verifica el formato del INE y la logitud, en caso contrarío
-     *               si es un numero diferente verifica el formato del INE, la logitud y el número verificador del INE.
-     * @return retorna verdadero(true) si la validación es correcta en caso contrarío retorna falso(false).
-     */
-    public static boolean isValidIFE( String ife, int option){
-        boolean status = false;
-        if( ife.trim().length() == 18) {
-            int divisor = 10;
-            //String pattern = "/^([a-zA-Z]{6})([0-9]{6})([0-9]{2})(H|M{1})([0-9]{1})([0-9]{2})$/i";
-            String pattern = "^([a-zA-Z]{6})([0-9]{6})([0-9]{2})(H|M{1})([0-9]{1})([0-9]{2})$";
-            // Create a Pattern object
-            Pattern r = Pattern.compile(pattern);
-            // Now create matcher object.
-            Matcher m = r.matcher(ife);
-            if (m.find()) {
-                if (option != 1) {
-                    String claveTrunc = m.group(1).concat(m.group(2)).concat(m.group(3));
-                    String noVerif = m.group(5);
-                    int pos = 1;
-                    int suma = 0;
-                    for (int i = 0; i < claveTrunc.trim().length(); i++) {
-                        suma = suma + numera(claveTrunc.charAt(i) + "", pos);
-                        pos++;
-                    }
-                    int mod = ((suma % divisor) + divisor) % divisor;
-                    int verif = divisor - mod;
-                    if (verif == 10) {
-                        verif = 0;
-                    }
-
-                    if (verif == Integer.parseInt(noVerif)) {
-                        status = true;
-                    } else {
-                        status = false;
-                    }
-                } else {
-                    status = true;
-                }
-            } else {
-                status = false;
-            }
-        }
-        return status;
-    }
-
-    /**
-     * Método que obtiene el numero que se utiliza para obtener el número verificador del INE.
-     * @param val, letra de la cadena que permite verificar el INE.
-     * @param pos, posición de cada letra de la cadena de verificación.
-     * @return número para el calculo del numero verificador.
-     */
-    private static int numera(String val, int pos){
-        int mult = 0;
-        int valorConv = 0;
-        if ((pos % 2) == 0) {
-            mult = -3;
-        } else {
-            mult = 3;
-        }
-        String patternNumber = "^\\-{0,1}(?:[0-9]+){0,1}(?:\\.[0-9]+){0,1}$";
-        // Create a Pattern object
-        Pattern r = Pattern.compile(patternNumber);
-        // Now create matcher object.
-        Matcher m = r.matcher(val);
-        if(m.find()){
-            valorConv = Integer.parseInt(val);
-            //System.out.println("NUMBER "+valorConv * mult);
-        }else {
-            valorConv = letterEnumeration(val);
-            //System.out.println("LETRA "+valorConv * mult);
-        }
-        return valorConv * mult;
-    }
-
-    /**
-     * Método que obtiene el número que le corresponde a una determinada letra del alfabeto
-     * @param letter, letra del alfabeto
-     * @return el número de una determianda letra.
-     */
-    private static int letterEnumeration(String letter){
-        switch (letter.toUpperCase()){
-            case "A": return 1;
-            case "B": return 2;
-            case "C": return 3;
-            case "D": return 4;
-            case "E": return 5;
-            case "F": return 6;
-            case "G": return 7;
-            case "H": return 8;
-            case "I": return 9;
-            case "J": return 10;
-            case "K": return 11;
-            case "L": return 12;
-            case "M": return 13;
-            case "N": return 14;
-            case "O": return 15;
-            case "P": return 16;
-            case "Q": return 17;
-            case "R": return 18;
-            case "S": return 19;
-            case "T": return 20;
-            case "U": return 21;
-            case "V": return 22;
-            case "W": return 23;
-            case "X": return 24;
-            case "Y": return 25;
-            case "Z": return 26;
-            default: return 0;
-        }
-
-    }
-
     /**
      * Método que genera el UUID (Universally Unique Identifier)
      * @return el identificador.
@@ -262,38 +114,6 @@ public class Utils {
         String randomUUIDString = uuid.toString().concat("d.0");
         return randomUUIDString;
     }
-
-    /*public static List<CatEncuestaTipo> listCatEncuestaTipo(){
-        List<CatEncuestaTipo> list = new ArrayList<>();
-        list.add(getCatEncuestaTipo(1,"Única", "Este tipo de encuesta solo se aplica una sola vez"));
-        list.add(getCatEncuestaTipo(2,"Libre multiple", "Este tipo de encuesta generará una nueva encuesta cada vez que se aplique"));
-        list.add(getCatEncuestaTipo(3,"Libre única", "Este tipo de encuesta es única y cada vez que se aplique se generará el historial de las respuestas"));
-        return list;
-    }
-
-    public static List<CatEncuestaEstatus> listCatEncuestaEstatus(){
-        List<CatEncuestaEstatus> list = new ArrayList<>();
-        list.add(getCatEncuestaEstatus(1,"Terminada", "Encuesta terminada localmente"));
-        list.add(getCatEncuestaEstatus(2,"Pendiente", "Encuesta en proceso"));
-        list.add(getCatEncuestaEstatus(3,"Enviada", "Encuesta guardada en el servidor"));
-        return list;
-    }
-
-    public static CatEncuestaTipo getCatEncuestaTipo (Integer id, String nombre, String descripcion){
-        CatEncuestaTipo cat = new CatEncuestaTipo();
-        cat.setCatEncuestaTipoId(id);
-        cat.setNombre(nombre);
-        cat.setDescripcion(descripcion);
-        return cat;
-    }
-
-    public static CatEncuestaEstatus getCatEncuestaEstatus(Integer id, String nombre, String descripcion){
-        CatEncuestaEstatus cat = new CatEncuestaEstatus();
-        cat.setCatEncuestaEstatusId(id);
-        cat.setNombre(nombre);
-        cat.setDescripcion(descripcion);
-        return cat;
-    }*/
 
     public static ArrayList<Survey> convertJsonToObjectSurveys(String surveys){
         Gson gson = new Gson();
@@ -1007,7 +827,7 @@ public class Utils {
         // encuesta.setJson(json);
         return survey;
     }
-    public static SurveyRecord getEncuestaRegistro(Survey survey, Integer catEncuestaEstatusId, String fechaInicial, String fechaFinal){
+    public static SurveyRecord getSurveyRecord(Survey survey, Integer catEncuestaEstatusId, String fechaInicial, String fechaFinal){
         SurveyRecord surveyRecord = new SurveyRecord();
         surveyRecord.setSurveyId(survey.getSurveyId());
         surveyRecord.setSurveyStatus(catEncuestaEstatusId);
@@ -1015,7 +835,7 @@ public class Utils {
         surveyRecord.setEndDate(fechaFinal);
         return surveyRecord;
     }
-    public static SurveyAnswer getEncuestaRespuesta(Questionnaire questionnaire,
+    public static SurveyAnswer getSurveyAnswer(Questionnaire questionnaire,
                                                     Question question, String respuesta, Long encuestaRegistroId){
         SurveyAnswer surveyAnswer = new SurveyAnswer();
         surveyAnswer.setSurveyRecordId(encuestaRegistroId);
@@ -1026,7 +846,7 @@ public class Utils {
         return surveyAnswer;
     }
 
-    public static ShowSelect infoMostrarSiSelecciona(Answer answer){
+    public static ShowSelect infoShowSelect(Answer answer){
         ShowSelect showSelect = null;
         if(!Utils.isEmpty(answer.getShowSelect())){
             if( !Utils.isEmpty(answer.getShowSelect().getQuestionnaires()) || !Utils.isEmpty(answer.getShowSelect().getQuestions())

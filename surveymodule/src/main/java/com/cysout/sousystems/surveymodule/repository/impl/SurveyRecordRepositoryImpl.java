@@ -36,8 +36,8 @@ public class SurveyRecordRepositoryImpl implements SurveyRecordRepository {
     }
 
     @Override
-    public Long insert(SurveyRecord encuestaRegistro) {
-        return this.surveyRecordDao.insert(encuestaRegistro);
+    public Long insert(SurveyRecord surveyRecord) {
+        return this.surveyRecordDao.insert(surveyRecord);
     }
 
     @Override
@@ -46,8 +46,8 @@ public class SurveyRecordRepositoryImpl implements SurveyRecordRepository {
     }
 
     @Override
-    public void update(SurveyRecord encuestaRegistro) {
-        this.surveyRecordDao.update(encuestaRegistro);
+    public void update(SurveyRecord surveyRecord) {
+        this.surveyRecordDao.update(surveyRecord);
     }
 
     @Override
@@ -66,73 +66,73 @@ public class SurveyRecordRepositoryImpl implements SurveyRecordRepository {
     }
 
     @Override
-    public LiveData<List<SurveyRecord>> loadByEncuestaId(Long encuestaId) {
-        return this.surveyRecordDao.loadByEncuestaId(encuestaId);
+    public LiveData<List<SurveyRecord>> loadBySurveyId(Long surveyId) {
+        return this.surveyRecordDao.loadBySurveyId(surveyId);
     }
 
     @Override
-    public List<SurveyRecord> loadByEncuestaIdSync(Long encuestaId) {
-        return this.surveyRecordDao.loadByEncuestaIdSync(encuestaId);
+    public List<SurveyRecord> loadBySurveyIdSync(Long surveyId) {
+        return this.surveyRecordDao.loadBySurveyIdSync(surveyId);
     }
 
     @Override
-    public SurveyRecord encuestaRegistro(Long encuestaId) {
-        return this.surveyRecordDao.encuestaRegistro(encuestaId);
+    public SurveyRecord surveyRecord(Long surveyId) {
+        return this.surveyRecordDao.surveyRecord(surveyId);
     }
 
     @Override
-    public SurveyRecord encuestaRegistroByEncuestaIdAndCatEncuestaEstatusId(Long encuestaId, Integer catEncuestaEstatusId) {
-        return this.surveyRecordDao.encuestaRegistroByEncuestaIdAndCatEncuestaEstatusId(encuestaId, catEncuestaEstatusId);
+    public SurveyRecord surveyRecord(Long surveyId, Integer surveyStatus) {
+        return this.surveyRecordDao.surveyRecord(surveyId, surveyStatus);
     }
 
     @Override
-    public LiveData<List<SurveyRecord>> loadByEncuestaIdAndCatEncuestaEstatusId(Long encuestaId, Integer catEncuestaEstatusId) {
-        return this.surveyRecordDao.loadByEncuestaIdAndCatEncuestaEstatusId(encuestaId, catEncuestaEstatusId);
+    public LiveData<List<SurveyRecord>> loadBySurveyIdAndSurveyStatus(Long surveyId, Integer surveyStatus) {
+        return this.surveyRecordDao.loadBySurveyIdAndSurveyStatus(surveyId, surveyStatus);
     }
 
     @Override
-    public List<SurveyRecord> loadByEncuestaIdAndCatEncuestaEstatusIdSync(Long encuestaId, Integer catEncuestaEstatusId) {
-        return this.surveyRecordDao.loadByEncuestaIdAndCatEncuestaEstatusIdSync(encuestaId, catEncuestaEstatusId);
+    public List<SurveyRecord> loadBySurveyIdAndSurveyStatusSync(Long surveyId, Integer surveyStatus) {
+        return this.surveyRecordDao.loadBySurveyIdAndSurveyStatusSync(surveyId, surveyStatus);
     }
 
     @Override
-    public void updateEncuestaRegistroByEnctRegtroId(Integer catEncuestaEstatusId, Long encuestaRegistroId) {
-        this.surveyRecordDao.updateEncuestaRegistroByEnctRegtroId(catEncuestaEstatusId, encuestaRegistroId);
+    public void update(Integer surveyStatus, Long surveyRecordId) {
+        this.surveyRecordDao.update(surveyStatus, surveyRecordId);
     }
 
     @Override
-    public void updateEncuestaRegistroByEnctRegtroId(Integer catEncuestaEstatusId, String fechaFinal, Long encuestaRegistroId) {
-        this.surveyRecordDao.updateEncuestaRegistroByEnctRegtroId(catEncuestaEstatusId, fechaFinal, encuestaRegistroId);
+    public void update(Integer surveyStatus, String endDate, Long surveyRecordId) {
+        this.surveyRecordDao.update(surveyStatus, endDate, surveyRecordId);
     }
 
     @Override
-    public LiveData<SurveyRecordAnswers> loadRegistroRespByEnctRegtroId(Long encuestaRegistroId) {
-        return this.surveyRecordDao.loadRegistroRespByEnctRegtroId(encuestaRegistroId);
+    public LiveData<SurveyRecordAnswers> surveyRecordAnswers(Long surveyRecordId) {
+        return this.surveyRecordDao.surveyRecordAnswers(surveyRecordId);
     }
 
     @Override
-    public SurveyRecordAnswers loadRegistroRespByEnctRegtroIdSync(Long encuestaRegistroId) {
-        return this.surveyRecordDao.loadRegistroRespByEnctRegtroIdSync(encuestaRegistroId);
+    public SurveyRecordAnswers surveyRecordAnswersSync(Long surveyRecordId) {
+        return this.surveyRecordDao.surveyRecordAnswersSync(surveyRecordId);
     }
 
     @Override
-    public LiveData<List<SurveyRecordAnswers>> loadRegistrosRespByEnctRegtroId(Long encuestaRegistroId) {
-        return this.surveyRecordDao.loadRegistrosRespByEnctRegtroId(encuestaRegistroId);
+    public LiveData<List<SurveyRecordAnswers>> loadBySurveyRecordId(Long surveyRecordId) {
+        return this.surveyRecordDao.loadBySurveyRecordId(surveyRecordId);
     }
 
     @Override
-    public List<SurveyRecordAnswers> loadRegistrosRespByEnctRegtroIdSync(Long encuestaRegistroId) {
-        return this.surveyRecordDao.loadRegistrosRespByEnctRegtroIdSync(encuestaRegistroId);
+    public List<SurveyRecordAnswers> loadBySurveyRecordIdSync(Long surveyRecordId) {
+        return this.surveyRecordDao.loadBySurveyRecordIdSync(surveyRecordId);
     }
 
     @Override
-    public LiveData<List<SurveyRecordAnswers>> loadRegistrosRespuestasByEstatus(Integer catEncuestaEstatusId) {
-        return this.surveyRecordDao.loadRegistrosRespuestasByEstatus(catEncuestaEstatusId);
+    public LiveData<List<SurveyRecordAnswers>> loadBySurveyStatus(Integer surveyStatus) {
+        return this.surveyRecordDao.loadBySurveyStatus(surveyStatus);
     }
 
     @Override
-    public List<SurveyRecordAnswers> loadRegistrosRespuestasByEstatusSync(Integer catEncuestaEstatusId) {
-        return this.surveyRecordDao.loadRegistrosRespuestasByEstatusSync(catEncuestaEstatusId);
+    public List<SurveyRecordAnswers> loadBySurveyStatusSync(Integer surveyStatus) {
+        return this.surveyRecordDao.loadBySurveyStatusSync(surveyStatus);
     }
 
 }
