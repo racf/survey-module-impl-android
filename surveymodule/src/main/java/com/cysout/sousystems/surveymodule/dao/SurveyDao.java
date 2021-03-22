@@ -82,32 +82,32 @@ public interface SurveyDao {
 
     @Transaction
     @Query("SELECT survey.*, er.* FROM Survey INNER JOIN surveyRecord er ON Survey.surveyId = er.surveyIdFK " +
-            "WHERE er.surveyStatus = "+ CustomConstants.TERMINADA)
+            "WHERE er.surveyStatus = "+ CustomConstants.FINISHED)
     LiveData<List<SurveyRecords>> loadSurveyCompleted();
 
     @Transaction
     @Query("SELECT survey.*, er.* FROM Survey INNER JOIN surveyRecord er ON Survey.surveyId = er.surveyIdFK " +
-            "WHERE er.surveyStatus = "+ CustomConstants.TERMINADA)
+            "WHERE er.surveyStatus = "+ CustomConstants.FINISHED)
     List<SurveyRecords> loadSurveyCompletedSync();
 
     @Transaction
     @Query("SELECT survey.*, er.* FROM Survey INNER JOIN surveyRecord er ON Survey.surveyId = er.surveyIdFK " +
-            "WHERE er.surveyStatus = "+ CustomConstants.PENDIENTE)
+            "WHERE er.surveyStatus = "+ CustomConstants.PENDING)
     LiveData<List<SurveyRecords>> loadSurveyPending();
 
     @Transaction
     @Query("SELECT survey.*, er.* FROM Survey INNER JOIN surveyRecord er ON Survey.surveyId = er.surveyIdFK " +
-            "WHERE er.surveyStatus = "+ CustomConstants.PENDIENTE)
+            "WHERE er.surveyStatus = "+ CustomConstants.PENDING)
     List<SurveyRecords> loadSurveyPendingSync();
 
     @Transaction
     @Query("SELECT survey.*, er.* FROM Survey INNER JOIN surveyRecord er ON Survey.surveyId = er.surveyIdFK " +
-            "WHERE er.surveyStatus = "+ CustomConstants.ENVIADA)
+            "WHERE er.surveyStatus = "+ CustomConstants.UPLOADED)
     LiveData<List<SurveyRecords>> loadSurveySent();
 
     @Transaction
     @Query("SELECT survey.*, er.* FROM Survey INNER JOIN surveyRecord er ON Survey.surveyId = er.surveyIdFK " +
-            "WHERE er.surveyStatus = "+ CustomConstants.ENVIADA)
+            "WHERE er.surveyStatus = "+ CustomConstants.UPLOADED)
     List<SurveyRecords> loadSurveySentSync();
 
 

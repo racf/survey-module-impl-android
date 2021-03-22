@@ -7,6 +7,13 @@
     Minimum version 16 (Android 4.1 - Jelly Bean)
 
 ## Features
+- The answer of a certain question (RadioGroup, Checkbox, Select) can display a set of questions.
+- The answer of a certain question (RadioGroup, Checkbox, Select) can hide a set of questions.
+- The answer to a certain question can show a set of answers to another question.
+- The answer to a certain question can end the survey.
+- The questionnaire is concluded until the mandatory questions are answered.
+- If you return to a questionnaire, the previous data is loaded.
+-The survey is updated if the value of the versionCode attribute changes.
 
 ## Download this project
 
@@ -16,6 +23,16 @@
 1. From the menu bar, click **File** -> **Import module...**
 2. Navigate to the **surveymoduleimplandroid**
 3. Select the **surveymodule** and click **Finish**
+4. From the menu bar, click **File** -> **Project Structure...**
+5. Select the menu **Dependencies**
+6. Select the **app** folder
+7. Click on the **add dependency** button (+)
+8. Click the menu **module dependency**
+9. Select the module **surveymodule** and click **Ok**
+10. Click **Apply** and click **Ok**
+
+The image shows the **surveymodule** in the project dependencies:
+![SurveyModule](module-dependency.png)
 
 ## Implementation in a project
 

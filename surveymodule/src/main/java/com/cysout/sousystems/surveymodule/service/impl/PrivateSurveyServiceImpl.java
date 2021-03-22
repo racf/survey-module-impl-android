@@ -52,26 +52,30 @@ public class PrivateSurveyServiceImpl extends AndroidViewModel implements Privat
     }
 
     @Override
-    public Long encuestaRespuesta(Survey survey, Questionnaire questionnaire, Question question, String respuesta, Long encuestaRegistroId) {
-        Long encuestaRespuestaId = 0L;
-        SurveyAnswer surveyAnswer = Utils.getEncuestaRespuesta(questionnaire, question,respuesta, encuestaRegistroId);
-        Log.i(CustomConstants.TAG_LOG, "encuestaRespuesta() "+ surveyAnswer.toString());
-        if( surveyAnswer.getType().equalsIgnoreCase(CustomConstants.TEXT) || surveyAnswer.getType().equalsIgnoreCase(CustomConstants.SELECT)){
-            Log.i(CustomConstants.TAG_LOG, "ENTRO TIPO "+ surveyAnswer.getType());
-            SurveyAnswer surveyAnswerResult = this.surveyAnswerDao.surveyAnswerByRegistroIdAndPregIdSync(encuestaRegistroId, question.getQuestionId());
+    public Long encuestaRespuesta(Survey survey, Questionnaire questionnaire, Question question, String answer, Long surveyRecordId) {
+        Long surveyAnswerId = 0L;
+        SurveyAnswer surveyAnswer = Utils.getEncuestaRespuesta(questionnaire, question, answer, surveyRecordId);
+        Log.i(CustomConstants.TAG_LOG, "PrivateSurveyServiceImpl - encuestaRespuesta");
+        Log.i(CustomConstants.TAG_LOG, surveyAnswer.toString());
+        //Validamos las preguntas que solo pueden tener una sola respuesta (text, radiogroup and select)
+        if( surveyAnswer.getType().equalsIgnoreCase(CustomConstants.TEXT) || surveyAnswer.getType().equalsIgnoreCase(CustomConstants.SELECT)
+                || surveyAnswer.getType().equalsIgnoreCase(CustomConstants.RADIOGROUP)){
+            SurveyAnswer surveyAnswerResult = this.surveyAnswerDao.surveyAnswerByRegistroIdAndPregIdSync(surveyRecordId, question.getQuestionId());
+            //Validamos si ya se ha contestado la pregunta
+            //Si existe solo se actualiza la informacion
+            //Caso contrarío se inserta la pregunta con su respuesta
             if( surveyAnswerResult != null ) {
                 surveyAnswerResult.setAnswer(surveyAnswer.getAnswer());
                 this.surveyAnswerDao.update(surveyAnswerResult);
-                Log.i(CustomConstants.TAG_LOG, "ENTRO ACTUALIZA "+ surveyAnswer.getType()+": "+ surveyAnswerResult.toString());
             } else {
-                encuestaRespuestaId = this.surveyAnswerDao.insert(surveyAnswer);
-                Log.i(CustomConstants.TAG_LOG, "ENTRO CREA "+ surveyAnswer.getType()+": "+ surveyAnswer.toString());
+                surveyAnswerId = this.surveyAnswerDao.insert(surveyAnswer);
             }
         }else {
-            encuestaRespuestaId = this.surveyAnswerDao.insert(surveyAnswer);
-            Log.i(CustomConstants.TAG_LOG, "ENTRO CREA "+ surveyAnswer.toString());
+            //Eliminar registros si esque existen e insertar nuevamente
+            this.surveyAnswerDao.delete(surveyRecordId, surveyAnswer.getQuestionnaireId(), surveyAnswer.getQuestionId(), answer);
+            surveyAnswerId = this.surveyAnswerDao.insert(surveyAnswer);
         }
-        return encuestaRespuestaId;
+        return surveyAnswerId;
     }
 
     @Override
