@@ -6,6 +6,8 @@ import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.app.Activity;
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -25,6 +27,7 @@ public class MainActivity extends AppCompatActivity {
     private RecyclerView recyclerView;
     private RecyclerView.LayoutManager layoutManager;
     private SurveyAdapter adapter;
+    private Activity activity;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -41,6 +44,7 @@ public class MainActivity extends AppCompatActivity {
         surveyService = new ViewModelProvider(this).get(SurveyServiceImpl.class);
         recyclerView = findViewById(R.id.recyclerViewSurveys);
         layoutManager = new LinearLayoutManager(this);
+        activity = this;
     }
 
     private void actionRecyclerView(){
@@ -58,7 +62,9 @@ public class MainActivity extends AppCompatActivity {
 
                     @Override
                     public void btnOnClick(View v, Survey survey, int position) {
-                        Utils.startNewSurvey(getApplicationContext(), survey);
+                      //  Utils.startNewSurvey(getApplicationContext(), survey);
+
+                        Utils.startNewSurvey(getApplicationContext(), activity, survey);
                         //Utils.startNewSurvey(getApplicationContext(), activity, encuesta);
                     }
                 });
@@ -70,25 +76,24 @@ public class MainActivity extends AppCompatActivity {
 
     public void saveSurveys(String surveys) {
         surveyService.saveSurveys(surveys);
-       // Log.i(CustomConstants.TAG_LOG, "Ejecuto --- "+surveyService.saveSurveys(surveys));
-        Executors.newSingleThreadExecutor().execute(() -> {
+        /*Executors.newSingleThreadExecutor().execute(() -> {
             for (Survey survey : surveyService.loadAllSurveysSync()) {
                 Log.i(CustomConstants.TAG_LOG, "DATA Front: " + survey.toString());
             }
-        });
+        });*/
     }
 
-   /* @Override
+   @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         if (requestCode == CustomConstants.QUESTIONNAIRES_REQUEST) {
             if (resultCode == RESULT_OK) {
                 String surveyResponses = data.getStringExtra(CustomConstants.SURVEY_RESPONSE);
-                Log.i(CustomConstants.TAG_LOG+" FINAL: ", surveyResponses);
+                Log.i(CustomConstants.TAG_LOG+" RESULT ", surveyResponses);
                 //Toast.makeText(this, getString(R.string.terminar_encuesta), Toast.LENGTH_LONG).show();
             }
         }
-    }*/
+    }
 
 
 }

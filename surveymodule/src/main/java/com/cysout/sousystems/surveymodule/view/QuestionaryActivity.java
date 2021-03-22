@@ -384,14 +384,14 @@ public class QuestionaryActivity extends AppCompatActivity{
     private void surveyResponse(){
         Executors.newSingleThreadExecutor().execute(() -> {
             Long surveyRecordId = Utils.findPreferenceLong(getApplicationContext(), CustomConstants.PREFERENCE_NAME_CUESTIONARIO, CustomConstants.CUESTIONARIO_REGISTRO_ID);
-            SurveyRecordAnswers surveyRecordAnswers = privateSurveyService.encuentaFinaliza(surveyRecordId, CustomConstants.TERMINADA, Utils.dateTime());
-            Log.i(CustomConstants.TAG_LOG, "RETURN INFO QUESTIONARY : "+ surveyRecordAnswers.getSurveyRecord().toString());
+            SurveyRecordAnswers surveyRecordAnswers = privateSurveyService.encuentaFinaliza(surveyRecordId, CustomConstants.FINISHED, Utils.dateTime());
+           // Log.i(CustomConstants.TAG_LOG, "RETURN INFO QUESTIONARY : "+ surveyRecordAnswers.getSurveyRecord().toString());
             Intent returnIntent = new Intent();
             ResponseMessageDto responseMessage = new ResponseMessageDto(CustomConstants.MESSAGE_SURVEY_RESPONSE, "", CustomConstants.CODE_200,
                     getString(R.string.message_finished_survey), surveyRecordAnswers);
             String responseMessageString = Utils.convertirObjToJson(responseMessage);
             returnIntent.putExtra(CustomConstants.SURVEY_RESPONSE, responseMessageString);
-            Log.i(CustomConstants.TAG_LOG, responseMessageString);
+            //Log.i(CustomConstants.TAG_LOG, responseMessageString);
             //returnIntent.setData(Uri.parse(encuestaRegistroRespuestas));
             setResult(Activity.RESULT_OK, returnIntent);
             //Limpiamos la preferencia del identificador del Cuestionario Registro.

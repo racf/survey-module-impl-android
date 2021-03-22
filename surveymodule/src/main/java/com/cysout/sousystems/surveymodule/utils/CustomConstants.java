@@ -53,14 +53,14 @@ public class CustomConstants {
     public static final String WEIGHT_SIGN = "$";
 
     //Tag general de la aplicación
-    public static final String TAG_LOG = "TAG_ENCUESTA";
+    public static final String TAG_LOG = "TAG_SURVEY";
 
     //Formato de fechas
     public static final String DATE_TIME_FORMAT = "yyyy-MM-dd HH:mm:ss";
 
     // Database
-    public static final String DATABASE_NAME = "encuesta";
-    public static final int DATABASE_VERSION = 4;
+    public static final String DATABASE_NAME = "survey";
+    public static final int DATABASE_VERSION = 1;
 
     // Estados
     public static Integer ENCUESTA_TERMINADA = 1;
@@ -93,9 +93,9 @@ public class CustomConstants {
     public static final int LIBRE_UNICA = 3; //Este tipo de encuesta es única y cada vez que se aplique se generará el historial de las respuestas
 
     //CatEncuestaEstatus
-    public static final int TERMINADA = 1; //Encuesta terminada localmente
-    public static final int PENDIENTE = 2; //Encuesta en proceso
-    public static final int ENVIADA = 3; // Encuesta guardada en el servidor
+    public static final int FINISHED = 1; //Encuesta terminada localmente
+    public static final int PENDING = 2; //Encuesta en proceso
+    public static final int UPLOADED = 3; // Encuesta guardada en el servidor
 
     //Message types
     public static final String MESSAGE_SURVEY_RESPONSE = "SurveyResponse";

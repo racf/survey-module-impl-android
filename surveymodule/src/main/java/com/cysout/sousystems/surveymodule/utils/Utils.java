@@ -1078,6 +1078,12 @@ public class Utils {
         context.startActivity(intent);
     }
 
+    public static void startNewSurvey(Context context, Activity activity, Survey survey){
+        Intent intent = new Intent(context, QuestionaryActivity.class);
+        intent.putExtra(CustomConstants.SURVEY_KEY, survey);
+        activity.startActivityForResult(intent, CustomConstants.QUESTIONNAIRES_REQUEST);
+    }
+
     /*public static void startOldSurvey(Context context, Activity activity, Survey survey, EncuestaRegistro registrationSurvey){
         Intent intent = new Intent(context, QuestionaryActivity.class);
         intent.putExtra(CustomConstants.SURVEY_KEY, survey);
