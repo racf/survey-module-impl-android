@@ -2,7 +2,6 @@ package com.cysout.sousystems.surveymodule.fragment;
 
 import android.os.Bundle;
 
-import androidx.fragment.app.Fragment;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 
@@ -19,25 +18,37 @@ import java.util.List;
 import java.util.concurrent.Executors;
 
 import com.cysout.sousystems.surveymodule.R;
-import com.cysout.sousystems.surveymodule.entity.Cuestionario;
-import com.cysout.sousystems.surveymodule.entity.Encuesta;
-import com.cysout.sousystems.surveymodule.entity.EncuestaRespuesta;
-import com.cysout.sousystems.surveymodule.entity.Pregunta;
-import com.cysout.sousystems.surveymodule.entity.Respuesta;
-import com.cysout.sousystems.surveymodule.service.EncuestaService;
-import com.cysout.sousystems.surveymodule.service.impl.EncuestaServiceImpl;
+import com.cysout.sousystems.surveymodule.entity.Answer;
+import com.cysout.sousystems.surveymodule.entity.Questionnaire;
+import com.cysout.sousystems.surveymodule.entity.Survey;
+import com.cysout.sousystems.surveymodule.entity.SurveyAnswer;
+import com.cysout.sousystems.surveymodule.entity.Question;
+import com.cysout.sousystems.surveymodule.service.PrivateSurveyService;
+import com.cysout.sousystems.surveymodule.service.impl.PrivateSurveyServiceImpl;
 import com.cysout.sousystems.surveymodule.utils.CustomConstants;
 import com.cysout.sousystems.surveymodule.utils.Utils;
 
 /**
- * A simple {@link Fragment} subclass.
- */
+* Copyright 2021 CysOut Solutions and SouSystems
+*
+* Licensed under the Apache License, Version 2.0 (the "License");
+* you may not use this file except in compliance with the License.
+* You may obtain a copy of the License at
+*
+*      http://www.apache.org/licenses/LICENSE-2.0
+*
+* Unless required by applicable law or agreed to in writing, software
+* distributed under the License is distributed on an "AS IS" BASIS,
+* WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+* See the License for the specific language governing permissions and
+* limitations under the License.
+**/
 public class SpinnerFragment extends WidgetFragment {
     private Spinner spinnerCustom;
     SpinnerAdapter adapter;
-    Respuesta respuesta = null;
+    Answer answer = null;
 
-    private EncuestaService encuestaService;
+    private PrivateSurveyService privateSurveyService;
     public SpinnerFragment() {
         // Required empty public constructor
     }
@@ -49,7 +60,7 @@ public class SpinnerFragment extends WidgetFragment {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_spinner, container, false);
         //Cargamos el servicio para gestionar encuestas
-        this.encuestaService = new ViewModelProvider(this).get(EncuestaServiceImpl.class);
+        this.privateSurveyService = new ViewModelProvider(this).get(PrivateSurveyServiceImpl.class);
         bindView(view);
         return view;
     }
@@ -66,19 +77,17 @@ public class SpinnerFragment extends WidgetFragment {
      * @param selectedAnswer Respuesta seleccionada en el orden que se mostrara el Spinner, si es null
      *                       la información se mostrara de manera por default
      */
-    private void loadSpinner(List<Respuesta> answers, Respuesta selectedAnswer){
+    private void loadSpinner(List<Answer> answers, Answer selectedAnswer){
         int listSize = answers.size();
         if( selectedAnswer != null ) {
             answers.remove(selectedAnswer);
             answers.add(0, selectedAnswer);
-            if( answers.get(listSize-1).getRespuestaId() != CustomConstants.LONG_0L){
-                Log.i(CustomConstants.TAG_LOG, "AGREGO DEFAULT 1");
-                answers.add(listSize, Utils.getRespuestaSpinnerDefault(getContext()));
+            if( answers.get(listSize-1).getAnswerId() != CustomConstants.LONG_0L){
+                answers.add(listSize, Utils.getAnswerSpinnerDefault(getContext()));
             }
         } else {
-            if( answers.get(CustomConstants.INT_0).getRespuestaId() != CustomConstants.LONG_0L){
-                Log.i(CustomConstants.TAG_LOG, "AGREGO DEFAULT 2");
-                answers.add(CustomConstants.INT_0, Utils.getRespuestaSpinnerDefault(getContext()));
+            if( answers.get(CustomConstants.INT_0).getAnswerId() != CustomConstants.LONG_0L){
+                answers.add(CustomConstants.INT_0, Utils.getAnswerSpinnerDefault(getContext()));
             }
         }
         adapter = new com.cysout.sousystems.surveymodule.adapter.SpinnerAdapter(getContext(), R.layout.spinner_item_layout, answers);
@@ -88,8 +97,8 @@ public class SpinnerFragment extends WidgetFragment {
             public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
                 if( view != null ){
                     TextView tvTitleSpinner = view.findViewById(R.id.tvTitleSpinner);
-                    respuesta = (Respuesta) tvTitleSpinner.getTag();
-                    Log.i(CustomConstants.TAG_LOG, "SpinnerFragment - SELECTED "+respuesta.toString());
+                    answer = (Answer) tvTitleSpinner.getTag();
+                    Log.i(CustomConstants.TAG_LOG, "SpinnerFragment-loadSpinner-SELECTED "+ answer.toString());
                 }
             }
 
@@ -99,64 +108,62 @@ public class SpinnerFragment extends WidgetFragment {
         });
     }
     @Override
-    public boolean load(Cuestionario cuestionario, Pregunta pregunta) {
+    public boolean load(Questionnaire questionnaire, Question question) {
         //boolean status = false;
-        Log.i(CustomConstants.TAG_LOG, "SpinnerFragment - load(Cuestionario cuestionario, Pregunta pregunta)");
-        Long encuestaRegistroId = Utils.findPreferenceLong(getContext(), CustomConstants.PREFERENCE_NAME_CUESTIONARIO, CustomConstants.CUESTIONARIO_REGISTRO_ID);
-        List<Respuesta> listRespuesta = pregunta.getRespuestas();
+        Log.i(CustomConstants.TAG_LOG, "SpinnerFragment - load(Questionnaire questionnaire, Question question)");
+        Long surveyRecordId = Utils.findPreferenceLong(getContext(), CustomConstants.PREFERENCE_NAME_QUESTIONNAIRE, CustomConstants.QUESTIONNAIRE_REGISTRATION_ID);
+        List<Answer> listAnswer = question.getAnswers();
         //Asignamos informacion al regresar a la encuesta anterior
-        if (encuestaRegistroId > 0L) {
-            encuestaService.encuestaRespuestaByRegistroIdAndPregId(encuestaRegistroId, pregunta.getPreguntaId()).observe(getViewLifecycleOwner(), new Observer<EncuestaRespuesta>() {
+        if (surveyRecordId > 0L) {
+            privateSurveyService.surveyAnswer(surveyRecordId, question.getQuestionId()).observe(getViewLifecycleOwner(), new Observer<SurveyAnswer>() {
                 @Override
-                public void onChanged(EncuestaRespuesta encuestaRespuesta) {
-                    if(encuestaRespuesta != null) {
-                        if(pregunta.getPreguntaId() == encuestaRespuesta.getPreguntaId()){
-                            Log.i(CustomConstants.TAG_LOG, "ORDENAR INFORMACION "+encuestaRespuesta.toString());
-                            Long respuestaId = Long.parseLong(encuestaRespuesta.getRespuesta());
+                public void onChanged(SurveyAnswer surveyAnswer) {
+                    if(surveyAnswer != null) {
+                        if(question.getQuestionId() == surveyAnswer.getQuestionId()){
+                            Log.i(CustomConstants.TAG_LOG, "Sort information"+ surveyAnswer.toString());
+                            Long answerId = Long.parseLong(surveyAnswer.getAnswer());
+                            Answer respSelected;
                             if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.N) {
-                               Respuesta respSelected = listRespuesta.stream()
-                                                .filter(resp -> resp.getRespuestaId() == respuestaId)
-                                                .findAny()
-                                                .orElse(null);
-                                loadSpinner(listRespuesta, respSelected);
+                                respSelected = listAnswer.stream()
+                                        .filter(resp -> resp.getAnswerId() == answerId)
+                                        .findAny()
+                                        .orElse(null);
                             } else {
-                                Respuesta respSelected = null;
-                                for ( Respuesta respuesta : listRespuesta ) {
-                                    if ( respuesta.getRespuestaId() == respuestaId ) {
-                                        respSelected = respuesta;
+                                respSelected = null;
+                                for ( Answer answer : listAnswer) {
+                                    if ( answer.getAnswerId() == answerId ) {
+                                        respSelected = answer;
                                         break;
                                     }
                                 }
-                                loadSpinner(listRespuesta, respSelected);
-                                Log.i(CustomConstants.TAG_LOG, "VERSIONES MENORES LOGICA ");
                             }
+                            loadSpinner(listAnswer, respSelected);
                         }
                     } else {
-                        loadSpinner(listRespuesta, null);
+                        loadSpinner(listAnswer, null);
                     }
                 }
             });
         }else {
-            loadSpinner(listRespuesta, null);
+            loadSpinner(listAnswer, null);
         }
         return true;
     }
 
     @Override
-    public boolean save(Encuesta encuesta, Cuestionario cuestionario, Pregunta pregunta, Long encuestaRegistroId) {
+    public boolean save(Survey survey, Questionnaire questionnaire, Question question, Long surveyRecordId) {
         //boolean status = false;
-        Log.i(CustomConstants.TAG_LOG, "SpinnerFragment.save()");
+        Log.i(CustomConstants.TAG_LOG, "SpinnerFragment-save()");
         //if ( spinnerCustom != null){
             Executors.newSingleThreadExecutor().execute(() -> {
-                if(respuesta != null && respuesta.getRespuestaId() > CustomConstants.LONG_0L){
-                    Log.i(CustomConstants.TAG_LOG, "RESPUESTA SpinnerFragment "+respuesta.toString());
-                    String respuestaString  = String.valueOf(respuesta.getRespuestaId());
+                if(answer != null && answer.getAnswerId() > CustomConstants.LONG_0L){
+                    Log.i(CustomConstants.TAG_LOG, "SpinnerFragment-save()-answer "+ answer.toString());
+                    String answerString  = String.valueOf(answer.getAnswerId());
                     //Logica del guardado de la información
-                    this.encuestaService.encuestaRespuesta(encuesta, cuestionario, pregunta, respuestaString, encuestaRegistroId);
+                    this.privateSurveyService.surveyAnswer(survey, questionnaire, question, answerString, surveyRecordId);
                 } else {
-                    Log.i(CustomConstants.TAG_LOG, "NO HA SELECCIONADO");
-                    if( !pregunta.getRequerido() ) {
-                        this.encuestaService.eliminarEncuestaRegistroByPreguntaId(encuestaRegistroId, pregunta.getPreguntaId());
+                    if( !question.getRequired() ) {
+                        this.privateSurveyService.deleteSurveyRecordByQuestionId(surveyRecordId, question.getQuestionId());
                     }
                 }
             });

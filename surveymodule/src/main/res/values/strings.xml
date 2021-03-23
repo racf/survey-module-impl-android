@@ -1,16 +1,12 @@
 <resources>
-    <string name="app_name">Encuestas</string>
-
-    <!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
-    <string name="seleccion_requerida">Selección requerida</string>
-    <string name="escribir_aqui_respuesta">Escribir aquí su respuesta</string>
+    <string name="app_name">SurveyModule</string>
     <string name="question_required">*</string>
-    <string name="iniciar_encuesta">INICIAR ENCUESTA</string>
-    <string name="texto_siguiente">SIGUIENTE</string>
-    <string name="texto_terminar">TERMINAR</string>
-    <string name="texto_requerido">Requerido</string>
-    <string name="mensaje_campos_requeridos">Hay preguntas requeridas sin responder</string>
-    <string name="mensaje_encuesta_finalizada">Encuesta finalizada</string>
-    <string name="spinner_mensaje_default">----Seleccione una opción----</string>
+    <string name="next">NEXT</string>
+    <string name="finish">FINISH</string>
+    <string name="back">BACK</string>
+    <string name="required">Required</string>
+    <string name="message_write_answer">Write your answer here</string>
+    <string name="message_questions_required">There are questions required</string>
+    <string name="message_finished_survey">Finished survey</string>
+    <string name="message_spinner_default">----Select an option----</string>
 </resources>

@@ -7,11 +7,11 @@
         <!-- <include android:layout_height="wrap_content" android:layout_width="match_parent"
             layout="@layout/fragment_widget"/> -->
         <TextView
-            android:id="@+id/tvCuestionarioTitulo"
+            android:id="@+id/tvQuestionnaireTitle"
             android:layout_width="match_parent"
             android:gravity="center_horizontal"
             android:layout_margin="@dimen/marginBody"
-            android:textColor="@color/gobierno_rojo"
+            android:textColor="@color/colorPrimary"
             android:textStyle="bold"
             android:textSize="20dp"
             android:layout_height="wrap_content"/>

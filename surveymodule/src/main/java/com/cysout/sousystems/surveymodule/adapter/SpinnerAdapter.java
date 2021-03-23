@@ -14,12 +14,26 @@ import androidx.annotation.Nullable;
 import java.util.List;
 
 import com.cysout.sousystems.surveymodule.R;
-import com.cysout.sousystems.surveymodule.entity.Respuesta;
-
+import com.cysout.sousystems.surveymodule.entity.Answer;
+/**
+* Copyright 2021 CysOut Solutions and SouSystems
+*
+* Licensed under the Apache License, Version 2.0 (the "License");
+* you may not use this file except in compliance with the License.
+* You may obtain a copy of the License at
+*
+*      http://www.apache.org/licenses/LICENSE-2.0
+*
+* Unless required by applicable law or agreed to in writing, software
+* distributed under the License is distributed on an "AS IS" BASIS,
+* WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+* See the License for the specific language governing permissions and
+* limitations under the License.
+**/
 public class SpinnerAdapter extends ArrayAdapter<String> {
     private final LayoutInflater mInflater;
     private final Context mContext;
-    private final List<Respuesta> items;
+    private final List<Answer> items;
     private final int mResource;
 
     public SpinnerAdapter(@NonNull Context context, @LayoutRes int resource, @NonNull List objects) {
@@ -45,9 +59,9 @@ public class SpinnerAdapter extends ArrayAdapter<String> {
     private View createItemView(int position, View convertView, ViewGroup parent){
         final View view = mInflater.inflate(mResource, parent, false);
         TextView tvTitleSpinner = view.findViewById(R.id.tvTitleSpinner);
-        Respuesta respuesta = items.get(position);
-        tvTitleSpinner.setText(respuesta.getTexto());
-        tvTitleSpinner.setTag(respuesta);
+        Answer answer = items.get(position);
+        tvTitleSpinner.setText(answer.getText());
+        tvTitleSpinner.setTag(answer);
         return view;
     }
 }

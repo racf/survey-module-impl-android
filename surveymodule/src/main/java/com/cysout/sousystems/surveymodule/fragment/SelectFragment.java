@@ -2,8 +2,6 @@ package com.cysout.sousystems.surveymodule.fragment;
 
 
 import android.os.Bundle;
-
-import androidx.fragment.app.Fragment;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 
@@ -20,29 +18,39 @@ import java.util.Map;
 import java.util.concurrent.Executors;
 
 import com.cysout.sousystems.surveymodule.R;
-import com.cysout.sousystems.surveymodule.entity.Cuestionario;
-import com.cysout.sousystems.surveymodule.entity.Encuesta;
-import com.cysout.sousystems.surveymodule.entity.EncuestaRespuesta;
-import com.cysout.sousystems.surveymodule.entity.MostrarSiSelecciona;
-import com.cysout.sousystems.surveymodule.entity.Pregunta;
-import com.cysout.sousystems.surveymodule.entity.Respuesta;
-import com.cysout.sousystems.surveymodule.service.EncuestaService;
-import com.cysout.sousystems.surveymodule.service.impl.EncuestaServiceImpl;
+import com.cysout.sousystems.surveymodule.entity.Answer;
+import com.cysout.sousystems.surveymodule.entity.Question;
+import com.cysout.sousystems.surveymodule.entity.Questionnaire;
+import com.cysout.sousystems.surveymodule.entity.ShowSelect;
+import com.cysout.sousystems.surveymodule.entity.Survey;
+import com.cysout.sousystems.surveymodule.entity.SurveyAnswer;
+import com.cysout.sousystems.surveymodule.service.PrivateSurveyService;
+import com.cysout.sousystems.surveymodule.service.impl.PrivateSurveyServiceImpl;
 import com.cysout.sousystems.surveymodule.utils.CustomConstants;
 import com.cysout.sousystems.surveymodule.utils.Utils;
 import com.cysout.sousystems.surveymodule.view.QuestionaryActivity;
 
 /**
- * A simple {@link Fragment} subclass.
- */
+* Copyright 2021 CysOut Solutions and SouSystems
+*
+* Licensed under the Apache License, Version 2.0 (the "License");
+* you may not use this file except in compliance with the License.
+* You may obtain a copy of the License at
+*
+*      http://www.apache.org/licenses/LICENSE-2.0
+*
+* Unless required by applicable law or agreed to in writing, software
+* distributed under the License is distributed on an "AS IS" BASIS,
+* WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+* See the License for the specific language governing permissions and
+* limitations under the License.
+**/
 public class SelectFragment extends WidgetFragment {
-
-   // private NestedScrollView scrollView;
     private RadioGroup radioGroup;
-    private EncuestaService encuestaService;
+    private PrivateSurveyService privateSurveyService;
 
     public SelectFragment() {
-        // Required empty public constructor
+        //
     }
 
 
@@ -52,7 +60,7 @@ public class SelectFragment extends WidgetFragment {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_select, container, false);
         //Cargamos el servicio para gestionar encuestas
-        this.encuestaService = new ViewModelProvider(this).get(EncuestaServiceImpl.class);
+        this.privateSurveyService = new ViewModelProvider(this).get(PrivateSurveyServiceImpl.class);
         bindView(view);
         return view;
     }
@@ -66,24 +74,24 @@ public class SelectFragment extends WidgetFragment {
 
 
     @Override
-    public boolean load(Cuestionario cuestionario, Pregunta pregunta) {
-        Log.i(CustomConstants.TAG_LOG, "SelectFragment - load(Cuestionario cuestionario, Pregunta pregunta)");
-        Long encuestaRegistroId = Utils.findPreferenceLong(getContext(), CustomConstants.PREFERENCE_NAME_CUESTIONARIO, CustomConstants.CUESTIONARIO_REGISTRO_ID);
+    public boolean load(Questionnaire questionnaire, Question question) {
+        Log.i(CustomConstants.TAG_LOG, "SelectFragment - load(Questionnaire questionnaire, Question question)");
+        Long surveyRecordId = Utils.findPreferenceLong(getContext(), CustomConstants.PREFERENCE_NAME_QUESTIONNAIRE, CustomConstants.QUESTIONNAIRE_REGISTRATION_ID);
         final boolean[] status = {false};
         radioGroup.removeAllViews();
-        for (Respuesta respuesta : pregunta.getRespuestas()) {
-            final RadioButton radioButton = getRadioButton(radioGroup.getChildCount(), respuesta.getTexto(), respuesta, null);
+        for (Answer answer : question.getAnswers()) {
+            final RadioButton radioButton = getRadioButton(radioGroup.getChildCount(), answer.getText(), answer, null);
             //Si visible es igual a false ocultamos el radioButton a mostrar de una determinada pregunta
-            if( !respuesta.getVisible() ){
+            if( !answer.getVisible() ){
                 radioButton.setVisibility(View.GONE);
             }
             //Asignamos informacion al regresar a la encuesta anterior
-            if (encuestaRegistroId > 0L) {
-                encuestaService.encuestaRespuestaByRegistroIdAndPregId(encuestaRegistroId, pregunta.getPreguntaId()).observe(getViewLifecycleOwner(), new Observer<EncuestaRespuesta>() {
+            if (surveyRecordId > 0L) {
+                privateSurveyService.surveyAnswer(surveyRecordId, question.getQuestionId()).observe(getViewLifecycleOwner(), new Observer<SurveyAnswer>() {
                     @Override
-                    public void onChanged(EncuestaRespuesta encuestaRespuesta) {
-                        if(encuestaRespuesta != null) {
-                           if(pregunta.getPreguntaId() == encuestaRespuesta.getPreguntaId() && String.valueOf(respuesta.getRespuestaId()).equalsIgnoreCase(encuestaRespuesta.getRespuesta())){
+                    public void onChanged(SurveyAnswer surveyAnswer) {
+                        if(surveyAnswer != null) {
+                           if(question.getQuestionId() == surveyAnswer.getQuestionId() && String.valueOf(answer.getAnswerId()).equalsIgnoreCase(surveyAnswer.getAnswer())){
                                radioButton.setChecked(CustomConstants.TRUE);
                            }
                         }
@@ -95,43 +103,43 @@ public class SelectFragment extends WidgetFragment {
                 @Override
                 public void onCheckedChanged(CompoundButton compoundButton, boolean isChecked) {
                     QuestionaryFragment questionaryFragment = (QuestionaryFragment) getParentFragment();
-                    Map<WidgetFragment, Pregunta> preguntas = questionaryFragment.getPreguntas();
-                    Respuesta opcionChecked = (Respuesta) compoundButton.getTag();
-                    MostrarSiSelecciona mostrarSiSelecciona = Utils.infoMostrarSiSelecciona(opcionChecked);
+                    Map<WidgetFragment, Question> answers = questionaryFragment.getQuestions();
+                    Answer optionChecked = (Answer) compoundButton.getTag();
+                    ShowSelect showSelect = Utils.infoShowSelect(optionChecked);
                     if( compoundButton.isChecked() ){
-                        if ( mostrarSiSelecciona != null ) {
-                            Log.d(CustomConstants.TAG_LOG, "Radio - Checked - Muestra preguntas");
-                            showQuestions(preguntas, mostrarSiSelecciona);
-                            showSurvey(cuestionario, pregunta, opcionChecked, mostrarSiSelecciona);
+                        if ( showSelect != null ) {
+                            Log.d(CustomConstants.TAG_LOG, "Radio - Checked - Show questions");
+                            showQuestions(answers, showSelect);
+                            showSurvey(questionnaire, question, optionChecked, showSelect);
                         }
-                        if( respuesta.getFinalizarSiSelecciona() ) {
-                            QuestionaryActivity.btnNext.setText(R.string.texto_terminar);
-                            hideSurvey(cuestionario, pregunta);
+                        if( answer.getFinishSelect() ) {
+                            QuestionaryActivity.btnNext.setText(R.string.finish);
+                            hideSurvey(questionnaire, question);
                         } else {
-                            QuestionaryActivity.btnNext.setText(R.string.texto_siguiente);
+                            QuestionaryActivity.btnNext.setText(R.string.next);
                         }
 
                     }
                     if( !compoundButton.isChecked() ){
-                        if ( mostrarSiSelecciona != null ) {
-                            Log.d(CustomConstants.TAG_LOG, "Radio - No Checked - Oculta preguntas");
-                            hideQuestions(preguntas, mostrarSiSelecciona, encuestaRegistroId);
-                            //hideSurvey(pregunta, opcionChecked, mostrarSiSelecciona);
+                        if ( showSelect != null ) {
+                            Log.d(CustomConstants.TAG_LOG, "Radio - No Checked - Hide questions");
+                            hideQuestions(answers, showSelect, surveyRecordId);
+                            //hideSurvey(pregunta, optionChecked, mostrarSiSelecciona);
                         }
                         //Eliminamos la respuesta de la pregunta que se deschequea
-                        if (encuestaRegistroId > 0L) {
+                        if (surveyRecordId > 0L) {
                             Executors.newSingleThreadExecutor().execute(() -> {
-                                String respuestaId = String.valueOf(opcionChecked.getRespuestaId());
-                                encuestaService.eliminarEncuestaRegistroByPregtIdAndResp(encuestaRegistroId, pregunta.getPreguntaId(), respuestaId);
+                                String respuestaId = String.valueOf(optionChecked.getAnswerId());
+                                privateSurveyService.deleteSurveyRecordByQuestionIdAndAnswer(surveyRecordId, question.getQuestionId(), respuestaId);
                             });
                         }
                     }
                 }
             });
         }
-        if(pregunta.getDescripcion() != null && !pregunta.getDescripcion().equals("")){
+        if(question.getDescription() != null && !question.getDescription().equals("")){
             labelDescription.setVisibility(View.VISIBLE);
-            labelDescription.setText(String.valueOf(pregunta.getDescripcion()));
+            labelDescription.setText(String.valueOf(question.getDescription()));
         }else {
             labelDescription.setVisibility(View.GONE);
         }
@@ -141,8 +149,8 @@ public class SelectFragment extends WidgetFragment {
 
 
     @Override
-    public boolean save(Encuesta encuesta, Cuestionario cuestionario, Pregunta pregunta, Long encuestaRegistroId) {
-        final boolean[] estatus = new boolean[1];
+    public boolean save(Survey survey, Questionnaire questionnaire, Question question, Long surveyRecordId) {
+        final boolean[] status = new boolean[1];
         Log.d(CustomConstants.TAG_LOG, "SelectFragment.save()");
         Executors.newSingleThreadExecutor().execute(() -> {
             //RespuestaDto respuesta =  null;
@@ -150,13 +158,13 @@ public class SelectFragment extends WidgetFragment {
                 int buttonID = radioGroup.getCheckedRadioButtonId();
                 RadioButton radioButton = (RadioButton)radioGroup.findViewById(buttonID);
                 if (radioButton != null) {
-                    Respuesta respuesta = (Respuesta) radioButton.getTag();
-                    String  opcion = String.valueOf(respuesta.getRespuestaId());
-                    Log.i(CustomConstants.TAG_LOG, "SelectFragment.save() - GUARDAR RESPUESTA: "+respuesta.toString());
+                    Answer answer = (Answer) radioButton.getTag();
+                    String  option = String.valueOf(answer.getAnswerId());
+                    Log.i(CustomConstants.TAG_LOG, "SelectFragment.save() - Save answer: "+ answer.toString());
                     //Logica para guardar informacion localmente
-                    this.encuestaService.encuestaRespuesta(encuesta, cuestionario, pregunta, opcion, encuestaRegistroId);
-                    Map<Long, Long> preguntaRespuesta = new HashMap<>();
-                    preguntaRespuesta.put(pregunta.getPreguntaId(), respuesta.getRespuestaId());
+                    this.privateSurveyService.surveyAnswer(survey, questionnaire, question, option, surveyRecordId);
+                    Map<Long, Long> questionAnswer = new HashMap<>();
+                    questionAnswer.put(question.getQuestionId(), answer.getAnswerId());
 
                 }else {
                     //Log.i(this, "save %s none selected", question.name);
@@ -167,18 +175,18 @@ public class SelectFragment extends WidgetFragment {
                 //answer.value = null;
             }
             //answer.save();
-            if (pregunta.getRequerido()) {
+            if (question.getRequired()) {
                 radioGroup.requestFocus();
                 // Toast.makeText(getContext(), R.string.seleccion_requerida, Toast.LENGTH_SHORT).show();
-                estatus[0] = false;
+                status[0] = false;
             }
            /* if (pregunta.getRequerido() && respuesta == null) {
                 radioGroup.requestFocus();
                // Toast.makeText(getContext(), R.string.seleccion_requerida, Toast.LENGTH_SHORT).show();
-                estatus[0] = false;
+                status[0] = false;
             }*/
         });
-        return estatus[0];
+        return status[0];
     }
 
 }
