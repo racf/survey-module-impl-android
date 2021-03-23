@@ -13,7 +13,7 @@
 - The answer to a certain question can end the survey.
 - The questionnaire is concluded until the mandatory questions are answered.
 - If you return to a questionnaire, the previous data is loaded.
--The survey is updated if the value of the versionCode attribute changes.
+- The survey is updated if the value of the versionCode attribute changes.
 
 ## Download this project
 
@@ -47,8 +47,54 @@ The image shows the **surveymodule** in the project dependencies:
         android:layout_marginTop="@dimen/margin_padding_8"
         android:scrollbars="vertical"/>
     ```
-3. 
+3. Create an instance of the SurveyService in the [MainActivity.java](https://gitlab.com/racf/survey-module-impl-android/-/blob/frc_develop/app/src/main/java/com/cysout/sousystems/survey/impl/MainActivity.java)
+```java
+    SurveyService surveyService = new ViewModelProvider(this).get(SurveyServiceImpl.class);
+```
+4. Save the surveys in SurveyModulo with the **saveSurveys(surveys)** method. ***saveSurveys(surveys)*** receives as a parameter a json (JSON Array) with a set of surveys. Surveys can come from any data source (REST API). SurveyModule has sample surveys in **jsonArrayTest()** method.
+```java
+    String surveys = Utils.jsonArrayTest();
+    surveyService.saveSurveys(surveys);
+```
+5. Show the surveys with the **loadAllSurveys()** method. The following code snippet shows the example.
+```java
+    surveyService.loadAllSurveys().observe(this, new Observer<List<Survey>>() {
+        @Override
+        public void onChanged(List<Survey> surveys) {
+            adapter = new SurveyAdapter(surveys, R.layout.cards_surveys_layout, new SurveyAdapter.CustomHolder.OnItemClickListener() {
+                @Override
+                public void onItemClick(Survey survey, int position) {
 
+                }
+
+                @Override
+                public void btnOnClick(View v, Survey survey, int position) {
+                    surveyService.startNewSurvey(getApplicationContext(), activity, survey);
+                }
+            });
+            recyclerView.setLayoutManager(layoutManager);
+            recyclerView.setAdapter(adapter);
+        }
+    });
+```
+6. The **startNewSurvey(Context context, Activity activity, Survey survey)** method starts a new survey. This method receives as parameters: the context of the application, the activity and the survey. This method is implemented in the **btnOnClick** from step 5.
+```java
+    surveyService.startNewSurvey(getApplicationContext(), activity, survey);
+```
+7. The result of the survey is obtained in the **onActivityResult** method. The following code snippet shows the example.
+```java
+   @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (requestCode == CustomConstants.QUESTIONNAIRES_REQUEST) {
+            if (resultCode == RESULT_OK) {
+                String surveyResponses = data.getStringExtra(CustomConstants.SURVEY_RESPONSE);
+                Log.i(CustomConstants.TAG_LOG.concat(" RESULT "), surveyResponses);
+                Toast.makeText(this, getString(R.string.message_finished_survey), Toast.LENGTH_LONG).show();
+            }
+        }
+    }
+```
 ## Component types
 1. **Text** : This type of component allows capturing different types of text in an input. The supported input types are the following:
 
