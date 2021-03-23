@@ -95,15 +95,15 @@ public class QuestionaryActivity extends AppCompatActivity{
         SurveyRecord surveyRecord = (SurveyRecord) intent.getSerializableExtra(CustomConstants.REGISTRATION_SURVEY_KEY);
         if ( surveyParameter != null && surveyRecord != null ){ //Para una encuesta con información que se ha iniciado
             //Guardamos el ID auto-increment de EncuestaRegistro, es util para encuestas que se han quedado sin concluir
-            Utils.saveOnPreferenceLong(getApplicationContext(), CustomConstants.PREFERENCE_NAME_CUESTIONARIO, CustomConstants.CUESTIONARIO_REGISTRO_ID, surveyRecord.getSurveyRecordId());
+            Utils.saveOnPreferenceLong(getApplicationContext(), CustomConstants.PREFERENCE_NAME_QUESTIONNAIRE, CustomConstants.QUESTIONNAIRE_REGISTRATION_ID, surveyRecord.getSurveyRecordId());
             Log.i(CustomConstants.TAG_LOG, "Pending survey");
         }else if ( surveyParameter != null ){ //Es para una encuesta nueva
-            Utils.deleteSinglePreference(getApplicationContext(), CustomConstants.PREFERENCE_NAME_CUESTIONARIO, CustomConstants.CUESTIONARIO_REGISTRO_ID);
+            Utils.deleteSinglePreference(getApplicationContext(), CustomConstants.PREFERENCE_NAME_QUESTIONNAIRE, CustomConstants.QUESTIONNAIRE_REGISTRATION_ID);
             Log.i(CustomConstants.TAG_LOG, "New survey");
         } else {
             //Logica para el result de error
             Log.i(CustomConstants.TAG_LOG, "Error");
-            Utils.deleteSinglePreference(getApplicationContext(), CustomConstants.PREFERENCE_NAME_CUESTIONARIO, CustomConstants.CUESTIONARIO_REGISTRO_ID);
+            Utils.deleteSinglePreference(getApplicationContext(), CustomConstants.PREFERENCE_NAME_QUESTIONNAIRE, CustomConstants.QUESTIONNAIRE_REGISTRATION_ID);
         }
 
         //String jsonEncuesta = Utils.jsonStringFinal();
@@ -383,26 +383,26 @@ public class QuestionaryActivity extends AppCompatActivity{
     }
     private void surveyResponse(){
         Executors.newSingleThreadExecutor().execute(() -> {
-            Long surveyRecordId = Utils.findPreferenceLong(getApplicationContext(), CustomConstants.PREFERENCE_NAME_CUESTIONARIO, CustomConstants.CUESTIONARIO_REGISTRO_ID);
+            Long surveyRecordId = Utils.findPreferenceLong(getApplicationContext(), CustomConstants.PREFERENCE_NAME_QUESTIONNAIRE, CustomConstants.QUESTIONNAIRE_REGISTRATION_ID);
             SurveyRecordAnswers surveyRecordAnswers = privateSurveyService.surveyFinished(surveyRecordId, CustomConstants.FINISHED, Utils.dateTime());
            // Log.i(CustomConstants.TAG_LOG, "RETURN INFO QUESTIONARY : "+ surveyRecordAnswers.getSurveyRecord().toString());
             Intent returnIntent = new Intent();
             ResponseMessageDto responseMessage = new ResponseMessageDto(CustomConstants.MESSAGE_SURVEY_RESPONSE, "", CustomConstants.CODE_200,
                     getString(R.string.message_finished_survey), surveyRecordAnswers);
-            String responseMessageString = Utils.convertirObjToJson(responseMessage);
+            String responseMessageString = Utils.convertObjectToJson(responseMessage);
             returnIntent.putExtra(CustomConstants.SURVEY_RESPONSE, responseMessageString);
             //Log.i(CustomConstants.TAG_LOG, responseMessageString);
             //returnIntent.setData(Uri.parse(encuestaRegistroRespuestas));
             setResult(Activity.RESULT_OK, returnIntent);
             //Limpiamos la preferencia del identificador del Cuestionario Registro.
-            Utils.deleteSinglePreference(getApplicationContext(), CustomConstants.PREFERENCE_NAME_CUESTIONARIO, CustomConstants.CUESTIONARIO_REGISTRO_ID);
+            Utils.deleteSinglePreference(getApplicationContext(), CustomConstants.PREFERENCE_NAME_QUESTIONNAIRE, CustomConstants.QUESTIONNAIRE_REGISTRATION_ID);
             finish();
         });
     }
 
     private void deleteSurveyRecordByQuestionnaire(){
         Executors.newSingleThreadExecutor().execute(() -> {
-            Long surveyRecordId = Utils.findPreferenceLong(getApplicationContext(), CustomConstants.PREFERENCE_NAME_CUESTIONARIO, CustomConstants.CUESTIONARIO_REGISTRO_ID);
+            Long surveyRecordId = Utils.findPreferenceLong(getApplicationContext(), CustomConstants.PREFERENCE_NAME_QUESTIONNAIRE, CustomConstants.QUESTIONNAIRE_REGISTRATION_ID);
             if( surveyRecordId > CustomConstants.LONG_0L ) {
                 QuestionaryFragment questionaryFragment = (QuestionaryFragment) mPagerAdapter.getItem(questionaryViewPager.getCurrentItem());
                 Long questionnaireId = questionaryFragment.getQuestionnaire().getQuestionnaireId();

@@ -94,7 +94,7 @@ public class TextFragment extends WidgetFragment {
     @Override
     public boolean load(Questionnaire questionnaire, Question question) {
         Log.i(CustomConstants.TAG_LOG, "TextFragment - load(Questionnaire questionnaire, Question question)");
-        Long surveyRecordId = Utils.findPreferenceLong(getContext(), CustomConstants.PREFERENCE_NAME_CUESTIONARIO, CustomConstants.CUESTIONARIO_REGISTRO_ID);
+        Long surveyRecordId = Utils.findPreferenceLong(getContext(), CustomConstants.PREFERENCE_NAME_QUESTIONNAIRE, CustomConstants.QUESTIONNAIRE_REGISTRATION_ID);
         //Asignamos informacion al regresar a la encuesta anterior
         if (surveyRecordId > 0L) {
             privateSurveyService.surveyAnswer(surveyRecordId, question.getQuestionId()).observe(getViewLifecycleOwner(), new Observer<SurveyAnswer>() {

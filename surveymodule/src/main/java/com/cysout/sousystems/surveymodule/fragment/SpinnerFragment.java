@@ -111,7 +111,7 @@ public class SpinnerFragment extends WidgetFragment {
     public boolean load(Questionnaire questionnaire, Question question) {
         //boolean status = false;
         Log.i(CustomConstants.TAG_LOG, "SpinnerFragment - load(Questionnaire questionnaire, Question question)");
-        Long surveyRecordId = Utils.findPreferenceLong(getContext(), CustomConstants.PREFERENCE_NAME_CUESTIONARIO, CustomConstants.CUESTIONARIO_REGISTRO_ID);
+        Long surveyRecordId = Utils.findPreferenceLong(getContext(), CustomConstants.PREFERENCE_NAME_QUESTIONNAIRE, CustomConstants.QUESTIONNAIRE_REGISTRATION_ID);
         List<Answer> listAnswer = question.getAnswers();
         //Asignamos informacion al regresar a la encuesta anterior
         if (surveyRecordId > 0L) {

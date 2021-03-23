@@ -1,5 +1,8 @@
 package com.cysout.sousystems.surveymodule.service;
 
+import android.app.Activity;
+import android.content.Context;
+
 import androidx.lifecycle.LiveData;
 
 import java.util.List;
@@ -36,4 +39,5 @@ public interface SurveyService {
     List<SurveyRecords> loadSurveyPendingSync();
     LiveData<List<SurveyRecords>> loadSurveyUploaded();
     List<SurveyRecords> loadSurveyUploadedSync();
+    void startNewSurvey(Context context, Activity activity, Survey survey);
 }

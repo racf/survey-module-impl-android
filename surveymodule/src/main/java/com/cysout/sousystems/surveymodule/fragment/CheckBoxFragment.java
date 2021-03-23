@@ -76,7 +76,7 @@ public class CheckBoxFragment extends WidgetFragment {
     @Override
     public boolean load(Questionnaire questionnaire, Question question) {
         Log.i(CustomConstants.TAG_LOG, "CheckBoxFragment - load(Questionnaire questionnaire, Question question)");
-        Long surveyRecordId = Utils.findPreferenceLong(getContext(), CustomConstants.PREFERENCE_NAME_CUESTIONARIO, CustomConstants.CUESTIONARIO_REGISTRO_ID);
+        Long surveyRecordId = Utils.findPreferenceLong(getContext(), CustomConstants.PREFERENCE_NAME_QUESTIONNAIRE, CustomConstants.QUESTIONNAIRE_REGISTRATION_ID);
         final boolean[] status = {false};
         checkboxesLinerLayout.removeAllViews();
         checkBoxes = new ArrayList<>();
