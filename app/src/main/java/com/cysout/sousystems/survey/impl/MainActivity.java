@@ -19,23 +19,22 @@ import com.cysout.sousystems.surveymodule.service.SurveyService;
 import com.cysout.sousystems.surveymodule.service.impl.SurveyServiceImpl;
 import com.cysout.sousystems.surveymodule.utils.CustomConstants;
 import com.cysout.sousystems.surveymodule.utils.Utils;
-
 import java.util.List;
-import java.util.concurrent.Executors;
 
 public class MainActivity extends AppCompatActivity {
     private SurveyService surveyService;
+    private Activity activity;
     private RecyclerView recyclerView;
     private RecyclerView.LayoutManager layoutManager;
     private SurveyAdapter adapter;
-    private Activity activity;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         startUI();
-        String  surveys = Utils.jsonArrayTest();//Utils.jsonArrayTest();
+        String surveys = Utils.jsonArrayTest();
         saveSurveys(surveys);
         actionRecyclerView();
 
@@ -43,18 +42,15 @@ public class MainActivity extends AppCompatActivity {
 
     public void startUI(){
         surveyService = new ViewModelProvider(this).get(SurveyServiceImpl.class);
+        activity = this;
         recyclerView = findViewById(R.id.recyclerViewSurveys);
         layoutManager = new LinearLayoutManager(this);
-        activity = this;
     }
 
     private void actionRecyclerView(){
         surveyService.loadAllSurveys().observe(this, new Observer<List<Survey>>() {
             @Override
             public void onChanged(List<Survey> surveys) {
-                /*for(Survey survey1 : surveys){
-                    Log.i(CustomConstants.TAG_LOG, "ENCUESTA A MOSTRAR "+survey1.toString());
-                }*/
                 adapter = new SurveyAdapter(surveys, R.layout.cards_surveys_layout, new SurveyAdapter.CustomHolder.OnItemClickListener() {
                     @Override
                     public void onItemClick(Survey survey, int position) {
@@ -63,10 +59,7 @@ public class MainActivity extends AppCompatActivity {
 
                     @Override
                     public void btnOnClick(View v, Survey survey, int position) {
-                      //  Utils.startNewSurvey(getApplicationContext(), survey);
-
                         Utils.startNewSurvey(getApplicationContext(), activity, survey);
-                        //Utils.startNewSurvey(getApplicationContext(), activity, encuesta);
                     }
                 });
                 recyclerView.setLayoutManager(layoutManager);
@@ -77,11 +70,6 @@ public class MainActivity extends AppCompatActivity {
 
     public void saveSurveys(String surveys) {
         surveyService.saveSurveys(surveys);
-        /*Executors.newSingleThreadExecutor().execute(() -> {
-            for (Survey survey : surveyService.loadAllSurveysSync()) {
-                Log.i(CustomConstants.TAG_LOG, "DATA Front: " + survey.toString());
-            }
-        });*/
     }
 
    @Override
@@ -90,7 +78,7 @@ public class MainActivity extends AppCompatActivity {
         if (requestCode == CustomConstants.QUESTIONNAIRES_REQUEST) {
             if (resultCode == RESULT_OK) {
                 String surveyResponses = data.getStringExtra(CustomConstants.SURVEY_RESPONSE);
-                Log.i(CustomConstants.TAG_LOG+" RESULT ", surveyResponses);
+                Log.i(CustomConstants.TAG_LOG.concat(" RESULT "), surveyResponses);
                 Toast.makeText(this, getString(R.string.message_finished_survey), Toast.LENGTH_LONG).show();
             }
         }

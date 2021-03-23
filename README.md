@@ -35,6 +35,19 @@ The image shows the **surveymodule** in the project dependencies:
 ![SurveyModule](module-dependency.png)
 
 ## Implementation in a project
+1. Generate an xml file to design a CardView. This CardView shows the survey to be applied. This file is in the demo at the following location: [cards_surveys_layout.xml](https://gitlab.com/racf/survey-module-impl-android/-/blob/develop/app/src/main/res/layout/cards_surveys_layout.xml)
+2. Add the RecyclerView in the activity_main.xml
+    ```xml
+        <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/recyclerViewSurveys"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginStart="@dimen/margin_padding_8"
+        android:layout_marginEnd="@dimen/margin_padding_8"
+        android:layout_marginTop="@dimen/margin_padding_8"
+        android:scrollbars="vertical"/>
+    ```
+3. 
 
 ## Component types
 1. **Text** : This type of component allows capturing different types of text in an input. The supported input types are the following:

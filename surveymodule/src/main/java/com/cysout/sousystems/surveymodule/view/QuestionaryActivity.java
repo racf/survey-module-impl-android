@@ -389,7 +389,7 @@ public class QuestionaryActivity extends AppCompatActivity{
             Intent returnIntent = new Intent();
             ResponseMessageDto responseMessage = new ResponseMessageDto(CustomConstants.MESSAGE_SURVEY_RESPONSE, "", CustomConstants.CODE_200,
                     getString(R.string.message_finished_survey), surveyRecordAnswers);
-            String responseMessageString = Utils.convertirObjToJson(responseMessage);
+            String responseMessageString = Utils.convertObjectToJson(responseMessage);
             returnIntent.putExtra(CustomConstants.SURVEY_RESPONSE, responseMessageString);
             //Log.i(CustomConstants.TAG_LOG, responseMessageString);
             //returnIntent.setData(Uri.parse(encuestaRegistroRespuestas));
