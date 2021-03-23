@@ -47,11 +47,11 @@ public interface AnswerShowQuestionnairesDao {
     void deleteAll();
 
     @Query("DELETE FROM answerShowQuestionnaires WHERE questionId=:questionId")
-    void deleteByPreguntaId(Long questionId);
+    void deleteByQuestionId(Long questionId);
 
     @Query("DELETE FROM answerShowQuestionnaires WHERE questionnaireOriginId=:questionnaireOriginId")
-    void deleteByCuestionarioOrigenId(Long questionnaireOriginId);
+    void deleteByQuestionnaireOriginId(Long questionnaireOriginId);
 
     @Query("DELETE FROM answerShowQuestionnaires WHERE questionId=:questionId AND answerId=:answerId")
-    void deleteByPreguntaIdAndRespuestaId(Long questionId, Long answerId);
+    void deleteByQuestionIdAndAnswerId(Long questionId, Long answerId);
 }

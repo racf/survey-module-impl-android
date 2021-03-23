@@ -65,7 +65,7 @@ public class SurveyServiceImpl extends AndroidViewModel implements SurveyService
                 String jsonStringSurvey = gson.toJson(survey);
                 Survey encuesta = gson.fromJson(jsonStringSurvey, Survey.class);
                 encuesta.setJson(jsonStringSurvey);
-                Survey surveyReturn = surveyRepository.loadEncuestaByIdSync(encuesta.getSurveyId());
+                Survey surveyReturn = surveyRepository.loadSurveyByIdSync(encuesta.getSurveyId());
                 //Validamos si se encuentra la encuesta en la DB local
                 if( surveyReturn != null){
                     //Si se encuentra, validamos que el versionCode sea diferente para actualizarlo
@@ -97,12 +97,12 @@ public class SurveyServiceImpl extends AndroidViewModel implements SurveyService
 
     @Override
     public LiveData<Survey> loadSurveyById(Long surveyId) {
-        return this.surveyRepository.loadEncuestaById(surveyId);
+        return this.surveyRepository.loadSurveyById(surveyId);
     }
 
     @Override
     public Survey loadSurveyByIdSync(Long surveyId) {
-        return this.surveyRepository.loadEncuestaByIdSync(surveyId);
+        return this.surveyRepository.loadSurveyByIdSync(surveyId);
     }
 
     @Override

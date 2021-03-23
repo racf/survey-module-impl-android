@@ -49,25 +49,19 @@ public interface SurveyDao {
 
     @Transaction
     @Query("SELECT * FROM survey")
-    LiveData<List<SurveyQuestionnaires>> loadCuestionarios();
-    @Transaction
-    @Query("SELECT * FROM survey")
-    List<SurveyQuestionnaires> loadCuestionariosSync();
-    @Transaction
-    @Query("SELECT * FROM survey LIMIT 1")
-    SurveyQuestionnaires loadCuestionarioRespuestasSync();
+    List<SurveyQuestionnaires> loadSurveyQuestionnairesSync();
 
-    @Query("SELECT * FROM survey WHERE surveyId = :encuestaId LIMIT 1")
-    LiveData<Survey> loadEncuestaById(Long encuestaId);
+    @Query("SELECT * FROM survey WHERE surveyId = :surveyId LIMIT 1")
+    LiveData<Survey> loadSurveyById(Long surveyId);
 
-    @Query("SELECT * FROM survey WHERE surveyId = :encuestaId LIMIT 1")
-    Survey loadEncuestaByIdSync(Long encuestaId);
+    @Query("SELECT * FROM survey WHERE surveyId = :surveyId LIMIT 1")
+    Survey loadSurveyByIdSync(Long surveyId);
 
-    @Query("SELECT * FROM survey WHERE surveyId=:encuestaId")
-    LiveData<List<Survey>> loadByEncuestaId(Long encuestaId);
+    @Query("SELECT * FROM survey WHERE surveyId=:surveyId")
+    LiveData<List<Survey>> loadBySurveyId(Long surveyId);
 
-    @Query("SELECT * FROM survey WHERE surveyId=:encuestaId")
-    List<Survey> loadByEncuestaIdSync(Long encuestaId);
+    @Query("SELECT * FROM survey WHERE surveyId=:surveyId")
+    List<Survey> loadBySurveyIdSync(Long surveyId);
 
     @Query("DELETE FROM survey")
     void deleteAll();

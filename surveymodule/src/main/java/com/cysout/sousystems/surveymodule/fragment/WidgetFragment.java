@@ -165,14 +165,14 @@ public abstract class WidgetFragment extends Fragment {
                     if (showSelect !=null) {
                         List<ShowQuestionnaires> showQuestionnaires = showSelect.getQuestionnaires();
                         if (!Utils.isEmpty(showQuestionnaires)) {
-                            answerShowQuestionnairesController.deleteByPreguntaId(question.getQuestionId());
+                            answerShowQuestionnairesController.deleteByQuestionId(question.getQuestionId());
                         }
                     } else {
-                        answerShowQuestionnairesController.deleteByCuestionarioOrigenId(questionnaire.getQuestionnaireId());
+                        answerShowQuestionnairesController.deleteByQuestionnaireOriginId(questionnaire.getQuestionnaireId());
                     }
                 }
             } else {
-               answerShowQuestionnairesController.deleteByCuestionarioOrigenId(questionnaire.getQuestionnaireId());
+               answerShowQuestionnairesController.deleteByQuestionnaireOriginId(questionnaire.getQuestionnaireId());
             }
         });
     }

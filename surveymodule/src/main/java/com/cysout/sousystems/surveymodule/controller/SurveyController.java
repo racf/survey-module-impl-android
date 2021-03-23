@@ -51,7 +51,7 @@ public class SurveyController extends AndroidViewModel {
         return this.surveyRepository.loadAllSync();
     }
 
-    public List<SurveyQuestionnaires> findEncuestaCuestionarios() {
-        return this.surveyRepository.loadEncuestaCuestionarios();
+    public List<SurveyQuestionnaires> loadSurveyQuestionnairesSync() {
+        return this.surveyRepository.loadSurveyQuestionnairesSync();
     }
 }

@@ -26,7 +26,7 @@ public interface ShowAnswersRepository {
     void update(ShowAnswers item);
     LiveData<List<ShowAnswers>> loadAll();
     List<ShowAnswers> loadAllSync();
-    LiveData<List<ShowAnswers>> loadByMostrarSiSeleccionaId(Long id);
-    List<ShowAnswers> loadByMostrarSiSeleccionaIdSync(Long id);
+    LiveData<List<ShowAnswers>> loadByShowSelectId(Long id);
+    List<ShowAnswers> loadByShowSelectIdSync(Long id);
     void deleteAll();
 }

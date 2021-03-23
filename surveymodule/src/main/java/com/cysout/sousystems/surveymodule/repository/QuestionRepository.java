@@ -26,10 +26,10 @@ public interface QuestionRepository {
     void update(Question item);
     LiveData<List<Question>> loadAll();
     List<Question> loadAllSync();
-    Question loadPreguntaSync(Long id);
-    LiveData<List<Question>> loadByPreguntaId(Long id);
-    List<Question> loadByPreguntaIdSync(Long id);
-    LiveData<List<Question>> loadByCuestionarioId(Long id);
-    List<Question> loadByCuestionarioIdSync(Long id);
+    Question loadQuestionSync(Long id);
+    LiveData<List<Question>> loadByQuestionId(Long id);
+    List<Question> loadByQuestionIdSync(Long id);
+    LiveData<List<Question>> loadByQuestionnaireId(Long id);
+    List<Question> loadByQuestionnaireIdSync(Long id);
     void deleteAll();
 }

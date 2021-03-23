@@ -71,19 +71,19 @@ public class SurveyRepositoryImpl implements SurveyRepository {
     }
 
     @Override
-    public LiveData<Survey> loadEncuestaById(Long encuestaId) {
-        return this.surveyDao.loadEncuestaById(encuestaId);
+    public LiveData<Survey> loadSurveyById(Long surveyId) {
+        return this.surveyDao.loadSurveyById(surveyId);
     }
 
     @Override
-    public Survey loadEncuestaByIdSync(Long encuestaId) {
-        return this.surveyDao.loadEncuestaByIdSync(encuestaId);
+    public Survey loadSurveyByIdSync(Long surveyId) {
+        return this.surveyDao.loadSurveyByIdSync(surveyId);
     }
 
 
     @Override
-    public List<Survey> findEncuestasById(Long encuestaId) {
-        return this.surveyDao.loadByEncuestaIdSync(encuestaId);
+    public List<Survey> loadBySurveyIdSync(Long surveyId) {
+        return this.surveyDao.loadBySurveyIdSync(surveyId);
     }
 
     @Override
@@ -97,13 +97,8 @@ public class SurveyRepositoryImpl implements SurveyRepository {
     }
 
     @Override
-    public List<SurveyQuestionnaires> loadEncuestaCuestionarios() {
-        return this.surveyDao.loadCuestionariosSync();
-    }
-
-    @Override
-    public SurveyQuestionnaires loadCuestionarioRespuestasSync() {
-        return this.surveyDao.loadCuestionarioRespuestasSync();
+    public List<SurveyQuestionnaires> loadSurveyQuestionnairesSync() {
+        return this.surveyDao.loadSurveyQuestionnairesSync();
     }
 
     @Override

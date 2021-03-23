@@ -44,10 +44,10 @@ public interface ShowQuestionsDao {
     List<ShowQuestions> loadAllSync();
 
     @Query("SELECT * FROM showQuestions WHERE showSelectId = :id")
-    LiveData<List<ShowQuestions>> loadByMostrarSiSeleccionaId(Long id);
+    LiveData<List<ShowQuestions>> loadByShowSelectId(Long id);
 
     @Query("SELECT * FROM showQuestions WHERE showSelectId = :id")
-    List<ShowQuestions> loadByMostrarSiSeleccionaIdSync(Long id);
+    List<ShowQuestions> loadByShowSelectIdSync(Long id);
 
     @Query("DELETE FROM showQuestions")
     void deleteAll();
