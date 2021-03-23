@@ -64,69 +64,69 @@ public class SurveyAnswerRepositoryImpl implements SurveyAnswerRepository {
     }
 
     @Override
-    public SurveyAnswer encuestaRespuestaByRegistroIdAndPregIdSync(Long encuestaRegistroId, Long preguntaId) {
-        return this.surveyAnswerDao.surveyAnswerByRegistroIdAndPregIdSync(encuestaRegistroId, preguntaId);
+    public SurveyAnswer surveyAnswerSync(Long surveyRecordId, Long questionId) {
+        return this.surveyAnswerDao.surveyAnswerSync(surveyRecordId, questionId);
     }
 
     @Override
-    public LiveData<SurveyAnswer> encuestaRespuestaByRegistroIdAndPregId(Long encuestaRegistroId, Long preguntaId) {
-        return this.surveyAnswerDao.surveyAnswerByRegistroIdAndPregId(encuestaRegistroId, preguntaId);
+    public LiveData<SurveyAnswer> surveyAnswer(Long surveyRecordId, Long questionId) {
+        return this.surveyAnswerDao.surveyAnswer(surveyRecordId, questionId);
     }
 
     @Override
-    public LiveData<SurveyAnswer> encuestaRespuestaByRegtroIdAndPregIdAndRespId(Long encuestaRegistroId, Long preguntaId, String respuestaId) {
-        return this.surveyAnswerDao.surveyAnswerByRegtroIdAndPregIdAndRespId(encuestaRegistroId, preguntaId, respuestaId);
+    public LiveData<SurveyAnswer> surveyAnswer(Long surveyRecordId, Long questionId, String answerId) {
+        return this.surveyAnswerDao.surveyAnswer(surveyRecordId, questionId, answerId);
     }
 
     @Override
-    public SurveyAnswer encuestaRespuestaByRegtroIdAndPregIdAndRespIdSync(Long encuestaRegistroId, Long preguntaId, String respuestaId) {
-        return this.surveyAnswerDao.surveyAnswerByRegtroIdAndPregIdAndRespIdSync(encuestaRegistroId, preguntaId, respuestaId);
+    public SurveyAnswer surveyAnswerSync(Long surveyRecordId, Long questionId, String answerId) {
+        return this.surveyAnswerDao.surveyAnswerSync(surveyRecordId, questionId, answerId);
     }
 
 
     @Override
-    public List<SurveyAnswer> loadByEncuestaRegistroIdSync(Long encuestaRegistroId) {
-        return this.surveyAnswerDao.loadBysurveyRecordIdSync(encuestaRegistroId);
+    public List<SurveyAnswer> loadBySurveyRecordIdSync(Long surveyRecordId) {
+        return this.surveyAnswerDao.loadBySurveyRecordIdSync(surveyRecordId);
     }
 
     @Override
-    public LiveData<List<SurveyAnswer>> loadByEncuestaRegistroId(Long encuestaRegistroId) {
-        return this.surveyAnswerDao.loadBysurveyRecordId(encuestaRegistroId);
+    public LiveData<List<SurveyAnswer>> loadBySurveyRecordId(Long surveyRecordId) {
+        return this.surveyAnswerDao.loadBySurveyRecordId(surveyRecordId);
     }
 
     @Override
-    public LiveData<List<SurveyAnswer>> loadByCuestionarioId(Long cuestionarioId) {
-        return this.surveyAnswerDao.loadByCuestionarioId(cuestionarioId);
+    public LiveData<List<SurveyAnswer>> loadByQuestionnaireId(Long questionnaireId) {
+        return this.surveyAnswerDao.loadByQuestionnaireId(questionnaireId);
     }
 
     @Override
-    public List<SurveyAnswer> loadByCuestionarioIdSync(Long cuestionarioId) {
-        return this.surveyAnswerDao.loadByCuestionarioIdSync(cuestionarioId);
+    public List<SurveyAnswer> loadByQuestionnaireIdSync(Long questionnaireId) {
+        return this.surveyAnswerDao.loadByQuestionnaireIdSync(questionnaireId);
     }
 
     @Override
-    public LiveData<SurveyAnswer> encuestaRespuestaByRegistroIdAndCuestId(Long encuestaRegistroId, Long cuestionarioId) {
-        return this.surveyAnswerDao.surveyAnswerByRegistroIdAndCuestId(encuestaRegistroId, cuestionarioId);
+    public LiveData<SurveyAnswer> surveyAnswerByRecordIdAndQuestionnaireId(Long surveyRecordId, Long questionnaireId) {
+        return this.surveyAnswerDao.surveyAnswerByRecordIdAndQuestionnaireId(surveyRecordId, questionnaireId);
     }
 
     @Override
-    public SurveyAnswer encuestaRespuestaByRegistroIdAndCuestIdSync(Long encuestaRegistroId, Long cuestionarioId) {
-        return this.surveyAnswerDao.surveyAnswerByRegistroIdAndCuestIdSync(encuestaRegistroId, cuestionarioId);
+    public SurveyAnswer surveyAnswerByRecordIdAndQuestionnaireIdSync(Long surveyRecordId, Long questionnaireId) {
+        return this.surveyAnswerDao.surveyAnswerByRecordIdAndQuestionnaireIdSync(surveyRecordId, questionnaireId);
     }
 
     @Override
-    public void deleteByEnctRegtIdAndCuestId(Long encuestaRegistroId, Long cuestionarioId) {
-        this.surveyAnswerDao.deleteByEnctRegtIdAndCuestId(encuestaRegistroId, cuestionarioId);
+    public void deleteByRecordIdQuestionnaireId(Long surveyRecordId, Long questionnaireId) {
+        this.surveyAnswerDao.deleteByRecordIdQuestionnaireId(surveyRecordId, questionnaireId);
     }
 
     @Override
-    public void deleteByEnctRegtIdAndPreguntaId(Long encuestaRegistroId, Long preguntaId) {
-        this.surveyAnswerDao.deleteByEnctRegtIdAndPreguntaId(encuestaRegistroId, preguntaId);
+    public void deleteSurveyRecordByQuestionId(Long surveyRecordId, Long questionId) {
+        this.surveyAnswerDao.deleteSurveyRecordByQuestionId(surveyRecordId, questionId);
     }
 
     @Override
-    public void deleteByEnctRegtIdAndPregtIdAndResp(Long encuestaRegistroId, Long preguntaId, String respuesta) {
-        this.surveyAnswerDao.deleteByEnctRegtIdAndPregtIdAndResp(encuestaRegistroId, preguntaId, respuesta);
+    public void deleteSurveyRecordByQuestionIdAndAnswer(Long surveyRecordId, Long questionId, String answer) {
+        this.surveyAnswerDao.deleteSurveyRecordByQuestionIdAndAnswer(surveyRecordId, questionId, answer);
     }
 
 }

@@ -29,13 +29,12 @@ public interface SurveyRepository {
     void update(Survey survey);
     void delete(Survey survey);
     void deleteAllRows();
-    LiveData<Survey> loadEncuestaById(Long encuestaId);
-    Survey loadEncuestaByIdSync(Long encuestaId);
-    List<Survey> findEncuestasById(Long encuestaId);
+    LiveData<Survey> loadSurveyById(Long surveyId);
+    Survey loadSurveyByIdSync(Long surveyId);
+    List<Survey> loadBySurveyIdSync(Long surveyId);
     LiveData<List<Survey>> loadAll();
     List<Survey> loadAllSync();
-    List<SurveyQuestionnaires> loadEncuestaCuestionarios();
-    SurveyQuestionnaires loadCuestionarioRespuestasSync();
+    List<SurveyQuestionnaires> loadSurveyQuestionnairesSync();
     LiveData<List<SurveyRecords>> loadAllSurveyRecords();
     List<SurveyRecords> loadAllSurveyRecordsSync();
     LiveData<List<SurveyRecords>> loadSurveyCompleted();

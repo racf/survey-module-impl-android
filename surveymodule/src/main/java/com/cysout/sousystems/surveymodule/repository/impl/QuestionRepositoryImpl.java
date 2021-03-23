@@ -58,28 +58,28 @@ public class QuestionRepositoryImpl implements QuestionRepository {
     }
 
     @Override
-    public Question loadPreguntaSync(Long id) {
-        return this.questionDao.loadPreguntaSync(id);
+    public Question loadQuestionSync(Long id) {
+        return this.questionDao.loadQuestionSync(id);
     }
 
     @Override
-    public LiveData<List<Question>> loadByPreguntaId(Long id) {
-        return this.questionDao.loadByPreguntaId(id);
+    public LiveData<List<Question>> loadByQuestionId(Long id) {
+        return this.questionDao.loadByQuestionId(id);
     }
 
     @Override
-    public List<Question> loadByPreguntaIdSync(Long id) {
-        return this.questionDao.loadByPreguntaIdSync(id);
+    public List<Question> loadByQuestionIdSync(Long id) {
+        return this.questionDao.loadByQuestionIdSync(id);
     }
 
     @Override
-    public LiveData<List<Question>> loadByCuestionarioId(Long id) {
-        return this.questionDao.loadByCuestionarioId(id);
+    public LiveData<List<Question>> loadByQuestionnaireId(Long id) {
+        return this.questionDao.loadByQuestionnaireId(id);
     }
 
     @Override
-    public List<Question> loadByCuestionarioIdSync(Long id) {
-        return this.questionDao.loadByCuestionarioIdSync(id);
+    public List<Question> loadByQuestionnaireIdSync(Long id) {
+        return this.questionDao.loadByQuestionnaireIdSync(id);
     }
 
     @Override

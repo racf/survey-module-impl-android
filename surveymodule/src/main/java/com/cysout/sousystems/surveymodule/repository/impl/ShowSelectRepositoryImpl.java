@@ -60,13 +60,13 @@ public class ShowSelectRepositoryImpl implements ShowSelectRepository {
     }
 
     @Override
-    public LiveData<List<ShowSelect>> loadByRespuestaId(Long id) {
-        return this.showSelectDao.loadByRespuestaId(id);
+    public LiveData<List<ShowSelect>> loadByAnswerId(Long id) {
+        return this.showSelectDao.loadByAnswerId(id);
     }
 
     @Override
-    public List<ShowSelect> loadByRespuestaIdSync(Long id) {
-        return this.showSelectDao.loadByRespuestaIdSync(id);
+    public List<ShowSelect> loadByAnswerIdSync(Long id) {
+        return this.showSelectDao.loadByAnswerIdSync(id);
     }
 
     @Override
@@ -75,18 +75,18 @@ public class ShowSelectRepositoryImpl implements ShowSelectRepository {
     }
 
     @Override
-    public RelationShowSelect loadMosstrarSiSeleccionaByRespuestaId(Long id) {
-        return this.showSelectDao.loadMosstrarSiSeleccionaByRespuestaId(id);
+    public RelationShowSelect loadShowSelectByAnswerId(Long id) {
+        return this.showSelectDao.loadShowSelectByAnswerId(id);
     }
 
     @Override
-    public LiveData<List<RelationSelectQuestionnaires>> loadMostrarCuestionarios() {
-        return this.showSelectDao.loadMostrarCuestionarios();
+    public LiveData<List<RelationSelectQuestionnaires>> loadShowQuestionnaires() {
+        return this.showSelectDao.loadShowQuestionnaires();
     }
 
     @Override
-    public List<RelationSelectQuestionnaires> loadMostrarCuestionariosSync() {
-        return this.showSelectDao.loadMostrarCuestionariosSync();
+    public List<RelationSelectQuestionnaires> loadShowQuestionnairesSync() {
+        return this.showSelectDao.loadShowQuestionnairesSync();
     }
 
 }

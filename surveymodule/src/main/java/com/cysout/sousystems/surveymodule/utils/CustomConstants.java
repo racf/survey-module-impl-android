@@ -62,11 +62,6 @@ public class CustomConstants {
     public static final String DATABASE_NAME = "survey";
     public static final int DATABASE_VERSION = 1;
 
-    // Estados
-    public static Integer ENCUESTA_TERMINADA = 1;
-    public static Integer ENCUESTA_EN_PROCESO = 2;
-    public static Integer ENCUESTA_ENVIADA = 3;
-
     // Preferences
     public static final String PREFERENCE_NAME_CUESTIONARIO = "cuestionario_registro";
     public static final String CUESTIONARIO_REGISTRO_ID = "cuestionario_registro_id";
@@ -86,6 +81,7 @@ public class CustomConstants {
     public static final String RADIOGROUP = "radiogroup";
     public static final String CHECKBOX = "checkbox";
     public static final String SELECT = "select";
+    public static final String LABEL = "label";
 
     //CatEncuestaTipo
     public static final int UNICA = 1; //Este tipo de encuesta solo se aplica una sola vez

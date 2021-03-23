@@ -54,15 +54,15 @@ public class AnswerShowQuestionnairesController extends AndroidViewModel {
         this.answerShowQuestionnairesRepository.deleteAll();
     }
 
-    public void deleteByPreguntaId(Long preguntaId) {
-        this.answerShowQuestionnairesRepository.deleteByPreguntaId(preguntaId);
+    public void deleteByQuestionId(Long questionId) {
+        this.answerShowQuestionnairesRepository.deleteByQuestionId(questionId);
     }
 
-    public void deleteByCuestionarioOrigenId(Long cuestionarioOrigenId) {
-        this.answerShowQuestionnairesRepository.deleteByCuestionarioOrigenId(cuestionarioOrigenId);
+    public void deleteByQuestionnaireOriginId(Long questionnaireOriginId) {
+        this.answerShowQuestionnairesRepository.deleteByQuestionnaireOriginId(questionnaireOriginId);
     }
 
-    public void deleteByPreguntaIdAndRespuestaId(Long preguntaId, Long respuestaId) {
-        this.answerShowQuestionnairesRepository.deleteByPreguntaIdAndRespuestaId(preguntaId,respuestaId);
+    public void deleteByQuestionIdAndAnswerId(Long questionId, Long answerId) {
+        this.answerShowQuestionnairesRepository.deleteByQuestionIdAndAnswerId(questionId, answerId);
     }
 }

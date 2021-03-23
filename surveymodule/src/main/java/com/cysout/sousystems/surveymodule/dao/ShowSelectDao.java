@@ -47,23 +47,23 @@ public interface ShowSelectDao {
     List<ShowSelect> loadAllSync();
 
     @Query("SELECT * FROM showSelect WHERE answerId = :id")
-    LiveData<List<ShowSelect>> loadByRespuestaId(Long id);
+    LiveData<List<ShowSelect>> loadByAnswerId(Long id);
 
     @Query("SELECT * FROM showSelect WHERE answerId = :id")
-    List<ShowSelect> loadByRespuestaIdSync(Long id);
+    List<ShowSelect> loadByAnswerIdSync(Long id);
 
     @Query("DELETE FROM showSelect")
     void deleteAll();
 
     @Transaction
     @Query("SELECT * FROM showSelect WHERE answerId=:id LIMIT 1")
-    RelationShowSelect loadMosstrarSiSeleccionaByRespuestaId(Long id);
+    RelationShowSelect loadShowSelectByAnswerId(Long id);
 
     @Transaction
     @Query("SELECT * FROM showSelect")
-    LiveData<List<RelationSelectQuestionnaires>> loadMostrarCuestionarios();
+    LiveData<List<RelationSelectQuestionnaires>> loadShowQuestionnaires();
 
     @Transaction
     @Query("SELECT * FROM showSelect")
-    List<RelationSelectQuestionnaires> loadMostrarCuestionariosSync();
+    List<RelationSelectQuestionnaires> loadShowQuestionnairesSync();
 }

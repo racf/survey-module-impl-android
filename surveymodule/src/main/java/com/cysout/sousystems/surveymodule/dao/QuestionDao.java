@@ -46,23 +46,19 @@ public interface QuestionDao {
     List<Question> loadAllSync();
 
     @Query("SELECT * FROM question WHERE questionId = :id LIMIT 1")
-    Question loadPreguntaSync(Long id);
-
-    @Transaction
-    @Query("SELECT * FROM question WHERE questionnaireId=:id")
-    QuestionAnswers loadPreguntaRespuestasByCuestionarioId(Long id);
+    Question loadQuestionSync(Long id);
 
     @Query("SELECT * FROM question WHERE questionId = :id")
-    LiveData<List<Question>> loadByPreguntaId(Long id);
+    LiveData<List<Question>> loadByQuestionId(Long id);
 
     @Query("SELECT * FROM question WHERE questionId = :id")
-    List<Question> loadByPreguntaIdSync(Long id);
+    List<Question> loadByQuestionIdSync(Long id);
 
     @Query("SELECT * FROM question WHERE questionnaireId = :id")
-    LiveData<List<Question>> loadByCuestionarioId(Long id);
+    LiveData<List<Question>> loadByQuestionnaireId(Long id);
 
     @Query("SELECT * FROM question WHERE questionnaireId = :id")
-    List<Question> loadByCuestionarioIdSync(Long id);
+    List<Question> loadByQuestionnaireIdSync(Long id);
 
     @Query("DELETE FROM question")
     void deleteAll();

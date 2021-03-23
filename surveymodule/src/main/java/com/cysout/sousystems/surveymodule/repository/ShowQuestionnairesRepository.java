@@ -26,7 +26,7 @@ public interface ShowQuestionnairesRepository {
     void update(ShowQuestionnaires item);
     LiveData<List<ShowQuestionnaires>> loadAll();
     List<ShowQuestionnaires> loadAllSync();
-    LiveData<List<ShowQuestionnaires>> loadByMostrarSiSeleccionaId(Long id);
-    List<ShowQuestionnaires> loadByMostrarSiSeleccionaIdSync(Long id);
+    LiveData<List<ShowQuestionnaires>> loadByShowSelectId(Long id);
+    List<ShowQuestionnaires> loadByShowSelectIdSync(Long id);
     void deleteAll();
 }

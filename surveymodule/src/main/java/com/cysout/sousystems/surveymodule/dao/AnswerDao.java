@@ -43,21 +43,6 @@ public interface AnswerDao {
     @Query("SELECT * FROM answer")
     List<Answer> loadAllSync();
 
-    @Query("SELECT * FROM answer WHERE answerId = :id LIMIT 1")
-    Answer loadRespuestaSync(Long id);
-
-    @Query("SELECT * FROM answer WHERE answerId = :id")
-    LiveData<List<Answer>> loadByRespuestaId(Long id);
-
-    @Query("SELECT * FROM answer WHERE answerId = :id")
-    List<Answer> loadByRespuestaIdSync(Long id);
-
-    @Query("SELECT * FROM answer WHERE answerId = :id")
-    LiveData<List<Answer>> loadByPreguntaId(Long id);
-
-    @Query("SELECT * FROM answer WHERE answerId = :id")
-    List<Answer> loadByPreguntaIdSync(Long id);
-
     @Query("DELETE FROM answer")
     void deleteAll();
 }

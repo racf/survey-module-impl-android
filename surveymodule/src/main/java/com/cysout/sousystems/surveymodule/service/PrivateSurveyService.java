@@ -24,15 +24,15 @@ import com.cysout.sousystems.surveymodule.entity.relation.SurveyRecordAnswers;
 * limitations under the License.
 **/
 public interface PrivateSurveyService {
-    Long encuestaRegistro(Survey survey, Integer catEncuestaEstatusId, String fechaInicial, String fechaFinal);
-    Long encuestaRespuesta(Survey survey, Questionnaire questionnaire, Question question, String respuesta, Long encuestaRegistroId);
-    SurveyRecord findEncuestaregistro(Survey survey);
-    LiveData<SurveyAnswer> encuestaRespuestaByRegistroIdAndPregId(Long encuestaRegistroId, Long preguntaId);
-    SurveyAnswer encuestaRespuestaByRegistroIdAndPregIdSync(Long encuestaRegistroId, Long preguntaId);
-    LiveData<SurveyAnswer> encuestaRespuestaByRegtroIdAndPregIdAndRespId(Long encuestaRegistroId, Long preguntaId, String respuestaId);
-    SurveyAnswer encuestaRespuestaByRegtroIdAndPregIdAndRespIdSync(Long encuestaRegistroId, Long preguntaId, String respuestaId);
-    SurveyRecordAnswers encuentaFinaliza(Long encuestaRegistroId, Integer catEncuestaEstatusId, String fechaFinal);
-    void eliminarEncuestaRegistroByCuestionarioId(Long encuestaRegistroId, Long cuestionarioId);
-    void eliminarEncuestaRegistroByPreguntaId(Long encuestaRegistroId, Long preguntaId);
-    void eliminarEncuestaRegistroByPregtIdAndResp(Long encuestaRegistroId, Long preguntaId, String respuesta);
+    Long surveyRecord(Survey survey, Integer surveyStatus, String startDate, String endDate);
+    Long surveyAnswer(Survey survey, Questionnaire questionnaire, Question question, String answer, Long surveyRecordId);
+    SurveyRecord findSurveyRecord(Survey survey);
+    LiveData<SurveyAnswer> surveyAnswer(Long surveyRecordId, Long questionId);
+    SurveyAnswer surveyAnswerSync(Long surveyRecordId, Long questionId);
+    LiveData<SurveyAnswer> surveyAnswer(Long surveyRecordId, Long questionId, String answerId);
+    SurveyAnswer surveyAnswerSync(Long surveyRecordId, Long questionId, String answerId);
+    SurveyRecordAnswers surveyFinished(Long surveyRecordId, Integer surveyStatus, String endDate);
+    void deleteSurveyRecordByQuestionnaireId(Long surveyRecordId, Long questionnaireId);
+    void deleteSurveyRecordByQuestionId(Long surveyRecordId, Long questionId);
+    void deleteSurveyRecordByQuestionIdAndAnswer(Long surveyRecordId, Long questionId, String answer);
 }

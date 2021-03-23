@@ -59,13 +59,13 @@ public class ShowQuestionsRepositoryImpl implements ShowQuestionsRepository {
     }
 
     @Override
-    public LiveData<List<ShowQuestions>> loadByMostrarSiSeleccionaId(Long id) {
-        return this.showQuestionsDao.loadByMostrarSiSeleccionaId(id);
+    public LiveData<List<ShowQuestions>> loadByShowSelectId(Long id) {
+        return this.showQuestionsDao.loadByShowSelectId(id);
     }
 
     @Override
-    public List<ShowQuestions> loadByMostrarSiSeleccionaIdSync(Long id) {
-        return this.showQuestionsDao.loadByMostrarSiSeleccionaIdSync(id);
+    public List<ShowQuestions> loadByShowSelectIdSync(Long id) {
+        return this.showQuestionsDao.loadByShowSelectIdSync(id);
     }
 
     @Override

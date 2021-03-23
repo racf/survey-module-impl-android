@@ -58,31 +58,6 @@ public class AnswerRepositoryImpl implements AnswerRepository {
     }
 
     @Override
-    public Answer loadRespuestaSync(Long id) {
-        return this.answerDao.loadRespuestaSync(id);
-    }
-
-    @Override
-    public LiveData<List<Answer>> loadByRespuestaId(Long id) {
-        return this.answerDao.loadByRespuestaId(id);
-    }
-
-    @Override
-    public List<Answer> loadByRespuestaIdSync(Long id) {
-        return this.answerDao.loadByRespuestaIdSync(id);
-    }
-
-    @Override
-    public LiveData<List<Answer>> loadByPreguntaId(Long id) {
-        return this.answerDao.loadByPreguntaId(id);
-    }
-
-    @Override
-    public List<Answer> loadByPreguntaIdSync(Long id) {
-        return this.answerDao.loadByPreguntaIdSync(id);
-    }
-
-    @Override
     public void deleteAll() {
         this.answerDao.deleteAll();
     }

@@ -28,10 +28,10 @@ public interface ShowSelectRepository {
     void update(ShowSelect item);
     LiveData<List<ShowSelect>> loadAll();
     List<ShowSelect> loadAllSync();
-    LiveData<List<ShowSelect>> loadByRespuestaId(Long id);
-    List<ShowSelect> loadByRespuestaIdSync(Long id);
+    LiveData<List<ShowSelect>> loadByAnswerId(Long id);
+    List<ShowSelect> loadByAnswerIdSync(Long id);
     void deleteAll();
-    RelationShowSelect loadMosstrarSiSeleccionaByRespuestaId(Long id);
-    LiveData<List<RelationSelectQuestionnaires>> loadMostrarCuestionarios();
-    List<RelationSelectQuestionnaires> loadMostrarCuestionariosSync();
+    RelationShowSelect loadShowSelectByAnswerId(Long id);
+    LiveData<List<RelationSelectQuestionnaires>> loadShowQuestionnaires();
+    List<RelationSelectQuestionnaires> loadShowQuestionnairesSync();
 }

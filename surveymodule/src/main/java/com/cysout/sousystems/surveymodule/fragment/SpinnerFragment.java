@@ -115,7 +115,7 @@ public class SpinnerFragment extends WidgetFragment {
         List<Answer> listAnswer = question.getAnswers();
         //Asignamos informacion al regresar a la encuesta anterior
         if (surveyRecordId > 0L) {
-            privateSurveyService.encuestaRespuestaByRegistroIdAndPregId(surveyRecordId, question.getQuestionId()).observe(getViewLifecycleOwner(), new Observer<SurveyAnswer>() {
+            privateSurveyService.surveyAnswer(surveyRecordId, question.getQuestionId()).observe(getViewLifecycleOwner(), new Observer<SurveyAnswer>() {
                 @Override
                 public void onChanged(SurveyAnswer surveyAnswer) {
                     if(surveyAnswer != null) {
@@ -160,10 +160,10 @@ public class SpinnerFragment extends WidgetFragment {
                     Log.i(CustomConstants.TAG_LOG, "SpinnerFragment-save()-answer "+ answer.toString());
                     String answerString  = String.valueOf(answer.getAnswerId());
                     //Logica del guardado de la información
-                    this.privateSurveyService.encuestaRespuesta(survey, questionnaire, question, answerString, surveyRecordId);
+                    this.privateSurveyService.surveyAnswer(survey, questionnaire, question, answerString, surveyRecordId);
                 } else {
                     if( !question.getRequired() ) {
-                        this.privateSurveyService.eliminarEncuestaRegistroByPreguntaId(surveyRecordId, question.getQuestionId());
+                        this.privateSurveyService.deleteSurveyRecordByQuestionId(surveyRecordId, question.getQuestionId());
                     }
                 }
             });

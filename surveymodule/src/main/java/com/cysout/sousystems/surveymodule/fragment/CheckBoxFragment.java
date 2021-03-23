@@ -91,7 +91,7 @@ public class CheckBoxFragment extends WidgetFragment {
             //Asignamos informacion al regresar a la encuesta anterior
             if (surveyRecordId > 0L) {
                 String answerId = String.valueOf(answer.getAnswerId());
-                privateSurveyService.encuestaRespuestaByRegtroIdAndPregIdAndRespId(surveyRecordId, question.getQuestionId(), answerId).observe(getViewLifecycleOwner(), new Observer<SurveyAnswer>() {
+                privateSurveyService.surveyAnswer(surveyRecordId, question.getQuestionId(), answerId).observe(getViewLifecycleOwner(), new Observer<SurveyAnswer>() {
                     @Override
                     public void onChanged(SurveyAnswer surveyAnswer) {
                         if(surveyAnswer != null) {
@@ -110,7 +110,7 @@ public class CheckBoxFragment extends WidgetFragment {
                     QuestionaryFragment questionaryFragment = (QuestionaryFragment) getParentFragment();
                     Map<WidgetFragment, Question> preguntas = questionaryFragment.getQuestions();
                     Answer optionChecked = (Answer) compoundButton.getTag();
-                    ShowSelect showSelect = Utils.infoMostrarSiSelecciona(optionChecked);
+                    ShowSelect showSelect = Utils.infoShowSelect(optionChecked);
                     if(compoundButton.isChecked()){
                         if (showSelect != null) {
                             Log.d(CustomConstants.TAG_LOG, "CheckBox - Checked - Show questions");
@@ -134,7 +134,7 @@ public class CheckBoxFragment extends WidgetFragment {
                         if (surveyRecordId > 0L) {
                             Executors.newSingleThreadExecutor().execute(() -> {
                                 String respuestaId = String.valueOf(optionChecked.getAnswerId());
-                                privateSurveyService.eliminarEncuestaRegistroByPregtIdAndResp(surveyRecordId, question.getQuestionId(), respuestaId);
+                                privateSurveyService.deleteSurveyRecordByQuestionIdAndAnswer(surveyRecordId, question.getQuestionId(), respuestaId);
                             });
                         }
                     }
@@ -156,7 +156,7 @@ public class CheckBoxFragment extends WidgetFragment {
                     Log.i(CustomConstants.TAG_LOG, "CheckboxFragment.save() - Save answer: "+ answer.toString());
                     //String  respuesta = String.valueOf(opcion.getValor());
                     //Logica para guardar informacion
-                    this.privateSurveyService.encuestaRespuesta(survey, questionnaire, question, option, surveyRecordId);
+                    this.privateSurveyService.surveyAnswer(survey, questionnaire, question, option, surveyRecordId);
                     Map<Long, Long> questionAnswer = new HashMap<>();
                     questionAnswer.put(question.getQuestionId(), answer.getAnswerId());
 

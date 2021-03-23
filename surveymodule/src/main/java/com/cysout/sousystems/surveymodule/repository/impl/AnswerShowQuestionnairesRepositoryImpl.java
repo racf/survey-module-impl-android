@@ -58,17 +58,17 @@ public class AnswerShowQuestionnairesRepositoryImpl implements AnswerShowQuestio
     }
 
     @Override
-    public void deleteByPreguntaId(Long preguntaId) {
-        this.answerShowQuestionnairesDao.deleteByPreguntaId(preguntaId);
+    public void deleteByQuestionId(Long questionId) {
+        this.answerShowQuestionnairesDao.deleteByQuestionId(questionId);
     }
 
     @Override
-    public void deleteByCuestionarioOrigenId(Long cuestionarioOrigenId) {
-        this.answerShowQuestionnairesDao.deleteByCuestionarioOrigenId(cuestionarioOrigenId);
+    public void deleteByQuestionnaireOriginId(Long questionnaireOriginId) {
+        this.answerShowQuestionnairesDao.deleteByQuestionnaireOriginId(questionnaireOriginId);
     }
 
     @Override
-    public void deleteByPreguntaIdAndRespuestaId(Long preguntaId, Long respuestaId) {
-        this.answerShowQuestionnairesDao.deleteByPreguntaIdAndRespuestaId(preguntaId,respuestaId);
+    public void deleteByQuestionIdAndAnswerId(Long questionId, Long answerId) {
+        this.answerShowQuestionnairesDao.deleteByQuestionIdAndAnswerId(questionId, answerId);
     }
 }

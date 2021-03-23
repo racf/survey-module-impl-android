@@ -30,10 +30,10 @@ public interface SurveyService {
     Survey loadSurveyByIdSync(Long surveyId);
     LiveData<List<SurveyRecords>> loadAllSurveyRecords();
     List<SurveyRecords> loadAllSurveyRecordsSync();
-    LiveData<List<SurveyRecords>> loadSurveyCompleted();
-    List<SurveyRecords> loadSurveyCompletedSync();
+    LiveData<List<SurveyRecords>> loadSurveyFinished();
+    List<SurveyRecords> loadSurveyFinishedSync();
     LiveData<List<SurveyRecords>> loadSurveyPending();
     List<SurveyRecords> loadSurveyPendingSync();
-    LiveData<List<SurveyRecords>> loadSurveySent();
-    List<SurveyRecords> loadSurveySentSync();
+    LiveData<List<SurveyRecords>> loadSurveyUploaded();
+    List<SurveyRecords> loadSurveyUploadedSync();
 }

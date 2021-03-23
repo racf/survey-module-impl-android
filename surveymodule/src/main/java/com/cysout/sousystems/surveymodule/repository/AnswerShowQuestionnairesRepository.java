@@ -27,7 +27,7 @@ public interface AnswerShowQuestionnairesRepository {
     LiveData<List<AnswerShowQuestionnaires>> loadAll();
     List<AnswerShowQuestionnaires> loadAllSync();
     void deleteAll();
-    void deleteByPreguntaId(Long preguntaId);
-    void deleteByCuestionarioOrigenId(Long cuestionarioOrigenId);
-    void deleteByPreguntaIdAndRespuestaId(Long preguntaId, Long respuestaId);
+    void deleteByQuestionId(Long questionId);
+    void deleteByQuestionnaireOriginId(Long questionnaireOriginId);
+    void deleteByQuestionIdAndAnswerId(Long questionId, Long answerId);
 }
