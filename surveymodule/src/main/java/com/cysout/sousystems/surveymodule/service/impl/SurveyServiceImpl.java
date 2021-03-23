@@ -1,11 +1,17 @@
 package com.cysout.sousystems.surveymodule.service.impl;
 
+import android.app.Activity;
 import android.app.Application;
+import android.content.Context;
+import android.content.Intent;
+
 import androidx.annotation.NonNull;
 import androidx.lifecycle.AndroidViewModel;
 import androidx.lifecycle.LiveData;
 
 import com.cysout.sousystems.surveymodule.entity.Survey;
+import com.cysout.sousystems.surveymodule.utils.CustomConstants;
+import com.cysout.sousystems.surveymodule.view.QuestionaryActivity;
 import com.google.gson.Gson;
 import java.util.ArrayList;
 import java.util.List;
@@ -143,6 +149,13 @@ public class SurveyServiceImpl extends AndroidViewModel implements SurveyService
     @Override
     public List<SurveyRecords> loadSurveyUploadedSync() {
         return this.surveyRepository.loadSurveySentSync();
+    }
+
+    @Override
+    public void startNewSurvey(Context context, Activity activity, Survey survey) {
+        Intent intent = new Intent(context, QuestionaryActivity.class);
+        intent.putExtra(CustomConstants.SURVEY_KEY, survey);
+        activity.startActivityForResult(intent, CustomConstants.QUESTIONNAIRES_REQUEST);
     }
 }
 

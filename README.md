@@ -36,7 +36,7 @@ The image shows the **surveymodule** in the project dependencies:
 
 ## Implementation in a project
 1. Generate an xml file to design a CardView. This CardView shows the survey to be applied. This file is in the demo at the following location: [cards_surveys_layout.xml](https://gitlab.com/racf/survey-module-impl-android/-/blob/develop/app/src/main/res/layout/cards_surveys_layout.xml)
-2. Add the RecyclerView in the activity_main.xml
+2. Add the RecyclerView in the [activity_main.xml](https://gitlab.com/racf/survey-module-impl-android/-/blob/frc_develop/app/src/main/res/layout/activity_main.xml)
     ```xml
         <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/recyclerViewSurveys"
@@ -61,7 +61,23 @@ The image shows the **surveymodule** in the project dependencies:
 3. **Checkbox** : This type of component allows you to select one or more answers from a group of answers.
 4. **Select** : This type of component allows you to select a single option from a list of options.
 
-## **Join us to improve SurveyModule!** :page_with_curl:
-
 ## License
-    Apache 2.0
+SurveyModule is released under the [Apache 2.0 license](LICENSE).
+```
+   Copyright 2021 CysOut Solutions and SouSystems
+
+   Licensed under the Apache License, Version 2.0 (the "License");
+   you may not use this file except in compliance with the License.
+   You may obtain a copy of the License at
+
+       http://www.apache.org/licenses/LICENSE-2.0
+
+   Unless required by applicable law or agreed to in writing, software
+   distributed under the License is distributed on an "AS IS" BASIS,
+   WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+   See the License for the specific language governing permissions and
+   limitations under the License.
+
+```
+
+## **Join us to improve SurveyModule!** :page_with_curl:

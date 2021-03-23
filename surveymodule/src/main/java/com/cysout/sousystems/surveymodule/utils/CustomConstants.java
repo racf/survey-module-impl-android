@@ -63,8 +63,8 @@ public class CustomConstants {
     public static final int DATABASE_VERSION = 1;
 
     // Preferences
-    public static final String PREFERENCE_NAME_CUESTIONARIO = "cuestionario_registro";
-    public static final String CUESTIONARIO_REGISTRO_ID = "cuestionario_registro_id";
+    public static final String PREFERENCE_NAME_QUESTIONNAIRE = "registration_questionnaire";
+    public static final String QUESTIONNAIRE_REGISTRATION_ID = "questionnaire_registration_id";
 
     // Parameters
     public static final String SURVEY_KEY = "surveyKey";

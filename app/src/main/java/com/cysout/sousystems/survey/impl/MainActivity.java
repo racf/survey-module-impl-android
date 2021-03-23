@@ -35,7 +35,7 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
         startUI();
         String surveys = Utils.jsonArrayTest();
-        saveSurveys(surveys);
+        surveyService.saveSurveys(surveys);
         actionRecyclerView();
 
     }
@@ -59,17 +59,13 @@ public class MainActivity extends AppCompatActivity {
 
                     @Override
                     public void btnOnClick(View v, Survey survey, int position) {
-                        Utils.startNewSurvey(getApplicationContext(), activity, survey);
+                        surveyService.startNewSurvey(getApplicationContext(), activity, survey);
                     }
                 });
                 recyclerView.setLayoutManager(layoutManager);
                 recyclerView.setAdapter(adapter);
             }
         });
-    }
-
-    public void saveSurveys(String surveys) {
-        surveyService.saveSurveys(surveys);
     }
 
    @Override
