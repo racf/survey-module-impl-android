@@ -34,7 +34,7 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         startUI();
-        String surveys = Utils.jsonArrayTest();
+        String surveys = Utils.jsonArrayTest1();
         surveyService.saveSurveys(surveys);
         actionRecyclerView();
 

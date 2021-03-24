@@ -129,6 +129,86 @@ public class Utils {
         return gson.toJson(obj);
     }
 
+    public static String jsonArrayTest1(){
+        String json = "[{\n" +
+                "    \"surveyId\": 1,\n" +
+                "    \"title\": \"Survey showing the different types of components\",\n" +
+                "    \"phase\": 2,\n" +
+                "    \"description\": \"Survey description\",\n" +
+                "    \"surveyType\": 1,\n" +
+                "    \"visible\": true,\n" +
+                "    \"versionCode\": 1,\n" +
+                "    \"questionnaires\": [{\n" +
+                "        \"questionnaireId\": 10,\n" +
+                "        \"name\": \"Component questionnaires\",\n" +
+                "        \"order\": 1,\n" +
+                "        \"title\": \"Component questionnaires\",\n" +
+                "        \"visible\": true,\n" +
+                "        \"questions\": [{\n" +
+                "                \"description\": \"Subtitle of the label component\",\n" +
+                "                \"name\": \"name\",\n" +
+                "                \"order\": 1,\n" +
+                "                \"questionId\": 1,\n" +
+                "                \"required\": false,\n" +
+                "                \"type\": \"label\",\n" +
+                "                \"title\": \"Title of the label component\",\n" +
+                "                \"validations\": [],\n" +
+                "                \"visible\": true\n" +
+                "            },\n" +
+                "            {\n" +
+                "                \"description\": \"Component description is typeInput textPersonName\",\n" +
+                "                \"name\": \"\",\n" +
+                "                \"order\": 2,\n" +
+                "                \"questionId\": 2,\n" +
+                "                \"required\": true,\n" +
+                "                \"type\": \"text\",\n" +
+                "                \"typeInput\": \"textPersonName\",\n" +
+                "                \"title\": \"Title of the text component\",\n" +
+                "                \"validations\": [],\n" +
+                "                \"visible\": true\n" +
+                "            },\n" +
+                "            {\n" +
+                "                \"description\": \"Component description is typeInput number\",\n" +
+                "                \"name\": \"\",\n" +
+                "                \"order\": 3,\n" +
+                "                \"questionId\": 3,\n" +
+                "                \"required\": false,\n" +
+                "                \"type\": \"text\",\n" +
+                "                \"typeInput\": \"number\",\n" +
+                "                \"title\": \"Title of the text component\",\n" +
+                "                \"validations\": [],\n" +
+                "                \"visible\": true\n" +
+                "            },\n" +
+                "            {\n" +
+                "                \"description\": \"Component description is typeInput phone\",\n" +
+                "                \"name\": \"\",\n" +
+                "                \"order\": 4,\n" +
+                "                \"questionId\": 4,\n" +
+                "                \"required\": false,\n" +
+                "                \"type\": \"text\",\n" +
+                "                \"typeInput\": \"phone\",\n" +
+                "                \"title\": \"Title of the text component\",\n" +
+                "                \"validations\": [],\n" +
+                "                \"visible\": true\n" +
+                "            },\n" +
+                "            {\n" +
+                "                \"description\": \"Component description is typeInput text\",\n" +
+                "                \"name\": \"\",\n" +
+                "                \"order\": 5,\n" +
+                "                \"questionId\": 5,\n" +
+                "                \"required\": false,\n" +
+                "                \"type\": \"text\",\n" +
+                "                \"typeInput\": \"text\",\n" +
+                "                \"title\": \"Title of the text component\",\n" +
+                "                \"validations\": [],\n" +
+                "                \"visible\": true\n" +
+                "            }\n" +
+                "        ]\n" +
+                "    }]\n" +
+                "}]";
+        return json;
+    }
+
     public static String jsonArrayTest(){
         //json en ingles
         String json = "[{\n" +
