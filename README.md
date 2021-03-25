@@ -106,6 +106,7 @@ The image shows the **surveymodule** in the project dependencies:
 2. **RadioGroup** : This type of component allows you to select a single answer from a group of answers.
 3. **Checkbox** : This type of component allows you to select one or more answers from a group of answers.
 4. **Select** : This type of component allows you to select a single option from a list of options.
+5. **Label** : This type of component allows you to add notices, descriptions or some indication.
 
 ## License
 SurveyModule is released under the [Apache 2.0 license](LICENSE).
