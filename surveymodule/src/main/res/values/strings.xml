@@ -9,4 +9,6 @@
     <string name="message_questions_required">There are questions required</string>
     <string name="message_finished_survey">Finished survey</string>
     <string name="message_spinner_default">----Select an option----</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
 </resources>

@@ -112,31 +112,19 @@ public class QuestionaryFragment extends Fragment implements WidgetFragment.Frag
             questions.clear();
             fieldset.removeAllViews();
             for (Question question : questionnaire.getQuestions()) {
-                //Log.d(CustomConstants.TAG_LOG, "GENERA LOS TIPOS DE PREGUNTAS DE LOS CUESTIONARIOS "+pregunta.getPreguntaId()+" - "+ pregunta.getTipo());
+                WidgetFragment widgetFragment = null;
                 if (question.getType().equalsIgnoreCase(CustomConstants.TEXT)) {
-                    // Class<? extends WidgetFragment> widget = WidgetFragment.classForType(getActivity(), subQuestion.type);
-                    WidgetFragment widgetFragment = new TextFragment();
-                    widgetFragment.setCallback(this);
-                    widgetFragment.setMenuVisibility(CustomConstants.FALSE);
-                    fragmentTransaction.add(R.id.fieldset, widgetFragment);
-                    questions.put(widgetFragment, question);
+                    widgetFragment = new TextFragment();
+                } else if(question.getType().equalsIgnoreCase(CustomConstants.RADIOGROUP)){
+                    widgetFragment = new SelectFragment();
+                } else if(question.getType().equalsIgnoreCase(CustomConstants.CHECKBOX)){
+                    widgetFragment = new CheckBoxFragment();
+                } else if(question.getType().equalsIgnoreCase(CustomConstants.SELECT)){
+                    widgetFragment = new SpinnerFragment();
+                } else if(question.getType().equalsIgnoreCase(CustomConstants.LABEL)){
+                    widgetFragment = new LabelFragment();
                 }
-                if(question.getType().equalsIgnoreCase(CustomConstants.RADIOGROUP)){
-                    WidgetFragment widgetFragment = new SelectFragment();
-                    widgetFragment.setCallback(this);
-                    widgetFragment.setMenuVisibility(CustomConstants.FALSE);
-                    fragmentTransaction.add(R.id.fieldset, widgetFragment);
-                    questions.put(widgetFragment, question);
-                }
-                if(question.getType().equalsIgnoreCase(CustomConstants.CHECKBOX)){
-                    WidgetFragment widgetFragment = new CheckBoxFragment();
-                    widgetFragment.setCallback(this);
-                    widgetFragment.setMenuVisibility(CustomConstants.FALSE);
-                    fragmentTransaction.add(R.id.fieldset, widgetFragment);
-                    questions.put(widgetFragment, question);
-                }
-                if(question.getType().equalsIgnoreCase(CustomConstants.SELECT)){
-                    WidgetFragment widgetFragment = new SpinnerFragment();
+                if(widgetFragment != null){
                     widgetFragment.setCallback(this);
                     widgetFragment.setMenuVisibility(CustomConstants.FALSE);
                     fragmentTransaction.add(R.id.fieldset, widgetFragment);
