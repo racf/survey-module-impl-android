@@ -130,6 +130,703 @@ public class Utils {
     }
 
     public static String jsonArrayTest(){
+        String json = "[{\n" +
+                "    \"surveyId\": 1,\n" +
+                "    \"title\": \"Survey showing the different types of components\",\n" +
+                "    \"phase\": 2,\n" +
+                "    \"description\": \"Survey description\",\n" +
+                "    \"surveyType\": 1,\n" +
+                "    \"visible\": true,\n" +
+                "    \"versionCode\": 2,\n" +
+                "    \"questionnaires\": [{\n" +
+                "        \"questionnaireId\": 10,\n" +
+                "        \"name\": \"Component questionnaires\",\n" +
+                "        \"order\": 1,\n" +
+                "        \"title\": \"Component questionnaires\",\n" +
+                "        \"visible\": true,\n" +
+                "        \"questions\": [{\n" +
+                "                \"description\": \"Description of the label component\",\n" +
+                "                \"name\": \"\",\n" +
+                "                \"order\": 1,\n" +
+                "                \"questionId\": 1,\n" +
+                "                \"required\": false,\n" +
+                "                \"type\": \"label\",\n" +
+                "                \"title\": \"Title of the label component\",\n" +
+                "                \"validations\": [],\n" +
+                "                \"visible\": true\n" +
+                "            },\n" +
+                "            {\n" +
+                "                \"description\": \"Component description is typeInput textPersonName\",\n" +
+                "                \"name\": \"\",\n" +
+                "                \"order\": 2,\n" +
+                "                \"questionId\": 2,\n" +
+                "                \"required\": true,\n" +
+                "                \"type\": \"text\",\n" +
+                "                \"typeInput\": \"textPersonName\",\n" +
+                "                \"title\": \"Title of the text component\",\n" +
+                "                \"validations\": [],\n" +
+                "                \"visible\": true\n" +
+                "            },\n" +
+                "            {\n" +
+                "                \"description\": \"Component description is typeInput number\",\n" +
+                "                \"name\": \"\",\n" +
+                "                \"order\": 3,\n" +
+                "                \"questionId\": 3,\n" +
+                "                \"required\": false,\n" +
+                "                \"type\": \"text\",\n" +
+                "                \"typeInput\": \"number\",\n" +
+                "                \"title\": \"Title of the text component\",\n" +
+                "                \"validations\": [],\n" +
+                "                \"visible\": true\n" +
+                "            },\n" +
+                "            {\n" +
+                "                \"description\": \"Component description is typeInput phone\",\n" +
+                "                \"name\": \"\",\n" +
+                "                \"order\": 4,\n" +
+                "                \"questionId\": 4,\n" +
+                "                \"required\": false,\n" +
+                "                \"type\": \"text\",\n" +
+                "                \"typeInput\": \"phone\",\n" +
+                "                \"title\": \"Title of the text component\",\n" +
+                "                \"validations\": [],\n" +
+                "                \"visible\": true\n" +
+                "            },\n" +
+                "            {\n" +
+                "                \"description\": \"Component description is typeInput text\",\n" +
+                "                \"name\": \"\",\n" +
+                "                \"order\": 5,\n" +
+                "                \"questionId\": 5,\n" +
+                "                \"required\": false,\n" +
+                "                \"type\": \"text\",\n" +
+                "                \"typeInput\": \"text\",\n" +
+                "                \"title\": \"Title of the text component\",\n" +
+                "                \"validations\": [],\n" +
+                "                \"visible\": true\n" +
+                "            },\n" +
+                "            {\n" +
+                "                \"questionId\": 6,\n" +
+                "                \"order\": 6,\n" +
+                "                \"type\": \"radiogroup\",\n" +
+                "                \"name\": \"\",\n" +
+                "                \"title\": \"Title of the RadioGroup component\",\n" +
+                "                \"description\": \"Description of the RadioGroup component\",\n" +
+                "                \"required\": true,\n" +
+                "                \"visible\": true,\n" +
+                "                \"answers\": [{\n" +
+                "                        \"answerId\": 1,\n" +
+                "                        \"text\": \"Option 1\",\n" +
+                "                        \"showSelect\": {},\n" +
+                "                        \"hideSelect\": {},\n" +
+                "                        \"finishSelect\": false,\n" +
+                "                        \"visible\": true\n" +
+                "                    },\n" +
+                "                    {\n" +
+                "                        \"answerId\": 2,\n" +
+                "                        \"text\": \"Option 2\",\n" +
+                "                        \"showSelect\": {},\n" +
+                "                        \"hideSelect\": {},\n" +
+                "                        \"finishSelect\": false,\n" +
+                "                        \"visible\": true\n" +
+                "                    },\n" +
+                "                    {\n" +
+                "                        \"answerId\": 3,\n" +
+                "                        \"text\": \"Option 3\",\n" +
+                "                        \"showSelect\": {},\n" +
+                "                        \"hideSelect\": {},\n" +
+                "                        \"finishSelect\": false,\n" +
+                "                        \"visible\": true\n" +
+                "                    },\n" +
+                "                    {\n" +
+                "                        \"answerId\": 4,\n" +
+                "                        \"text\": \"Option 4\",\n" +
+                "                        \"showSelect\": {},\n" +
+                "                        \"hideSelect\": {},\n" +
+                "                        \"finishSelect\": false,\n" +
+                "                        \"visible\": true\n" +
+                "                    }\n" +
+                "                ]\n" +
+                "            },\n" +
+                "            {\n" +
+                "                \"description\": \"Description of the Checkbox component\",\n" +
+                "                \"title\": \"Title of the Checkbox component\",\n" +
+                "                \"type\": \"checkbox\",\n" +
+                "                \"name\": \"\",\n" +
+                "                \"order\": 7,\n" +
+                "                \"questionId\": 7,\n" +
+                "                \"required\": false,\n" +
+                "                \"visible\": true,\n" +
+                "                \"answers\": [{\n" +
+                "                        \"finishSelect\": false,\n" +
+                "                        \"showSelect\": {},\n" +
+                "                        \"hideSelect\": {},\n" +
+                "                        \"answerId\": 5,\n" +
+                "                        \"text\": \"Option 1\",\n" +
+                "                        \"visible\": true\n" +
+                "                    },\n" +
+                "                    {\n" +
+                "                        \"finishSelect\": false,\n" +
+                "                        \"showSelect\": {},\n" +
+                "                        \"hideSelect\": {},\n" +
+                "                        \"answerId\": 6,\n" +
+                "                        \"text\": \"Option 2\",\n" +
+                "                        \"visible\": true\n" +
+                "                    },\n" +
+                "                    {\n" +
+                "                        \"finishSelect\": false,\n" +
+                "                        \"showSelect\": {},\n" +
+                "                        \"hideSelect\": {},\n" +
+                "                        \"answerId\": 7,\n" +
+                "                        \"text\": \"Option 3\",\n" +
+                "                        \"visible\": true\n" +
+                "                    },\n" +
+                "                    {\n" +
+                "                        \"answerId\": 8,\n" +
+                "                        \"text\": \"Option 4\",\n" +
+                "                        \"showSelect\": {},\n" +
+                "                        \"hideSelect\": {},\n" +
+                "                        \"finishSelect\": false,\n" +
+                "                        \"visible\": true\n" +
+                "                    },\n" +
+                "                    {\n" +
+                "                        \"answerId\": 9,\n" +
+                "                        \"text\": \"Option 5\",\n" +
+                "                        \"showSelect\": {},\n" +
+                "                        \"hideSelect\": {},\n" +
+                "                        \"finishSelect\": false,\n" +
+                "                        \"visible\": true\n" +
+                "                    }\n" +
+                "                ]\n" +
+                "            },\n" +
+                "            {\n" +
+                "                \"questionId\": 8,\n" +
+                "                \"order\": 8,\n" +
+                "                \"type\": \"select\",\n" +
+                "                \"typeInput\": \"selectServer\",\n" +
+                "                \"name\": \"\",\n" +
+                "                \"title\": \"Title of the select component\",\n" +
+                "                \"description\": \"Description of the select component\",\n" +
+                "                \"required\": true,\n" +
+                "                \"visible\": true,\n" +
+                "                \"answers\": [{\n" +
+                "                        \"answerId\": 10,\n" +
+                "                        \"text\": \"Option 1\",\n" +
+                "                        \"showSelect\": {},\n" +
+                "                        \"hideSelect\": {},\n" +
+                "                        \"visible\": true,\n" +
+                "                        \"finishSelect\": false\n" +
+                "                    },\n" +
+                "                    {\n" +
+                "                        \"answerId\": 11,\n" +
+                "                        \"text\": \"Option 2\",\n" +
+                "                        \"showSelect\": {},\n" +
+                "                        \"hideSelect\": {},\n" +
+                "                        \"visible\": true,\n" +
+                "                        \"finishSelect\": false\n" +
+                "                    },\n" +
+                "                    {\n" +
+                "                        \"answerId\": 12,\n" +
+                "                        \"text\": \"Option 3\",\n" +
+                "                        \"showSelect\": {},\n" +
+                "                        \"hideSelect\": {},\n" +
+                "                        \"visible\": true,\n" +
+                "                        \"finishSelect\": false\n" +
+                "                    }\n" +
+                "                ]\n" +
+                "            }\n" +
+                "        ]\n" +
+                "    }]\n" +
+                "}, {\n" +
+                "    \"surveyId\": 2,\n" +
+                "    \"title\": \"Sample survey\",\n" +
+                "    \"phase\": 1,\n" +
+                "    \"description\": \"Interaction between components\",\n" +
+                "    \"surveyType\": 1,\n" +
+                "    \"visible\": true,\n" +
+                "    \"versionCode\": 1,\n" +
+                "    \"questionnaires\": [{\n" +
+                "        \"questionnaireId\": 20,\n" +
+                "        \"name\": \"\",\n" +
+                "        \"order\": 1,\n" +
+                "        \"title\": \"Personal information\",\n" +
+                "        \"visible\": true,\n" +
+                "        \"questions\": [{\n" +
+                "                \"description\": \"Questions with * are required\",\n" +
+                "                \"name\": \"\",\n" +
+                "                \"order\": 1,\n" +
+                "                \"questionId\": 20,\n" +
+                "                \"required\": false,\n" +
+                "                \"type\": \"label\",\n" +
+                "                \"title\": \"Answer the following questions\",\n" +
+                "                \"validations\": [],\n" +
+                "                \"visible\": true\n" +
+                "            }, {\n" +
+                "                \"questionId\": 21,\n" +
+                "                \"order\": 2,\n" +
+                "                \"name\": \"\",\n" +
+                "                \"type\": \"text\",\n" +
+                "                \"typeInput\": \"textPersonName\",\n" +
+                "                \"title\": \"What's your first name?\",\n" +
+                "                \"description\": \"Write your first name\",\n" +
+                "                \"required\": true,\n" +
+                "                \"visible\": true,\n" +
+                "                \"validations\": []\n" +
+                "            }, {\n" +
+                "                \"questionId\": 22,\n" +
+                "                \"order\": 3,\n" +
+                "                \"name\": \"\",\n" +
+                "                \"type\": \"text\",\n" +
+                "                \"typeInput\": \"textPersonName\",\n" +
+                "                \"title\": \"What's your last name?\",\n" +
+                "                \"description\": \"Write your last name\",\n" +
+                "                \"required\": false,\n" +
+                "                \"visible\": true,\n" +
+                "                \"validations\": []\n" +
+                "            }, {\n" +
+                "                \"questionId\": 23,\n" +
+                "                \"order\": 4,\n" +
+                "                \"name\": \"\",\n" +
+                "                \"type\": \"text\",\n" +
+                "                \"typeInput\": \"number\",\n" +
+                "                \"title\": \"What's your age?\",\n" +
+                "                \"description\": \"Write your age\",\n" +
+                "                \"required\": true,\n" +
+                "                \"visible\": true,\n" +
+                "                \"validations\": []\n" +
+                "            }, {\n" +
+                "                \"questionId\": 24,\n" +
+                "                \"order\": 5,\n" +
+                "                \"type\": \"radiogroup\",\n" +
+                "                \"name\": \"\",\n" +
+                "                \"title\": \"What's your gender?\",\n" +
+                "                \"description\": \"The Female option activates the following question / The Male option ends the survey\",\n" +
+                "                \"required\": true,\n" +
+                "                \"visible\": true,\n" +
+                "                \"answers\": [{\n" +
+                "                        \"answerId\": 30,\n" +
+                "                        \"text\": \"Female\",\n" +
+                "                        \"showSelect\": {\n" +
+                "                            \"questionnaires\": [],\n" +
+                "                            \"questions\": [{\n" +
+                "                                \"questionnaireId\": 20,\n" +
+                "                                \"questionId\": 25\n" +
+                "                            }],\n" +
+                "                            \"answers\": []\n" +
+                "                        },\n" +
+                "                        \"hideSelect\": {},\n" +
+                "                        \"visible\": true,\n" +
+                "                        \"finishSelect\": false\n" +
+                "                    },\n" +
+                "                    {\n" +
+                "                        \"answerId\": 31,\n" +
+                "                        \"text\": \"Male\",\n" +
+                "                        \"showSelect\": {},\n" +
+                "                        \"hideSelect\": {},\n" +
+                "                        \"visible\": true,\n" +
+                "                        \"finishSelect\": true\n" +
+                "                    }\n" +
+                "                ]\n" +
+                "            },\n" +
+                "            {\n" +
+                "                \"questionId\": 25,\n" +
+                "                \"order\": 6,\n" +
+                "                \"type\": \"radiogroup\",\n" +
+                "                \"name\": \"\",\n" +
+                "                \"title\": \"Do you suffer from family violence?\",\n" +
+                "                \"description\": \"The Yes option activates the next questionnaire / The No option ends the survey\",\n" +
+                "                \"required\": true,\n" +
+                "                \"visible\": false,\n" +
+                "                \"answers\": [{\n" +
+                "                        \"answerId\": 32,\n" +
+                "                        \"text\": \"Yes\",\n" +
+                "                        \"showSelect\": {\n" +
+                "                            \"questionnaires\": [{\n" +
+                "                                \"questionnaireId\": 21\n" +
+                "                            }],\n" +
+                "                            \"questions\": [],\n" +
+                "                            \"answers\": []\n" +
+                "                        },\n" +
+                "                        \"hideSelect\": {},\n" +
+                "                        \"visible\": true,\n" +
+                "                        \"finishSelect\": false\n" +
+                "                    },\n" +
+                "                    {\n" +
+                "                        \"answerId\": 33,\n" +
+                "                        \"text\": \"No\",\n" +
+                "                        \"showSelect\": {\n" +
+                "                            \"questionnaires\": [],\n" +
+                "                            \"questions\": [],\n" +
+                "                            \"answers\": []\n" +
+                "                        },\n" +
+                "                        \"hideSelect\": {},\n" +
+                "                        \"visible\": true,\n" +
+                "                        \"finishSelect\": true\n" +
+                "                    }\n" +
+                "                ]\n" +
+                "            }\n" +
+                "        ]\n" +
+                "    }, {\n" +
+                "        \"questionnaireId\": 21,\n" +
+                "        \"name\": \"\",\n" +
+                "        \"order\": 2,\n" +
+                "        \"title\": \"Survey on violence\",\n" +
+                "        \"visible\": false,\n" +
+                "        \"questions\": [{\n" +
+                "            \"questionId\": 26,\n" +
+                "            \"order\": 1,\n" +
+                "            \"type\": \"radiogroup\",\n" +
+                "            \"name\": \"\",\n" +
+                "            \"title\": \"What kind of violence?\",\n" +
+                "            \"description\": \"Each option shows different answers to the following question\",\n" +
+                "            \"required\": true,\n" +
+                "            \"visible\": true,\n" +
+                "            \"answers\": [{\n" +
+                "                    \"answerId\": 34,\n" +
+                "                    \"text\": \"Physical\",\n" +
+                "                    \"showSelect\": {\n" +
+                "                        \"questionnaires\": [],\n" +
+                "                        \"questions\": [],\n" +
+                "                        \"answers\": [{\n" +
+                "                                \"questionnaireId\": 21,\n" +
+                "                                \"questionId\": 27,\n" +
+                "                                \"answerId\": 37\n" +
+                "                            },\n" +
+                "                            {\n" +
+                "                                \"questionnaireId\": 21,\n" +
+                "                                \"questionId\": 27,\n" +
+                "                                \"answerId\": 38\n" +
+                "                            },\n" +
+                "                            {\n" +
+                "                                \"questionnaireId\": 21,\n" +
+                "                                \"questionId\": 27,\n" +
+                "                                \"answerId\": 39\n" +
+                "                            }\n" +
+                "                        ]\n" +
+                "                    },\n" +
+                "                    \"hideSelect\": {},\n" +
+                "                    \"visible\": true,\n" +
+                "                    \"finishSelect\": false\n" +
+                "                },\n" +
+                "                {\n" +
+                "                    \"answerId\": 35,\n" +
+                "                    \"text\": \"Psychological\",\n" +
+                "                    \"showSelect\": {\n" +
+                "                        \"questionnaires\": [],\n" +
+                "                        \"questions\": [],\n" +
+                "                        \"answers\": [{\n" +
+                "                                \"questionnaireId\": 21,\n" +
+                "                                \"questionId\": 27,\n" +
+                "                                \"answerId\": 40\n" +
+                "                            },\n" +
+                "                            {\n" +
+                "                                \"questionnaireId\": 21,\n" +
+                "                                \"questionId\": 27,\n" +
+                "                                \"answerId\": 41\n" +
+                "                            },\n" +
+                "                            {\n" +
+                "                                \"questionnaireId\": 21,\n" +
+                "                                \"questionId\": 27,\n" +
+                "                                \"answerId\": 42\n" +
+                "                            }\n" +
+                "                        ]\n" +
+                "                    },\n" +
+                "                    \"hideSelect\": {},\n" +
+                "                    \"visible\": true,\n" +
+                "                    \"finishSelect\": false\n" +
+                "                },\n" +
+                "                {\n" +
+                "                    \"answerId\": 36,\n" +
+                "                    \"text\": \"Sexual\",\n" +
+                "                    \"showSelect\": {\n" +
+                "                        \"questionnaires\": [],\n" +
+                "                        \"questions\": [],\n" +
+                "                        \"answers\": [{\n" +
+                "                                \"questionnaireId\": 21,\n" +
+                "                                \"questionId\": 27,\n" +
+                "                                \"answerId\": 43\n" +
+                "                            },\n" +
+                "                            {\n" +
+                "                                \"questionnaireId\": 21,\n" +
+                "                                \"questionId\": 27,\n" +
+                "                                \"answerId\": 44\n" +
+                "                            }\n" +
+                "                        ]\n" +
+                "                    },\n" +
+                "                    \"hideSelect\": {},\n" +
+                "                    \"visible\": true,\n" +
+                "                    \"finishSelect\": false\n" +
+                "                }\n" +
+                "            ]\n" +
+                "        }, {\n" +
+                "            \"description\": \"\",\n" +
+                "            \"title\": \"Such as:\",\n" +
+                "            \"type\": \"checkbox\",\n" +
+                "            \"name\": \"\",\n" +
+                "            \"order\": 2,\n" +
+                "            \"questionId\": 27,\n" +
+                "            \"required\": true,\n" +
+                "            \"visible\": true,\n" +
+                "            \"answers\": [{\n" +
+                "                    \"finishSelect\": false,\n" +
+                "                    \"showSelect\": {\n" +
+                "                        \"questionnaires\": [],\n" +
+                "                        \"questions\": [],\n" +
+                "                        \"answers\": []\n" +
+                "                    },\n" +
+                "                    \"hideSelect\": {},\n" +
+                "                    \"answerId\": 37,\n" +
+                "                    \"text\": \"Slapping\",\n" +
+                "                    \"visible\": false\n" +
+                "                },\n" +
+                "                {\n" +
+                "                    \"finishSelect\": false,\n" +
+                "                    \"showSelect\": {},\n" +
+                "                    \"hideSelect\": {},\n" +
+                "                    \"answerId\": 38,\n" +
+                "                    \"text\": \"Punches\",\n" +
+                "                    \"visible\": false\n" +
+                "                },\n" +
+                "                {\n" +
+                "                    \"finishSelect\": false,\n" +
+                "                    \"showSelect\": {},\n" +
+                "                    \"hideSelect\": {},\n" +
+                "                    \"answerId\": 39,\n" +
+                "                    \"text\": \"Kicks\",\n" +
+                "                    \"visible\": false\n" +
+                "                },\n" +
+                "                {\n" +
+                "                    \"answerId\": 40,\n" +
+                "                    \"text\": \"Contempt\",\n" +
+                "                    \"showSelect\": {},\n" +
+                "                    \"hideSelect\": {},\n" +
+                "                    \"finishSelect\": false,\n" +
+                "                    \"visible\": false\n" +
+                "                },\n" +
+                "                {\n" +
+                "                    \"answerId\": 41,\n" +
+                "                    \"text\": \"Insult\",\n" +
+                "                    \"showSelect\": {},\n" +
+                "                    \"hideSelect\": {},\n" +
+                "                    \"finishSelect\": false,\n" +
+                "                    \"visible\": false\n" +
+                "                },\n" +
+                "                {\n" +
+                "                    \"answerId\": 42,\n" +
+                "                    \"text\": \"Humiliation\",\n" +
+                "                    \"showSelect\": {},\n" +
+                "                    \"hideSelect\": {},\n" +
+                "                    \"finishSelect\": false,\n" +
+                "                    \"visible\": false\n" +
+                "                },\n" +
+                "                {\n" +
+                "                    \"answerId\": 43,\n" +
+                "                    \"text\": \"Without consent\",\n" +
+                "                    \"showSelect\": {},\n" +
+                "                    \"hideSelect\": {},\n" +
+                "                    \"finishSelect\": false,\n" +
+                "                    \"visible\": false\n" +
+                "                },\n" +
+                "                {\n" +
+                "                    \"answerId\": 44,\n" +
+                "                    \"text\": \"Forced\",\n" +
+                "                    \"showSelect\": {},\n" +
+                "                    \"hideSelect\": {},\n" +
+                "                    \"finishSelect\": false,\n" +
+                "                    \"visible\": false\n" +
+                "                }\n" +
+                "            ]\n" +
+                "        }, {\n" +
+                "            \"questionId\": 28,\n" +
+                "            \"order\": 3,\n" +
+                "            \"type\": \"radiogroup\",\n" +
+                "            \"name\": \"\",\n" +
+                "            \"title\": \"How often do they mistreat you?\",\n" +
+                "            \"description\": \"\",\n" +
+                "            \"required\": true,\n" +
+                "            \"visible\": true,\n" +
+                "            \"answers\": [{\n" +
+                "                    \"answerId\": 45,\n" +
+                "                    \"text\": \"Diary\",\n" +
+                "                    \"showSelect\": {},\n" +
+                "                    \"hideSelect\": {},\n" +
+                "                    \"visible\": true,\n" +
+                "                    \"finishSelect\": false\n" +
+                "                },\n" +
+                "                {\n" +
+                "                    \"answerId\": 46,\n" +
+                "                    \"text\": \"Daily inter\",\n" +
+                "                    \"showSelect\": {},\n" +
+                "                    \"hideSelect\": {},\n" +
+                "                    \"visible\": true,\n" +
+                "                    \"finishSelect\": false\n" +
+                "                },\n" +
+                "                {\n" +
+                "                    \"answerId\": 47,\n" +
+                "                    \"text\": \"Weekly\",\n" +
+                "                    \"showSelect\": {},\n" +
+                "                    \"hideSelect\": {},\n" +
+                "                    \"visible\": true,\n" +
+                "                    \"finishSelect\": false\n" +
+                "                },\n" +
+                "                {\n" +
+                "                    \"answerId\": 48,\n" +
+                "                    \"text\": \"Monthly\",\n" +
+                "                    \"showSelect\": {},\n" +
+                "                    \"hideSelect\": {},\n" +
+                "                    \"visible\": true,\n" +
+                "                    \"finishSelect\": false\n" +
+                "                }\n" +
+                "            ]\n" +
+                "        }, {\n" +
+                "            \"questionId\": 29,\n" +
+                "            \"order\": 4,\n" +
+                "            \"type\": \"radiogroup\",\n" +
+                "            \"name\": \"\",\n" +
+                "            \"title\": \"Who is the aggressor?\",\n" +
+                "            \"description\": \"\",\n" +
+                "            \"required\": true,\n" +
+                "            \"visible\": true,\n" +
+                "            \"answers\": [{\n" +
+                "                    \"answerId\": 49,\n" +
+                "                    \"text\": \"Husband\",\n" +
+                "                    \"showSelect\": {},\n" +
+                "                    \"hideSelect\": {},\n" +
+                "                    \"visible\": true,\n" +
+                "                    \"finishSelect\": false\n" +
+                "                },\n" +
+                "                {\n" +
+                "                    \"answerId\": 50,\n" +
+                "                    \"text\": \"Sons\",\n" +
+                "                    \"showSelect\": {},\n" +
+                "                    \"hideSelect\": {},\n" +
+                "                    \"visible\": true,\n" +
+                "                    \"finishSelect\": false\n" +
+                "                },\n" +
+                "                {\n" +
+                "                    \"answerId\": 51,\n" +
+                "                    \"text\": \"Others\",\n" +
+                "                    \"showSelect\": {},\n" +
+                "                    \"hideSelect\": {},\n" +
+                "                    \"visible\": true,\n" +
+                "                    \"finishSelect\": false\n" +
+                "                }\n" +
+                "            ]\n" +
+                "        }, {\n" +
+                "            \"questionId\": 30,\n" +
+                "            \"order\": 5,\n" +
+                "            \"type\": \"radiogroup\",\n" +
+                "            \"name\": \"\",\n" +
+                "            \"title\": \"Have you received any help from an institution?\",\n" +
+                "            \"description\": \"\",\n" +
+                "            \"required\": true,\n" +
+                "            \"visible\": true,\n" +
+                "            \"answers\": [{\n" +
+                "                    \"answerId\": 52,\n" +
+                "                    \"text\": \"Yes\",\n" +
+                "                    \"showSelect\": {},\n" +
+                "                    \"hideSelect\": {},\n" +
+                "                    \"visible\": true,\n" +
+                "                    \"finishSelect\": false\n" +
+                "                },\n" +
+                "                {\n" +
+                "                    \"answerId\": 53,\n" +
+                "                    \"text\": \"No\",\n" +
+                "                    \"showSelect\": {},\n" +
+                "                    \"hideSelect\": {},\n" +
+                "                    \"visible\": true,\n" +
+                "                    \"finishSelect\": false\n" +
+                "                }\n" +
+                "            ]\n" +
+                "        }]\n" +
+                "    }, {\n" +
+                "        \"questionnaireId\": 22,\n" +
+                "        \"name\": \"\",\n" +
+                "        \"order\": 3,\n" +
+                "        \"title\": \"Contact information\",\n" +
+                "        \"visible\": true,\n" +
+                "        \"questions\": [{\n" +
+                "            \"questionId\": 54,\n" +
+                "            \"order\": 1,\n" +
+                "            \"name\": \"\",\n" +
+                "            \"type\": \"text\",\n" +
+                "            \"typeInput\": \"text\",\n" +
+                "            \"title\": \"What's your country?\",\n" +
+                "            \"description\": \"Write your country\",\n" +
+                "            \"required\": true,\n" +
+                "            \"visible\": true,\n" +
+                "            \"validations\": []\n" +
+                "        }, {\n" +
+                "            \"questionId\": 55,\n" +
+                "            \"order\": 1,\n" +
+                "            \"name\": \"\",\n" +
+                "            \"type\": \"text\",\n" +
+                "            \"typeInput\": \"text\",\n" +
+                "            \"title\": \"What's your city?\",\n" +
+                "            \"description\": \"Write your city\",\n" +
+                "            \"required\": true,\n" +
+                "            \"visible\": true,\n" +
+                "            \"validations\": []\n" +
+                "        }, {\n" +
+                "            \"questionId\": 56,\n" +
+                "            \"order\": 1,\n" +
+                "            \"name\": \"\",\n" +
+                "            \"type\": \"text\",\n" +
+                "            \"typeInput\": \"textPersonName\",\n" +
+                "            \"title\": \"What's your address?\",\n" +
+                "            \"description\": \"Write your address\",\n" +
+                "            \"required\": true,\n" +
+                "            \"visible\": true,\n" +
+                "            \"validations\": []\n" +
+                "        }, {\n" +
+                "            \"questionId\": 57,\n" +
+                "            \"order\": 1,\n" +
+                "            \"name\": \"\",\n" +
+                "            \"type\": \"text\",\n" +
+                "            \"typeInput\": \"number\",\n" +
+                "            \"title\": \"What's your zip code?\",\n" +
+                "            \"description\": \"Write your zip code\",\n" +
+                "            \"required\": true,\n" +
+                "            \"visible\": true,\n" +
+                "            \"validations\": []\n" +
+                "        }, {\n" +
+                "            \"questionId\": 58,\n" +
+                "            \"order\": 1,\n" +
+                "            \"name\": \"\",\n" +
+                "            \"type\": \"text\",\n" +
+                "            \"typeInput\": \"email\",\n" +
+                "            \"title\": \"What's your email?\",\n" +
+                "            \"description\": \"Write your email\",\n" +
+                "            \"required\": false,\n" +
+                "            \"visible\": true,\n" +
+                "            \"validations\": []\n" +
+                "        }, {\n" +
+                "            \"questionId\": 59,\n" +
+                "            \"order\": 1,\n" +
+                "            \"name\": \"\",\n" +
+                "            \"type\": \"text\",\n" +
+                "            \"typeInput\": \"phone\",\n" +
+                "            \"title\": \"What's your phone number?\",\n" +
+                "            \"description\": \"Write your phone number\",\n" +
+                "            \"required\": false,\n" +
+                "            \"visible\": true,\n" +
+                "            \"validations\": []\n" +
+                "        }, {\n" +
+                "            \"questionId\": 60,\n" +
+                "            \"order\": 1,\n" +
+                "            \"name\": \"\",\n" +
+                "            \"type\": \"text\",\n" +
+                "            \"typeInput\": \"phone\",\n" +
+                "            \"title\": \"What's your cell phone number?\",\n" +
+                "            \"description\": \"Write your cell phone number\",\n" +
+                "            \"required\": true,\n" +
+                "            \"visible\": true,\n" +
+                "            \"validations\": []\n" +
+                "        }]\n" +
+                "    }]\n" +
+                "}]";
+        return json;
+    }
+
+    public static String jsonArrayTest1(){
         //json en ingles
         String json = "[{\n" +
                 "        \"surveyId\": 2,\n" +

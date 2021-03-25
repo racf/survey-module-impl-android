@@ -129,8 +129,8 @@ public class SelectFragment extends WidgetFragment {
                         //Eliminamos la respuesta de la pregunta que se deschequea
                         if (surveyRecordId > 0L) {
                             Executors.newSingleThreadExecutor().execute(() -> {
-                                String respuestaId = String.valueOf(optionChecked.getAnswerId());
-                                privateSurveyService.deleteSurveyRecordByQuestionIdAndAnswer(surveyRecordId, question.getQuestionId(), respuestaId);
+                                String answerId = String.valueOf(optionChecked.getAnswerId());
+                                privateSurveyService.deleteSurveyRecordByQuestionIdAndAnswer(surveyRecordId, question.getQuestionId(), answerId);
                             });
                         }
                     }

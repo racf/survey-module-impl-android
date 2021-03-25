@@ -237,7 +237,7 @@ public abstract class WidgetFragment extends Fragment {
                         //Validamos que la vista no este vacía esto aplica en el momento que se regresa al cuestionario anterior
                         if ( widgetFragment.rootView != null) {
                             if(showAnswer.getAnswerId() == answer.getAnswerId()) {
-                                String respuestaStringId = String.valueOf(answer.getAnswerId());
+                                String answerStringId = String.valueOf(answer.getAnswerId());
                                 if (question.getType().equalsIgnoreCase(CustomConstants.CHECKBOX)) {
                                     int checkBoxId = Integer.parseInt(question.getQuestionId() + "" + answer.getAnswerId());
                                     CheckBox checkBox = widgetFragment.rootView.findViewById(checkBoxId);
@@ -246,7 +246,7 @@ public abstract class WidgetFragment extends Fragment {
                                     } else {
                                         checkBox.setVisibility(View.GONE);
                                         checkBox.setChecked(CustomConstants.FALSE);
-                                        deleteAnswer(surveyRecordId, question.getQuestionId(), respuestaStringId);
+                                        deleteAnswer(surveyRecordId, question.getQuestionId(), answerStringId);
                                     }
                                 } else if (question.getType().equalsIgnoreCase(CustomConstants.RADIOGROUP)) {
                                     RadioButton radioButton = widgetFragment.rootView.findViewWithTag(answer);
@@ -259,7 +259,7 @@ public abstract class WidgetFragment extends Fragment {
                                             // y posteriormente lo limpiamos
                                             if (radioButton.getParent() instanceof RadioGroup) {
                                                 ((RadioGroup) radioButton.getParent()).clearCheck();
-                                                deleteAnswer(surveyRecordId, question.getQuestionId(), respuestaStringId);
+                                                deleteAnswer(surveyRecordId, question.getQuestionId(), answerStringId);
                                             }
                                         }
                                     }
