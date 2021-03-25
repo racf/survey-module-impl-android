@@ -17,7 +17,7 @@
 
 ## Download this project
 
-    git clone https://gitlab.com/racf/survey-module-impl-android.git
+    git clone https://github.com/racf/survey-module-impl-android.git
 
 ## Import to a project
 1. From the menu bar, click **File** -> **Import module...**
@@ -35,8 +35,8 @@ The image shows the **surveymodule** in the project dependencies:
 ![SurveyModule](module-dependency.png)
 
 ## Implementation in a project
-1. Generate an xml file to design a CardView. This CardView shows the survey to be applied. This file is in the demo at the following location: [cards_surveys_layout.xml](https://gitlab.com/racf/survey-module-impl-android/-/blob/develop/app/src/main/res/layout/cards_surveys_layout.xml)
-2. Add the RecyclerView in the [activity_main.xml](https://gitlab.com/racf/survey-module-impl-android/-/blob/frc_develop/app/src/main/res/layout/activity_main.xml)
+1. Generate an xml file to design a CardView. This CardView shows the survey to be applied. This file is in the demo at the following location: [cards_surveys_layout.xml](https://github.com/racf/survey-module-impl-android/blob/master/app/src/main/res/layout/cards_surveys_layout.xml)
+2. Add the RecyclerView in the [activity_main.xml](https://github.com/racf/survey-module-impl-android/blob/master/app/src/main/res/layout/activity_main.xml)
     ```xml
         <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/recyclerViewSurveys"
@@ -47,7 +47,7 @@ The image shows the **surveymodule** in the project dependencies:
         android:layout_marginTop="@dimen/margin_padding_8"
         android:scrollbars="vertical"/>
     ```
-3. Create an instance of the SurveyService in the [MainActivity.java](https://gitlab.com/racf/survey-module-impl-android/-/blob/frc_develop/app/src/main/java/com/cysout/sousystems/survey/impl/MainActivity.java)
+3. Create an instance of the SurveyService in the [MainActivity.java](https://github.com/racf/survey-module-impl-android/blob/master/app/src/main/java/com/cysout/sousystems/survey/impl/MainActivity.java)
 ```java
     SurveyService surveyService = new ViewModelProvider(this).get(SurveyServiceImpl.class);
 ```
